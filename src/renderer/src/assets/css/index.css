@@ -1,0 +1,54 @@
+.ant-layout-header {
+  transition: background-color 0s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+}
+.ant-pro-global-header {
+  transition: background-color 0s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+}
+
+.cutomBadge .ant-badge-status-dot {
+  position: relative;
+  top: -2px !important;
+  display: inline-block;
+  width: 15px !important;
+  height: 15px !important;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.custom-ant-pro-global-header {
+  position: relative;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  margin-block: 0;
+  margin-inline: 16px;
+  height: 56px;
+  box-sizing: border-box;
+}
+
+.cutomBadge .ant-badge-color-green {
+  color: #49aa19 !important;
+  background-color: #49aa19 !important;
+}
+.custom-colapse .ant-collapse-content-box {
+  padding: 0 !important;
+}
+.custom-colapse .ant-collapse-header {
+  align-items: center !important;
+}
+.custom-colapse .ant-collapse-header-text {
+  flex-grow: 1 !important;
+}
+
+.container {
+  display: inline;
+}
+
+.item-span {
+  vertical-align: bottom;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 33.3%;
+}
