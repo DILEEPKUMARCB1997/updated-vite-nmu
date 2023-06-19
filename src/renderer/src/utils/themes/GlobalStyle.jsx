@@ -1,9 +1,9 @@
-import React from "react";
-import { Global, css } from "@emotion/react";
-import { useTheme } from "antd-style";
+import React from 'react'
+import { Global, css } from '@emotion/react'
+import { useTheme } from 'antd-style'
 
 const GlobalStyle = () => {
-  const token = useTheme();
+  const token = useTheme()
   return (
     <Global
       styles={css`
@@ -30,7 +30,7 @@ const GlobalStyle = () => {
         }
       `}
     />
-  );
-};
+  )
+}
 
-export default GlobalStyle;
+export default GlobalStyle

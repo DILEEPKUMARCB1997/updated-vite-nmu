@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { SyncOutlined } from '@ant-design/icons'
 import {
   dashboardSelector,
   requestHistoryData,
   updateTrapGraph
 } from '../../features/dashboardSlice'
-import requestGraphData from './requestGraphData'
-import { theme as antdTheme } from 'antd'
-import {
-  REQUEST_MP_GET_EVENT_LOG_HISTORY,
-  RESPONSE_RP_GET_EVENT_LOG_HISTORY
-} from '../../../../main/utils/IPCEvents'
+import { Button, Tooltip, theme as antdTheme } from 'antd'
 import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
@@ -26,23 +22,28 @@ const TrapGraphSummary = () => {
     series: [
       {
         name: 'SNMP Trap Message Count',
-        data: [12, 32, 43, 23, 65, 12, 11]
-        // data: trapGraphData.data
+        data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
+        // data: []
       }
     ],
     options: {
       chart: {
-        height: 350,
         type: 'bar',
+        // background: token.colorBgContainer,
+        height: 320,
         toolbar: {
           show: false
-        }
+        },
+        offsetY: -20,
+        offsetX: 0
       },
+
       legend: {
         show: true,
         showForSingleSeries: true,
-        position: 'bottom',
-        horizontalAlign: 'center'
+        position: 'top',
+        horizontalAlign: 'center',
+        offsetY: 20
       },
       plotOptions: {
         bar: {
@@ -51,34 +52,38 @@ const TrapGraphSummary = () => {
         }
       },
       dataLabels: {
-        enabled: true
+        enabled: false
       },
       stroke: {
         width: 2
       },
 
       grid: {
+        show: false,
         row: {
           colors: ['#fff', '#f2f2f2']
         }
       },
       xaxis: {
-        labels: {
-          rotate: -45
-        },
+        type: 'category',
         // categories: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'],
         categories: trapGraphData.label,
-
-        tickPlacement: 'on'
+        labels: {
+          rotate: -45,
+          rotateAlways: true
+        }
       },
       yaxis: {
         title: {
-          text: 'Trap Msg Count'
+          text: 'Trap Msg Count',
+          lines: {
+            show: true
+          }
         }
       },
       fill: {
         type: 'solid',
-        colors: [token.colorSuccess],
+
         gradient: {
           shade: 'lights',
           type: 'horizontal',
@@ -98,32 +103,56 @@ const TrapGraphSummary = () => {
       dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
     }, 1500)
   }, [])
-  return (
-    // <div>
-    //   <pre>
-    //     <code>{JSON.stringify(trapGraphData, '', '\t')}</code>
-    //   </pre>
-    // </div>
 
-    <div>
-      <Card
-        title="SNMP Trap Message Count"
-        // size="small"
-        bordered={false}
+  // useEffect(() => {
+  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+  //     setSnmpTrapMsgData((prev) => ({
+  //       ...prev,
+  //       series: [
+  //         {
+  //           data: trapGraphData.data
+  //         }
+  //       ],
+  //       options: {
+  //         ...prev.options,
+  //         xaxis: {
+  //           categories: trapGraphData.label
+  //         }
+  //       }
+  //     }))
+  //   }
+  // }, [trapGraphData])
+
+  const handleRefresh = () => {
+    dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
+  }
+
+  return (
+    <>
+      {' '}
+      <div
         style={{
-          width: 450,
-          height: 350
+          margin: '0px 5px',
+          marginTop: '0px',
+          display: 'flex',
+          justifyContent: 'space-between'
         }}
       >
+        <i>{trapGraphData.lastUpdated}</i>
+        <Tooltip title="Refresh">
+          <Button icon={<SyncOutlined />} onClick={handleRefresh} />
+        </Tooltip>
+      </div>
+      <div>
         <ReactApexChart
           options={snmpTrapMsgData.options}
           series={snmpTrapMsgData.series}
           type="bar"
-          // height={350}
-          width={400}
+          height={250}
+          width={350}
         />
-      </Card>
-    </div>
+      </div>
+    </>
   )
 }
 

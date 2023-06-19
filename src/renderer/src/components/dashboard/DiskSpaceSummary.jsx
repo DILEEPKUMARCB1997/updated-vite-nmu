@@ -28,19 +28,28 @@ const DiskSpaceSummary = () => {
 
   const options = {
     series: [diskUses.diskUsed],
-    labels: ['Disk Space Used'],
-    // legend: {
-    //   show: true,
-    //   position: 'left',
-    //   offsetX: -10,
-    //   offsetY: 15,
-    //   formatter: function (val) {
-    //     return val
-    //   }
-    // },
+    labels: [
+      `Disk Space Used - ${diskUses.diskUsed} %`
+      // `Disk Space Free - ${diskUses.diskFree} %`
+    ],
+    legend: {
+      show: true,
+      showForSingleSeries: true,
+      position: 'right',
+      offsetX: -10,
+      offsetY: 30,
+      formatter: function (val) {
+        return val
+      },
+      labels: {
+        useSeriesColors: false
+      }
+    },
     chart: {
       height: 350,
       type: 'radialBar',
+      offsetX: -5,
+      offsetY: -30,
       toolbar: {
         show: false
       }
@@ -51,7 +60,7 @@ const DiskSpaceSummary = () => {
         endAngle: 225,
         hollow: {
           margin: 0,
-          size: '70%',
+          size: '50%',
           background: '#fff',
           image: undefined,
           imageOffsetX: 0,
@@ -80,19 +89,21 @@ const DiskSpaceSummary = () => {
         },
 
         dataLabels: {
-          show: true,
           name: {
-            offsetY: -10,
+            offsetY: 5,
             show: true,
             color: '#1a1818',
-            fontSize: '15px'
+            fontSize: '15px',
+            show: false
           },
           value: {
             formatter: function (val) {
               return val + '%'
             },
             color: '#111',
-            fontSize: '25px',
+            fontSize: '15px',
+            fontWeight: 'bold',
+            offsetY: 5,
             show: true
           }
         }
@@ -124,17 +135,27 @@ const DiskSpaceSummary = () => {
     //   </pre>
     // </div>
 
+    // <div>
+    //   <Card
+    //     title="Disk Space Utilization Summary"
+    //     // size="small"
+    //     bordered={false}
+    //     style={{
+    //       width: 300
+    //     }}
+    //   >
+    //     <ReactApexChart options={options} series={options.series} type="radialBar" height={250} />
+    //   </Card>
+    // </div>
+
     <div>
-      <Card
-        title="Disk Space Utilization Summary"
-        // size="small"
-        bordered={false}
-        style={{
-          width: 300
-        }}
-      >
-        <ReactApexChart options={options} series={options.series} type="radialBar" height={250} />
-      </Card>
+      <ReactApexChart
+        options={options}
+        series={options.series}
+        type="radialBar"
+        height={150}
+        width={400}
+      />
     </div>
   )
 }
