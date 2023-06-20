@@ -161,6 +161,7 @@ const EventLog = (props) => {
         Events
         <div style={{ fontSize: '15px' }}>{customGraphData.lastUpdated}</div>
         <Button
+          title="Refresh"
           icon={<SyncOutlined />}
           style={{ padding: '5px' }}
           onClick={handleRefreshGraph}
