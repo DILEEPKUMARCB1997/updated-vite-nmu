@@ -33,7 +33,7 @@ const EventList = () => {
                   : '#D50000'
               }
               item={item}
-            ></EventListCard>
+            />
           ))}
         </Col>
       </Row>
