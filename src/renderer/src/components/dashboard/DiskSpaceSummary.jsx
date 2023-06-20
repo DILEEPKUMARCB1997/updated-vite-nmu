@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+import React,{useEffect} from 'react'
 import {
   REQUEST_MP_GET_DISK_USES,
   RESPONSE_RP_GET_DISK_USES
 } from '../../../../main/utils/IPCEvents'
 import { useDispatch, useSelector } from 'react-redux'
-import { dasboardSelector, initDiskUses } from '../../features/dashboardSlice'
+import { dashboardSelector, initDiskUses } from '../../features/dashboardSlice'
 
-const DiskSpceSummary = () => {
+const DiskSpaceSummary = () => {
   const dispatch = useDispatch()
-  const { diskUses } = useSelector(dasboardSelector)
+  const { diskUses } = useSelector(dashboardSelector)
   useEffect(() => {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
       if (arg.success) {
@@ -33,4 +35,4 @@ const DiskSpceSummary = () => {
   )
 }
 
-export default DiskSpceSummary
+export default DiskSpaceSummary

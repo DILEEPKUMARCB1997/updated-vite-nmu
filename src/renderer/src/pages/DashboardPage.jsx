@@ -1,7 +1,9 @@
-// import React from 'react'
-// import DeviceSummary from '../components/dashboard/DeviceSummary'
-// import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
 import { Card, Col, Row } from 'antd'
+import EventLog from '../components/dashboard/EventLog'
+import DeviceSummary from '../components/dashboard/DeviceSummary'
+import DiskSpaceSummary from '../components/dashboard/DiskSpaceSummary'
+import EventList from '../components/dashboard/EventList'
+import EventSummary from '../components/dashboard/EventSummary'
 
 const DashboardPage = () => {
   return (
@@ -9,31 +11,43 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Device summary</Card>
+            <Card bordered={false}>
+              DeviceSummary
+              <DeviceSummary />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Disk Space</Card>
+            <Card bordered={false}>
+              DiskSpaceSummary <DiskSpaceSummary />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>SNMP trap</Card>
+            <Card bordered={false}>SNMPTrap</Card>
           </Col>
         </Row>
       </Col>
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Daily Events</Card>
+            <Card bordered={false}>
+              EventSummary
+              <EventSummary />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
+            <Card bordered={true}>
+              <EventLog />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card bordered={false}>Syslog graph</Card>
           </Col>
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card bordered={false} style={{ width: '100%', height: '100%', marginBottom: '5%' }}>
+          <EventList />
+        </Card>
       </Col>
     </Row>
   )

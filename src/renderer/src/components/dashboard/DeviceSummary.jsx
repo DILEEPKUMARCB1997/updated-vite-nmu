@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { discoverySelector } from '../../features/discoverySlice'
@@ -28,7 +29,6 @@ const DeviceSummary = () => {
     <div>
       <pre>
         <code>{JSON.stringify(getSummaryDetails(), '', '\t')}</code>
-        <h1>{getSummaryDetails().online}</h1>
       </pre>
     </div>
   )
