@@ -21,14 +21,17 @@ const EventLog = (props) => {
   const [series, setSeries] = useState([
     {
       name: 'Information',
+      color: 'rgba(70, 179, 0,0.95)',
       data: [0, 1, 2, 3, 4, 5]
     },
     {
       name: 'Warning',
+      color: 'rgba(245, 127, 23,0.95)',
       data: [0, 1, 2, 3, 4, 5]
     },
     {
       name: 'Critical',
+      color: 'rgba(213, 0, 0,0.95)',
       data: [0, 1, 2, 3, 4, 5]
     }
   ])
@@ -53,7 +56,7 @@ const EventLog = (props) => {
       bar: {
         borderRadius: 0,
         dataLabels: {
-          position: 'top' // top, center, bottom
+          position: 'top'
         }
       }
     },
