@@ -8,6 +8,7 @@ import {
   requestHistoryData,
   showCustomTableData
 } from '../../features/dashboardSlice'
+
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
@@ -116,7 +117,6 @@ const EventLog = (props) => {
   })
 
   useEffect(() => {
-    // setSeries(series)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -125,7 +125,7 @@ const EventLog = (props) => {
         le: ''
       })
     )
-  }, [series])
+  }, [])
 
   const onCustomGraphClick = () => {
     dispatch(showCustomTableData(tableData))
@@ -133,6 +133,7 @@ const EventLog = (props) => {
 
   const handleRefreshGraph = () => {
     setSeries(series)
+    setOptions(options)
     dispatch(
       requestHistoryData({
         type: 'custom',
