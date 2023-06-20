@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Card } from 'antd'
-import '../dashboardAntd.global.css'
+// import '../dashboardAntd.global.css'
 
 const SummaryCard = (props) => {
   const { title, hbcolor, bbcolor, bodylabel } = props
@@ -18,7 +18,7 @@ const SummaryCard = (props) => {
           backgroundColor: hbcolor,
           color: '#fff',
           textAlign: 'center',
-          padding: '0 10px'
+          padding: '0 5px'
         }}
         bodyStyle={{
           backgroundColor: bbcolor,

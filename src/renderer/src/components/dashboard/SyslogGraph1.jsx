@@ -32,7 +32,7 @@ const SyslogGraph1 = (props) => {
     ],
     options: {
       chart: {
-        height: 350,
+        height: '100%',
         type: 'bar',
         stacked: true,
         toolbar: {
@@ -42,7 +42,10 @@ const SyslogGraph1 = (props) => {
       legend: {
         show: true,
         showForSingleSeries: true,
-        position: 'top'
+        position: 'top',
+        showForNullSeries: true,
+        showForZeroSeries: true,
+        fontSize: '14px'
       },
       fill: {
         type: 'solid'
@@ -146,8 +149,8 @@ const SyslogGraph1 = (props) => {
           justifyContent: 'space-between'
         }}
       >
-        <div style={{ padding: '0px 10px', fontSize: '15px', color: 'green' }}> Syslog Msg</div>
-        <div style={{ padding: '0px 10px', color: 'green' }}>{syslogGraphData.lastUpdated}</div>
+        <div style={{ padding: '0px 5px', fontSize: '15px', color: 'green' }}> Syslog Msg</div>
+        <div style={{ padding: '0px 5px', color: 'green' }}>{syslogGraphData.lastUpdated}</div>
         <Button
           size="small"
           style={{ padding: '2px' }}
@@ -162,7 +165,7 @@ const SyslogGraph1 = (props) => {
           options={GraphData.options}
           series={GraphData.series}
           type="bar"
-          width="320"
+          width="100%"
           onClick={onSyslogGraphClick}
         />
       </div>

@@ -13,20 +13,26 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Device summary</Card>
+            <Card bordered={false} style={{ width: '100%' }}>
+              Device summary
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Disk Space</Card>
+            <Card bordered={false} style={{ width: '100%' }}>
+              Disk Space
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>SNMP trap</Card>
+            <Card bordered={false} style={{ width: '100%' }}>
+              SNMP trap
+            </Card>
           </Col>
         </Row>
       </Col>
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>
+            <Card bordered={false} style={{ width: '100%' }}>
               <div className="summaryContent">
                 <div style={{ padding: '0px 10px', fontSize: '15px', color: 'green' }}>
                   Daily Events
@@ -40,10 +46,16 @@ const DashboardPage = () => {
             </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
+            <Card bordered={false} style={{ width: '100%' }}>
+              Event graph
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false} className="graphContent">
+            <Card
+              bordered={false}
+              className="graphContent"
+              style={{ width: '100%', height: '100%' }}
+            >
               {' '}
               <SyslogGraph1 />{' '}
             </Card>
@@ -51,7 +63,9 @@ const DashboardPage = () => {
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card bordered={false} style={{ width: '100%' }}>
+          Event list
+        </Card>
       </Col>
     </Row>
   )

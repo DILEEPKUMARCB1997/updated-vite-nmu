@@ -17,10 +17,10 @@ import {
   clearHistoryData
 } from '../../features/eventlogSlice'
 import { Row, Col, Card } from 'antd'
+import SummaryCard from './component/SummaryCard'
 
 var clearLogTimeOut1
-const EventSummary = (props) => {
-  const { information, critical, warning } = props
+const EventSummary = () => {
   const { customEventDailyData } = useSelector(eventLogSelector)
 
   const geteventdetails = () => {
@@ -67,112 +67,45 @@ const EventSummary = (props) => {
     const msToMidnight = night.getTime() - now.getTime()
 
     if (msToMidnight > 0) {
-      clearLogTimeOut1 = setTimeout(
-        () => {
-          // type: UPDATE_LOG_DATA,
+      clearLogTimeOut1 = setTimeout(() => {
+        // type: UPDATE_LOG_DATA,
 
-          const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
-          return {
-            ...state,
+        const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
+        return {
+          ...state,
 
-            customEventDailyData: filterCustomLogDailyData
-          }
-        },
-        // default:
-        //   return state;
-        //  }
-        msToMidnight
-      )
+          customEventDailyData: filterCustomLogDailyData
+        }
+      }, msToMidnight)
     }
-  }, [])
-
-  useEffect(() => {
-    clearTimeout(clearLogTimeOut1)
   }, [])
 
   return (
     <div className="cardWrapper">
       <Row gutter={8}>
         <Col span={8}>
-          <Card
+          <SummaryCard
             title="Information"
-            bodylabel={information}
-            bordered={false}
-            headStyle={{
-              minHeight: '31px',
-              backgroundColor: '#46b300',
-              color: 'black',
-              textAlign: 'center',
-              padding: '0 10px'
-            }}
-            bodyStyle={{
-              textAlign: 'center',
-              backgroundColor: '#E8F5E9',
-              color: 'black',
-              padding: '0px',
-              fontSize: '1.4rem',
-              fontWeight: 'bold'
-            }}
-            style={{
-              width: 120
-            }}
-          >
-            {geteventdetails().information}
-          </Card>
+            hbcolor="#46b300"
+            bbcolor="#E8F5E9"
+            bodylabel={geteventdetails().information}
+          />
         </Col>
         <Col span={8}>
-          <Card
+          <SummaryCard
             title="Warning"
-            bodylabel={warning}
-            bordered={false}
-            headStyle={{
-              minHeight: '31px',
-              backgroundColor: '#F57F17',
-              color: 'black',
-              textAlign: 'center',
-              padding: '0 10px'
-            }}
-            bodyStyle={{
-              textAlign: 'center',
-              backgroundColor: '#FFFDE7',
-              color: 'black',
-              padding: '0px',
-              fontSize: '1.4rem',
-              fontWeight: 'bold'
-            }}
-            style={{
-              width: 120
-            }}
-          >
-            {geteventdetails().warning}
-          </Card>
+            hbcolor="#F57F17"
+            bbcolor="#FFFDE7"
+            bodylabel={geteventdetails().warning}
+          />
         </Col>
         <Col span={8}>
-          <Card
+          <SummaryCard
             title="Critical"
-            bodylabel={critical}
-            bordered={false}
-            headStyle={{
-              minHeight: '31px',
-              backgroundColor: '#D50000',
-              color: 'black',
-              textAlign: 'center',
-              padding: '0 10px'
-            }}
-            bodyStyle={{
-              textAlign: 'center',
-              backgroundColor: '#FFEBEE',
-              color: 'black',
-              padding: '0px',
-              fontSize: '1.4rem',
-              fontWeight: 'bold'
-            }}
-            style={{
-              width: 120
-            }}
-          >
-            {geteventdetails().critical}
-          </Card>
+            hbcolor="#D50000"
+            bbcolor="#FFEBEE"
+            bodylabel={geteventdetails().critical}
+          />
         </Col>
       </Row>
     </div>
