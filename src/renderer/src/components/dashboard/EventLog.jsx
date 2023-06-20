@@ -1,9 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-// /* eslint-disable react/prop-types */
-// /* eslint-disable prettier/prettier */
-// /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -162,7 +158,7 @@ const EventLog = (props) => {
         <div style={{ fontSize: '15px' }}>{customGraphData.lastUpdated}</div>
         <Button
           icon={<SyncOutlined />}
-          style={{ padding: '2px' }}
+          style={{ padding: '5px' }}
           onClick={handleRefreshGraph}
         ></Button>
       </div>

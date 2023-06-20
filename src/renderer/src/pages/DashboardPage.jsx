@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Card, Col, Row } from 'antd'
 import EventLog from '../components/dashboard/EventLog'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
@@ -30,12 +31,11 @@ const DashboardPage = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Card bordered={false}>
-              EventSummary
               <EventSummary />
             </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={true}>
+            <Card bordered={false} style={{ width: '100%', height: '100%', padding: ' 0px 5px' }}>
               <EventLog />
             </Card>
           </Col>
@@ -45,7 +45,7 @@ const DashboardPage = () => {
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false} style={{ width: '100%', height: '100%', marginBottom: '5%' }}>
+        <Card bordered={false} style={{ width: '100%', height: '100%', padding: '0px 5px' }}>
           <EventList />
         </Card>
       </Col>
