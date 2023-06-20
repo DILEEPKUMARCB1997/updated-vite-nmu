@@ -1,6 +1,10 @@
-// import React from 'react'
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+import React from 'react'
 // import DeviceSummary from '../components/dashboard/DeviceSummary'
 // import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
+import EventSummary from '../components/dashboard/EventSummary'
+import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
 import { Card, Col, Row } from 'antd'
 
 const DashboardPage = () => {
@@ -22,13 +26,27 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Daily Events</Card>
+            <Card bordered={false}>
+              <div className="summaryContent">
+                <div style={{ padding: '0px 10px', fontSize: '15px', color: 'green' }}>
+                  Daily Events
+                </div>
+                <pre />
+                <div>
+                  {' '}
+                  <EventSummary />
+                </div>
+              </div>
+            </Card>
           </Col>
           <Col span={24}>
             <Card bordered={false}>Event graph</Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card bordered={false} className="graphContent">
+              {' '}
+              <SyslogGraph1 />{' '}
+            </Card>
           </Col>
         </Row>
       </Col>

@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { Button, Card, Input, Popover, Segmented, Tooltip } from 'antd'
 import {
   SyncOutlined,

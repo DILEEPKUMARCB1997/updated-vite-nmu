@@ -1,0 +1,36 @@
+.container {
+  position: absolute;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+.content {
+  min-height: calc(100vh - 85px);
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  min-width: 761px;
+  background-color: #333333b3 !important;
+}
+
+.summary-content {
+  min-height: calc(100vh - 84.4vh);
+
+  color: #01fac4;
+  background-color: #333333 !important;
+}
+.graph-content {
+  min-height: calc(100vh - 65.6vh);
+  color: #01fac4;
+  background-color: #333333 !important;
+}
+.list-content {
+  height: calc(100vh - 14.6vh);
+  color: #01fac4;
+  background-color: #333333 !important;
+}
+
+.inner-content {
+  height: calc(100vh - 14.6vh);
+}
