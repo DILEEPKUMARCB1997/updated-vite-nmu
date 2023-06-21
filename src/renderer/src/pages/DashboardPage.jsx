@@ -1,9 +1,10 @@
-
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
+import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
+import EventSummary from '../components/dashboard/SyslogGraph1'
 import EventLog from '../components/dashboard/EventLog'
 import EventList from '../components/dashboard/EventList'
 
@@ -50,9 +51,29 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Daily Events</Card>
+            <Card
+              title="Daily Events"
+              bordered={false}
+              size="small"
+              style={{ height: 130 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <EventSummary />
+            </Card>
           </Col>
           <Col span={24}>
+            <Card bordered={false}>Event graph</Card>
+          </Col>
+          <Col span={24}>
+            <Card
+              title="Syslog Message"
+              bordered={false}
+              size="small"
+              style={{ height: 300 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <SyslogGraph1 />
+            </Card>
             <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
               <EventLog />
             </Card>

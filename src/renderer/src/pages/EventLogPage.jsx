@@ -3,7 +3,7 @@ import { Card, Tabs } from 'antd'
 // eslint-disable-next-line no-unused-vars
 import TabPane from 'antd/es/tabs/TabPane'
 import React from 'react'
-import Event from '../components/eventlog/Event'
+// import Event from '../components/eventlog/Event'
 
 function EventLogPage() {
   const onChange = (key) => {

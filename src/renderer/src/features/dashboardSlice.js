@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -22,9 +21,9 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateTrapGraph(resultTrap))
         break
       }
-      case 'custom': {
-        const resultCustom = requestCustomGraphData(data)
-        dispatch(updateCustomGraphData(resultCustom))
+      case 'syslog': {
+        const resultSyslog = requestGraphData(data)
+        dispatch(updateSyslog(resultSyslog))
         break
       }
       default:
@@ -33,6 +32,10 @@ export const requestHistoryData = (param) => (dispatch) => {
   })
 
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
+export const showSyslogTableData = (payload) => (dispatch) => {
+  dispatch(updateSyslogTableData(payload))
+  dispatch(openDialog('syslogGraphTable'))
 }
 const dashboardSlice = createSlice({
   name: 'dashboardSlice',
@@ -84,6 +87,17 @@ const dashboardSlice = createSlice({
         }
       }
     },
+
+    updateSyslog: (state, action) => {
+      const { payload } = action
+      return {
+        ...state,
+        syslogGraphData: {
+          label: payload.label,
+          data: payload.data
+        }
+      }
+    },
     updateCustomGraphData: (state, { payload }) => {
       return {
         ...state,
@@ -97,7 +111,13 @@ const dashboardSlice = createSlice({
         }
       }
     },
-
+    updateSyslogTableData: (state, { payload }) => {
+      //  const { payload } = action
+      return {
+        ...state,
+        syslogTableData: payload
+      }
+    },
     updateCustomTableData: (state, { payload }) => {
       return {
         ...state,
@@ -105,7 +125,7 @@ const dashboardSlice = createSlice({
       }
     },
 
-    openDialog: (state) => {
+    openDialog: (state, action) => {
       if (state.dialogs.includes(action.payload)) {
         return state
       }
@@ -118,11 +138,13 @@ const dashboardSlice = createSlice({
 })
 
 export const {
-  openDialog,
   initDiskUses,
+  updateTrapGraph,
+  updateSyslog,
+  updateSyslogTableData,
+  openDialog,
   updateCustomGraphData,
   updateCustomTableData,
-  updateTrapGraph,
   updateTrapTableData
 } = dashboardSlice.actions
 
