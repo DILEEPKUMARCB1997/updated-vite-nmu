@@ -32,9 +32,9 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false} style={{ width: '100%' }}>
+            <Card bordered={false} style={{ width: '100%', padding: '0px 5px' }}>
               <div className="summaryContent">
-                <div style={{ padding: '0px 10px', fontSize: '15px', color: 'green' }}>
+                <div style={{ padding: '0px 5px', fontSize: '15px', color: 'green' }}>
                   Daily Events
                 </div>
                 <pre />
@@ -54,7 +54,7 @@ const DashboardPage = () => {
             <Card
               bordered={false}
               className="graphContent"
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', padding: '0px 5px' }}
             >
               {' '}
               <SyslogGraph1 />{' '}

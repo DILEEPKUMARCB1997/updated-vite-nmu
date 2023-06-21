@@ -2,6 +2,35 @@
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
 
+export const initEventLogHistroyData = (payload) => (dispatch) => {
+  const { type } = payload
+  switch (type) {
+    case 'trap':
+      dispatch(
+        requestHistoryData({
+          type,
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+      dispatch(openDialog('trapHistory'))
+      break
+  }
+}
+export const requestHistoryData = (param) => (dispatch) => {
+  ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    const { type, data } = arg
+    switch (type) {
+      case 'trap':
+        dispatch(updateTrapHistory(data))
+        break
+    }
+  })
+
+  ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
+
 const eventLogSlice = createSlice({
   name: 'eventLog',
   initialState: {
@@ -63,6 +92,22 @@ const eventLogSlice = createSlice({
         syslogHistoryData: [],
         customEventHistoryData: []
       }
+    },
+    openDialog: (state, { action }) => {
+      if (state.dialogs.includes(action.payload)) {
+        return state
+      }
+      return {
+        ...state,
+        dialogs: [...state.dialogs, action.payload]
+      }
+    },
+    updateTrapHistory: (state, { action }) => {
+      const { payload } = action
+      return { ...state, trapHistoryData: payload }
+    },
+    clearTrapData: (state) => {
+      return { ...state, trapData: [] }
     }
   }
 })

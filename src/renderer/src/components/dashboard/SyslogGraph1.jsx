@@ -36,7 +36,7 @@ const SyslogGraph1 = (props) => {
         type: 'bar',
         stacked: true,
         toolbar: {
-          show: true
+          show: false
         }
       },
       legend: {
@@ -156,9 +156,8 @@ const SyslogGraph1 = (props) => {
           style={{ padding: '2px' }}
           onClick={handleRefreshGraph}
           title="Refresh"
-        >
-          <SyncOutlined fontSize="inherit" style={{ color: 'black' }} />
-        </Button>
+          icon={<SyncOutlined />}
+        />
       </div>
       <div className="container">
         <Chart
