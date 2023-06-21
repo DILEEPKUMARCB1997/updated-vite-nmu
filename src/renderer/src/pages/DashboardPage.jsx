@@ -1,15 +1,12 @@
-
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
-
-// import React from 'react'
-// import DeviceSummary from '../components/dashboard/DeviceSummary'
-// import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
-import { Card, Col, Row } from 'antd'
-
+import EventLog from '../components/dashboard/EventLog'
+import EventList from '../components/dashboard/EventList'
 
 const DashboardPage = () => {
   return (
@@ -17,7 +14,6 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-
             <Card
               title="Device Summary"
               bordered={false}
@@ -49,15 +45,6 @@ const DashboardPage = () => {
             >
               <TrapGraphSummary />
             </Card>
-
-            <Card bordered={false}>Device summary</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>Disk Space</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>SNMP trap</Card>
-
           </Col>
         </Row>
       </Col>
@@ -67,15 +54,21 @@ const DashboardPage = () => {
             <Card bordered={false}>Daily Events</Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+              <EventLog />
+            </Card>
           </Col>
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card
+          title="EvenList"
+          style={{ width: '100%', height: '100%' }}
+          bordered={false}
+          bodyStyle={{ padding: '5px' }}
+        >
+          <EventList />
+        </Card>
       </Col>
     </Row>
   )

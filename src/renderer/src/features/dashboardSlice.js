@@ -1,10 +1,16 @@
+/* eslint-disable no-undef */
 import { createSlice } from '@reduxjs/toolkit'
-import requestGraphData from '../components/dashboard/requestGraphData'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
+import requestCustomGraphData from '../components/dashboard/requestCustomGraphData'
+import requestGraphData from '../components/dashboard/requestGraphData'
 
+export const showCustomTableData = (payload) => (dispatch) => {
+  dispatch(updateCustomTableData(payload))
+  dispatch(openDialog('customGraphTable'))
+}
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
@@ -16,16 +22,11 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateTrapGraph(resultTrap))
         break
       }
-      // case 'syslog': {
-      //   const resultSyslog = requestGraphData(data)
-      //   dispatch(updateSyslog(resultSyslog))
-      //   break
-      // }
-      // case 'custom': {
-      //   const resultCustom = requestCustomGraphData(data)
-      //   dispatch(updateCustom(resultCustom))
-      //   break
-      // }
+      case 'custom': {
+        const resultCustom = requestCustomGraphData(data)
+        dispatch(updateCustomGraphData(resultCustom))
+        break
+      }
       default:
         break
     }
@@ -33,7 +34,6 @@ export const requestHistoryData = (param) => (dispatch) => {
 
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
-
 const dashboardSlice = createSlice({
   name: 'dashboardSlice',
   initialState: {
@@ -83,11 +83,48 @@ const dashboardSlice = createSlice({
           lastUpdated: lastUpdated
         }
       }
+    },
+    updateCustomGraphData: (state, { payload }) => {
+      return {
+        ...state,
+        customGraphData: {
+          label: payload.label,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
+          WarningData: payload.WarningData,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
+        }
+      }
+    },
+
+    updateCustomTableData: (state, { payload }) => {
+      return {
+        ...state,
+        customTableData: payload
+      }
+    },
+
+    openDialog: (state) => {
+      if (state.dialogs.includes(action.payload)) {
+        return state
+      }
+      return {
+        ...state,
+        dialogs: [...state.dialogs, action.payload]
+      }
     }
   }
 })
 
-export const { initDiskUses, updateTrapGraph } = dashboardSlice.actions
+export const {
+  openDialog,
+  initDiskUses,
+  updateCustomGraphData,
+  updateCustomTableData,
+  updateTrapGraph,
+  updateTrapTableData
+} = dashboardSlice.actions
 
 export const dashboardSelector = (state) => {
   const {
