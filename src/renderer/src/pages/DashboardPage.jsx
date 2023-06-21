@@ -1,8 +1,15 @@
+
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
+
+// import React from 'react'
+// import DeviceSummary from '../components/dashboard/DeviceSummary'
+// import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
+import { Card, Col, Row } from 'antd'
+
 
 const DashboardPage = () => {
   return (
@@ -10,6 +17,7 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
+
             <Card
               title="Device Summary"
               bordered={false}
@@ -41,6 +49,15 @@ const DashboardPage = () => {
             >
               <TrapGraphSummary />
             </Card>
+
+            <Card bordered={false}>Device summary</Card>
+          </Col>
+          <Col span={24}>
+            <Card bordered={false}>Disk Space</Card>
+          </Col>
+          <Col span={24}>
+            <Card bordered={false}>SNMP trap</Card>
+
           </Col>
         </Row>
       </Col>
