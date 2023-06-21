@@ -1,12 +1,10 @@
+
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 
-// import React from 'react'
-// import DeviceSummary from '../components/dashboard/DeviceSummary'
-// import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
 
 const DashboardPage = () => {
   return (
@@ -54,15 +52,21 @@ const DashboardPage = () => {
             <Card bordered={false}>Daily Events</Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+              <EventLog />
+            </Card>
           </Col>
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card
+          title="EvenList"
+          style={{ width: '100%', height: '100%' }}
+          bordered={false}
+          bodyStyle={{ padding: '5px' }}
+        >
+          <EventList />
+        </Card>
       </Col>
     </Row>
   )

@@ -1,27 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const requestHistoryData = (param) => (dispatch) => {
-  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-    const { type, data } = arg
-    switch (type) {
-      case 'event':
-        dispatch(updateEventHistroy(data))
-        break
-      case 'trap':
-        dispatch(updateTrapHistory(data))
-        break
-      case 'syslog':
-        dispatch(updateSyslogHistory(data))
-        break
-      case 'custom':
-        dispatch(updateCustomHistory(data))
-        break
-      default:
-        break
-    }
-  })
-  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
-}
+import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
 const eventLogSlice = createSlice({
   name: 'eventlogslice',
@@ -42,11 +21,20 @@ const eventLogSlice = createSlice({
   reducers: {
     updateEventHistory: (state, { payload }) => {
       return { ...state, eventHistoryData: payload }
+    },
+    updateCustomDataDaily: (state) => {
+      const sortedItems = customEventSortFilter([...state.customEventHistoryData])
+      const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
+      return {
+        ...state,
+        customEventDailyData: filteredCustomEventsDailyData,
+        customEventListData: sortedItems.slice(0, 30)
+      }
     }
   }
 })
 
-export const { updateEventHistory } = eventLogSlice.actions
+export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {
   const {
