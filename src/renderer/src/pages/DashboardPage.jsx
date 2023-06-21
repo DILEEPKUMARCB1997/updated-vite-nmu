@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
+
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
-import EventLog from '../components/dashboard/EventLog'
-import EventList from '../components/dashboard/EventList'
+
 
 const DashboardPage = () => {
   return (
