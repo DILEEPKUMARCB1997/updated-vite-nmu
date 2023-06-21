@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useDispatch } from 'react-redux'
 import { PageContainer, ProLayout } from '@ant-design/pro-components'
 import { useEffect, useState } from 'react'

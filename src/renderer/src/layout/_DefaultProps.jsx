@@ -1,4 +1,5 @@
-import { DashboardOutlined, DesktopOutlined } from '@ant-design/icons';
+/* eslint-disable prettier/prettier */
+import { DashboardOutlined, DesktopOutlined, ProfileOutlined } from '@ant-design/icons'
 
 const routes = {
   route: {
@@ -7,17 +8,22 @@ const routes = {
       {
         path: '/dashboard',
         name: 'Dashboard',
-        icon: <DashboardOutlined />,
+        icon: <DashboardOutlined />
       },
       {
         path: '/devices',
         name: 'Devices',
-        icon: <DesktopOutlined />,
+        icon: <DesktopOutlined />
       },
-    ],
+      {
+        path: '/eventLog',
+        name: 'Event',
+        icon: <ProfileOutlined />
+      }
+    ]
   },
   location: {
-    pathname: '/',
-  },
-};
-export default routes;
+    pathname: '/'
+  }
+}
+export default routes

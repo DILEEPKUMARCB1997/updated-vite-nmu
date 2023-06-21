@@ -1,0 +1,17 @@
+.history-button {
+  margin: 0px 0px 15px 0px !important;
+}
+
+.clear-button {
+  margin-bottom: 15px !important;
+  margin-left: 5px !important;
+}
+
+.content {
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 15px 15px 0px;
+  min-width: 761px;
+}

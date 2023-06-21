@@ -2,8 +2,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import './SNMPTrap.css'
-import { useDispatch } from 'react-redux'
-import { initEventLogHistroyData, clearTrapData } from '../../../features/eventlogSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { Table, Alert } from 'antd'
+import { Card, Button } from 'antd'
+import {
+  initEventLogHistroyData,
+  clearTrapData,
+  eventLogSelector
+} from '../../../features/eventlogSlice'
 
 const columns = [
   {
@@ -66,6 +72,7 @@ const columns = [
 
 const SNMPTrap = () => {
   const dispatch = useDispatch()
+  const { trapData } = useSelector(eventLogSelector)
   const [tableLoading, setTableLoading] = useState(true)
 
   useEffect(() => {
@@ -79,7 +86,41 @@ const SNMPTrap = () => {
     dispatch(clearTrapData())
   }
 
-  return <div>SNMPTrap</div>
+  return (
+    <Card className="content">
+      <Button
+        className="historyButton"
+        variant="outlined"
+        size="small"
+        color="primary"
+        onClick={handleHistoryButtonOnClick}
+      >
+        History
+      </Button>
+      <Button
+        className="clearButton"
+        variant="outlined"
+        size="small"
+        color="primary"
+        onClick={handleClearButtonOnClick}
+      >
+        Clear
+      </Button>
+      <Alert
+        message="Here can check today log data, please check history for past data."
+        type="warning"
+        showIcon
+      />
+      <Table
+        loading={tableLoading}
+        bordered
+        columns={columns}
+        dataSource={trapData}
+        pagination={{ pageSize: 25 }}
+        scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
+      />
+    </Card>
+  )
 }
 
 export default SNMPTrap

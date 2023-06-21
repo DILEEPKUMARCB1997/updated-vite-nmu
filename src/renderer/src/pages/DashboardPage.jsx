@@ -32,14 +32,13 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false} style={{ width: '100%', padding: '0px 5px' }}>
+            <Card bordered={false} style={{ width: '100%' }} bodyStyle={{ padding: 5 }}>
               <div className="summaryContent">
                 <div style={{ padding: '0px 5px', fontSize: '15px', color: 'green' }}>
                   Daily Events
                 </div>
                 <pre />
                 <div>
-                  {' '}
                   <EventSummary />
                 </div>
               </div>

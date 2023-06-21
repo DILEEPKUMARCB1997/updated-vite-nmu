@@ -20,7 +20,7 @@ const GroupMemberTransferDialog = ({ onClose }) => {
 
   const renderItem = (item) => {
     const customLabel = (
-      <div className="container">
+      <div className="container1">
         <span className="item-span">{item.model}</span>
         <span className="item-span">{item.IPAddress}</span>
         <span className="item-span">{item.MACAddress}</span>

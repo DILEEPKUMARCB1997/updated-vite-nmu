@@ -106,8 +106,8 @@ const eventLogSlice = createSlice({
       const { payload } = action
       return { ...state, trapHistoryData: payload }
     },
-    clearTrapData: (state) => {
-      return { ...state, trapData: [] }
+    clearTrapData: (state, { payload }) => {
+      return { ...state, trapData: [payload] }
     }
   }
 })
