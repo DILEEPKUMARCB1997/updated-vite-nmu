@@ -1,4 +1,3 @@
-
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -79,6 +78,7 @@ const eventLogSlice = createSlice({
           return new Date(item.createAt).getTime() >= new Date(today).getTime()
         })
       }
+    },
 
     updateEventHistory: (state, { payload }) => {
       return { ...state, eventHistoryData: payload }

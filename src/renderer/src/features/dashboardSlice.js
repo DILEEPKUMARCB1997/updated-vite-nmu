@@ -1,4 +1,3 @@
-
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -27,7 +26,7 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateSyslog(resultSyslog))
         break
       }
-    default:
+      default:
         break
     }
   })
@@ -95,8 +94,10 @@ const dashboardSlice = createSlice({
         ...state,
         syslogGraphData: {
           label: payload.label,
-          data: payload.data,
-
+          data: payload.data
+        }
+      }
+    },
     updateCustomGraphData: (state, { payload }) => {
       return {
         ...state,
@@ -117,14 +118,14 @@ const dashboardSlice = createSlice({
         syslogTableData: payload
       }
     },
-   updateCustomTableData: (state, { payload }) => {
+    updateCustomTableData: (state, { payload }) => {
       return {
         ...state,
         customTableData: payload
       }
     },
 
-    openDialog: (state) => {
+    openDialog: (state, action) => {
       if (state.dialogs.includes(action.payload)) {
         return state
       }
@@ -136,17 +137,16 @@ const dashboardSlice = createSlice({
   }
 })
 
-export const { initDiskUses, updateTrapGraph, updateSyslog, updateSyslogTableData, openDialog } =
-  dashboardSlice.actions
 export const {
-  openDialog,
   initDiskUses,
+  updateTrapGraph,
+  updateSyslog,
+  updateSyslogTableData,
+  openDialog,
   updateCustomGraphData,
   updateCustomTableData,
-  updateTrapGraph,
   updateTrapTableData
 } = dashboardSlice.actions
-
 
 export const dashboardSelector = (state) => {
   const {

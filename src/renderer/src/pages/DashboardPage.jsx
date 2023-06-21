@@ -1,10 +1,12 @@
-
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
-
+import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
+import EventSummary from '../components/dashboard/SyslogGraph1'
+import EventLog from '../components/dashboard/EventLog'
+import EventList from '../components/dashboard/EventList'
 
 const DashboardPage = () => {
   return (
@@ -71,6 +73,7 @@ const DashboardPage = () => {
               bodyStyle={{ padding: '5px' }}
             >
               <SyslogGraph1 />
+            </Card>
             <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
               <EventLog />
             </Card>
