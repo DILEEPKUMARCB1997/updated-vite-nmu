@@ -4,6 +4,7 @@ import discoverySlice from '../features/discoverySlice'
 import dialogSlice from '../features/dialogSlice'
 import groupMemberSlice from '../features/groupMemberSlice'
 import dashboardSlice from '../features/dashboardSlice'
+import eventLogSlice from '../features/eventLogSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     discovery: discoverySlice.reducer,
     dialog: dialogSlice.reducer,
     groupMember: groupMemberSlice.reducer,
-    dashboard: dashboardSlice.reducer
+    dashboard: dashboardSlice.reducer,
+    eventLog: eventLogSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

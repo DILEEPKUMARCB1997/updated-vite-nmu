@@ -3,6 +3,10 @@ import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
+import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
+import EventSummary from '../components/dashboard/EventSummary'
+import EventLog from '../components/dashboard/EventLog'
+import EventList from '../components/dashboard/EventList'
 
 const DashboardPage = () => {
   return (
@@ -47,18 +51,43 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Daily Events</Card>
+            <Card
+              title="Daily Events"
+              bordered={false}
+              size="small"
+              style={{ height: 130 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <EventSummary />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
+            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+              <EventLog />
+            </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card
+              title="Syslog Message"
+              bordered={false}
+              size="small"
+              style={{ height: 300 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <SyslogGraph1 />
+            </Card>
           </Col>
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card
+          title="EvenList"
+          style={{ width: '100%', height: '100%' }}
+          bordered={false}
+          bodyStyle={{ padding: '5px' }}
+        >
+          <EventList />
+        </Card>
       </Col>
     </Row>
   )
