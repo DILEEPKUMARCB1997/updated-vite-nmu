@@ -62,6 +62,11 @@ const DashboardPage = () => {
             </Card>
           </Col>
           <Col span={24}>
+            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+              <EventLog />
+            </Card>
+          </Col>
+          <Col span={24}>
             <Card
               title="Syslog Message"
               bordered={false}
@@ -70,11 +75,6 @@ const DashboardPage = () => {
               bodyStyle={{ padding: '5px' }}
             >
               <SyslogGraph1 />
-            </Card>
-          </Col>
-          <Col span={24}>
-            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
-              <EventLog />
             </Card>
           </Col>
         </Row>
