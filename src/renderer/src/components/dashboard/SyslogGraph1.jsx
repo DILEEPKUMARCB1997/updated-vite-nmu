@@ -22,6 +22,7 @@ import { SyncOutlined } from '@ant-design/icons'
 const SyslogGraph1 = (props) => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
+  console.log(syslogGraphData)
 
   const [GraphData, setGraphData] = useState({
     series: [
@@ -148,7 +149,7 @@ const SyslogGraph1 = (props) => {
           justifyContent: 'space-between'
         }}
       >
-        <div style={{ padding: '0px 5px' }}>{syslogGraphData.lastUpdated}</div>
+        <div>{syslogGraphData.lastUpdated}</div>
         <Button
           size="small"
           style={{ padding: '2px' }}
