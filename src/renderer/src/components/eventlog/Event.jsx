@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { Alert, Button, Card, Table } from 'antd'
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { eventLogSelector, updateEventHistory } from '../../features/eventLogSlice'
+import { eventLogSelector } from '../../features/eventLogSlice'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
