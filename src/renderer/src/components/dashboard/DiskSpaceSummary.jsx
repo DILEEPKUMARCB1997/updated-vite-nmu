@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-import React,{useEffect} from 'react'
+
 import {
   REQUEST_MP_GET_DISK_USES,
   RESPONSE_RP_GET_DISK_USES
@@ -26,11 +24,6 @@ const DiskSpaceSummary = () => {
 
   console.log(diskUses)
 
-  return (
-    <div>
-      <pre>
-        <code>{JSON.stringify(diskUses, '', '\t')}</code>
-      </pre>
     </div>
   )
 }

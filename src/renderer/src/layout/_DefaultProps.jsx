@@ -1,4 +1,4 @@
-import { DashboardOutlined, DesktopOutlined } from '@ant-design/icons';
+import { BarsOutlined, DashboardOutlined, DesktopOutlined } from '@ant-design/icons'
 
 const routes = {
   route: {
@@ -7,17 +7,22 @@ const routes = {
       {
         path: '/dashboard',
         name: 'Dashboard',
-        icon: <DashboardOutlined />,
+        icon: <DashboardOutlined />
       },
       {
         path: '/devices',
         name: 'Devices',
-        icon: <DesktopOutlined />,
+        icon: <DesktopOutlined />
       },
-    ],
+      {
+        path: '/eventlog',
+        name: 'Events',
+        icon: <BarsOutlined />
+      }
+    ]
   },
   location: {
-    pathname: '/',
-  },
-};
-export default routes;
+    pathname: '/'
+  }
+}
+export default routes
