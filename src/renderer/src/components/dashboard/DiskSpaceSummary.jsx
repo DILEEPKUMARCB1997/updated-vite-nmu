@@ -5,7 +5,6 @@ import {
 } from '../../../../main/utils/IPCEvents'
 import { useDispatch, useSelector } from 'react-redux'
 import { dashboardSelector, initDiskUses } from '../../features/dashboardSlice'
-import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 
 const DiskSpaceSummary = () => {
@@ -129,25 +128,6 @@ const DiskSpaceSummary = () => {
   }
 
   return (
-    // <div>
-    //   <pre>
-    //     <code>{JSON.stringify(diskUses, '', '\t')}</code>
-    //   </pre>
-    // </div>
-
-    // <div>
-    //   <Card
-    //     title="Disk Space Utilization Summary"
-    //     // size="small"
-    //     bordered={false}
-    //     style={{
-    //       width: 300
-    //     }}
-    //   >
-    //     <ReactApexChart options={options} series={options.series} type="radialBar" height={250} />
-    //   </Card>
-    // </div>
-
     <div>
       <ReactApexChart
         options={options}

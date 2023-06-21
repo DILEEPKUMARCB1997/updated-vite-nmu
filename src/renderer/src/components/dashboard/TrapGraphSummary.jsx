@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
-import {
-  dashboardSelector,
-  requestHistoryData,
-  updateTrapGraph
-} from '../../features/dashboardSlice'
+import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
-import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
 
@@ -16,20 +11,18 @@ const TrapGraphSummary = () => {
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const dispatch = useDispatch()
-  // const { label, data, tableData, lastUpdated } = trapGraphData
   console.log(trapGraphData)
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [
       {
         name: 'SNMP Trap Message Count',
-        data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
-        // data: []
+        // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
+        data: []
       }
     ],
     options: {
       chart: {
         type: 'bar',
-        // background: token.colorBgContainer,
         height: 320,
         toolbar: {
           show: false
@@ -101,24 +94,24 @@ const TrapGraphSummary = () => {
     }, 1500)
   }, [])
 
-  // useEffect(() => {
-  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
-  //     setSnmpTrapMsgData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: trapGraphData.data
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: trapGraphData.label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [trapGraphData])
+  useEffect(() => {
+    if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+      setSnmpTrapMsgData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: trapGraphData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: trapGraphData.label
+          }
+        }
+      }))
+    }
+  }, [trapGraphData])
 
   const handleRefresh = () => {
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
