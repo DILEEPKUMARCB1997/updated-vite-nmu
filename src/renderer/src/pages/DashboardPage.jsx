@@ -1,15 +1,12 @@
-
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
-
-// import React from 'react'
-// import DeviceSummary from '../components/dashboard/DeviceSummary'
-// import DiskSpceSummary from '../components/dashboard/DiskSpceSummary'
-import { Card, Col, Row } from 'antd'
-
+import EventSummary from '../components/dashboard/EventSummary'
+import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
 
 const DashboardPage = () => {
   return (
@@ -17,7 +14,6 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-
             <Card
               title="Device Summary"
               bordered={false}
@@ -49,28 +45,35 @@ const DashboardPage = () => {
             >
               <TrapGraphSummary />
             </Card>
-
-            <Card bordered={false}>Device summary</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>Disk Space</Card>
-          </Col>
-          <Col span={24}>
-            <Card bordered={false}>SNMP trap</Card>
-
           </Col>
         </Row>
       </Col>
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card bordered={false}>Daily Events</Card>
+            <Card
+              title="Daily Events"
+              bordered={false}
+              size="small"
+              style={{ height: 130 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <EventSummary />
+            </Card>
           </Col>
           <Col span={24}>
             <Card bordered={false}>Event graph</Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Syalog graph</Card>
+            <Card
+              title="Syslog Message"
+              bordered={false}
+              size="small"
+              style={{ height: 300 }}
+              bodyStyle={{ padding: '5px' }}
+            >
+              <SyslogGraph1 />
+            </Card>
           </Col>
         </Row>
       </Col>

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import React from 'react'
-import Event from '../components/eventlog/Event'
+// import Event from '../components/eventlog/Event'
 
 function EventLogPage() {
   const onChange = (key) => {
