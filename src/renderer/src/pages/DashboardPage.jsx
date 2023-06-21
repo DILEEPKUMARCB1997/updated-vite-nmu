@@ -10,7 +10,13 @@ const DashboardPage = () => {
       <Col span={9}>
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Card title="Device Summary" bordered={false} size="small" style={{ height: 130 }}>
+            <Card
+              title="Device Summary"
+              bordered={false}
+              size="small"
+              style={{ height: 130 }}
+              bodyStyle={{ padding: '5px' }}
+            >
               <DeviceSummary />
             </Card>
           </Col>
@@ -20,6 +26,7 @@ const DashboardPage = () => {
               bordered={false}
               size="small"
               style={{ height: 150 }}
+              bodyStyle={{ padding: '5px' }}
             >
               <DiskSpceSummary />
             </Card>
@@ -30,6 +37,7 @@ const DashboardPage = () => {
               bordered={false}
               size="small"
               style={{ height: 300 }}
+              bodyStyle={{ padding: '5px' }}
             >
               <TrapGraphSummary />
             </Card>

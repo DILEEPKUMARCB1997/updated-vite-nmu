@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { discoverySelector } from '../../features/discoverySlice'
 import { Card, Col, Row, Table } from 'antd'
 import { theme as antdTheme } from 'antd'
+import SummaryCard from './SummaryCard'
 
 const DeviceSummary = () => {
   const { groupDeviceArrayData } = useSelector(discoverySelector)
@@ -101,54 +102,20 @@ const DeviceSummary = () => {
       {/* <Table columns={columns} dataSource={dataSource} /> */}
       <Row gutter={16}>
         <Col span={12}>
-          <Card
-            size="small"
+          <SummaryCard
             title="Online"
-            style={{ height: 60, backgroundColor: '#D2FBD3' }}
-            headStyle={{
-              minHeight: '31px',
-              backgroundColor: '#0ECA19',
-              color: '#fff',
-              textAlign: 'center',
-              padding: '0 10px',
-              fontSize: '15px'
-            }}
-            bodyStyle={{
-              backgroundColor: '#D2FBD3',
-              textAlign: 'center',
-              color: 'black',
-              padding: '0px',
-              fontWeight: 'bold',
-              fontSize: '25px'
-            }}
-          >
-            {getSummaryDetails().online}
-          </Card>
+            hbcolor="#46b300"
+            bbcolor="#E8F5E9"
+            bodylabel={getSummaryDetails().online}
+          />
         </Col>
         <Col span={12}>
-          <Card
-            size="small"
+          <SummaryCard
             title="Offline"
-            style={{ height: 60, backgroundColor: '#FDECEC' }}
-            headStyle={{
-              minHeight: '31px',
-              backgroundColor: '#CD0E1D',
-              color: '#fff',
-              textAlign: 'center',
-              padding: '0 10px',
-              fontSize: '15px'
-            }}
-            bodyStyle={{
-              backgroundColor: '#FDECEC',
-              textAlign: 'center',
-              color: 'black',
-              padding: '0px',
-              fontWeight: 'bold',
-              fontSize: '25px'
-            }}
-          >
-            {getSummaryDetails().offline}
-          </Card>
+            hbcolor="#D50000"
+            bbcolor="#FFEBEE"
+            bodylabel={getSummaryDetails().offline}
+          />
         </Col>
       </Row>
     </div>

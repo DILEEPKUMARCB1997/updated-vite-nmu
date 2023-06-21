@@ -1,9 +1,10 @@
-import { Navigate, useRoutes } from 'react-router-dom';
-import MainLayout from '../../layout/Mainlayout';
-import DashboardPage from '../../pages/DashboardPage';
-import DevicePage from '../../pages/DevicePage';
-import LoginPage from '../../pages/LoginPage';
-import PageNotFound from '../../pages/PageNotFound';
+import { Navigate, useRoutes } from 'react-router-dom'
+import MainLayout from '../../layout/Mainlayout'
+import DashboardPage from '../../pages/DashboardPage'
+import DevicePage from '../../pages/DevicePage'
+import LoginPage from '../../pages/LoginPage'
+import PageNotFound from '../../pages/PageNotFound'
+import EventLogPage from '../../pages/EventLogPage'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -14,19 +15,23 @@ const AppRoutes = () => {
         { index: true, element: <Navigate to="/dashboard" /> },
         {
           path: 'dashboard',
-          element: <DashboardPage />,
+          element: <DashboardPage />
         },
         {
           path: 'devices',
-          element: <DevicePage />,
+          element: <DevicePage />
         },
-      ],
+        {
+          path: 'eventlog',
+          element: <EventLogPage />
+        }
+      ]
     },
     { path: '/login', element: <LoginPage /> },
-    { path: '*', element: <PageNotFound /> },
-  ]);
+    { path: '*', element: <PageNotFound /> }
+  ])
 
-  return element;
-};
+  return element
+}
 
-export default AppRoutes;
+export default AppRoutes

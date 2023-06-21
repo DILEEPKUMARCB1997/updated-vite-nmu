@@ -37,7 +37,7 @@ const DiskSpaceSummary = () => {
       showForSingleSeries: true,
       position: 'right',
       offsetX: -10,
-      offsetY: 30,
+      offsetY: 40,
       formatter: function (val) {
         return val
       },
@@ -49,7 +49,7 @@ const DiskSpaceSummary = () => {
       height: 350,
       type: 'radialBar',
       offsetX: -5,
-      offsetY: -30,
+      offsetY: -25,
       toolbar: {
         show: false
       }

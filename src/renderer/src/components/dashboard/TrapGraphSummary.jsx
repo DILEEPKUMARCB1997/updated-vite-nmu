@@ -35,7 +35,7 @@ const TrapGraphSummary = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: 0
+        offsetX: -5
       },
 
       legend: {
@@ -59,10 +59,7 @@ const TrapGraphSummary = () => {
       },
 
       grid: {
-        show: false,
-        row: {
-          colors: ['#fff', '#f2f2f2']
-        }
+        show: true
       },
       xaxis: {
         type: 'category',
@@ -149,7 +146,7 @@ const TrapGraphSummary = () => {
           series={snmpTrapMsgData.series}
           type="bar"
           height={250}
-          width={350}
+          width={400}
         />
       </div>
     </>
