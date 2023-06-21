@@ -4,7 +4,7 @@ import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
-import EventSummary from '../components/dashboard/SyslogGraph1'
+import EventSummary from '../components/dashboard/EventSummary'
 import EventLog from '../components/dashboard/EventLog'
 import EventList from '../components/dashboard/EventList'
 
@@ -62,9 +62,6 @@ const DashboardPage = () => {
             </Card>
           </Col>
           <Col span={24}>
-            <Card bordered={false}>Event graph</Card>
-          </Col>
-          <Col span={24}>
             <Card
               title="Syslog Message"
               bordered={false}
@@ -74,6 +71,8 @@ const DashboardPage = () => {
             >
               <SyslogGraph1 />
             </Card>
+          </Col>
+          <Col span={24}>
             <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
               <EventLog />
             </Card>
