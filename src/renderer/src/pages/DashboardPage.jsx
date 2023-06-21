@@ -5,7 +5,6 @@ import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 
-
 const DashboardPage = () => {
   return (
     <Row gutter={[8, 18]}>
@@ -71,12 +70,21 @@ const DashboardPage = () => {
               bodyStyle={{ padding: '5px' }}
             >
               <SyslogGraph1 />
+            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+              <EventLog />
             </Card>
           </Col>
         </Row>
       </Col>
       <Col span={6}>
-        <Card bordered={false}>Event list</Card>
+        <Card
+          title="EvenList"
+          style={{ width: '100%', height: '100%' }}
+          bordered={false}
+          bodyStyle={{ padding: '5px' }}
+        >
+          <EventList />
+        </Card>
       </Col>
     </Row>
   )

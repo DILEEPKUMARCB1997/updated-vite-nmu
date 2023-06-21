@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { configureStore } from '@reduxjs/toolkit'
 import userManagementSlice from '../features/userManagementSlice'
 import discoverySlice from '../features/discoverySlice'

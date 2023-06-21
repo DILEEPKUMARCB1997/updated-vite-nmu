@@ -1,10 +1,16 @@
+
 import { createSlice } from '@reduxjs/toolkit'
-import requestGraphData from '../components/dashboard/requestGraphData'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
+import requestCustomGraphData from '../components/dashboard/requestCustomGraphData'
+import requestGraphData from '../components/dashboard/requestGraphData'
 
+export const showCustomTableData = (payload) => (dispatch) => {
+  dispatch(updateCustomTableData(payload))
+  dispatch(openDialog('customGraphTable'))
+}
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
@@ -21,70 +27,17 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateSyslog(resultSyslog))
         break
       }
-      // case 'custom': {
-      //   const resultCustom = requestCustomGraphData(data)
-      //   dispatch(updateCustom(resultCustom))
-      //   break
-      // }
-      default:
+    default:
         break
     }
   })
 
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
-// const requestGraphData = (Items) => {
-//   let label = []
-//   let data = []
-//   let tableResult = []
-//   for (let index = 7; index > 0; index--) {
-//     let le = ''
-//     let ge = ''
-//     let ledate = new Date()
-//     ledate.setDate(ledate.getDate() - (index - 1 - 1))
-//     let gedate = new Date()
-//     gedate.setDate(gedate.getDate() - (index - 1))
-//     le = `${ledate.getFullYear()}-${('00' + (ledate.getMonth() + 1)).slice(-2)}-${(
-//       '00' + ledate.getDate()
-//     ).slice(-2)}`
-//     ge = `${gedate.getFullYear()}-${('00' + (gedate.getMonth() + 1)).slice(-2)}-${(
-//       '00' + gedate.getDate()
-//     ).slice(-2)}`
-//     let result = Items.filter(function (item) {
-//       return (
-//         new Date(item.createAt).getTime() >= new Date(ge).getTime() &&
-//         new Date(item.createAt).getTime() < new Date(le).getTime()
-//       )
-//     })
-//     let gelabel = `${('00' + (gedate.getMonth() + 1)).slice(-2)}/${('00' + gedate.getDate()).slice(
-//       -2
-//     )}`
-//     label.push(gelabel)
-//     tableResult.push(result)
-//     data.push(result.length)
-//   }
-//   const date = new Date()
-//   const lastUpdated =
-//     'last update ' +
-//     ('00' + date.getDate()).slice(-2) +
-//     '/' +
-//     ('00' + (date.getMonth() + 1)).slice(-2) +
-//     '/' +
-//     date.getFullYear() +
-//     ' ' +
-//     ('00' + date.getHours()).slice(-2) +
-//     ':' +
-//     ('00' + date.getMinutes()).slice(-2)
-
-//   // let lastUpdated = syslogGraphData.lastUpdated
-//   // let tableData = syslogGraphData.tableData
-//   return { label, data, lastUpdated, tableResult }
-// }
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
   dispatch(openDialog('syslogGraphTable'))
 }
-
 const dashboardSlice = createSlice({
   name: 'dashboardSlice',
   initialState: {
@@ -135,6 +88,7 @@ const dashboardSlice = createSlice({
         }
       }
     },
+
     updateSyslog: (state, action) => {
       const { payload } = action
       return {
@@ -142,6 +96,15 @@ const dashboardSlice = createSlice({
         syslogGraphData: {
           label: payload.label,
           data: payload.data,
+
+    updateCustomGraphData: (state, { payload }) => {
+      return {
+        ...state,
+        customGraphData: {
+          label: payload.label,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
+          WarningData: payload.WarningData,
           tableData: payload.tableResult,
           lastUpdated: payload.lastUpdated
         }
@@ -154,7 +117,14 @@ const dashboardSlice = createSlice({
         syslogTableData: payload
       }
     },
-    openDialog: (state, { action }) => {
+   updateCustomTableData: (state, { payload }) => {
+      return {
+        ...state,
+        customTableData: payload
+      }
+    },
+
+    openDialog: (state) => {
       if (state.dialogs.includes(action.payload)) {
         return state
       }
@@ -168,6 +138,15 @@ const dashboardSlice = createSlice({
 
 export const { initDiskUses, updateTrapGraph, updateSyslog, updateSyslogTableData, openDialog } =
   dashboardSlice.actions
+export const {
+  openDialog,
+  initDiskUses,
+  updateCustomGraphData,
+  updateCustomTableData,
+  updateTrapGraph,
+  updateTrapTableData
+} = dashboardSlice.actions
+
 
 export const dashboardSelector = (state) => {
   const {

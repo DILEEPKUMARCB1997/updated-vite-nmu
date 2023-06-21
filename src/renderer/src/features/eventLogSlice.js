@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -33,6 +33,7 @@ export const requestHistoryData = (param) => (dispatch) => {
 
   ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
+import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
 const eventLogSlice = createSlice({
   name: 'eventLog',
@@ -79,6 +80,10 @@ const eventLogSlice = createSlice({
         })
       }
 
+    updateEventHistory: (state, { payload }) => {
+      return { ...state, eventHistoryData: payload }
+    },
+    updateCustomDataDaily: (state) => {
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -117,6 +122,8 @@ const eventLogSlice = createSlice({
 
 export const { updateCustomHistory, updateCustomEventDaily, clearHistoryData } =
   eventLogSlice.actions
+export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
+
 export const eventLogSelector = (state) => {
   const {
     eventData,
