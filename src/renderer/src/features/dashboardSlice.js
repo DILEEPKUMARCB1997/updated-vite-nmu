@@ -1,4 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit'
+import requestGraphData from '../components/dashboard/requestGraphData'
+import {
+  REQUEST_MP_GET_EVENT_LOG_HISTORY,
+  RESPONSE_RP_GET_EVENT_LOG_HISTORY
+} from '../../../main/utils/IPCEvents'
+
+export const requestHistoryData = (param) => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    const { type, data } = arg
+    switch (type) {
+      case 'event':
+        break
+      case 'trap': {
+        const resultTrap = requestGraphData(data)
+        dispatch(updateTrapGraph(resultTrap))
+        break
+      }
+      // case 'syslog': {
+      //   const resultSyslog = requestGraphData(data)
+      //   dispatch(updateSyslog(resultSyslog))
+      //   break
+      // }
+      // case 'custom': {
+      //   const resultCustom = requestCustomGraphData(data)
+      //   dispatch(updateCustom(resultCustom))
+      //   break
+      // }
+      default:
+        break
+    }
+  })
+
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
 
 const dashboardSlice = createSlice({
   name: 'dashboardSlice',
@@ -37,13 +71,25 @@ const dashboardSlice = createSlice({
         ...state,
         diskUses: { free, used: size - free, total: size, diskFree, diskUsed }
       }
+    },
+    updateTrapGraph: (state, { payload }) => {
+      const { label, data, tableResult, lastUpdated } = payload
+      return {
+        ...state,
+        trapGraphData: {
+          label: label,
+          data: data,
+          tableData: tableResult,
+          lastUpdated: lastUpdated
+        }
+      }
     }
   }
 })
 
-export const { initDiskUses } = dashboardSlice.actions
+export const { initDiskUses, updateTrapGraph } = dashboardSlice.actions
 
-export const dasboardSelector = (state) => {
+export const dashboardSelector = (state) => {
   const {
     diskUses,
     trapGraphData,
