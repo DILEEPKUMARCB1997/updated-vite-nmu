@@ -1,8 +1,13 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
+import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
 export const initEventLogHistroyData = (payload) => (dispatch) => {
   const { type } = payload
@@ -21,7 +26,7 @@ export const initEventLogHistroyData = (payload) => (dispatch) => {
   }
 }
 export const requestHistoryData = (param) => (dispatch) => {
-  ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     switch (type) {
       case 'trap':
@@ -30,9 +35,8 @@ export const requestHistoryData = (param) => (dispatch) => {
     }
   })
 
-  ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
-import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
 const eventLogSlice = createSlice({
   name: 'eventLog',
@@ -78,12 +82,7 @@ const eventLogSlice = createSlice({
           return new Date(item.createAt).getTime() >= new Date(today).getTime()
         })
       }
-    },
 
-    updateEventHistory: (state, { payload }) => {
-      return { ...state, eventHistoryData: payload }
-    },
-    updateCustomDataDaily: (state) => {
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -91,37 +90,42 @@ const eventLogSlice = createSlice({
         customEventDailyData: filteredCustomEventsDailyData,
         customEventListData: sortedItems.slice(0, 30)
       }
-    },
-    clearHistoryData: (state) => {
-      return {
-        ...state,
-        eventHistoryData: [],
-        trapHistoryData: [],
-        syslogHistoryData: [],
-        customEventHistoryData: []
-      }
-    },
-    openDialog: (state, { action }) => {
-      if (state.dialogs.includes(action.payload)) {
-        return state
-      }
-      return {
-        ...state,
-        dialogs: [...state.dialogs, action.payload]
-      }
-    },
-    updateTrapHistory: (state, { action }) => {
-      const { payload } = action
-      return { ...state, trapHistoryData: payload }
-    },
-    clearTrapData: (state, { payload }) => {
-      return { ...state, trapData: [payload] }
     }
+  },
+  clearHistoryData: (state) => {
+    return {
+      ...state,
+      eventHistoryData: [],
+      trapHistoryData: [],
+      syslogHistoryData: [],
+      customEventHistoryData: []
+    }
+  },
+  openDialog: (state, { action }) => {
+    if (state.dialogs.includes(action.payload)) {
+      return state
+    }
+    return {
+      ...state,
+      dialogs: [...state.dialogs, action.payload]
+    }
+  },
+  updateTrapHistory: (state, { action }) => {
+    const { payload } = action
+    return { ...state, trapHistoryData: payload }
+  },
+  clearTrapData: (state, { payload }) => {
+    return { ...state, trapData: [payload] }
   }
 })
 
-export const { updateCustomHistory, updateCustomEventDaily, clearHistoryData } =
-  eventLogSlice.actions
+export const {
+  updateCustomHistory,
+  updateCustomEventDaily,
+  clearHistoryData,
+  openDialog,
+  updateTrapHistory
+} = eventLogSlice.actions
 export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {
