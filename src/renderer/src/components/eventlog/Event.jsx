@@ -1,19 +1,15 @@
 /* eslint-disable prettier/prettier */
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, Table } from 'antd'
-
-import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { eventLogSelector } from '../../features/eventLogSlice'
-import {
-  REQUEST_MP_GET_EVENT_LOG_HISTORY,
-  RESPONSE_RP_GET_EVENT_LOG_HISTORY
-} from '../../../../main/utils/IPCEvents'
+import { clearEventData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
 
 function Event() {
-  const { eventHistoryData } = useSelector(eventLogSelector)
-  console.log(eventHistoryData)
+  const { eventData } = useSelector(eventLogSelector)
+  console.log(eventData)
   const dispatch = useDispatch()
-
+  const [tableLoading, setTableLoading] = useState(true)
+  const [isEventHistoryModalOpen, setIsEventHistoryModalOpen] = useState(false)
   const columns = [
     {
       key: 'createAt',
@@ -41,28 +37,39 @@ function Event() {
     { key: 'msg', title: 'Message', dataIndex: 'msg' }
   ]
 
-  useEffect((param) => {
-    window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-      const { data } = arg
-      console.log(arg)
-      dispatch(updateEventHistory(data))
-    })
-    window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
-  })
+  useEffect(() => {
+    setTableLoading(false)
+  }, [])
+
+  const handleHistoryButtonOnClick = () => {
+    dispatch(
+      requestHistoryData({
+        type: 'event',
+        MACAddress: '',
+        ge: '',
+        le: ''
+      })
+    )
+  }
+
+  const handleClearButtonOnClick = () => {
+    dispatch(clearEventData())
+  }
+
   return (
-    <div>Events</div>
-    // <div>
-    //   <Card>
-    //     <Button>History</Button>
-    //     <Button>Clear</Button>
-    //     <Alert
-    //       message="Here you can check today's log data, please check history for past data."
-    //       type="warning"
-    //       showIcon
-    //     />
-    //     <Table columns={columns} />
-    //   </Card>
-    // </div>
+    // <div>Events</div>
+    <div>
+      <Card>
+        <Button onClick={handleHistoryButtonOnClick}>History</Button>
+        <Button onClick={handleClearButtonOnClick}>Clear</Button>
+        <Alert
+          message="Here you can check today's log data, please check history for past data."
+          type="warning"
+          showIcon
+        />
+        <Table columns={columns} dataSource={eventData} loading={tableLoading} />
+      </Card>
+    </div>
   )
 }
 

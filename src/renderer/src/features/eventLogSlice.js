@@ -1,13 +1,8 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
 export const initEventLogHistroyData = (payload) => (dispatch) => {
   const { type } = payload
@@ -32,6 +27,9 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'trap':
         dispatch(updateTrapHistory(data))
         break
+      case 'event':
+        dispatch(updateEventHistory(data))
+        break
     }
   })
 
@@ -39,7 +37,7 @@ export const requestHistoryData = (param) => (dispatch) => {
 }
 
 const eventLogSlice = createSlice({
-  name: 'eventLog',
+  name: 'eventLogSlice',
   initialState: {
     eventData: [],
     eventHistoryData: [],
@@ -47,7 +45,7 @@ const eventLogSlice = createSlice({
     trapHistoryData: [],
     syslogData: [],
     syslogHistoryData: [],
-    cusromEventData: [],
+    customEventData: [],
     customEventDailyData: [],
     customEventHistoryData: [],
     customEventListData: [],
@@ -60,29 +58,6 @@ const eventLogSlice = createSlice({
       return { ...state, customEventHistoryData: payload }
     },
     updateCustomEventDaily: (state) => {
-      const customEventSortFilter = (Items) => {
-        let sortedItems = Items.sort(function (a, b) {
-          return new Date(b.createAt) - new Date(a.createAt)
-        })
-        return sortedItems
-      }
-      const filterByDate = (Items) => {
-        let today = new Date()
-        let dd = today.getDate()
-        let mm = today.getMonth() + 1
-        let yyyy = today.getFullYear()
-        if (dd < 10) {
-          dd = '0' + dd
-        }
-        if (mm < 10) {
-          mm = '0' + mm
-        }
-        today = `${yyyy}-${mm}-${dd}`
-        return Items.filter(function (item) {
-          return new Date(item.createAt).getTime() >= new Date(today).getTime()
-        })
-      }
-
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -90,41 +65,74 @@ const eventLogSlice = createSlice({
         customEventDailyData: filteredCustomEventsDailyData,
         customEventListData: sortedItems.slice(0, 30)
       }
+    },
+    openDialog: (state, { action }) => {
+      if (state.dialogs.includes(action.payload)) {
+        return state
+      }
+      return {
+        ...state,
+        dialogs: [...state.dialogs, action.payload]
+      }
+    },
+    updateTrapHistory: (state, { action }) => {
+      const { payload } = action
+      return { ...state, trapHistoryData: payload }
+    },
+    updateLogData: (state) => {
+      const filteredEventLogData = filterByDate([...state.eventData])
+      const filteredTrapLogData = filterByDate([...state.trapData])
+      const filteredSyslogLogData = filterByDate([...state.syslogData])
+      const filterCustomLogData = filterByDate([...state.customEventData])
+      const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
+      return {
+        ...state,
+        eventData: filteredEventLogData,
+        syslogData: filteredSyslogLogData,
+        trapData: filteredTrapLogData,
+        customEventData: filterCustomLogData,
+        customEventDailyData: filterCustomLogDailyData
+      }
+    },
+    clearEventData: (state) => {
+      return { ...state, eventData: [] }
+    },
+    clearSyslogData: (state) => {
+      return { ...state, syslogData: [] }
+    },
+    clearTrapData: (state) => {
+      return { ...state, trapData: [] }
+    },
+    clearCustomEventData: (state) => {
+      return { ...state, customEventData: [] }
+    },
+    clearHistoryData: (state) => {
+      return {
+        ...state,
+        eventHistoryData: [],
+        trapHistoryData: [],
+        syslogHistoryData: [],
+        customEventHistoryData: []
+      }
+    },
+    updateEventHistory: (state, action) => {
+      const { payload } = action
+      return { ...state, eventHistoryData: payload }
     }
-  },
-  clearHistoryData: (state) => {
-    return {
-      ...state,
-      eventHistoryData: [],
-      trapHistoryData: [],
-      syslogHistoryData: [],
-      customEventHistoryData: []
-    }
-  },
-  openDialog: (state, { action }) => {
-    if (state.dialogs.includes(action.payload)) {
-      return state
-    }
-    return {
-      ...state,
-      dialogs: [...state.dialogs, action.payload]
-    }
-  },
-  updateTrapHistory: (state, { action }) => {
-    const { payload } = action
-    return { ...state, trapHistoryData: payload }
-  },
-  clearTrapData: (state, { payload }) => {
-    return { ...state, trapData: [payload] }
   }
 })
 
 export const {
   updateCustomHistory,
   updateCustomEventDaily,
-  clearHistoryData,
   openDialog,
-  updateTrapHistory
+  updateTrapHistory,
+  updateEvent,
+  updateLogData,
+  clearEventData,
+  clearSyslogData,
+  clearTrapData,
+  clearHistoryData
 } = eventLogSlice.actions
 export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
 
@@ -136,7 +144,7 @@ export const eventLogSelector = (state) => {
     trapHistoryData,
     syslogData,
     syslogHistoryData,
-    cusromEventData,
+    customEventData,
     customEventDailyData,
     customEventHistoryData,
     customEventListData,
@@ -150,7 +158,7 @@ export const eventLogSelector = (state) => {
     trapHistoryData,
     syslogData,
     syslogHistoryData,
-    cusromEventData,
+    customEventData,
     customEventDailyData,
     customEventHistoryData,
     customEventListData,
@@ -160,3 +168,27 @@ export const eventLogSelector = (state) => {
 }
 
 export default eventLogSlice
+
+const filterByDate = (Items) => {
+  let today = new Date()
+  let dd = today.getDate()
+  let mm = today.getMonth() + 1
+  let yyyy = today.getFullYear()
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+  today = `${yyyy}-${mm}-${dd}`
+  return Items.filter(function (item) {
+    return new Date(item.createAt).getTime() >= new Date(today).getTime()
+  })
+}
+
+const customEventSortFilter = (Items) => {
+  let sortedItems = Items.sort(function (a, b) {
+    return new Date(b.createAt) - new Date(a.createAt)
+  })
+  return sortedItems
+}
