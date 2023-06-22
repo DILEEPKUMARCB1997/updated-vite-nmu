@@ -20,7 +20,7 @@ import { SyncOutlined } from '@ant-design/icons'
 // }
 // var interval1 = null
 
-const SyslogGraph1 = (props) => {
+const SyslogGraph = (props) => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   console.log(syslogGraphData)
@@ -36,11 +36,14 @@ const SyslogGraph1 = (props) => {
       chart: {
         height: 320,
         type: 'bar',
-        stacked: true,
+        // stacked: true,
         toolbar: {
           show: false
-        }
+        },
+        offsetY: -20,
+        offsetX: -5
       },
+
       legend: {
         show: true,
         showForSingleSeries: true,
@@ -54,6 +57,7 @@ const SyslogGraph1 = (props) => {
       plotOptions: {
         bar: {
           borderRadius: 0,
+          columnWidth: '50%',
           dataLabels: {
             position: 'top' // top, center, bottom
           }
@@ -73,15 +77,8 @@ const SyslogGraph1 = (props) => {
           rotate: -45,
           rotateAlways: true
         },
-        axisBorder: {
-          show: false
-        },
-
-        axisTicks: {
-          show: false
-        },
         fill: {
-          type: 'gradient',
+          type: 'solid',
           gradient: {
             colorFrom: '#D8E3F0',
             colorTo: '#BED1E6',
@@ -94,13 +91,6 @@ const SyslogGraph1 = (props) => {
       yaxis: {
         title: {
           text: 'syslog count'
-        },
-
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
         },
 
         labels: {
@@ -148,9 +138,12 @@ const SyslogGraph1 = (props) => {
           padding: '0px 5px',
           display: 'flex',
           justifyContent: 'space-between'
+          // fontSize: '15px'
         }}
       >
-        <div>{syslogGraphData.lastUpdated}</div>
+        <div>
+          <i>{syslogGraphData.lastUpdated}</i>
+        </div>
         <Button
           style={{ padding: '5px' }}
           onClick={handleRefreshGraph}
@@ -158,13 +151,13 @@ const SyslogGraph1 = (props) => {
           icon={<SyncOutlined />}
         />
       </div>
-      <div className="container">
+      <div>
         <Chart
           // data={GraphData.data === null ? {} : GraphData.data}
           options={GraphData.options}
           series={GraphData.series}
           type="bar"
-          height={250}
+          height={210}
           width={400}
           onClick={onSyslogGraphClick}
         />
@@ -173,4 +166,4 @@ const SyslogGraph1 = (props) => {
   )
 }
 
-export default SyslogGraph1
+export default SyslogGraph

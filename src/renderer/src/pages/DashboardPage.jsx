@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
 import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
-import SyslogGraph1 from '../components/dashboard/SyslogGraph1'
+import SyslogGraph from '../components/dashboard/SyslogGraph'
 import EventSummary from '../components/dashboard/EventSummary'
 import EventLog from '../components/dashboard/EventLog'
 import EventList from '../components/dashboard/EventList'
@@ -79,7 +80,7 @@ const DashboardPage = () => {
               style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
-              <SyslogGraph1 />
+              <SyslogGraph />
             </Card>
           </Col>
         </Row>
