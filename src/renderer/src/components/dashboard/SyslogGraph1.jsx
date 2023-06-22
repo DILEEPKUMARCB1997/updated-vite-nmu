@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
@@ -151,8 +152,7 @@ const SyslogGraph1 = (props) => {
       >
         <div>{syslogGraphData.lastUpdated}</div>
         <Button
-          size="small"
-          style={{ padding: '2px' }}
+          style={{ padding: '5px' }}
           onClick={handleRefreshGraph}
           title="Refresh"
           icon={<SyncOutlined />}

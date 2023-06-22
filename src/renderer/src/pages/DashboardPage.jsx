@@ -29,7 +29,7 @@ const DashboardPage = () => {
               title="Disk Space Utilization Summary"
               bordered={false}
               size="small"
-              style={{ height: 150 }}
+              style={{ height: 210 }}
               bodyStyle={{ padding: '5px' }}
             >
               <DiskSpceSummary />
@@ -40,7 +40,7 @@ const DashboardPage = () => {
               title="SNMP Trap Message Count"
               bordered={false}
               size="small"
-              style={{ height: 300 }}
+              style={{ height: 210 }}
               bodyStyle={{ padding: '5px' }}
             >
               <TrapGraphSummary />
@@ -62,7 +62,12 @@ const DashboardPage = () => {
             </Card>
           </Col>
           <Col span={24}>
-            <Card title="EventGraph" bordered={false} bodyStyle={{ padding: '5px' }}>
+            <Card
+              title="EventGraph"
+              bordered={false}
+              style={{ height: 210 }}
+              bodyStyle={{ padding: '5px' }}
+            >
               <EventLog />
             </Card>
           </Col>
@@ -71,7 +76,7 @@ const DashboardPage = () => {
               title="Syslog Message"
               bordered={false}
               size="small"
-              style={{ height: 300 }}
+              style={{ height: 210 }}
               bodyStyle={{ padding: '5px' }}
             >
               <SyslogGraph1 />
