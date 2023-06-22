@@ -7,8 +7,8 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
-
+// import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
+import { openDialog } from './dialogSlice'
 export const initEventLogHistroyData = (payload) => (dispatch) => {
   const { type } = payload
   switch (type) {
@@ -47,7 +47,7 @@ const eventLogSlice = createSlice({
     trapHistoryData: [],
     syslogData: [],
     syslogHistoryData: [],
-    cusromEventData: [],
+    customEventData: [],
     customEventDailyData: [],
     customEventHistoryData: [],
     customEventListData: [],
@@ -101,17 +101,7 @@ const eventLogSlice = createSlice({
       customEventHistoryData: []
     }
   },
-  openDialog: (state, { action }) => {
-    if (state.dialogs.includes(action.payload)) {
-      return state
-    }
-    return {
-      ...state,
-      dialogs: [...state.dialogs, action.payload]
-    }
-  },
-  updateTrapHistory: (state, { action }) => {
-    const { payload } = action
+  updateTrapHistory: (state, { payload }) => {
     return { ...state, trapHistoryData: payload }
   },
   clearTrapData: (state, { payload }) => {
@@ -123,10 +113,9 @@ export const {
   updateCustomHistory,
   updateCustomEventDaily,
   clearHistoryData,
-  openDialog,
-  updateTrapHistory
+  updateTrapHistory,
+  clearTrapData
 } = eventLogSlice.actions
-export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {
   const {

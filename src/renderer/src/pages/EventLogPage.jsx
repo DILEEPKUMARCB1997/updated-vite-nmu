@@ -1,10 +1,14 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
 // eslint-disable-next-line no-unused-vars
 import TabPane from 'antd/es/tabs/TabPane'
-import React from 'react'
+import React, { useEffect } from 'react'
 // import Event from '../components/eventlog/Event'
+import SNMPTrap from '../components/eventlog/SNMPTrap'
+// import { clearTrapData, updateLogData } from '../features/eventLogSlice'
 
+// var clearLogTimeOut
 function EventLogPage() {
   const onChange = (key) => {
     console.log(key)
@@ -13,24 +17,38 @@ function EventLogPage() {
     {
       key: '1',
       label: `Event`,
-      children: <Event />
+      children: `Content of Tab Pane 1`
     },
     {
       key: '2',
       label: `SNMP Trap`,
-      children: `Content of Tab Pane 2`
+      children: <SNMPTrap />
     },
     {
       key: '3',
       label: `Syslog`,
       children: `Content of Tab Pane 3`
-    },
-    {
-      key: '4',
-      label: `Custom Event`,
-      children: `Content of Tab Pane 4`
     }
   ]
+
+  // useEffect(() => {
+  //   updateLogData()
+  //   const now = new Date()
+  //   const night = new Date(
+  //     now.getFullYear(),
+  //     now.getMonth(),
+  //     now.getDate() + 1, // the next day, ...
+  //     0,
+  //     0,
+  //     0 // ...at 00:00:00 hours
+  //   )
+  //   const msToMidnight = night.getTime() - now.getTime()
+  //   if (msToMidnight > 0) {
+  //     clearLogTimeOut = setTimeout(() => {
+  //       clearTrapData()
+  //     }, msToMidnight)
+  //   }
+  // }, [])
   return (
     <div>
       <Card>

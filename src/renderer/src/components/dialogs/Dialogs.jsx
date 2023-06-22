@@ -1,8 +1,13 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/prop-types */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeDialog, dialogSelector } from '../../features/dialogSlice'
 import TestDialog from './TestDialog'
 import GroupMemberTransferDialog from './groupMemberTransferDialog/GroupMemberTransferDialog'
+import TrapHistoryDialog from './TrapHistoryDialog/TrapHistoryDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -10,7 +15,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
       {
         {
           testDialog: <TestDialog onClose={onClose} />,
-          transferMember: <GroupMemberTransferDialog onClose={onClose} />
+          transferMember: <GroupMemberTransferDialog onClose={onClose} />,
+          trapHistory: <TrapHistoryDialog onClose={onClose} />
         }[id]
       }
     </div>

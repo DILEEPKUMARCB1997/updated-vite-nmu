@@ -1,4 +1,8 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { Alert, Button, Card, Table } from 'antd'
 
 import React, { useEffect } from 'react'

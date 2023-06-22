@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const customEventSortFilter = (Items) => {
   let sortedItems = Items.sort(function (a, b) {
     return new Date(b.createAt) - new Date(a.createAt)
