@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-const requestCustomGraphData = (Items) => {
+/* eslint-disable no-unused-vars */
+
+export const requestCustomGraphData = (Items) => {
   let label = []
   let InformationData = []
   let CriticalData = []
@@ -75,4 +77,3 @@ const requestCustomGraphData = (Items) => {
     tableResult
   }
 }
-export default requestCustomGraphData

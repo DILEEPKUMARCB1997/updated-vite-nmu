@@ -65,6 +65,7 @@ const DashboardPage = () => {
           <Col span={24}>
             <Card
               title="EventGraph"
+              size="small"
               bordered={false}
               style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
@@ -88,6 +89,7 @@ const DashboardPage = () => {
       <Col span={6}>
         <Card
           title="EvenList"
+          size="small"
           style={{ width: '100%', height: '100%' }}
           bordered={false}
           bodyStyle={{ padding: '5px' }}

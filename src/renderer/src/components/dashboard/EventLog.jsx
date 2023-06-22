@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
   requestHistoryData,
-  showCustomTableData
+  showCustomTableData,
+  updateCustomGraphData
 } from '../../features/dashboardSlice'
 
 import { Button } from 'antd'
@@ -17,35 +18,37 @@ const EventLog = (props) => {
   const { tableData, data } = props
 
   const { customGraphData } = useSelector(dashboardSelector)
-  // console.log(customGraphData)
+  console.log(customGraphData)
   const dispatch = useDispatch()
 
   const [series, setSeries] = useState([
     {
       name: 'Information',
-      color: 'rgba(70, 179, 0,0.95)',
+      color: '#46b300',
       data: [0, 1, 2, 3, 4, 5]
     },
     {
       name: 'Warning',
-      color: 'rgba(245, 127, 23,0.95)',
+      color: '#F57F17',
       data: [0, 1, 2, 3, 4, 5]
     },
     {
       name: 'Critical',
-      color: 'rgba(213, 0, 0,0.95)',
+      color: '#D50000',
       data: [0, 1, 2, 3, 4, 5]
     }
   ])
   const [options, setOptions] = useState({
     chart: {
-      height: 350,
       type: 'bar',
-      stacked: true,
+      height: 100,
       toolbar: {
-        show: true
-      }
+        show: false
+      },
+      offsetY: -20,
+      offsetX: -5
     },
+
     legend: {
       show: true,
       showForSingleSeries: true,
@@ -69,49 +72,33 @@ const EventLog = (props) => {
     grid: {
       show: true
     },
-
     xaxis: {
+      type: 'category',
       categories: customGraphData.label,
-      position: 'bottom',
       labels: {
         rotate: -45,
         rotateAlways: true
-      },
-      axisBorder: {
-        show: false
-      },
-
-      axisTicks: {
-        show: false
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          colorFrom: '#D8E3F0',
-          colorTo: '#BED1E6',
-          stops: [0, 100],
-          opacityFrom: 0.4,
-          opacityTo: 0.5
-        }
       }
     },
     yaxis: {
-      // title: {
-      //   text: '123'
-      // },
-
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-
-      labels: {
-        show: true,
-        formatter: function (val) {
-          return val
+      title: {
+        lines: {
+          show: true
         }
+      }
+    },
+    fill: {
+      type: 'solid',
+
+      gradient: {
+        shade: 'lights',
+        type: 'horizontal',
+        shadeIntensity: 1,
+        gradientToColors: undefined,
+        inverseColors: false,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [0, 50]
       }
     }
   })
@@ -133,7 +120,6 @@ const EventLog = (props) => {
 
   const handleRefreshGraph = () => {
     setSeries(series)
-    setOptions(options)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -150,12 +136,12 @@ const EventLog = (props) => {
         style={{
           padding: '0px 5px',
           display: 'flex',
-          justifyContent: 'space-between',
-          color: 'blue',
-          fontSize: '18px'
+          justifyContent: 'space-between'
         }}
       >
-        <div style={{ fontSize: '15px' }}>{customGraphData.lastUpdated}</div>
+        <div>
+          <i>{customGraphData.lastUpdated}</i>
+        </div>
         <Button
           title="Refresh"
           icon={<SyncOutlined />}
@@ -167,7 +153,7 @@ const EventLog = (props) => {
         options={options}
         series={series}
         type="bar"
-        height={350}
+        height={210}
         data={data === null ? {} : data}
         onClick={onCustomGraphClick}
       />
