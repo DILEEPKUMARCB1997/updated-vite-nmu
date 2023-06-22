@@ -38,7 +38,7 @@ const DashboardPage = () => {
           </Col>
           <Col span={24}>
             <Card
-              title="SNMP Trap Message Count"
+              title="SNMP Trap Message"
               bordered={false}
               size="small"
               style={{ height: 250 }}
