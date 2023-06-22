@@ -2,13 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
-import {
-  dashboardSelector,
-  requestHistoryData,
-  updateTrapGraph
-} from '../../features/dashboardSlice'
+import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
-import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
 
@@ -17,7 +12,6 @@ const TrapGraphSummary = () => {
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const dispatch = useDispatch()
-  // const { label, data, tableData, lastUpdated } = trapGraphData
   console.log(trapGraphData)
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [
@@ -30,7 +24,6 @@ const TrapGraphSummary = () => {
     options: {
       chart: {
         type: 'bar',
-        // background: token.colorBgContainer,
         height: 320,
         toolbar: {
           show: false
@@ -146,7 +139,7 @@ const TrapGraphSummary = () => {
           options={snmpTrapMsgData.options}
           series={snmpTrapMsgData.series}
           type="bar"
-          height={250}
+          height={210}
           width={400}
         />
       </div>
