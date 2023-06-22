@@ -17,7 +17,7 @@ const EventLog = (props) => {
   const { tableData, data } = props
 
   const { customGraphData } = useSelector(dashboardSelector)
-  console.log(customGraphData)
+  // console.log(customGraphData)
   const dispatch = useDispatch()
 
   const [series, setSeries] = useState([
