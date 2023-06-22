@@ -71,7 +71,6 @@ const EventSummary = () => {
         const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
         return {
           ...state,
-
           customEventDailyData: filterCustomLogDailyData
         }
       }, msToMidnight)
