@@ -5,7 +5,6 @@ import {
 } from '../../../../main/utils/IPCEvents'
 import { useDispatch, useSelector } from 'react-redux'
 import { dashboardSelector, initDiskUses } from '../../features/dashboardSlice'
-import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 
 const DiskSpaceSummary = () => {
@@ -36,8 +35,8 @@ const DiskSpaceSummary = () => {
       show: true,
       showForSingleSeries: true,
       position: 'right',
-      offsetX: -10,
-      offsetY: 40,
+      offsetX: 40,
+      offsetY: 90,
       formatter: function (val) {
         return val
       },
@@ -48,7 +47,7 @@ const DiskSpaceSummary = () => {
     chart: {
       height: 350,
       type: 'radialBar',
-      offsetX: -5,
+      offsetX: -35,
       offsetY: -25,
       toolbar: {
         show: false
@@ -89,11 +88,13 @@ const DiskSpaceSummary = () => {
         },
 
         dataLabels: {
+          show: true,
           name: {
             offsetY: 5,
             show: true,
             color: '#1a1818',
             fontSize: '15px',
+            // eslint-disable-next-line no-dupe-keys
             show: false
           },
           value: {
@@ -101,9 +102,9 @@ const DiskSpaceSummary = () => {
               return val + '%'
             },
             color: '#111',
-            fontSize: '15px',
+            fontSize: '25px',
             fontWeight: 'bold',
-            offsetY: 5,
+            offsetY: 10,
             show: true
           }
         }
@@ -129,33 +130,8 @@ const DiskSpaceSummary = () => {
   }
 
   return (
-    // <div>
-    //   <pre>
-    //     <code>{JSON.stringify(diskUses, '', '\t')}</code>
-    //   </pre>
-    // </div>
-
-    // <div>
-    //   <Card
-    //     title="Disk Space Utilization Summary"
-    //     // size="small"
-    //     bordered={false}
-    //     style={{
-    //       width: 300
-    //     }}
-    //   >
-    //     <ReactApexChart options={options} series={options.series} type="radialBar" height={250} />
-    //   </Card>
-    // </div>
-
     <div>
-      <ReactApexChart
-        options={options}
-        series={options.series}
-        type="radialBar"
-        height={150}
-        width={400}
-      />
+      <ReactApexChart options={options} series={options.series} type="radialBar" width={500} />
     </div>
   )
 }
