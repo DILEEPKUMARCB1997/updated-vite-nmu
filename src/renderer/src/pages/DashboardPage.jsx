@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import DeviceSummary from '../components/dashboard/DeviceSummary'
 import DiskSpceSummary from '../components/dashboard/DiskSpaceSummary'
@@ -29,7 +30,7 @@ const DashboardPage = () => {
               title="Disk Space Utilization Summary"
               bordered={false}
               size="small"
-              style={{ height: 210 }}
+              style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
               <DiskSpceSummary />
@@ -40,7 +41,7 @@ const DashboardPage = () => {
               title="SNMP Trap Message Count"
               bordered={false}
               size="small"
-              style={{ height: 210 }}
+              style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
               <TrapGraphSummary />
@@ -64,8 +65,9 @@ const DashboardPage = () => {
           <Col span={24}>
             <Card
               title="EventGraph"
+              size="small"
               bordered={false}
-              style={{ height: 210 }}
+              style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
               <EventLog />
@@ -76,7 +78,7 @@ const DashboardPage = () => {
               title="Syslog Message"
               bordered={false}
               size="small"
-              style={{ height: 210 }}
+              style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
               <SyslogGraph1 />

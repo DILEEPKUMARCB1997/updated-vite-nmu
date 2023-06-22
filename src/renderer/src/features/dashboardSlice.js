@@ -12,6 +12,10 @@ export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
   dispatch(openDialog('customGraphTable'))
 }
+export const showSyslogTableData = (payload) => (dispatch) => {
+  dispatch(updateSyslogTableData(payload))
+  dispatch(openDialog('syslogGraphTable'))
+}
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
@@ -23,14 +27,14 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateTrapGraph(resultTrap))
         break
       }
-      case 'syslog': {
-        const resultSyslog = requestGraphData(data)
-        dispatch(updateSyslog(resultSyslog))
-        break
-      }
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
         dispatch(updateCustomGraphData(resultCustom))
+        break
+      }
+      case 'syslog': {
+        const resultSyslog = requestGraphData(data)
+        dispatch(updateSyslog(resultSyslog))
         break
       }
       default:
@@ -40,10 +44,7 @@ export const requestHistoryData = (param) => (dispatch) => {
 
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
-export const showSyslogTableData = (payload) => (dispatch) => {
-  dispatch(updateSyslogTableData(payload))
-  dispatch(openDialog('syslogGraphTable'))
-}
+
 const dashboardSlice = createSlice({
   name: 'dashboardSlice',
   initialState: {
@@ -107,8 +108,7 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraphData: (state, action) => {
-      const { payload } = action
+    updateCustomGraphData: (state, { payload }) => {
       return {
         ...state,
         customGraphData: {
@@ -154,6 +154,7 @@ export const {
   updateSyslogTableData,
   openDialog,
   updateCustomTableData,
+  updateCustomGraphData,
   updateTrapTableData
 } = dashboardSlice.actions
 
