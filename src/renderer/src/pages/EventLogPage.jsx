@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
-// eslint-disable-next-line no-unused-vars
-import TabPane from 'antd/es/tabs/TabPane'
 import React from 'react'
-// import Event from '../components/eventlog/Event'
+import Event from '../components/eventlog/Event'
+import Syslog from '../components/eventlog/Syslog'
+import SyslogHistoryDialog from '../components/dialogs/SyslogHistoryDialog/SyslogHistoryDialog'
 
 function EventLogPage() {
   const onChange = (key) => {
@@ -12,8 +13,8 @@ function EventLogPage() {
   const items = [
     {
       key: '1',
-      label: `Event`,
-      children: <Event />
+      label: `syslogHistoryDialog`,
+      children: <SyslogHistoryDialog />
     },
     {
       key: '2',
@@ -23,7 +24,7 @@ function EventLogPage() {
     {
       key: '3',
       label: `Syslog`,
-      children: `Content of Tab Pane 3`
+      children: <Syslog />
     },
     {
       key: '4',

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeDialog, dialogSelector } from '../../features/dialogSlice'
 import TestDialog from './TestDialog'
 import GroupMemberTransferDialog from './groupMemberTransferDialog/GroupMemberTransferDialog'
+import SyslogHistoryDialog from './SyslogHistoryDialog/SyslogHistoryDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -10,6 +13,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
       {
         {
           testDialog: <TestDialog onClose={onClose} />,
+          sysLogHistoryDialog: <SyslogHistoryDialog onClose={onClose} />,
           transferMember: <GroupMemberTransferDialog onClose={onClose} />
         }[id]
       }

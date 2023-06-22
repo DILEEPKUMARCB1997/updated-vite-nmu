@@ -9,7 +9,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 
-export const initEventLogHistroyData = (payload) => (dispatch) => {
+export const initEventLogHistoryData = (payload) => (dispatch) => {
   const { type } = payload
   switch (type) {
     case 'trap':
@@ -21,7 +21,18 @@ export const initEventLogHistroyData = (payload) => (dispatch) => {
           le: ''
         })
       )
-      dispatch(openDialog('trapHistory'))
+      // dispatch(openDialog('trapHistory'))
+      break
+    case 'syslog':
+      dispatch(
+        requestHistoryData({
+          type,
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+      // dispatch(openDialog('syslogHistory'))
       break
   }
 }
@@ -60,29 +71,6 @@ const eventLogSlice = createSlice({
       return { ...state, customEventHistoryData: payload }
     },
     updateCustomEventDaily: (state) => {
-      const customEventSortFilter = (Items) => {
-        let sortedItems = Items.sort(function (a, b) {
-          return new Date(b.createAt) - new Date(a.createAt)
-        })
-        return sortedItems
-      }
-      const filterByDate = (Items) => {
-        let today = new Date()
-        let dd = today.getDate()
-        let mm = today.getMonth() + 1
-        let yyyy = today.getFullYear()
-        if (dd < 10) {
-          dd = '0' + dd
-        }
-        if (mm < 10) {
-          mm = '0' + mm
-        }
-        today = `${yyyy}-${mm}-${dd}`
-        return Items.filter(function (item) {
-          return new Date(item.createAt).getTime() >= new Date(today).getTime()
-        })
-      }
-
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -101,6 +89,18 @@ const eventLogSlice = createSlice({
       customEventHistoryData: []
     }
   },
+
+  clearSyslogData: (state, { payload }) => {
+    return { ...state, syslogData: payload }
+  },
+
+  updateSyslog: (state, { payload }) => {
+    const filteredSyslogData = filterByDate([...state.syslogData])
+    // const { payload } = action;
+    filteredSyslogData.push(payload)
+    return { ...state, syslogData: filteredSyslogData }
+  },
+
   openDialog: (state, { action }) => {
     if (state.dialogs.includes(action.payload)) {
       return state
@@ -124,9 +124,10 @@ export const {
   updateCustomEventDaily,
   clearHistoryData,
   openDialog,
-  updateTrapHistory
+  clearSyslogData,
+  updateTrapHistory,
+  updateSyslog
 } = eventLogSlice.actions
-export const { updateEventHistory, updateCustomDataDaily } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {
   const {
