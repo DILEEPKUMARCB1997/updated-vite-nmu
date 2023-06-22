@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-const requestCustomGraphData = (Items) => {
+/* eslint-disable no-unused-vars */
+
+export const requestCustomGraphData = (Items) => {
   let label = []
   let InformationData = []
   let CriticalData = []
@@ -56,7 +58,7 @@ const requestCustomGraphData = (Items) => {
   }
   const date = new Date()
   const lastUpdated =
-    'Last Updated ' +
+    'last update ' +
     ('00' + date.getDate()).slice(-2) +
     '/' +
     ('00' + (date.getMonth() + 1)).slice(-2) +
@@ -75,4 +77,3 @@ const requestCustomGraphData = (Items) => {
     tableResult
   }
 }
-export default requestCustomGraphData

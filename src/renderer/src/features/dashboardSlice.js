@@ -5,8 +5,8 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-import requestCustomGraphData from '../components/dashboard/requestCustomGraphData'
 import requestGraphData from '../components/dashboard/requestGraphData'
+import { requestCustomGraphData } from '../components/dashboard/requestCustomGraphData'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))

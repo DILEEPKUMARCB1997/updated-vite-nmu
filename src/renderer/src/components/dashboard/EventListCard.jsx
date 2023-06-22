@@ -5,7 +5,7 @@ import { Row, Col } from 'antd'
 
 const EventListCard = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const { createAt, sourceIP, msg, eventId, hostname } = props.item
+  const { createAt, sourceIP, msg, eventId, hostname } = props
   return (
     <div key={eventId}>
       <Row style={{ marginBottom: '5px' }}>

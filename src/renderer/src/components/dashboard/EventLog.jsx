@@ -103,32 +103,6 @@ const EventLog = (props) => {
     }
   })
 
-  // useEffect(() => {
-  //   dispatch(
-  //     requestHistoryData({
-  //       type: 'custom',
-  //       sourceIP: '',
-  //       ge: '',
-  //       le: ''
-  //     })
-  //   )
-  // }, [])
-
-  // const onCustomGraphClick = () => {
-  //   dispatch(showCustomTableData(tableData))
-  // }
-
-  // const handleRefreshGraph = () => {
-  //   dispatch(
-  //     requestHistoryData({
-  //       type: 'custom',
-  //       sourceIP: '',
-  //       ge: '',
-  //       le: ''
-  //     })
-  //   )
-  // }
-
   useEffect(() => {
     dispatch(
       requestHistoryData({

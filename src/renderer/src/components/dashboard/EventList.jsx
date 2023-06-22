@@ -13,7 +13,7 @@ const EventList = () => {
     <div>
       {customEventListData.map((item) => (
         <EventListCard
-          style={{ width: 300, height: 600 }}
+          // style={{ width: 300, height: 600 }}
           key={item.eventId}
           ledColor={
             item.severity === 'Information'
@@ -23,7 +23,7 @@ const EventList = () => {
               : '#D50000'
           }
           item={item}
-        ></EventListCard>
+        />
       ))}
       {/* <EventListCard ledColor="#D50000" />
         <EventListCard ledColor="#F57F17" />
