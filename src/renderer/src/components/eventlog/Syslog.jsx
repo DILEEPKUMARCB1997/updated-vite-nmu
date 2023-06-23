@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { Card, Table, Button, Alert } from 'antd'
@@ -8,6 +9,7 @@ import {
   eventLogSelector,
   initEventLogHistoryData
 } from '../../features/eventLogSlice'
+import { openDialog } from '../../features/dialogSlice.js'
 
 const columns = [
   {
@@ -53,6 +55,7 @@ const columns = [
   { key: 'tag', title: 'Tag', dataIndex: 'tag', width: 100 },
   { key: 'message', title: 'Message', dataIndex: 'message' }
 ]
+
 const Syslog = () => {
   const { syslogData } = useSelector(eventLogSelector)
   const dispatch = useDispatch()
@@ -66,6 +69,7 @@ const Syslog = () => {
 
   const handleHistoryButtonOnClick = () => {
     initEventLogHistoryData({ type: 'syslog' })
+    dispatch(openDialog('sysLogHistoryDialog'))
   }
   const handleClearButtonOnClick = () => {
     dispatch(clearSyslogData(syslogData))
@@ -73,10 +77,15 @@ const Syslog = () => {
 
   return (
     <Card>
-      <Button variant="outlined" size="small" color="primary" onClick={handleHistoryButtonOnClick}>
+      <Button
+        variant="outlined"
+        size="default"
+        color="primary"
+        onClick={handleHistoryButtonOnClick}
+      >
         History
       </Button>
-      <Button variant="outlined" size="small" color="primary" onClick={handleClearButtonOnClick}>
+      <Button variant="outlined" size="default" color="primary" onClick={handleClearButtonOnClick}>
         Clear
       </Button>
       <Alert

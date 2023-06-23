@@ -117,6 +117,7 @@ const EventLog = (props) => {
   }, [])
 
   useEffect(() => {
+    dispatch(requestHistoryData(customGraphData))
     if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
       setEventLogData((prev) => ({
         ...prev,

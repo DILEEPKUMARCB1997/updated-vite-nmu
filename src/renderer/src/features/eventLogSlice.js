@@ -42,6 +42,9 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'event':
         dispatch(updateEventHistory(data))
         break
+      case 'syslog':
+        dispatch(updateSyslogHistory(data))
+        break
     }
   })
 
@@ -106,6 +109,15 @@ const eventLogSlice = createSlice({
         customEventDailyData: filterCustomLogDailyData
       }
     },
+    clearHistoryData: (state) => {
+      return {
+        ...state,
+        eventHistoryData: [],
+        trapHistoryData: [],
+        syslogHistoryData: [],
+        customEventHistoryData: []
+      }
+    },
     clearEventData: (state) => {
       return { ...state, eventData: [] }
     },
@@ -118,15 +130,7 @@ const eventLogSlice = createSlice({
     clearCustomEventData: (state) => {
       return { ...state, customEventData: [] }
     },
-    clearHistoryData: (state) => {
-      return {
-        ...state,
-        eventHistoryData: [],
-        trapHistoryData: [],
-        syslogHistoryData: [],
-        customEventHistoryData: []
-      }
-    },
+
     updateEventHistory: (state, action) => {
       const { payload } = action
       return { ...state, eventHistoryData: payload }

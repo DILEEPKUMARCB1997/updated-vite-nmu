@@ -13,7 +13,7 @@ import {
   clearSyslogData
 } from '../features/eventLogSlice'
 import Syslog from '../components/eventlog/Syslog'
-import SyslogHistoryDialog from '../components/dialogs/SyslogHistoryDialog/SyslogHistoryDialog'
+
 var clearLogTimeOut
 
 function EventLogPage() {
@@ -28,31 +28,17 @@ function EventLogPage() {
       label: `Events`,
       children: <Event />
     },
+
     {
       key: '2',
-      label: `syslogHistoryDialog`,
-      children: <SyslogHistoryDialog />
-    },
-    {
-      key: '3',
       label: `SNMP Trap`,
       children: `Content of Tab Pane 2`
     },
     {
-      key: '4',
-      label: `Syslog`,
+      key: '3',
+      label: `syslog`,
       children: <Syslog />
-    },
-    {
-      key: '5',
-      label: `Custom Event`,
-      children: `Content of Tab Pane 4`
     }
-    // {
-    //   key: '4',
-    //   label: `Custom Event`,
-    //   children: `Content of Tab Pane 4`
-    // }
   ]
 
   useEffect(() => {

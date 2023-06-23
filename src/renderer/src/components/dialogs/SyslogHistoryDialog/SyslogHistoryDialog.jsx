@@ -1,11 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { Modal, Divider, Table, Input, Button, DatePicker } from 'antd'
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-//import { CloseCircleFilled } from '@ant-design/icons'
-// import { Close } from '@material-ui/icons'
-//import { RangePicker } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { eventLogSelector, requestHistoryData } from '../../../features/eventLogSlice'
 
 const { RangePicker } = DatePicker
 const columns = [
@@ -53,16 +52,20 @@ const columns = [
   { key: 'message', title: 'Message', dataIndex: 'message' }
 ]
 
-function SyslogHistoryDialog(props) {
-  const { onClose, requestHistoryData, clearHistoryData, classes, syslogHistoryData } = props
+function SyslogHistoryDialog({ onClose }) {
+  const { syslogHistoryData } = useSelector(eventLogSelector)
+  console.log(syslogHistoryData)
+  const dispatch = useDispatch()
 
-  const [sourceIP, setSourceIP] = useState('')
+  const [sourceIP, setSourceIP] = useState()
   const [ge, setGe] = useState('')
   const [le, setLe] = useState('')
   const [tableLoading, setTableLoading] = useState(true)
+
   useEffect(() => {
     setTableLoading(false)
   }, [])
+
   const handleSourceIPInputOnChange = (event) => {
     setSourceIP(event.target.value)
   }
@@ -71,38 +74,35 @@ function SyslogHistoryDialog(props) {
     setLe(dateString[1])
   }
 
-  const rangePickerOKButtonClick = (value, dateString) => {
-    setGe(dateString[0])
-    setLe(dateString[1])
-  }
-
   const handleRefreshButtonClick = () => {
-    requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le })
+    dispatch(requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le }))
+    dispatch(syslogHistoryData)
   }
-  const handleCloseButtonOnClick = () => {
-    onClose()
-    clearHistoryData()
-  }
+  // const handleCloseButtonOnClick = () => {
+  //   clearHistoryData()
+  // }
   return (
-    <Modal open width="80%" footer={null} onCancel={handleCloseButtonOnClick}>
+    <Modal open width="80%" footer={null} onCancel={onClose}>
       <div>
-        <span>Syslog History</span>
+        <span style={{ fontSize: '18px' }}>SyslogHistory</span>
       </div>
       <div>
-        <Input placeholder="Source IP" onChange={handleSourceIPInputOnChange} />
-
+        <Input
+          style={{
+            width: '15%'
+          }}
+          placeholder="Source IP"
+          onChange={handleSourceIPInputOnChange}
+          maxLength={16}
+        />
         <RangePicker
           popupStyle={{ zIndex: '1301' }}
           showTime={{ format: 'HH:mm' }}
           format="YYYY-MM-DD HH:mm"
           placeholder={['Start Time', 'End Time']}
           onChange={rangePickerChange}
-          onOk={rangePickerOKButtonClick}
         />
-        <Button type="primary" onClick={handleRefreshButtonClick}>
-          {' '}
-          Refresh{' '}
-        </Button>
+        <Button onClick={handleRefreshButtonClick}> Refresh </Button>
       </div>
       <Divider style={{ margin: '10px 0px' }} />
       <Table
@@ -117,11 +117,5 @@ function SyslogHistoryDialog(props) {
     </Modal>
   )
 }
-SyslogHistoryDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  requestHistoryData: PropTypes.func.isRequired,
-  clearHistoryData: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
-  syslogHistoryData: PropTypes.array.isRequired
-}
+
 export default SyslogHistoryDialog
