@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
