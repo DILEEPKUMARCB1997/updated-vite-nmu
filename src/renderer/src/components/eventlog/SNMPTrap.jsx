@@ -3,13 +3,10 @@
 import React, { useState, useEffect } from 'react'
 // import './SNMPTrap.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Alert, Button } from 'antd'
+import { Table, Alert, Button, Card } from 'antd'
 
-import {
-  initEventLogHistroyData,
-  clearTrapData,
-  eventLogSelector
-} from '../../features/eventLogSlice'
+import { clearTrapData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
+import { openDialog } from '../../features/dialogSlice'
 
 const columns = [
   {
@@ -73,6 +70,7 @@ const columns = [
 const SNMPTrap = () => {
   const dispatch = useDispatch()
   const { trapData } = useSelector(eventLogSelector)
+  console.log(trapData)
   const [tableLoading, setTableLoading] = useState(true)
 
   useEffect(() => {
@@ -80,7 +78,15 @@ const SNMPTrap = () => {
   }, [])
 
   const handleHistoryButtonOnClick = () => {
-    dispatch(initEventLogHistroyData({ type: 'trap' }))
+    dispatch(
+      requestHistoryData({
+        type: 'trap',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
+    dispatch(openDialog('trapHistory'))
   }
   const handleClearButtonOnClick = () => {
     dispatch(clearTrapData())
@@ -89,14 +95,19 @@ const SNMPTrap = () => {
   return (
     <div>
       <Button
-        variant="outlined"
-        size="default"
-        color="secondary"
+        type="primary"
+        ghost
+        style={{ margin: '0px 0px 15px 0px' }}
         onClick={handleHistoryButtonOnClick}
       >
         History
       </Button>
-      <Button variant="outlined" size="default" color="primary" onClick={handleClearButtonOnClick}>
+      <Button
+        type="primary"
+        ghost
+        style={{ marginLeft: '5px', marginBottom: '15px' }}
+        onClick={handleClearButtonOnClick}
+      >
         Clear
       </Button>
       <Alert

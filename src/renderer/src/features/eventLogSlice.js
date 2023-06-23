@@ -69,8 +69,7 @@ const eventLogSlice = createSlice({
         customEventListData: sortedItems.slice(0, 30)
       }
     },
-    updateTrapHistory: (state, { action }) => {
-      const { payload } = action
+    updateTrapHistory: (state, { payload }) => {
       return { ...state, trapHistoryData: payload }
     },
     updateLogData: (state) => {
@@ -105,8 +104,7 @@ const eventLogSlice = createSlice({
         ...state,
         eventHistoryData: [],
         trapHistoryData: [],
-        syslogHistoryData: [],
-        customEventHistoryData: []
+        syslogHistoryData: []
       }
     },
     updateEventHistory: (state, action) => {
