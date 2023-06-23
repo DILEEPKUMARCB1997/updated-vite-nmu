@@ -10,7 +10,6 @@ import {
   initEventLogHistoryData
 } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice.js'
-
 const columns = [
   {
     key: 'createAt',
@@ -58,34 +57,41 @@ const columns = [
 
 const Syslog = () => {
   const { syslogData } = useSelector(eventLogSelector)
+  console.log(syslogData)
   const dispatch = useDispatch()
-
   const [tableLoading, setTableLoading] = useState(false)
 
   useEffect(() => {
     setTableLoading(tableLoading)
-    dispatch(initEventLogHistoryData({ type: 'syslog' }))
+    //dispatch(initEventLogHistoryData(syslogData))
   }, [tableLoading])
 
   const handleHistoryButtonOnClick = () => {
-    initEventLogHistoryData({ type: 'syslog' })
+    dispatch(initEventLogHistoryData({ type: 'syslog' }))
     dispatch(openDialog('sysLogHistoryDialog'))
   }
   const handleClearButtonOnClick = () => {
-    dispatch(clearSyslogData(syslogData))
+    dispatch(clearSyslogData())
   }
 
   return (
-    <Card>
+    <div>
       <Button
         variant="outlined"
-        size="default"
-        color="primary"
+        type="primary"
+        ghost
         onClick={handleHistoryButtonOnClick}
+        style={{ marginBottom: '15px', marginLeft: '10px' }}
       >
         History
       </Button>
-      <Button variant="outlined" size="default" color="primary" onClick={handleClearButtonOnClick}>
+      <Button
+        variant="outlined"
+        type="primary"
+        ghost
+        onClick={handleClearButtonOnClick}
+        style={{ marginBottom: '15px', marginLeft: '10px' }}
+      >
         Clear
       </Button>
       <Alert
@@ -101,7 +107,7 @@ const Syslog = () => {
         pagination={{ pageSize: 25 }}
         scroll={{ y: 'calc(100vh - 365px)' }}
       />
-    </Card>
+    </div>
   )
 }
 

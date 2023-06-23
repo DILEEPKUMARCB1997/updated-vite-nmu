@@ -55,8 +55,8 @@ const columns = [
 function SyslogHistoryDialog({ onClose }) {
   const { syslogHistoryData } = useSelector(eventLogSelector)
   console.log(syslogHistoryData)
-  const dispatch = useDispatch()
 
+  const dispatch = useDispatch()
   const [sourceIP, setSourceIP] = useState()
   const [ge, setGe] = useState('')
   const [le, setLe] = useState('')
@@ -76,16 +76,16 @@ function SyslogHistoryDialog({ onClose }) {
 
   const handleRefreshButtonClick = () => {
     dispatch(requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le }))
-    dispatch(syslogHistoryData)
+    //dispatch(syslogHistoryData)
   }
-  // const handleCloseButtonOnClick = () => {
-  //   clearHistoryData()
-  // }
+  const handleCloseButtonOnClick = () => {
+    dispatch(onClose())
+    dispatch(clearHistoryData())
+  }
+
   return (
-    <Modal open width="80%" footer={null} onCancel={onClose}>
-      <div>
-        <span style={{ fontSize: '18px' }}>SyslogHistory</span>
-      </div>
+    <Modal open width="80%" footer={null} onCancel={handleCloseButtonOnClick}>
+      <span style={{ fontSize: '18px' }}>SyslogHistory</span>
       <div>
         <Input
           style={{
@@ -93,16 +93,24 @@ function SyslogHistoryDialog({ onClose }) {
           }}
           placeholder="Source IP"
           onChange={handleSourceIPInputOnChange}
-          maxLength={16}
         />
         <RangePicker
+          style={{ marginBottom: '15px', marginLeft: '10px' }}
           popupStyle={{ zIndex: '1301' }}
           showTime={{ format: 'HH:mm' }}
           format="YYYY-MM-DD HH:mm"
           placeholder={['Start Time', 'End Time']}
           onChange={rangePickerChange}
         />
-        <Button onClick={handleRefreshButtonClick}> Refresh </Button>
+        <Button
+          onClick={handleRefreshButtonClick}
+          type="primary"
+          ghost
+          style={{ marginBottom: '15px', marginLeft: '10px' }}
+        >
+          {' '}
+          Refresh{' '}
+        </Button>
       </div>
       <Divider style={{ margin: '10px 0px' }} />
       <Table

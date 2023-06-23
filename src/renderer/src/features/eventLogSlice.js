@@ -8,6 +8,9 @@ import {
 export const initEventLogHistoryData = (payload) => (dispatch) => {
   const { type } = payload
   switch (type) {
+    case 'event':
+      dispatch(updateEventHistory(data))
+      break
     case 'trap':
       dispatch(
         requestHistoryData({
@@ -36,14 +39,16 @@ export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     switch (type) {
-      case 'trap':
-        dispatch(updateTrapHistory(data))
-        break
       case 'event':
         dispatch(updateEventHistory(data))
         break
+      case 'trap':
+        dispatch(updateTrapHistory(data))
+        break
       case 'syslog':
         dispatch(updateSyslogHistory(data))
+        break
+      default:
         break
     }
   })
@@ -170,6 +175,11 @@ const eventLogSlice = createSlice({
     const { payload } = action
     return { ...state, trapHistoryData: payload }
   },
+
+  updateSyslogHistory: (state) => {
+    const { payload } = action
+    return { ...state, syslogHistoryData: payload }
+  },
   clearTrapData: (state, { payload }) => {
     return { ...state, trapData: [payload] }
   }
@@ -178,15 +188,15 @@ const eventLogSlice = createSlice({
 export const {
   updateCustomHistory,
   updateCustomEventDaily,
+  updateEventHistory,
   openDialog,
   clearSyslogData,
   updateTrapHistory,
   updateSyslog,
-
+  updateSyslogHistory,
   updateEvent,
   updateLogData,
   clearEventData,
-
   clearTrapData,
   clearHistoryData
 } = eventLogSlice.actions

@@ -36,7 +36,7 @@ function EventLogPage() {
     },
     {
       key: '3',
-      label: `syslog`,
+      label: `Syslog`,
       children: <Syslog />
     }
   ]
