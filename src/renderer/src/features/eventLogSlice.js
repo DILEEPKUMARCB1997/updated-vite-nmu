@@ -1,14 +1,12 @@
+/* eslint-disable no-undef */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-<<<<<<< HEAD
 // import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 import { openDialog } from './dialogSlice'
-=======
 
->>>>>>> 3001907f37598bfb7f5a265d5caa1ca3e8c2003b
 export const initEventLogHistroyData = (payload) => (dispatch) => {
   const { type } = payload
   switch (type) {
@@ -71,15 +69,6 @@ const eventLogSlice = createSlice({
         customEventListData: sortedItems.slice(0, 30)
       }
     },
-    openDialog: (state, { action }) => {
-      if (state.dialogs.includes(action.payload)) {
-        return state
-      }
-      return {
-        ...state,
-        dialogs: [...state.dialogs, action.payload]
-      }
-    },
     updateTrapHistory: (state, { action }) => {
       const { payload } = action
       return { ...state, trapHistoryData: payload }
@@ -124,36 +113,12 @@ const eventLogSlice = createSlice({
       const { payload } = action
       return { ...state, eventHistoryData: payload }
     }
-<<<<<<< HEAD
-  },
-  clearHistoryData: (state) => {
-    return {
-      ...state,
-      eventHistoryData: [],
-      trapHistoryData: [],
-      syslogHistoryData: [],
-      customEventHistoryData: []
-    }
-  },
-  updateTrapHistory: (state, { payload }) => {
-    return { ...state, trapHistoryData: payload }
-  },
-  clearTrapData: (state, { payload }) => {
-    return { ...state, trapData: [payload] }
-=======
->>>>>>> 3001907f37598bfb7f5a265d5caa1ca3e8c2003b
   }
 })
 
 export const {
   updateCustomHistory,
   updateCustomEventDaily,
-<<<<<<< HEAD
-  clearHistoryData,
-  updateTrapHistory,
-  clearTrapData
-=======
-  openDialog,
   updateTrapHistory,
   updateEvent,
   updateLogData,
@@ -161,7 +126,6 @@ export const {
   clearSyslogData,
   clearTrapData,
   clearHistoryData
->>>>>>> 3001907f37598bfb7f5a265d5caa1ca3e8c2003b
 } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {

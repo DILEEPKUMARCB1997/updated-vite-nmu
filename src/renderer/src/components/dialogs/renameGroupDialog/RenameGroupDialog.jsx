@@ -1,3 +1,7 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { Input, Modal } from 'antd'
 import React, { useState } from 'react'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../../main/utils/IPCEvents'

@@ -1,12 +1,4 @@
-/* eslint-disable prettier/prettier */
-<<<<<<< HEAD
-/* eslint-disable no-undef */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-=======
 import React, { useEffect, useState } from 'react'
->>>>>>> 3001907f37598bfb7f5a265d5caa1ca3e8c2003b
 import { Alert, Button, Card, Table } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearEventData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
