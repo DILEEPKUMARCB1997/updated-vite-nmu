@@ -5,6 +5,7 @@ import DevicePage from '../../pages/DevicePage'
 import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
+import TopologyPage from '../../pages/TopologyPage'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -24,6 +25,10 @@ const AppRoutes = () => {
         {
           path: 'eventlog',
           element: <EventLogPage />
+        },
+        {
+          path: 'topology',
+          element: <TopologyPage />
         }
       ]
     },

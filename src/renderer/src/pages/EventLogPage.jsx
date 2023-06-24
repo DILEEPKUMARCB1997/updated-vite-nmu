@@ -17,9 +17,6 @@ var clearLogTimeOut
 function EventLogPage() {
   const dispatch = useDispatch()
 
-  const onChange = (key) => {
-    console.log(key)
-  }
   const items = [
     {
       key: '1',
