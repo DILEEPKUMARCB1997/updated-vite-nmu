@@ -84,13 +84,16 @@ function SyslogHistoryDialog({ onClose }) {
   }
 
   return (
-    <Modal open width="80%" footer={null} onCancel={handleCloseButtonOnClick}>
-      <span style={{ fontSize: '18px' }}>SyslogHistory</span>
+    <Modal
+      title="Syslog History"
+      open
+      width="80%"
+      footer={null}
+      onCancel={handleCloseButtonOnClick}
+    >
       <div>
         <Input
-          style={{
-            width: '15%'
-          }}
+          style={{ width: 150, marginTop: '10px' }}
           placeholder="Source IP"
           onChange={handleSourceIPInputOnChange}
         />

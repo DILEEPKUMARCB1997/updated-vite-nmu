@@ -26,17 +26,17 @@ const EventLog = (props) => {
       {
         name: 'Information',
         color: '#46b300',
-        data: [0, 1, 2, 3, 4, 5]
+        data: customGraphData.CriticalData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: [0, 1, 2, 3, 4, 5]
+        data: customGraphData.CriticalData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: [0, 1, 2, 3, 4, 5]
+        data: customGraphData.CriticalData
       }
     ],
     options: {
