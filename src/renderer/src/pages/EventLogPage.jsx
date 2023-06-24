@@ -25,9 +25,6 @@ var clearLogTimeOut
 function EventLogPage() {
   const dispatch = useDispatch()
 
-  const onChange = (key) => {
-    console.log(key)
-  }
   const items = [
     {
       key: '1',
@@ -74,7 +71,7 @@ function EventLogPage() {
   return (
     <div>
       <Card>
-        <Tabs type="card" defaultActiveKey="1" items={items} onChange={onChange} />
+        <Tabs type="card" defaultActiveKey="1" items={items} />
       </Card>
     </div>
   )
