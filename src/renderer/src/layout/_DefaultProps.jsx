@@ -1,4 +1,10 @@
-import { BarsOutlined, DashboardOutlined, DesktopOutlined } from '@ant-design/icons'
+/* eslint-disable prettier/prettier */
+import {
+  BarsOutlined,
+  DashboardOutlined,
+  DesktopOutlined,
+  ShareAltOutlined
+} from '@ant-design/icons'
 
 const routes = {
   route: {
@@ -18,6 +24,11 @@ const routes = {
         path: '/eventlog',
         name: 'Events',
         icon: <BarsOutlined />
+      },
+      {
+        path: '/topology',
+        name: 'Topology',
+        icon: <ShareAltOutlined />
       }
     ]
   },

@@ -4,6 +4,8 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
+// import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
+import { openDialog } from './dialogSlice'
 
 export const initEventLogHistoryData = (payload) => (dispatch) => {
   const { type } = payload
@@ -20,7 +22,7 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
           le: ''
         })
       )
-      // dispatch(openDialog('trapHistory'))
+      dispatch(openDialog('trapHistory'))
       break
     case 'syslog':
       dispatch(
@@ -31,7 +33,7 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
           le: ''
         })
       )
-      // dispatch(openDialog('syslogHistory'))
+      dispatch(openDialog('syslogHistory'))
       break
   }
 }
@@ -86,17 +88,7 @@ const eventLogSlice = createSlice({
         customEventListData: sortedItems.slice(0, 30)
       }
     },
-    openDialog: (state, { action }) => {
-      if (state.dialogs.includes(action.payload)) {
-        return state
-      }
-      return {
-        ...state,
-        dialogs: [...state.dialogs, action.payload]
-      }
-    },
-    updateTrapHistory: (state, { action }) => {
-      const { payload } = action
+    updateTrapHistory: (state, { payload }) => {
       return { ...state, trapHistoryData: payload }
     },
     updateLogData: (state) => {
@@ -114,15 +106,6 @@ const eventLogSlice = createSlice({
         customEventDailyData: filterCustomLogDailyData
       }
     },
-    clearHistoryData: (state) => {
-      return {
-        ...state,
-        eventHistoryData: [],
-        trapHistoryData: [],
-        syslogHistoryData: [],
-        customEventHistoryData: []
-      }
-    },
     clearEventData: (state) => {
       return { ...state, eventData: [] }
     },
@@ -134,6 +117,14 @@ const eventLogSlice = createSlice({
     },
     clearCustomEventData: (state) => {
       return { ...state, customEventData: [] }
+    },
+    clearHistoryData: (state) => {
+      return {
+        ...state,
+        eventHistoryData: [],
+        trapHistoryData: [],
+        syslogHistoryData: []
+      }
     },
 
     updateEventHistory: (state, action) => {
@@ -162,15 +153,6 @@ const eventLogSlice = createSlice({
     return { ...state, syslogData: filteredSyslogData }
   },
 
-  openDialog: (state, { action }) => {
-    if (state.dialogs.includes(action.payload)) {
-      return state
-    }
-    return {
-      ...state,
-      dialogs: [...state.dialogs, action.payload]
-    }
-  },
   updateTrapHistory: (state, { action }) => {
     const { payload } = action
     return { ...state, trapHistoryData: payload }
@@ -189,7 +171,6 @@ export const {
   updateCustomHistory,
   updateCustomEventDaily,
   updateEventHistory,
-  openDialog,
   clearSyslogData,
   updateTrapHistory,
   updateSyslog,
