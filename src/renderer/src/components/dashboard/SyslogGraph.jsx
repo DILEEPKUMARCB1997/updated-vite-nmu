@@ -148,7 +148,7 @@ const SyslogGraph = (props) => {
       </div>
       <div>
         <Chart
-          data={GraphData.data === null ? {} : GraphData.data}
+          // data={GraphData.data === null ? {} : GraphData.data}
           options={GraphData.options}
           series={GraphData.series}
           type="bar"

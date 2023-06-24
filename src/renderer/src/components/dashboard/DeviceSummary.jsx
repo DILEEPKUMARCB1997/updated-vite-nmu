@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { discoverySelector } from '../../features/discoverySlice'

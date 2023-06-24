@@ -24,8 +24,8 @@ const TrapGraphSummary = () => {
     series: [
       {
         name: 'SNMP Trap Message Count',
-        data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
-        // data: []
+        // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
+        data: []
       }
     ],
     options: {
@@ -103,24 +103,24 @@ const TrapGraphSummary = () => {
     }, 1500)
   }, [])
 
-  // useEffect(() => {
-  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
-  //     setSnmpTrapMsgData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: trapGraphData.data
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: trapGraphData.label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [trapGraphData])
+  useEffect(() => {
+    if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+      setSnmpTrapMsgData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: trapGraphData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: trapGraphData.label
+          }
+        }
+      }))
+    }
+  }, [trapGraphData])
 
   const handleRefresh = () => {
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
@@ -139,7 +139,7 @@ const TrapGraphSummary = () => {
       >
         <i>{trapGraphData.lastUpdated}</i>
         <Tooltip title="Refresh">
-          <Button icon={<SyncOutlined />} onClick={handleRefresh} />
+          <Button icon={<SyncOutlined onClick={handleRefresh} />} />
         </Tooltip>
       </div>
       <div>

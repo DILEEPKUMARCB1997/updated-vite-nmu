@@ -105,7 +105,7 @@ const SNMPTrap = () => {
       <Button
         type="primary"
         ghost
-        style={{ marginLeft: '5px', marginBottom: '15px' }}
+        style={{ marginLeft: '10px', marginBottom: '15px' }}
         onClick={handleClearButtonOnClick}
       >
         Clear

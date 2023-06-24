@@ -119,8 +119,8 @@ const TrapHistoryDialog = ({ onClose }) => {
           placeholder="Source IP"
           style={{
             width: 150,
-            margin: '10px',
-            marginTop: '20px'
+            margin: '0px 10px 0px 10px',
+            marginTop: '10px'
           }}
           onChange={handleSourceIPInputOnChange}
         />
@@ -130,7 +130,7 @@ const TrapHistoryDialog = ({ onClose }) => {
           format="YYYY-MM-DD HH:mm"
           placeholder={['Start Time', 'End Time']}
           style={{
-            margin: '10px'
+            marginRight: '10px'
           }}
           onChange={rangePickerChange}
         />
