@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
@@ -5,8 +6,7 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-import requestGraphData from '../components/dashboard/requestGraphData'
-import { requestCustomGraphData } from '../components/dashboard/requestCustomGraphData'
+import { requestCustomGraphData, requestGraphData } from '../components/dashboard/requestGraphData'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
@@ -108,17 +108,19 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraphData: (state, action) => {
-      const { payload } = action
+    updateCustomGraphData: (state, { payload }) => {
+      const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
+        payload
+
       return {
         ...state,
         customGraphData: {
-          label: payload.label,
-          InformationData: payload.InformationData,
-          CriticalData: payload.CriticalData,
-          WarningData: payload.WarningData,
-          tableData: payload.tableResult,
-          lastUpdated: payload.lastUpdated
+          label: label,
+          InformationData: InformationData,
+          CriticalData: CriticalData,
+          WarningData: WarningData,
+          tableData: tableResult,
+          lastUpdated: lastUpdated
         }
       }
     },

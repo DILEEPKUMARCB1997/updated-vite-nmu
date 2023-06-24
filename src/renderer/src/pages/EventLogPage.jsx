@@ -1,8 +1,11 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
 // eslint-disable-next-line no-unused-vars
-import TabPane from 'antd/es/tabs/TabPane'
+//import TabPane from 'antd/es/tabs/TabPane'
+
 import React, { useEffect } from 'react'
+
 import Event from '../components/eventlog/Event'
 import { useDispatch } from 'react-redux'
 import {
@@ -11,33 +14,34 @@ import {
   clearTrapData,
   clearSyslogData
 } from '../features/eventLogSlice'
+// import SNMPTrap from '../components/eventlog/SNMPTrap'
+//import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog
+// var clearLogTimeOut
+// import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog'
+import SNMPTrap from '../components/eventlog/SNMPTrap'
+import Syslog from '../components/eventlog/Syslog'
 
 var clearLogTimeOut
-
 function EventLogPage() {
   const dispatch = useDispatch()
 
   const items = [
     {
       key: '1',
-      label: `Event`,
+      label: `Events`,
       children: <Event />
     },
+
     {
       key: '2',
       label: `SNMP Trap`,
-      children: `Content of Tab Pane 2`
+      children: <SNMPTrap />
     },
     {
       key: '3',
       label: `Syslog`,
-      children: `Content of Tab Pane 3`
+      children: <Syslog />
     }
-    // {
-    //   key: '4',
-    //   label: `Custom Event`,
-    //   children: `Content of Tab Pane 4`
-    // }
   ]
 
   useEffect(() => {
@@ -67,7 +71,7 @@ function EventLogPage() {
   return (
     <div>
       <Card>
-        <Tabs type="card" defaultActiveKey="1" items={items} onChange={onChange} />
+        <Tabs type="card" defaultActiveKey="1" items={items} />
       </Card>
     </div>
   )

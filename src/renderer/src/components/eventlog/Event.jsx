@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, Table } from 'antd'
@@ -36,6 +39,15 @@ function Event() {
     },
     { key: 'msg', title: 'Message', dataIndex: 'msg' }
   ]
+
+  // useEffect((param) => {
+  //   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+  //     const { data } = arg
+  //     console.log(arg)
+  //     // dispatch(updateEventHistory(data))
+  //   })
+  //   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+  // })
 
   useEffect(() => {
     setTableLoading(false)
