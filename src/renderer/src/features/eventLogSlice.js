@@ -20,7 +20,7 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
           le: ''
         })
       )
-      // dispatch(openDialog('trapHistory'))
+
       break
     case 'syslog':
       dispatch(
@@ -31,7 +31,7 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
           le: ''
         })
       )
-      // dispatch(openDialog('syslogHistory'))
+
       break
   }
 }
@@ -141,15 +141,6 @@ const eventLogSlice = createSlice({
       return { ...state, eventHistoryData: payload }
     }
   },
-  clearHistoryData: (state) => {
-    return {
-      ...state,
-      eventHistoryData: [],
-      trapHistoryData: [],
-      syslogHistoryData: [],
-      customEventHistoryData: []
-    }
-  },
 
   clearSyslogData: (state, { payload }) => {
     return { ...state, syslogData: payload }
@@ -162,15 +153,6 @@ const eventLogSlice = createSlice({
     return { ...state, syslogData: filteredSyslogData }
   },
 
-  openDialog: (state, { action }) => {
-    if (state.dialogs.includes(action.payload)) {
-      return state
-    }
-    return {
-      ...state,
-      dialogs: [...state.dialogs, action.payload]
-    }
-  },
   updateTrapHistory: (state, { action }) => {
     const { payload } = action
     return { ...state, trapHistoryData: payload }
