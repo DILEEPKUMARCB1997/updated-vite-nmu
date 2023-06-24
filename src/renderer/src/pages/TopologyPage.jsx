@@ -1,10 +1,14 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
+import Card from 'antd/es/card/Card'
 import React from 'react'
 
 const TopologyPage = () => {
-  return <div> Topology Page </div>
+  return (
+    <Card bordered={false} title="Device Topology">
+      <p>TopologyToolbarContainer</p>
+      <p>TopologyGraphContainer</p>
+      <p>TopologyAddModalContainer</p>
+    </Card>
+  )
 }
 
 export default TopologyPage

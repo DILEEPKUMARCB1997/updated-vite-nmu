@@ -1,9 +1,8 @@
-/* eslint-disable prettier/prettier */
 import {
   BarsOutlined,
   DashboardOutlined,
   DesktopOutlined,
-  ShareAltOutlined
+  ApartmentOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -28,7 +27,7 @@ const routes = {
       {
         path: '/topology',
         name: 'Topology',
-        icon: <ShareAltOutlined />
+        icon: <ApartmentOutlined />
       }
     ]
   },
