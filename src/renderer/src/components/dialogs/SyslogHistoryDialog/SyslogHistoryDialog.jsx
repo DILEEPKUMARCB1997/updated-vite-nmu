@@ -80,7 +80,7 @@ function SyslogHistoryDialog({ onClose }) {
   }
   const handleCloseButtonOnClick = () => {
     dispatch(onClose())
-    dispatch(clearHistoryData())
+    clearHistoryData()
   }
 
   return (

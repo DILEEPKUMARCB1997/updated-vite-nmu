@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
@@ -71,6 +72,7 @@ const EventSummary = () => {
         const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
         return {
           ...state,
+
           customEventDailyData: filterCustomLogDailyData
         }
       }, msToMidnight)

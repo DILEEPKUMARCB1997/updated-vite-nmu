@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Navigate, useRoutes } from 'react-router-dom'
 import MainLayout from '../../layout/Mainlayout'
 import DashboardPage from '../../pages/DashboardPage'

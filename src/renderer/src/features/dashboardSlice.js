@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
@@ -110,6 +111,7 @@ const dashboardSlice = createSlice({
     updateCustomGraphData: (state, { payload }) => {
       const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
         payload
+
       return {
         ...state,
         customGraphData: {
