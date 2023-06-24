@@ -132,15 +132,6 @@ const eventLogSlice = createSlice({
       return { ...state, eventHistoryData: payload }
     }
   },
-  clearHistoryData: (state) => {
-    return {
-      ...state,
-      eventHistoryData: [],
-      trapHistoryData: [],
-      syslogHistoryData: [],
-      customEventHistoryData: []
-    }
-  },
 
   clearSyslogData: (state, { payload }) => {
     return { ...state, syslogData: payload }
