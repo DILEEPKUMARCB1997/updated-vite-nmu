@@ -3,6 +3,7 @@
 import { Card, Tabs } from 'antd'
 // eslint-disable-next-line no-unused-vars
 //import TabPane from 'antd/es/tabs/TabPane'
+
 import React, { useEffect } from 'react'
 
 import Event from '../components/eventlog/Event'
@@ -16,8 +17,10 @@ import {
 // import SNMPTrap from '../components/eventlog/SNMPTrap'
 //import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog
 // var clearLogTimeOut
-import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog'
+// import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog'
 import SNMPTrap from '../components/eventlog/SNMPTrap'
+import Syslog from '../components/eventlog/Syslog'
+
 var clearLogTimeOut
 function EventLogPage() {
   const dispatch = useDispatch()
@@ -28,9 +31,10 @@ function EventLogPage() {
   const items = [
     {
       key: '1',
-      label: `Event`,
+      label: `Events`,
       children: <Event />
     },
+
     {
       key: '2',
       label: `SNMP Trap`,
@@ -39,13 +43,8 @@ function EventLogPage() {
     {
       key: '3',
       label: `Syslog`,
-      children: `Content of Tab Pane 4`
+      children: <Syslog />
     }
-    // {
-    //   key: '4',
-    //   label: `Custom Event`,
-    //   children: `Content of Tab Pane 4`
-    // }
   ]
 
   useEffect(() => {
