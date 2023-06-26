@@ -5,7 +5,7 @@ import {
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
 // import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
-import { openDialog } from './dialogSlice'
+//import { openDialog } from './dialogSlice'
 
 export const initEventLogHistoryData = (payload) => (dispatch) => {
   const { type } = payload
@@ -34,7 +34,7 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
         })
       )
 
-      dispatch(openDialog('syslogHistory'))
+      // dispatch(openDialog('syslogHistory'))
       break
   }
 }
@@ -150,8 +150,7 @@ const eventLogSlice = createSlice({
     return { ...state, trapHistoryData: payload }
   },
 
-  updateSyslogHistory: (state) => {
-    const { payload } = action
+  updateSyslogHistory: (state, { payload }) => {
     return { ...state, syslogHistoryData: payload }
   },
   clearTrapData: (state, { payload }) => {
