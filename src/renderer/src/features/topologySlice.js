@@ -1,4 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {
+  REQUEST_MP_GROUP_MEMBER_CHANGE,
+  REQUEST_MP_SAVE_TOPOLOGY_LAYOUT,
+  REQUEST_MP_SET_THE_GROUP_DATA,
+  RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT
+} from '../../../main/utils/IPCEvents'
+
+export const requestSaveTopologyLayout = (positions, callback) => (dispatch, getState) => {
+  const { edgesData, currentGroup, nodesIds, changeGroupMemberData } = getState().topology
+  window.electron.ipcRenderer.once(RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT, (event, arg) => {
+    callback(arg.success)
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SAVE_TOPOLOGY_LAYOUT, {
+    positions,
+    edgesData,
+    currentGroup
+  })
+  if (currentGroup === 'all') {
+    window.electron.ipcRenderer.send(REQUEST_MP_GROUP_MEMBER_CHANGE, {
+      changeGroupMemberData
+    })
+  } else {
+    window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
+      cmd: 'addRemoveDevice',
+      groupId: currentGroup,
+      MACAddressList: nodesIds
+    })
+  }
+  dispatch(clearTopologyData())
+}
 
 const topologySlice = createSlice({
   name: 'topologySlice',
@@ -71,10 +101,44 @@ const topologySlice = createSlice({
     isImageExporting: false,
     SNMPDeviceProperties: {}
   },
-  reducers: {}
+  reducers: {
+    setDeviceListSelect: (state, { payload }) => {
+      const { MACAddress } = payload
+      return { ...state, devicelistSelect: MACAddress }
+    },
+    setNetworkSelectElement: (state, { payload }) => {
+      const { nodes, edges } = payload
+      return { ...state, selectEdges: edges, selectNodes: nodes }
+    },
+    setImageExporting: (state, { payload }) => {
+      return { ...state, currentGroup: payload }
+    },
+    clearNewNodeTemp: (state) => {
+      return { ...state, newNodeTemp: '' }
+    },
+    clearTopologyData: (state) => {
+      return {
+        ...state,
+        event: '',
+        editMode: false,
+        selectNodes: [],
+        selectEdges: [],
+        changeGroupMemberData: {
+          addDevice: {},
+          removeDevice: []
+        }
+      }
+    }
+  }
 })
 
-export const {} = topologySlice.actions
+export const {
+  setDeviceListSelect,
+  setNetworkSelectElement,
+  clearNewNodeTemp,
+  clearTopologyData,
+  setImageExporting
+} = topologySlice.actions
 
 export const topologySelector = (state) => {
   const {

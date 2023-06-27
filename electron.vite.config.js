@@ -23,6 +23,9 @@ export default defineConfig({
         }
       }
     },
-    plugins: [react()]
+    plugins: [react()],
+    define: {
+      global: {}
+    }
   }
 })
