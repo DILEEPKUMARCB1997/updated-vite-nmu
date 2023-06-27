@@ -126,6 +126,9 @@ const topologySlice = createSlice({
       }
     }
   },
+  changeTopologyEvent: (state, { payload }) => {
+    return { ...state, event: payload }
+  },
   addNewEdge: (state, { payload }) => {
     const { fromId, toId, fromPort, toPort } = payload
     let newNodes = {}
@@ -181,7 +184,8 @@ const topologySlice = createSlice({
   }
 })
 
-export const { addNewNode, addNewEdge, addNewVirtualNode } = topologySlice.actions
+export const { addNewNode, addNewEdge, addNewVirtualNode, changeTopologyEvent } =
+  topologySlice.actions
 
 export const topologySelector = (state) => {
   const {

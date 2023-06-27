@@ -4,7 +4,11 @@
 import { Modal, Divider, Table, Input, Button, DatePicker } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { eventLogSelector, requestHistoryData } from '../../../features/eventLogSlice'
+import {
+  eventLogSelector,
+  requestHistoryData,
+  clearHistoryData
+} from '../../../features/eventLogSlice'
 
 const { RangePicker } = DatePicker
 const columns = [
@@ -76,11 +80,10 @@ function SyslogHistoryDialog({ onClose }) {
 
   const handleRefreshButtonClick = () => {
     dispatch(requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le }))
-    //dispatch(syslogHistoryData)
   }
   const handleCloseButtonOnClick = () => {
-    dispatch(onClose())
-    clearHistoryData()
+    onClose()
+    dispatch(clearHistoryData())
   }
 
   return (

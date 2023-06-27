@@ -92,6 +92,9 @@ const eventLogSlice = createSlice({
     updateTrapHistory: (state, { payload }) => {
       return { ...state, trapHistoryData: payload }
     },
+    updateSyslogHistory: (state, { payload }) => {
+      return { ...state, syslogHistoryData: payload }
+    },
     updateLogData: (state) => {
       const filteredEventLogData = filterByDate([...state.eventData])
       const filteredTrapLogData = filterByDate([...state.trapData])
