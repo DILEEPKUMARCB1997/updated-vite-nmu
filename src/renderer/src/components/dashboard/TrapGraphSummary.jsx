@@ -39,7 +39,6 @@ const TrapGraphSummary = () => {
         offsetY: -20,
         offsetX: -5
       },
-
       legend: {
         show: true,
         showForSingleSeries: true,
