@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
+import { REQUEST_MP_SWITCH_POLLING_TOPOLOGY } from '../../../main/utils/IPCEvents'
 import {
   REQUEST_MP_GROUP_MEMBER_CHANGE,
   REQUEST_MP_SAVE_TOPOLOGY_LAYOUT,
@@ -30,6 +32,30 @@ export const requestSaveTopologyLayout = (positions, callback) => (dispatch, get
   dispatch(clearTopologyData())
 }
 
+export const requestSwitchPolling = (param) => () => {
+  window.electron.ipcRenderer.send(REQUEST_MP_SWITCH_POLLING_TOPOLOGY, {
+    isStartPolling: param
+  })
+}
+export const setTopologyData = (param) => (dispatch, getState) => {
+  const { nodesData, edgesData, virtualNodeData } = param
+
+  Object.keys(nodesData).forEach((MACAddress) => {
+    const { defaultDeviceData } = getState().discovery
+    if (defaultDeviceData[MACAddress] !== undefined) {
+      nodesData[MACAddress].status =
+        defaultDeviceData[MACAddress].deviceType === 'all' ||
+        (defaultDeviceData[MACAddress].deviceType === 'snmp' &&
+          defaultDeviceData[MACAddress].online)
+          ? 'online'
+          : 'offline'
+      nodesData[MACAddress].IPAddress = defaultDeviceData[MACAddress].IPAddress
+      nodesData[MACAddress].model = defaultDeviceData[MACAddress].model
+      nodesData[MACAddress].hostname = defaultDeviceData[MACAddress].hostname
+    }
+  })
+  dispatch(SET_TOPOLOGY_DATA)
+}
 const topologySlice = createSlice({
   name: 'topologySlice',
   initialState: {
@@ -102,6 +128,74 @@ const topologySlice = createSlice({
     SNMPDeviceProperties: {}
   },
   reducers: {
+    changeTopologyEvent: (state, action) => {
+      return { ...state, event: action.payload }
+    },
+    switchEditMode: (state, action) => {
+      return { ...state, editMode: action.payload }
+    },
+    setTopologyViewSettings: (state, action) => {
+      return { ...state, [action.payload]: !state[action.payload] }
+    },
+    clearTopologyLayout: (state, payload) => {
+      return {
+        ...state,
+        virtualNodeData: { payload },
+        nodesData: { payload },
+        edgesData: { payload },
+        nodesIds: [payload],
+        selectNodes: [payload],
+        selectEdges: [payload]
+      }
+    },
+    removeNetworkSelectElement: (state, { payload }) => {
+      let { nodesData, edgesData, virtualNodeData } = state
+      const { selectNodes, selectEdges, changeGroupMemberData } = state
+
+      selectNodes.forEach((element) => {
+        if (element.startsWith('virtual')) {
+          const { [element]: _, ...newData } = virtualNodeData
+          virtualNodeData = { ...newData }
+        } else {
+          const { [element]: _, ...newData } = nodesData
+          nodesData = { ...newData }
+          if (state.currentGroup === 'all') {
+            if (changeGroupMemberData.addDevice[element] !== undefined) {
+              changeGroupMemberData.addDevice[element] = undefined
+            } else {
+              changeGroupMemberData.removeDevice.push(element)
+            }
+          }
+        }
+      })
+      selectEdges.forEach((element) => {
+        const { [element]: _, ...newData } = edgesData
+        edgesData = { ...newData }
+      })
+      return {
+        ...state,
+        nodesData,
+        edgesData,
+        virtualNodeData,
+        nodesIds: Object.keys(nodesData),
+        selectNodes: [payload],
+        selectEdges: [payload],
+        changeGroupMemberData
+      }
+    },
+    SET_TOPOLOGY_DATA: (state, action) => {
+      if (state.event !== '') {
+        return state
+      }
+      const { nodesData, edgesData, virtualNodeData } = action.payload
+      return {
+        ...state,
+        virtualNodeData,
+        nodesData,
+        edgesData,
+        nodesIds: Object.keys(nodesData)
+      }
+    },
     setDeviceListSelect: (state, { payload }) => {
       const { MACAddress } = payload
       return { ...state, devicelistSelect: MACAddress }
@@ -133,6 +227,13 @@ const topologySlice = createSlice({
 })
 
 export const {
+  changeTopologyEvent,
+  switchEditMode,
+  setTopologyViewSettings,
+  clearTopologyLayout,
+  removeNetworkSelectElement,
+  SET_TOPOLOGY_DATA,
+
   setDeviceListSelect,
   setNetworkSelectElement,
   clearNewNodeTemp,
