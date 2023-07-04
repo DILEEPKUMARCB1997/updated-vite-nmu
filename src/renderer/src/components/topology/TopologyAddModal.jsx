@@ -1,415 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-// /* eslint-disable react/prop-types */
-// /* eslint-disable no-unused-vars */
-// import { Modal, Checkbox, Input, Select, InputNumber } from 'antd'
-// import React, { useEffect, useState } from 'react'
-// import {
-//   addNewEdge,
-//   addNewNode,
-//   addNewVirtualNode,
-//   topologySelector
-// } from '../../features/topologySlice'
-// import { useDispatch, useSelector } from 'react-redux'
-
-// const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
-// const { Option } = Select
-// const TopologyAddModal = (props) => {
-//   const { nodesIds } = props
-//   const { currentGroup, event } = useSelector(topologySelector)
-//   console.log(currentGroup)
-//   const dispatch = useDispatch()
-
-//   useEffect(() => {
-//     dispatch(addNewVirtualNode(currentGroup))
-//   }, [])
-
-// const [isVirtualNode, setIsVirtualNode] = useState(false)
-// const [open, setOpen] = useState(false)
-// const [addNodeMax, setAddNodeMax] = useState([])
-// const [addNodeMAC, setAddNodeMAC] = useState('')
-// const [toPort, setToPort] = useState('')
-// const [selectGroup, setSelectGroup] = useState([])
-// const [addEdgeNodes, setAddEdgeNodes] = useState('')
-// const [fromPort, setFromPort] = useState(1)
-// const [addNodePosition, setAddNodePosition] = useState('')
-
-//   const isAddNodePass =
-//     (selectGroup.length !== 0 &&
-//       currentGroup === 'all' &&
-//       MACAddressFormat.test(addNodeMAC) &&
-//       !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-//     (currentGroup !== 'all' &&
-//       MACAddressFormat.test(addNodeMAC) &&
-//       !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-//     isVirtualNode
-//   const isAddEdgePass = fromPort !== '' && toPort !== ''
-//   const disableOKButton = event === 'addNode' ? !isAddNodePass : !isAddEdgePass
-
-//   const isFromVirtual = addEdgeNodes.startsWith('123')
-//   const isToVirtual = addEdgeNodes.startsWith('345')
-//   let groupDeviceData = {}
-//   const groupList = []
-//   Object.entries(groupDeviceData).forEach(([key, value]) => {
-//     if (key !== 'unGrouped') {
-//       groupList.push({ name: value.groupName, id: key })
-//     }
-//   })
-
-//   let groupSelectWidth = 105
-//   groupList.forEach((element) => {
-//     const minWidth = element.name.length * 12
-//     if (minWidth > groupSelectWidth) {
-//       groupSelectWidth = minWidth
-//     }
-//   })
-
-//   const handleAddNodeMACInputChange = (event) => {
-//     setAddNodeMAC(event.target.value)
-//   }
-//   const handleToPortInputChange = (value) => {
-//     if (value !== undefined) {
-//       setToPort(value)
-//     }
-//   }
-//   const handleGroupSelectOnChange = (value) => {
-//     setSelectGroup(value)
-//   }
-//   const handleFromPortInputChange = (value) => {
-//     if (value !== undefined) {
-//       setFromPort(value)
-//     }
-//   }
-
-//   const handleVirtualNodeCheckOnChange = (value) => {
-//     setIsVirtualNode(value.target.checked)
-//   }
-//   const handleModalOKButtonClick = () => {
-//     if (event === 'addNode') {
-//       if (isVirtualNode) {
-//         dispatch(
-//           addNewVirtualNode({
-//             x: addNodePosition.x,
-//             y: addNodePosition.y
-//           })
-//         )
-//       } else {
-//         dispatch(
-//           addNewNode({
-//             MACAddress: addNodeMAC,
-//             x: addNodePosition.x,
-//             y: addNodePosition.y,
-//             groupIds: selectGroup
-//           })
-//         )
-//       }
-//     } else {
-//       dispatch(
-//         addNewEdge({
-//           fromId: addEdgeNodes.from,
-//           toId: addEdgeNodes.to,
-//           fromPort: fromPort,
-//           toPort: toPort
-//         })
-//       )
-//     }
-//     handleModalCancel()
-//   }
-//   const handleModalCancelButtonClick = () => {
-//     handleModalCancel()
-//   }
-//   const handleModalCancel = () => {
-//     //setAddNodeMAC(addNodeMAC)
-//     //setAddNodeMax({ from: 1, to: 1 })
-//     setAddEdgeNodes({ from: '', to: '' })
-//     // setIsVirtualNode(false)
-//     // setSelectGroup(selectGroup)
-//     //setOpen(false)
-//     //dispatch(handleDisableEdit())
-//   }
-//   return (
-//     <Modal
-//       open
-//       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-//       onOk={handleModalOKButtonClick}
-//       onCancel={handleModalCancelButtonClick}
-//       okButtonProps={{ disabled: disableOKButton }}
-//     >
-//       <div>
-//         <Checkbox checked={isVirtualNode} onChange={handleVirtualNodeCheckOnChange}>
-//           Virtual Node
-//         </Checkbox>
-//         <Input
-//           disabled={isVirtualNode}
-//           value={addNodeMAC.toUpperCase()}
-//           placeholder="MAC Address"
-//           onChange={handleAddNodeMACInputChange}
-//         />
-//         {currentGroup === 'all' && (
-//           <Select
-//             mode="multiple"
-//             disabled={isVirtualNode}
-//             value={selectGroup}
-//             style={{ marginTop: '5px', minWidth: `${groupSelectWidth}px` }}
-//             onChange={handleGroupSelectOnChange}
-//           >
-//             {groupList.map((group) => (
-//               <Option key={group.id} value={group.id}>
-//                 {group.name}
-//               </Option>
-//             ))}
-//           </Select>
-//         )}
-//       </div>
-//     </Modal>
-//   )
-// }
-
-// export default TopologyAddModal
-
-// import React, { useState, useEffect } from 'react'
-// //import PropTypes from 'prop-types'
-// import { useSelector, useDispatch } from 'react-redux'
-// import {
-//   addNewEdge,
-//   addNewNode,
-//   addNewVirtualNode,
-//   topologySelector
-// } from '../../features/topologySlice'
-// import { Modal, Select, Input, Checkbox, InputNumber } from 'antd'
-// const { Option } = Select
-// const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
-// function TopologyAddModal(props) {
-//   const { onRef, event, handleDisableEdit, nodesIds, nodesData, groupList, groupSelectWidth } =
-//     props
-
-//   const dispatch = useDispatch()
-//   const { currentGroup } = useSelector(topologySelector)
-
-//   const [open, setOpen] = useState(false)
-//   const [addNodePosition, setAddNodePosition] = useState({})
-//   const [addNodeMAC, setAddNodeMAC] = useState('')
-//   const [addEdgeNodes, setAddEdgeNodes] = useState({ from: '', to: '' })
-//   const [addNodeMax, setAddNodeMax] = useState({ from: 1, to: 1 })
-//   const [fromPort, setFromPort] = useState(1)
-//   const [toPort, setToPort] = useState()
-//   const [isVirtualNode, setIsVirtualNode] = useState(false)
-//   const [selectGroup, setSelectGroup] = useState([])
-
-// useEffect(() => {
-//   //dispatch(addEdgeNodes(onRef))
-//   dispatch(addNewVirtualNode(currentGroup))
-//   return () => {
-//     // onRef(undefined)
-//   }
-// }, [])
-
-// const openModal = (data) => {
-//   //console.log(props);
-//   if (event === 'addNode') {
-//     setOpen(true)
-//     setAddNodePosition(data)
-//   } else {
-//     setOpen(true)
-//     setAddEdgeNodes(data)
-//     setAddNodeMax({
-//       from: data.from.startsWith('virtual') ? 1 : findPortMaxLength(data.from),
-//       to: data.to.startsWith('virtual') ? 1 : findPortMaxLength(data.to)
-//     })
-//   }
-// }
-
-//   const findPortMaxLength = (modeln) => {
-//     let Model = nodesData[modeln].model.toString('utf8')
-//     let MaxValue = 1
-//     if (Model.indexOf('-') > -1) {
-//       MaxValue = parseInt(Model.substring(Model.indexOf('-') - 2, Model.indexOf('-')))
-//     } else {
-//       MaxValue = parseInt(Model.substring(Model.length - 2, Model.length))
-//     }
-//     return MaxValue.toString() === 'NaN' ? 28 : MaxValue
-//   }
-
-//   const handleAddNodeMACInputChange = (event) => {
-//     setAddNodeMAC(event.target.value)
-//   }
-
-//   const handleModalOKButtonClick = () => {
-//     //console.log(currentGroup);
-//     //console.log(selectGroup);
-//     if (event === 'addNode') {
-//       if (isVirtualNode) {
-//         dispatch(
-//           addNewVirtualNode({
-//             x: addNodePosition.x,
-//             y: addNodePosition.y
-//           })
-//         )
-//       } else {
-//         dispatch(
-//           addNewNode({
-//             MACAddress: addNodeMAC,
-//             x: addNodePosition.x,
-//             y: addNodePosition.y,
-//             groupIds: selectGroup
-//           })
-//         )
-//       }
-//     } else {
-//       addNewEdge({
-//         fromId: addEdgeNodes.from,
-//         toId: addEdgeNodes.to,
-//         fromPort: fromPort,
-//         toPort: toPort
-//       })
-//     }
-//     dispatch(handleModalCancel())
-//   }
-
-//   const handleModalCancel = (value) => {
-// setOpen(false)
-// setAddNodePosition({})
-// setAddNodeMAC('')
-// setAddEdgeNodes({
-//   from: '',
-//   to: ''
-// })
-// setAddNodeMax({
-//   from: 1,
-//   to: 1
-// })
-// if (value !== undefined) {
-//   setFromPort(value)
-//   setToPort(value)
-// }
-// setIsVirtualNode(false)
-// setSelectGroup([])
-// // handleDisableEdit()
-//   }
-
-//   const handleModalCancelButtonClick = () => {
-//     dispatch(handleModalCancel())
-//   }
-
-//   const handleFromPortInputChange = (value) => {
-//     if (value !== undefined) {
-//       setFromPort(value)
-//     }
-//   }
-
-//   const handleToPortInputChange = (value) => {
-//     if (value !== undefined) {
-//       setToPort(value)
-//     }
-//   }
-
-//   const handleVirtualNodeCheckOnChange = (value) => {
-//     setIsVirtualNode(value.target.checked)
-//   }
-
-//   const handleGroupSelectOnChange = (value) => {
-//     setSelectGroup(value)
-//   }
-
-//   const isAddNodePass =
-//     (selectGroup.length !== 0 &&
-//       currentGroup === 'all' &&
-//       MACAddressFormat.test(addNodeMAC) &&
-//       !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-//     (currentGroup !== 'all' &&
-//       MACAddressFormat.test(addNodeMAC) &&
-//       !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-//     isVirtualNode
-//   const isAddEdgePass = fromPort !== '' && toPort !== ''
-//   const disableOKButton = event === 'addNode' ? !isAddNodePass : !isAddEdgePass
-//   const isFromVirtual = addEdgeNodes.from.startsWith('virtual')
-//   const isToVirtual = addEdgeNodes.to.startsWith('virtual')
-
-//   return (
-//     <Modal
-//       open
-//       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-//       onOk={handleModalOKButtonClick}
-//       onCancel={handleModalCancelButtonClick}
-//       okButtonProps={{ disabled: disableOKButton }}
-//     >
-//       {event === 'addNode' ? (
-//         <div>
-//           <Checkbox checked={isVirtualNode} onChange={handleVirtualNodeCheckOnChange}>
-//             Virtual Node
-//           </Checkbox>
-//           <Input
-//             disabled={isVirtualNode}
-//             value={addNodeMAC.toUpperCase()}
-//             placeholder="MAC Address"
-//             onChange={handleAddNodeMACInputChange}
-//           />
-//           {currentGroup === 'all' && (
-//             <Select
-//               mode="multiple"
-//               disabled={isVirtualNode}
-//               value={selectGroup}
-//               style={{ marginTop: '5px', minWidth: `${groupSelectWidth}px` }}
-//               onChange={handleGroupSelectOnChange}
-//             >
-//               {groupList.map((group) => (
-//                 <Option key={group.id} value={group.id}>
-//                   {group.name}
-//                 </Option>
-//               ))}
-//             </Select>
-//           )}
-//         </div>
-//       ) : (
-//         <div>
-//           <div>
-//             {'From '}
-//             <span>{isFromVirtual ? 'Virtual Node' : addEdgeNodes.from}</span>
-//             {!isFromVirtual && (
-//               <div>
-//                 {' Port '}
-//                 {
-//                   <InputNumber
-//                     placeholder="Port"
-//                     min={1}
-//                     max={addNodeMax.from}
-//                     value={fromPort}
-//                     onChange={handleFromPortInputChange}
-//                   />
-//                 }
-//               </div>
-//             )}
-//           </div>
-//           <div>
-//             {'To '}
-
-//             <span>{isToVirtual ? 'Virtual Node' : addEdgeNodes.to}</span>
-//             {!isToVirtual && (
-//               <div>
-//                 {' Port '}
-//                 {
-//                   <InputNumber
-//                     placeholder="Port"
-//                     min={1}
-//                     max={addNodeMax.to}
-//                     value={toPort}
-//                     onChange={handleToPortInputChange}
-//                   />
-//                 }
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-//     </Modal>
-//   )
-// }
-
-// export default TopologyAddModal
-
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Modal, InputNumber, Select, Input, Checkbox, Card } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
+// import handleDisableEdit from './TopologyGraph/TopologyGraph'
 import {
   addNewEdge,
   addNewNode,
@@ -417,15 +11,20 @@ import {
   changeTopologyEvent,
   topologySelector
 } from '../../features/topologySlice'
-import { useEffect, useState } from 'react'
 
 const { Option } = Select
 const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
 
 const TopologyAddModal = (props) => {
-  const { onRef } = props
+  // eslint-disable-next-line no-unused-vars
+  const { handleDisableEdit, nodesData, onRef } = props
+  TopologyAddModal.propTypes = {
+    handleDisableEdit: PropTypes.func.isRequired
+  }
+  //const modalRef = useRef()
+
   const { currentGroup, event, nodesIds } = useSelector(topologySelector)
-  console.log(event)
+  // console.log(event)
   const dispatch = useDispatch()
 
   const [isVirtualNode, setIsVirtualNode] = useState(false)
@@ -439,21 +38,12 @@ const TopologyAddModal = (props) => {
   const [addNodePosition, setAddNodePosition] = useState('')
 
   useEffect(() => {
+    //onRef(modalRef)
     dispatch(addNewVirtualNode(currentGroup))
-    //dispatch(changeTopologyEvent(''))
-    // onRef(this)
+    return () => {
+      // onRef(modalRef)
+    }
   }, [])
-
-  // useEffect(() => {
-  //   dispatch(onRef())
-  //   return () => {
-  //     onRef(undefined)
-  //   }
-  // }, [])
-  const handleDisableEdit = () => {
-    dispatch(changeTopologyEvent(''))
-    //this.graph.networkDisableEditMode()
-  }
 
   const openModal = (data) => {
     //console.log(props);
@@ -484,43 +74,36 @@ const TopologyAddModal = (props) => {
   const handleAddNodeMACInputChange = (event) => {
     setAddNodeMAC(event.target.value)
   }
-
   const handleModalOKButtonClick = () => {
-    //console.log(currentGroup);
+    //console.log(this.props.currentGroup);
     //console.log(selectGroup);
     if (event === 'addNode') {
       if (isVirtualNode) {
-        dispatch(
-          addNewVirtualNode({
-            x: addNodePosition.x,
-            y: addNodePosition.y
-          })
-        )
+        addNewVirtualNode({
+          x: addNodePosition.x,
+          y: addNodePosition.y
+        })
       } else {
-        dispatch(
-          addNewNode({
-            MACAddress: addNodeMAC,
-            x: addNodePosition.x,
-            y: addNodePosition.y,
-            groupIds: selectGroup
-          })
-        )
+        addNewNode({
+          MACAddress: addNodeMAC,
+          x: addNodePosition.x,
+          y: addNodePosition.y,
+          groupIds: selectGroup
+        })
       }
     } else {
-      dispatch(
-        addNewEdge({
-          fromId: addEdgeNodes.from,
-          toId: addEdgeNodes.to,
-          fromPort: fromPort,
-          toPort: toPort
-        })
-      )
+      addNewEdge({
+        fromId: addEdgeNodes.from,
+        toId: addEdgeNodes.to,
+        fromPort: fromPort,
+        toPort: toPort
+      })
     }
-    dispatch(handleModalCancel())
+    handleModalCancel()
   }
 
   const handleModalCancel = () => {
-    setOpen(false)
+    setOpen(open)
     setAddNodePosition({})
     setAddNodeMAC('')
     setAddEdgeNodes({
@@ -537,11 +120,12 @@ const TopologyAddModal = (props) => {
 
     setIsVirtualNode(false)
     setSelectGroup([])
-    dispatch(handleDisableEdit())
+    // dispatch(handleDisableEdit())
+    dispatch(changeTopologyEvent(''))
   }
 
   const handleModalCancelButtonClick = () => {
-    dispatch(handleModalCancel())
+    handleModalCancel()
   }
 
   const handleFromPortInputChange = (value) => {
