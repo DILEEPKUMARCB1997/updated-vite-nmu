@@ -18,10 +18,12 @@ import { nextInitRenderStep } from '../features/UIControllSlice'
 import { openDialog, dialogSelector } from '../features/dialogSlice.js'
 //import { requestGetNICData } from '../features/generalSlice'
 import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
-import PreferencesDialog from '../components/dialogs/PreferencesDialog/PreferencesDialog'
+//import PreferencesDialog from '../components/dialogs/PreferencesDialog/PreferencesDialog'
 
-const MainLayout = () => {
-  // const { isAppPreferencesDialogOpen } = useSelector(dialogSelector)
+//import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
+// const { isAppPreferencesDialogOpen } = useSelector(dialogSelector)
+
+const MainLayout = (props) => {
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()
@@ -32,6 +34,7 @@ const MainLayout = () => {
   useEffect(() => {
     setPathname(location.pathname || '/')
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
+
     setTimeout(() => {
       nextInitRenderStep()
     }, 800)
@@ -44,6 +47,17 @@ const MainLayout = () => {
     window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
   }, [location])
 
+  const nativeMenuListener = (event, arg) => {
+    if (arg.action === 'preference') {
+      // if (!isAppPreferencesDialogOpen) {
+      // this.props.requestGetNICData()
+      dispatch(openDialog('perferences'))
+      // }
+    } else if (arg.action === 'about') {
+      dispatch(openDialog('about'))
+    }
+  }
+
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
       dispatch(clearUsersData())
@@ -52,15 +66,15 @@ const MainLayout = () => {
     }
   }
 
-  const nativeMenuListener = (event, arg) => {
-    if (arg.action === 'preference') {
-      dispatch(openDialog('perferences'))
-      //localStorage.getItem('perferences')
-      //navigate('/perferences')
-    } else if (arg.action === 'about') {
-      openDialog('about')
-    }
-  }
+  // const nativeMenuListener = (event, arg) => {
+  //   if (arg.action === 'preference') {
+  //     dispatch(openDialog('perferences'))
+  //     //localStorage.getItem('perferences')
+  //     //navigate('/perferences')
+  //   } else if (arg.action === 'about') {
+  //     openDialog('about')
+  //   }
+  // }
 
   const loggedinUser = localStorage.getItem('username') ? localStorage.getItem('username') : 'admin'
 
@@ -102,6 +116,7 @@ const MainLayout = () => {
                   //   key: 'perferences',
                   //   icon: <SettingOutlined />,
                   //   label: 'Perferences'
+                  //   label: 'preference'
                   // }
                 ],
                 onClick: handleMenuClick

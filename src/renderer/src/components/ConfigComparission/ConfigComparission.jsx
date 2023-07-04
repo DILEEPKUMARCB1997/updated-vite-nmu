@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-
-import './ConfigComparission.css'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Row, Col, Card } from 'antd'
+import './ConfigComarission.css'
 
 function ConfigComparission() {
   const [asdf, setasdf] = useState('')

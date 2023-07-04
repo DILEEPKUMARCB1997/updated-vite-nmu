@@ -33,6 +33,7 @@ const routes = {
       {
         path: '/configComparission',
         name: 'ConfigComparission',
+
         icon: <FileSearchOutlined />
       }
     ]

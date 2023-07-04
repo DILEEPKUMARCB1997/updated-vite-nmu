@@ -18,16 +18,11 @@ const UIControlSlice = createSlice({
     nextInitRenderStep: (state, { payload }) => {
       const { action } = payload
       return { ...state, initRenderStep: state.initRenderStep + 1 }
-    },
-    removeBatchOperateEvent: (state, { payload }) => {
-      const { action } = payload
-      return { ...state, showBatchOperateTips: false, batchOperateEvent: '' }
     }
   }
 })
 
-export const { openDevicesMenu, nextInitRenderStep, removeBatchOperateEvent } =
-  UIControlSlice.actions
+export const { openDevicesMenu, nextInitRenderStep } = UIControlSlice.actions
 
 export const UIControlSelector = (state) => {
   const {
