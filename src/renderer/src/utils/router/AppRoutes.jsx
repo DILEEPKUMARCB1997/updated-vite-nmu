@@ -7,7 +7,11 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
+<<<<<<< HEAD
 import UserManagementPage from '../../pages/UserManagementPage'
+=======
+import DeviceConfigPage from '../../pages/DeviceConfigPage'
+>>>>>>> b1b92760cd7e9ff7762cad11dfee749c85035c04
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -33,8 +37,13 @@ const AppRoutes = () => {
           element: <TopologyPage />
         },
         {
+<<<<<<< HEAD
           path: 'usermanagement',
           element: <UserManagementPage />
+=======
+          path: 'file',
+          element: <DeviceConfigPage />
+>>>>>>> b1b92760cd7e9ff7762cad11dfee749c85035c04
         }
       ]
     },

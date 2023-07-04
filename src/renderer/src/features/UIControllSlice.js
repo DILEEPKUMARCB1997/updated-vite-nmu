@@ -13,11 +13,14 @@ const UIControlSlice = createSlice({
   reducers: {
     openDevicesMenu: (state, { payload }) => {
       return { ...state, manualOpenDeviceMenu: payload }
+    },
+    nextInitRenderStep: (state) => {
+      return { ...state, initRenderStep: state.initRenderStep + 1 }
     }
   }
 })
 
-export const { openDevicesMenu } = UIControlSlice.actions
+export const { openDevicesMenu, nextInitRenderStep } = UIControlSlice.actions
 
 export const UIControlSelector = (state) => {
   const {

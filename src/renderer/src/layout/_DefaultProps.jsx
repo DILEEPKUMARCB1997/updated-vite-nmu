@@ -4,6 +4,7 @@ import {
   DesktopOutlined,
   ApartmentOutlined,
   UserOutlined
+  FileSearchOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -31,9 +32,15 @@ const routes = {
         icon: <ApartmentOutlined />
       },
       {
+<<<<<<< HEAD
         path: '/usermanagement',
         name: 'User Management',
         icon: <UserOutlined />
+=======
+        path: '/file',
+        name: 'Device config comparison',
+        icon: <FileSearchOutlined />
+>>>>>>> b1b92760cd7e9ff7762cad11dfee749c85035c04
       }
     ]
   },

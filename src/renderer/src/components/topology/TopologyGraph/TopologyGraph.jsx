@@ -18,12 +18,16 @@ import { discoverySelector } from '../../../features/discoverySlice'
 import { openDevicesMenu } from '../../../features/UIControllSlice'
 import { notification } from 'antd'
 import { datePad } from '../../comman/tools'
+// import PropTypes from 'prop-types'
 
 let roundnessList = {}
 let virtualMac = []
 
 const TopologyGraph = (props) => {
-  let networkRef = useRef()
+  // TopologyGraph.PropTypes = {
+  //   onRef: PropTypes.func.isRequired
+  // }
+  const networkRef = useRef()
   console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
@@ -202,7 +206,7 @@ const TopologyGraph = (props) => {
     const nowSeconds = datePad(now.getSeconds().toString())
 
     const fileName =
-      this.props.currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
+      currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
     function filter(node) {
       return node.tagName !== 'i'
     }
@@ -211,11 +215,11 @@ const TopologyGraph = (props) => {
       .toSvg(networkCanvas, { filter })
       .then((dataUrl) => {
         saveAs(dataUrl, `${fileName}.svg`)
-        return this.props.setImageExporting(false)
+        return dispatch(setImageExporting(false))
       })
       .catch((error) => {
         console.error(error)
-        return this.props.setImageExporting(false)
+        return dispatch(setImageExporting(false))
       })
   }
 
