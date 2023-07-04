@@ -1,6 +1,36 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 import { REQUEST_MP_SWITCH_POLLING_TOPOLOGY } from '../../../main/utils/IPCEvents'
+import {
+  REQUEST_MP_GROUP_MEMBER_CHANGE,
+  REQUEST_MP_SAVE_TOPOLOGY_LAYOUT,
+  REQUEST_MP_SET_THE_GROUP_DATA,
+  RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT
+} from '../../../main/utils/IPCEvents'
+
+export const requestSaveTopologyLayout = (positions, callback) => (dispatch, getState) => {
+  const { edgesData, currentGroup, nodesIds, changeGroupMemberData } = getState().topology
+  window.electron.ipcRenderer.once(RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT, (event, arg) => {
+    callback(arg.success)
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SAVE_TOPOLOGY_LAYOUT, {
+    positions,
+    edgesData,
+    currentGroup
+  })
+  if (currentGroup === 'all') {
+    window.electron.ipcRenderer.send(REQUEST_MP_GROUP_MEMBER_CHANGE, {
+      changeGroupMemberData
+    })
+  } else {
+    window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
+      cmd: 'addRemoveDevice',
+      groupId: currentGroup,
+      MACAddressList: nodesIds
+    })
+  }
+  dispatch(clearTopologyData())
+}
 
 export const requestSwitchPolling = (param) => () => {
   window.electron.ipcRenderer.send(REQUEST_MP_SWITCH_POLLING_TOPOLOGY, {
@@ -24,10 +54,7 @@ export const setTopologyData = (param) => (dispatch, getState) => {
       nodesData[MACAddress].hostname = defaultDeviceData[MACAddress].hostname
     }
   })
-  dispatch({
-    type: SET_TOPOLOGY_DATA,
-    payload: { nodesData, edgesData, virtualNodeData }
-  })
+  dispatch(SET_TOPOLOGY_DATA)
 }
 const topologySlice = createSlice({
   name: 'topologySlice',
@@ -169,6 +196,20 @@ const topologySlice = createSlice({
         nodesIds: Object.keys(nodesData)
       }
     },
+    setDeviceListSelect: (state, { payload }) => {
+      const { MACAddress } = payload
+      return { ...state, devicelistSelect: MACAddress }
+    },
+    setNetworkSelectElement: (state, { payload }) => {
+      const { nodes, edges } = payload
+      return { ...state, selectEdges: edges, selectNodes: nodes }
+    },
+    setImageExporting: (state, { payload }) => {
+      return { ...state, currentGroup: payload }
+    },
+    clearNewNodeTemp: (state) => {
+      return { ...state, newNodeTemp: '' }
+    },
     clearTopologyData: (state) => {
       return {
         ...state,
@@ -192,7 +233,12 @@ export const {
   clearTopologyLayout,
   removeNetworkSelectElement,
   SET_TOPOLOGY_DATA,
-  clearTopologyData
+
+  setDeviceListSelect,
+  setNetworkSelectElement,
+  clearNewNodeTemp,
+  clearTopologyData,
+  setImageExporting
 } = topologySlice.actions
 
 export const topologySelector = (state) => {

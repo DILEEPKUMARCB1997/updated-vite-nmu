@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Form, Checkbox, Tooltip, Modal, Button, Divider, Progress, Typography } from 'antd'
@@ -21,7 +22,7 @@ import {
   removeNetworkSelectElement
 } from '../../features/topologySlice'
 
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 const { confirm } = Modal
 
@@ -33,14 +34,28 @@ const ADD_NODE_TIPS = 'Click in an empty space to place a new node.'
 const ADD_EDGE_TIPS = 'Click on a node and drag to another node to connect them.'
 
 const TopologyToolbar = (props) => {
-  TopologyToolbar.propTypes = {
-    handleAddNode: PropTypes.func.isRequired,
+  // TopologyToolbar.propTypes = {
+  //   handleAddNode: PropTypes.func.isRequired,
+  //   handleDisableEdit: PropTypes.func.isRequired,
+  //   handleFitViewPoin: PropTypes.func.isRequired,
+  //   handleSearchNode: PropTypes.func.isRequired,
+  //   handleAddEdge: PropTypes.func.isRequired,
+  //   handleSaveLayout: PropTypes.func.isRequired,
+  //   handleExportImage: PropTypes.func.isRequired,
 
-    showDeleteSelectButton: PropTypes.bool.isRequired,
+  //   showDeleteSelectButton: PropTypes.bool.isRequired,
 
-    role: PropTypes.string.isRequired
-  }
-  const { role } = props
+  //   role: PropTypes.string.isRequired
+  // }
+  const {
+    role,
+    handleAddNode,
+    handleAddEdge,
+    handleDisableEdit,
+    handleExportImage,
+    handleFitViewPoin,
+    handleSaveLayout
+  } = props
   const { editMode, isImageExporting, event } = useSelector(topologySelector)
   const dispatch = useDispatch()
 

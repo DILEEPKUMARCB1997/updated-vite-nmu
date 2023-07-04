@@ -2,7 +2,8 @@ import {
   BarsOutlined,
   DashboardOutlined,
   DesktopOutlined,
-  ApartmentOutlined
+  ApartmentOutlined,
+  FileSearchOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -28,6 +29,11 @@ const routes = {
         path: '/topology',
         name: 'Topology',
         icon: <ApartmentOutlined />
+      },
+      {
+        path: '/file',
+        name: 'Device config comparison',
+        icon: <FileSearchOutlined />
       }
     ]
   },

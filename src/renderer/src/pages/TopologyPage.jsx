@@ -1,6 +1,8 @@
+/* eslint-disable no-const-assign */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import Card from 'antd/es/card/Card'
-import React, { useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
+import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
 
 import {
   changeTopologyEvent,
@@ -8,13 +10,24 @@ import {
   clearTopologyData,
   requestSwitchPolling
 } from '../features/topologySlice'
+
 import { useDispatch } from 'react-redux'
 import TopologyToolbar from '../components/Topology/TopologyToolbar'
+import { Card } from 'antd'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
-
+// import PropTypes from 'prop-types'
+let graph
 const TopologyPage = () => {
+  // TopologyPage.propTypes = {
+  //   networkDisableEditMode: PropTypes.object.isRequired,
+  //   networkAddNodeMode: PropTypes.object.isRequired,
+  //   networkAddEdgeMode: PropTypes.object.isRequired,
+  //   networkExportImage: PropTypes.object.isRequired,
+  //   networkFitViewPoint: PropTypes.object.isRequired
+  // }
+  const graphRef = useRef()
+  const modalRef = useRef()
   const dispatch = useDispatch()
-
   useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
     dispatch(clearTopologyData())
@@ -27,25 +40,31 @@ const TopologyPage = () => {
   }
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
-    this.graph.networkDisableEditMode()
+    graphRef.current.networkDisableEditMode()
   }
   const handleAddNode = () => {
     dispatch(changeTopologyEvent('addNode'))
-    this.graph.networkAddNodeMode()
+    graphRef.current.networkAddNodeMode()
   }
 
   const handleAddEdge = () => {
     dispatch(changeTopologyEvent('addEdge'))
-    this.graph.networkAddEdgeMode()
+    graphRef.current.networkAddEdgeMode()
   }
   const handleSaveLayout = () => {
-    this.graph.networkSaveLayout()
+    graphRef.current.networkAddEdgeMode()
   }
   const handleExportImage = () => {
-    this.graph.networkExportImage()
+    graphRef.current.networkExportImage()
   }
   const handleFitViewPoin = () => {
-    this.graph.networkFitViewPoint()
+    graphRef.current.networkFitViewPoint()
+  }
+  const getNodePosition = (position) => {
+    modalRef.current.openModal(position)
+  }
+  const getEdgeLinkNode = (nodes) => {
+    modalRef.current.openModal(nodes)
   }
   return (
     <div
@@ -85,7 +104,6 @@ const TopologyPage = () => {
             handleSaveLayout={handleSaveLayout}
           />
         </div>
-
         <div
           style={{
             borderStyle: 'double',
@@ -95,6 +113,15 @@ const TopologyPage = () => {
             height: '380px'
           }}
         ></div>
+
+        <TopologyGraph
+          onRef={(ref) => {
+            ref = { graphRef }
+          }}
+          // onRef={graphRef}
+          getNodePosition={getNodePosition}
+          getEdgeLinkNode={getEdgeLinkNode}
+        />
       </Card>
     </div>
   )

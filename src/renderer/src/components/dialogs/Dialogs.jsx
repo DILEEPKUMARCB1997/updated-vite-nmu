@@ -8,6 +8,7 @@ import GroupMemberTransferDialog from './groupMemberTransferDialog/GroupMemberTr
 import TrapHistoryDialog from './TrapHistoryDialog/TrapHistoryDialog'
 import SyslogHistoryDialog from './SyslogHistoryDialog/SyslogHistoryDialog'
 import EventHistoryDialog from './eventHistoryDialog/EventHistoryDialog'
+import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -18,7 +19,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           sysLogHistoryDialog: <SyslogHistoryDialog onClose={onClose} />,
           transferMember: <GroupMemberTransferDialog onClose={onClose} />,
           trapHistory: <TrapHistoryDialog onClose={onClose} />,
-          eventHistory: <EventHistoryDialog onClose={onClose} />
+          eventHistory: <EventHistoryDialog onClose={onClose} />,
+          perferences: <PreferencesDialog onClose={onClose} />
         }[id]
       }
     </div>

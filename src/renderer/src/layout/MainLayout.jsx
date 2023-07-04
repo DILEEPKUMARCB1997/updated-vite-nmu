@@ -4,16 +4,20 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { App, Dropdown, Spin } from 'antd'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, SettingOutlined } from '@ant-design/icons'
 import ThemeController from '../utils/themes/ThemeController'
 import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
 import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
 import Dialogs from '../components/dialogs/Dialogs'
+import { openDialog } from '../features/dialogSlice'
+import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
+import { nextInitRenderStep } from '../features/UIControllSlice'
+
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 
-const MainLayout = () => {
+const MainLayout = (props) => {
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()
@@ -23,7 +27,30 @@ const MainLayout = () => {
 
   useEffect(() => {
     setPathname(location.pathname || '/')
+    window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
+
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 800)
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 1600)
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 2200)
+    window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
   }, [location])
+
+  const nativeMenuListener = (event, arg) => {
+    if (arg.action === 'preference') {
+      // if (!isAppPreferencesDialogOpen) {
+      // this.props.requestGetNICData()
+      dispatch(openDialog('perferences'))
+      // }
+    } else if (arg.action === 'about') {
+      dispatch(openDialog('about'))
+    }
+  }
 
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
@@ -69,6 +96,11 @@ const MainLayout = () => {
                     icon: <LogoutOutlined />,
                     label: 'Logout'
                   }
+                  // {
+                  //   key: 'perferences',
+                  //   icon: <SettingOutlined />,
+                  //   label: 'preference'
+                  // }
                 ],
                 onClick: handleMenuClick
               }}
