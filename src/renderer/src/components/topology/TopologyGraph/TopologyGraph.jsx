@@ -79,7 +79,7 @@ const TopologyGraph = (props) => {
     })
 
     networkRef.current.Network.on('click', () => {
-      dispatch(openDeviceMenu(false))
+      dispatch(openDevicesMenu(false))
     })
     console.log(networkRef.current.Network)
 
@@ -97,7 +97,7 @@ const TopologyGraph = (props) => {
         dispatch(openDevicesMenu(false))
       } else {
         const { MACAddress, deviceType, IPAddress, model } = groupDevices[rightClickMAC]
-        dispatch(openDeviceMenu(true))
+        dispatch(openDevicesMenu(true))
         setNodeData({
           nodeMACAddress: MACAddress,
           nodeDeviceType: deviceType,
@@ -344,7 +344,7 @@ const TopologyGraph = (props) => {
   )
 }
 
-export default TopologyGraph
+export default React.memo(TopologyGraph)
 
 const nodeFocusOption = {
   scale: 1.0,

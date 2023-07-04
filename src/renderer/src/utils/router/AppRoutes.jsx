@@ -7,6 +7,7 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
+import UserManagementPage from '../../pages/UserManagementPage'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -30,6 +31,10 @@ const AppRoutes = () => {
         {
           path: 'topology',
           element: <TopologyPage />
+        },
+        {
+          path: 'usermanagement',
+          element: <UserManagementPage />
         }
       ]
     },

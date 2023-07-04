@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { App, Dropdown, Spin } from 'antd'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, WindowsFilled } from '@ant-design/icons'
 import ThemeController from '../utils/themes/ThemeController'
 import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
@@ -12,6 +12,8 @@ import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
 import Dialogs from '../components/dialogs/Dialogs'
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
+import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
+import { openDialog } from '../features/dialogSlice'
 
 const MainLayout = () => {
   const dispatch = useDispatch()
@@ -23,7 +25,22 @@ const MainLayout = () => {
 
   useEffect(() => {
     setPathname(location.pathname || '/')
+    window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
   }, [location])
+
+  // useEffect(() => {})
+
+  const nativeMenuListener = (event, arg) => {
+    console.log(arg)
+    if (arg.action === 'preference') {
+      // if (!this.props.isAppPreferencesDialogOpen) {
+      //   this.props.requestGetNICData()
+      dispatch(openDialog('perferences'))
+      // }
+    } else if (arg.action === 'about') {
+      dispatch(openDialog('aboutDialog'))
+    }
+  }
 
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {

@@ -2,7 +2,8 @@ import {
   BarsOutlined,
   DashboardOutlined,
   DesktopOutlined,
-  ApartmentOutlined
+  ApartmentOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -28,6 +29,11 @@ const routes = {
         path: '/topology',
         name: 'Topology',
         icon: <ApartmentOutlined />
+      },
+      {
+        path: '/usermanagement',
+        name: 'User Management',
+        icon: <UserOutlined />
       }
     ]
   },
