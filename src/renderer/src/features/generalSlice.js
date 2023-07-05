@@ -29,7 +29,7 @@ export const requestGetNICData = () => (dispatch) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_ALL_NETWORK_INTERFACES)
 }
 
-export const sliceName = createSlice({
+export const generalSlice = createSlice({
   name: 'General',
   initialState: {
     isConfigChange: false,
@@ -50,7 +50,7 @@ export const sliceName = createSlice({
       }
     },
     clearGeneralData: (state, { payload }) => {
-      const { action } = payload
+      // const { action } = payload
       return {
         ...state,
         isConfigChange: false,
@@ -67,11 +67,11 @@ export const sliceName = createSlice({
   }
 })
 
-export const { clearGeneralData, setNICActiveIndex, initNICData } = sliceName.actions
+export const { clearGeneralData, setNICActiveIndex, initNICData } = generalSlice.actions
 
 export const GeneralSelector = (state) => {
-  const { isConfigChange, NICData, validsData } = state.general
-  return { isConfigChange, NICData, validsData }
+  const { NICData, validsData } = state.general
+  return { NICData, validsData }
 }
 
 const getStateOfSetValue = (state, payload) => ({

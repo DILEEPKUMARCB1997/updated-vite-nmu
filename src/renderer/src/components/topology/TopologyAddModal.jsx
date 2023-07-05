@@ -1,32 +1,23 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Modal, InputNumber, Select, Input, Checkbox, Card } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-// import handleDisableEdit from './TopologyGraph/TopologyGraph'
 import {
   addNewEdge,
   addNewNode,
   addNewVirtualNode,
-  changeTopologyEvent,
   topologySelector
 } from '../../features/topologySlice'
 
 const { Option } = Select
 const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
 
-const TopologyAddModal = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { handleDisableEdit, nodesData, onRef } = props
-  TopologyAddModal.propTypes = {
-    handleDisableEdit: PropTypes.func.isRequired
-  }
-  //const modalRef = useRef()
-
+const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
   const { currentGroup, event, nodesIds } = useSelector(topologySelector)
-  // console.log(event)
+  console.log(currentGroup)
   const dispatch = useDispatch()
-
+  //const [isModalOpen, setIsModalOpen] = useState(false)
   const [isVirtualNode, setIsVirtualNode] = useState(false)
   const [open, setOpen] = useState(false)
   const [addNodeMax, setAddNodeMax] = useState([])
@@ -39,10 +30,6 @@ const TopologyAddModal = (props) => {
 
   useEffect(() => {
     //onRef(modalRef)
-    dispatch(addNewVirtualNode(currentGroup))
-    return () => {
-      // onRef(modalRef)
-    }
   }, [])
 
   const openModal = (data) => {
@@ -79,25 +66,31 @@ const TopologyAddModal = (props) => {
     //console.log(selectGroup);
     if (event === 'addNode') {
       if (isVirtualNode) {
-        addNewVirtualNode({
-          x: addNodePosition.x,
-          y: addNodePosition.y
-        })
+        dispatch(
+          addNewVirtualNode({
+            x: addNodePosition.x,
+            y: addNodePosition.y
+          })
+        )
       } else {
-        addNewNode({
-          MACAddress: addNodeMAC,
-          x: addNodePosition.x,
-          y: addNodePosition.y,
-          groupIds: selectGroup
-        })
+        dispatch(
+          addNewNode({
+            MACAddress: addNodeMAC,
+            x: addNodePosition.x,
+            y: addNodePosition.y,
+            groupIds: selectGroup
+          })
+        )
       }
     } else {
-      addNewEdge({
-        fromId: addEdgeNodes.from,
-        toId: addEdgeNodes.to,
-        fromPort: fromPort,
-        toPort: toPort
-      })
+      dispatch(
+        addNewEdge({
+          fromId: addEdgeNodes.from,
+          toId: addEdgeNodes.to,
+          fromPort: fromPort,
+          toPort: toPort
+        })
+      )
     }
     handleModalCancel()
   }
@@ -120,8 +113,7 @@ const TopologyAddModal = (props) => {
 
     setIsVirtualNode(false)
     setSelectGroup([])
-    // dispatch(handleDisableEdit())
-    dispatch(changeTopologyEvent(''))
+    dispatch(handleDisableEdit())
   }
 
   const handleModalCancelButtonClick = () => {
@@ -179,10 +171,8 @@ const TopologyAddModal = (props) => {
 
   return (
     <Modal
-      open
-      //destroyOnClose
+      destroyOnClose
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-      //visible={open}
       onOk={handleModalOKButtonClick}
       onCancel={handleModalCancelButtonClick}
       okButtonProps={{ disabled: disableOKButton }}

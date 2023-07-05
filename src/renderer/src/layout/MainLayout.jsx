@@ -6,22 +6,16 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { App, Dropdown, Spin } from 'antd'
-import { LogoutOutlined, SettingOutlined } from '@ant-design/icons'
+import { LogoutOutlined } from '@ant-design/icons'
 import ThemeController from '../utils/themes/ThemeController'
 import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
 import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
-import Dialogs from '../components/dialogs/Dialogs'
 import { nextInitRenderStep } from '../features/UIControllSlice'
-//import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
-import { openDialog, dialogSelector } from '../features/dialogSlice.js'
-//import { requestGetNICData } from '../features/generalSlice'
+import Dialogs from '../components/dialogs/Dialogs'
+import { openDialog } from '../features/dialogSlice.js'
 import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
-//import PreferencesDialog from '../components/dialogs/PreferencesDialog/PreferencesDialog'
-
-//import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
-// const { isAppPreferencesDialogOpen } = useSelector(dialogSelector)
 
 const MainLayout = (props) => {
   const dispatch = useDispatch()
@@ -66,16 +60,6 @@ const MainLayout = (props) => {
     }
   }
 
-  // const nativeMenuListener = (event, arg) => {
-  //   if (arg.action === 'preference') {
-  //     dispatch(openDialog('perferences'))
-  //     //localStorage.getItem('perferences')
-  //     //navigate('/perferences')
-  //   } else if (arg.action === 'about') {
-  //     openDialog('about')
-  //   }
-  // }
-
   const loggedinUser = localStorage.getItem('username') ? localStorage.getItem('username') : 'admin'
 
   return (
@@ -112,12 +96,6 @@ const MainLayout = (props) => {
                     icon: <LogoutOutlined />,
                     label: 'Logout'
                   }
-                  // {
-                  //   key: 'perferences',
-                  //   icon: <SettingOutlined />,
-                  //   label: 'Perferences'
-                  //   label: 'preference'
-                  // }
                 ],
                 onClick: handleMenuClick
               }}

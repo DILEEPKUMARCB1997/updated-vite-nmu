@@ -10,13 +10,13 @@ import {
   setSelectIndex
 } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import General from './General/General'
+//import General from './General/General'
 import Mail from './Mail/Mail'
 
 const items = [
   {
-    label: 'General ',
-    page: <General />
+    label: 'General '
+    // page: <General />
   },
   { label: 'Mail', page: <Mail /> },
   { label: 'Telegram' },
@@ -51,15 +51,15 @@ const PreferencesDialog = ({ onClose }) => {
         right: 0,
         position: 'fixed'
       }}
-      bodyStyle={{ height: '600px' }}
+      bodyStyle={{ height: '100%' }}
     >
       <Layout>
         <Header
           style={{
             background: ' #6fbbd6',
             fontSize: 35,
-            height: '80px',
-            width: '1290px',
+            height: '90px',
+            width: '1460px',
             position: 'relative',
             top: '-10px'
           }}
@@ -93,8 +93,8 @@ const PreferencesDialog = ({ onClose }) => {
             <div
               style={{
                 // padding: 0,
-                minHeight: 540,
-                width: '1090px',
+                minHeight: 560,
+                width: '1250px',
                 background: colorBgContainer,
                 position: 'relative',
                 top: '-10px'
