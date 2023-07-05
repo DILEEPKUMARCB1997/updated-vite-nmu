@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {
   topologySelector,
-  requestSwitchPolling,
+  //,
   switchEditMode,
   setTopologyViewSettings,
   removeNetworkSelectElement
@@ -63,7 +63,7 @@ const TopologyToolbar = (props) => {
     dispatch(setTopologyViewSettings(name))
   }
   const handleEditModeButtonOnClick = () => {
-    requestSwitchPolling(false)
+    //(false)
     dispatch(switchEditMode(true))
   }
   const handleAddNodeButtonOnClick = () => {
@@ -74,7 +74,7 @@ const TopologyToolbar = (props) => {
   }
   const handleSaveLayoutButtonOnClick = () => {
     handleSaveLayout()
-    requestSwitchPolling(true)
+    //(true)
     dispatch(switchEditMode(false))
   }
   const handleCancelButtonOnClick = () => {
@@ -84,7 +84,7 @@ const TopologyToolbar = (props) => {
     dispatch(removeNetworkSelectElement())
   }
   const handleEditCancelButtonOnClick = () => {
-    requestSwitchPolling(true)
+    //(true)
     dispatch(switchEditMode(false))
   }
   const handleExportImageButtonOnClick = () => {

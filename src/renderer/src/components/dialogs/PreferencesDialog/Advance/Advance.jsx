@@ -4,11 +4,11 @@ import { MailOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 const items = [
   {
-    label: 'Mail ',
+    label: 'Advance ',
     icon: <MailOutlined />
   }
 ]
-const Mail = () => {
+const Advance = () => {
   return (
     <div>
       <Menu
@@ -17,10 +17,10 @@ const Mail = () => {
         defaultSelectedKeys={['1']}
         items={items}
       >
-        <span>Mail</span>
+        <span>Advance</span>
       </Menu>
     </div>
   )
 }
 
-export default Mail
+export default Advance

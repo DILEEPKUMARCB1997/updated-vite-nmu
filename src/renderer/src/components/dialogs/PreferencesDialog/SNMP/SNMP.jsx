@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { MailOutlined } from '@ant-design/icons'
+import { FieldTimeOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 const items = [
   {
-    label: 'Mail ',
-    icon: <MailOutlined />
+    label: 'SNMP ',
+    icon: <FieldTimeOutlined />
   }
 ]
-const Mail = () => {
+const SNMP = () => {
   return (
     <div>
       <Menu
@@ -17,10 +17,10 @@ const Mail = () => {
         defaultSelectedKeys={['1']}
         items={items}
       >
-        <span>Mail</span>
+        <span>SNMP</span>
       </Menu>
     </div>
   )
 }
 
-export default Mail
+export default SNMP
