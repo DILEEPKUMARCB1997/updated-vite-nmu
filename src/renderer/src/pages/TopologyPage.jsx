@@ -69,21 +69,19 @@ const TopologyPage = () => {
   return (
     <div
       style={{
-        position: 'absolute',
-        width: '100%',
-        padding: '25px 15px 15px 15px'
+        // position: 'fixed',
+        //     width: '100%',
+        padding: '20px 10px 10px 10px'
       }}
     >
       <Card
         bordered={false}
+        size="small"
         style={{
-          height: '550px',
-
-          boxSizing: 'border-box',
-          position: 'relative',
-          width: '1080px',
-          padding: '15px',
-          minWidth: '761px'
+          height: 550
+        }}
+        bodyStyle={{
+          padding: '15px'
         }}
       >
         <div
@@ -104,15 +102,16 @@ const TopologyPage = () => {
             handleSaveLayout={handleSaveLayout}
           />
         </div>
-        <div
+        {/* <div
           style={{
             borderStyle: 'double',
             boxSizing: 'border-box',
             position: 'relative',
-            top: '-50px',
-            height: '380px'
+            top: '-10px',
+            height: '380px',
+            padding: '30px 20px 20px 20px'
           }}
-        ></div>
+        ></div> */}
 
         <TopologyGraph
           onRef={(ref) => {

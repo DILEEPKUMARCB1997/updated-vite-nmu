@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Form, Checkbox, Tooltip, Modal, Button, Divider, Progress, Typography } from 'antd'
+import { Form, Checkbox, Tooltip, Modal, Button, Divider, Progress, Typography, Card } from 'antd'
 import {
   SearchOutlined,
   EditOutlined,
@@ -176,7 +176,7 @@ const TopologyToolbar = (props) => {
   }
   return (
     <div>
-      <div style={{ position: 'absolute', top: '-10px', left: '-1px' }}>
+      <div style={{ position: 'absolute', top: '5px', left: '-5px', padding: '20px' }}>
         <Form.Item>
           <Checkbox
             style={{
@@ -224,9 +224,14 @@ const TopologyToolbar = (props) => {
             lineHeight: '10px',
             position: 'relative',
             top: '-50px',
-            left: '400px',
-            marginRight: '5px',
-            paddingRight: '20px'
+            left: '400px'
+
+            // position: 'relative',
+            // top: '-50px',
+            // left: '580px'
+
+            //   // // marginLeft: '5px',
+            //   // paddingLeft: '20px'
           }}
         >
           <Button type="primary" ghost onClick={handleExportImageButtonOnClick}>
@@ -250,8 +255,9 @@ const TopologyToolbar = (props) => {
           width: '100%',
           height: '48px',
           padding: '20px',
-          left: '-20px',
-          position: 'absolute'
+          left: '-5px',
+          position: 'absolute',
+          top: '50px'
         }}
       >
         {editMode
