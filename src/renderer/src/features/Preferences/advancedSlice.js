@@ -67,10 +67,26 @@ const advancedSlice = createSlice({
         ...getStateOfSetValue(state, { defaultPassword }),
         ...getStateOfFormatValid(state, { isDefaultPasswordValid })
       }
+    },
+    setFWUpdateBatchQuantity: (state, action) => {
+      const { payload } = action
+      if (!valueFormat.common.words2.test(payload)) {
+        return { ...state }
+      }
+      const fwUpdateBatchQuantity = Number(payload)
+      const isFWUpdateBatchQuantityValid =
+        payload <= valueFormat.FWUpdate.BATCH_QUANTITY_MAX &&
+        payload >= valueFormat.FWUpdate.BATCH_QUANTITY_MIN
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { fwUpdateBatchQuantity }),
+        ...getStateOfFormatValid(state, { isFWUpdateBatchQuantityValid })
+      }
     }
   }
 })
-export const { setDefaultUsername, setDefaultPassword } = advancedSlice.actions
+export const { setDefaultUsername, setDefaultPassword, setFWUpdateBatchQuantity } =
+  advancedSlice.actions
 
 export const advancedSelector = (state) => {
   const {

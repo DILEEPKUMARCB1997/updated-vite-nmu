@@ -10,7 +10,6 @@ import {
 } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
 // import General from './General/General'
-import Mail from './Mail/Mail'
 import Advanced from './Advanced/Advanced'
 
 const items = [
@@ -18,7 +17,7 @@ const items = [
     label: 'General ',
     page: <Advanced />
   },
-  { label: 'Mail', page: <Mail /> },
+  { label: 'Mail' },
   { label: 'Telegram' },
   { label: 'SNMP' },
   { label: 'Advanced' }
@@ -200,14 +199,16 @@ const PreferencesDialog = ({ onClose }) => {
           //   console.log(collapsed, type)
           // }}
           >
-            <Menu
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={['5']}
-              items={items}
-              // onClick={handleMenuItemClick()}
-              style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
-            />
+            <div>
+              <Menu
+                theme="dark"
+                mode="inline"
+                defaultSelectedKeys={['5']}
+                items={items}
+                // onClick={handleMenuItemClick()}
+                style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
+              />
+            </div>
           </Sider>
 
           <Content>

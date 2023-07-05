@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Navigate, useRoutes } from 'react-router-dom'
-import MainLayout from '../../layout/Mainlayout'
+import MainLayout from '../../layout/MainLayout'
 import DashboardPage from '../../pages/DashboardPage'
 import DevicePage from '../../pages/DevicePage'
 import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
-import DeviceConfigPage from '../../pages/DeviceConfigPage'
+import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -33,8 +33,8 @@ const AppRoutes = () => {
           element: <TopologyPage />
         },
         {
-          path: 'file',
-          element: <DeviceConfigPage />
+          path: 'ConfigComparission',
+          element: <ConfigComparission />
         }
       ]
     },

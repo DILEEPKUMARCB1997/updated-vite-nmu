@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 import { REQUEST_MP_SWITCH_POLLING_TOPOLOGY } from '../../../main/utils/IPCEvents'
 import {
@@ -7,7 +6,6 @@ import {
   REQUEST_MP_SET_THE_GROUP_DATA,
   RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT
 } from '../../../main/utils/IPCEvents'
-
 export const requestSaveTopologyLayout = (positions, callback) => (dispatch, getState) => {
   const { edgesData, currentGroup, nodesIds, changeGroupMemberData } = getState().topology
   window.electron.ipcRenderer.once(RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT, (event, arg) => {
@@ -31,7 +29,6 @@ export const requestSaveTopologyLayout = (positions, callback) => (dispatch, get
   }
   dispatch(clearTopologyData())
 }
-
 export const requestSwitchPolling = (param) => () => {
   window.electron.ipcRenderer.send(REQUEST_MP_SWITCH_POLLING_TOPOLOGY, {
     isStartPolling: param
@@ -118,7 +115,6 @@ const topologySlice = createSlice({
     selectNodes: [],
     selectEdges: [],
     newNodeTemp: '',
-
     changeGroupMemberData: {
       addDevice: {},
       removeDevice: []
@@ -240,7 +236,6 @@ export const {
   clearTopologyData,
   setImageExporting
 } = topologySlice.actions
-
 export const topologySelector = (state) => {
   const {
     graphOption,
@@ -287,5 +282,4 @@ export const topologySelector = (state) => {
     SNMPDeviceProperties
   }
 }
-
 export default topologySlice

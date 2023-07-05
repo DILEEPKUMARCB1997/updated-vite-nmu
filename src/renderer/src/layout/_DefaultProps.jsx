@@ -31,8 +31,9 @@ const routes = {
         icon: <ApartmentOutlined />
       },
       {
-        path: '/file',
-        name: 'Device config comparison',
+        path: '/configComparission',
+        name: 'ConfigComparission',
+
         icon: <FileSearchOutlined />
       }
     ]
