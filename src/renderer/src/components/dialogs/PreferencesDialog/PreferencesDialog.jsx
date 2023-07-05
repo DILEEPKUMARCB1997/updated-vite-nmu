@@ -10,13 +10,13 @@ import {
   setSelectIndex
 } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
-//import General from './General/General'
+import General from './General/General'
 import Mail from './Mail/Mail'
 
 const items = [
   {
-    label: 'General '
-    // page: <General />
+    label: 'General ',
+    page: <General />
   },
   { label: 'Mail', page: <Mail /> },
   { label: 'Telegram' },
