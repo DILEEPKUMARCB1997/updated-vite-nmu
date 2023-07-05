@@ -30,18 +30,17 @@ export const requestGetNICData = () => (dispatch) => {
 }
 
 export const generalSlice = createSlice({
-  name: 'General',
+  name: 'generalSlice',
   initialState: {
-    isConfigChange: false,
     NICData: {},
     validsData: {
       isNICValid: true
     }
   },
   reducers: {
-    setNICActiveIndex: (state, { payload }) => {
-      const { action } = payload
-      const activeIndex = Number(action.payload)
+    setNICActiveIndex: (state, { action }) => {
+      //  const { action } = payload
+      const activeIndex = Number(action)
       const isNICValid = true
       return {
         ...state,
@@ -69,7 +68,7 @@ export const generalSlice = createSlice({
 
 export const { clearGeneralData, setNICActiveIndex, initNICData } = generalSlice.actions
 
-export const GeneralSelector = (state) => {
+export const generalSelector = (state) => {
   const { NICData, validsData } = state.general
   return { NICData, validsData }
 }
