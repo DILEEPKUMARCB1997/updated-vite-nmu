@@ -11,14 +11,14 @@ import {
 } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import General from './General/General'
-import Mail from './Mail/Mail'
+import { Mail } from './Mail/Mail'
 
 const items = [
   {
-    label: 'General ',
-    page: <General />
+    label: 'Mail',
+    page: <Mail />
   },
-  { label: 'Mail', page: <Mail /> },
+  { label: 'General ', page: <General /> },
   { label: 'Telegram' },
   { label: 'SNMP' },
   { label: 'Advanced' }
@@ -100,7 +100,7 @@ const PreferencesDialog = ({ onClose }) => {
                 top: '-10px'
               }}
             >
-              {loading ? <Spin /> : items[selectedIndex].page}
+              {(loading ? <Spin /> : <General />, (<Mail />))}
             </div>
           </Content>
         </Layout>

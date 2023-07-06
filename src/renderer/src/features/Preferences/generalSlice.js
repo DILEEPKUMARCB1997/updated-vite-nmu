@@ -5,7 +5,7 @@ import {
   REQUEST_MP_GET_ALL_NETWORK_INTERFACES,
   REQUEST_MP_SET_THE_NETWORK_INTERFACE,
   RESPONSE_RP_SET_THE_NETWORK_INTERFACE
-} from '../../../main/utils/IPCEvents'
+} from '../../../../main/utils/IPCEvents'
 
 export const requireSetNICData = (callback) => (dispatch, getState) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_THE_NETWORK_INTERFACE, (event, arg) => {
