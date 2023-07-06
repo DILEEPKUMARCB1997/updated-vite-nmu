@@ -65,8 +65,8 @@ const EventHistoryDialog = ({ onClose }) => {
   }
 
   const handleCloseButtonOnClick = () => {
-    onClose()
-    dispatch(clearHistoryData())
+    dispatch(onClose())
+    clearHistoryData()
   }
 
   return (

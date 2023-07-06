@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 
 const UIControlSlice = createSlice({
@@ -14,7 +15,8 @@ const UIControlSlice = createSlice({
     openDevicesMenu: (state, { payload }) => {
       return { ...state, manualOpenDeviceMenu: payload }
     },
-    nextInitRenderStep: (state) => {
+    nextInitRenderStep: (state, { payload }) => {
+      const { action } = payload
       return { ...state, initRenderStep: state.initRenderStep + 1 }
     }
   }

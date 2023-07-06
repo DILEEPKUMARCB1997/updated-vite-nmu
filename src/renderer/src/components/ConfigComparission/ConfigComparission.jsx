@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
+import { Row, Col, Card } from 'antd'
 import './ConfigComarission.css'
 
-import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import { Row, Col, Card, Form, Input, Select, Button, Modal, notification } from 'antd'
-
-const ConfigComparission = () => {
+function ConfigComparission() {
   const [asdf, setasdf] = useState('')
   const [asdf1, setasdf1] = useState('')
   const showFile = async (e) => {
@@ -16,7 +14,6 @@ const ConfigComparission = () => {
       const text = e.target.result
       setasdf(text)
       console.log(text)
-      //alert(text);
     }
     reader.readAsText(e.target.files[0])
   }
@@ -27,7 +24,6 @@ const ConfigComparission = () => {
       const text1 = e.target.result
       setasdf1(text1)
       console.log(text1)
-      //alert(text1);
     }
     reader.readAsText(e.target.files[0])
   }
@@ -41,10 +37,10 @@ const ConfigComparission = () => {
             </div>
             <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '20px' }}>
               <Col span={12}>
-                <input type="file" onChange={(e) => showFile(e)} className="choose" />
+                <input type="file" className="choose" onChange={(e) => showFile(e)} />
               </Col>
               <Col span={12}>
-                <input type="file" onChange={(e) => showFile1(e)} className="choose" />
+                <input type="file" className="choose" onChange={(e) => showFile1(e)} />
               </Col>
               <Row
                 justify="space-around"

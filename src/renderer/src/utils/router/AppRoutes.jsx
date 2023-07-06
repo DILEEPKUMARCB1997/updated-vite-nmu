@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Navigate, useRoutes } from 'react-router-dom'
-import MainLayout from '../../layout/Mainlayout'
+import MainLayout from '../../layout/MainLayout'
 import DashboardPage from '../../pages/DashboardPage'
 import DevicePage from '../../pages/DevicePage'
 import LoginPage from '../../pages/LoginPage'
@@ -10,6 +10,7 @@ import TopologyPage from '../../pages/TopologyPage'
 import UserManagementPage from '../../pages/UserManagementPage'
 import DeviceConfigPage from '../../pages/DeviceConfigPage'
 import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
+import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -45,6 +46,10 @@ const AppRoutes = () => {
         {
           path: 'telegram',
           element: <Telegram />
+        },
+        {
+          path: 'ConfigComparission',
+          element: <ConfigComparission />
         }
       ]
     },

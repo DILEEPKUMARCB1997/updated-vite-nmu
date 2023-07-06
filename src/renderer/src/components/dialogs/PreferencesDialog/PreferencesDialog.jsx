@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { SettingOutlined } from '@ant-design/icons'
@@ -24,7 +25,7 @@ const items = [
   { label: 'Advanced' }
   // { label: 'Notifications', page: <NotificationsContainer /> },
 ]
-const { Header, Content, Footer, Sider } = Layout
+const { Header, Content, Sider } = Layout
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 const PreferencesDialog = ({ onClose }) => {
   const {
@@ -51,16 +52,15 @@ const PreferencesDialog = ({ onClose }) => {
         right: 0,
         position: 'fixed'
       }}
-      bodyStyle={{ height: '600px' }}
+      bodyStyle={{ height: '100%' }}
     >
       <Layout>
         <Header
           style={{
             background: ' #6fbbd6',
             fontSize: 35,
-            height: '80px',
-            width: '1290px',
-
+            height: '90px',
+            width: '1460px',
             position: 'relative',
             top: '-10px'
           }}
@@ -94,8 +94,8 @@ const PreferencesDialog = ({ onClose }) => {
             <div
               style={{
                 // padding: 0,
-                minHeight: 540,
-                width: '1090px',
+                minHeight: 560,
+                width: '1250px',
                 background: colorBgContainer,
                 position: 'relative',
                 top: '-10px'

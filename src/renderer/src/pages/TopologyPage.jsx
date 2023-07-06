@@ -28,102 +28,93 @@ const TopologyPage = () => {
   const graphRef = useRef()
   const modalRef = useRef()
   const dispatch = useDispatch()
-  useEffect(() => {
-    window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-    dispatch(clearTopologyData())
-    dispatch(requestSwitchPolling(false))
-    window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-  }, [])
 
+  const graph = useRef()
+  const modal = useRef()
+
+  //  useEffect(() => {
+  //    ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+  //    return () => {
+  //      props.clearTopologyData()
+  //      props.requestSwitchPolling(false)
+  //      ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+  //    }
+  //  }, [props.topologyData])
   const topologyDataListener = (event, arg) => {
-    dispatch(setTopologyData(arg))
+    props.setTopologyData(arg)
+  }
+  const handleFitViewPoint = () => {
+    graph.current.networkFitViewPoint()
+  }
+  const handleAddNode = () => {
+    changeTopologyEvent('addNode')
+    graph.current.networkAddNodeMode()
+  }
+  const getNodePosition = (position) => {
+    modal.current.openModal(position)
+  }
+  const handleSearchNode = (node) => {
+    graph.current.networkFocusNode(node)
+  }
+  const handleAddEdge = () => {
+    changeTopologyEvent('addEdge')
+    graph.current.networkAddEdgeMode()
+  }
+  const getEdgeLinkNode = (nodes) => {
+    modal.current.openModal(nodes)
   }
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
-    graphRef.current.networkDisableEditMode()
-  }
-  const handleAddNode = () => {
-    dispatch(changeTopologyEvent('addNode'))
-    graphRef.current.networkAddNodeMode()
-  }
-
-  const handleAddEdge = () => {
-    dispatch(changeTopologyEvent('addEdge'))
-    graphRef.current.networkAddEdgeMode()
+    graph.current.networkDisableEditMode()
   }
   const handleSaveLayout = () => {
-    graphRef.current.networkAddEdgeMode()
+    graph.current.networkSaveLayout()
+  }
+  const topologyPanelSizeOnChange = () => {
+    graph.current.updateDimensions()
+  }
+  const handleSelectNode = (node) => {
+    graph.current.networkSelectNodes([node])
+    graph.current.networkFocusNode(node)
   }
   const handleExportImage = () => {
-    graphRef.current.networkExportImage()
+    graph.current.networkExportImage()
   }
-  const handleFitViewPoin = () => {
-    graphRef.current.networkFitViewPoint()
-  }
-  const getNodePosition = (position) => {
-    modalRef.current.openModal(position)
-  }
-  const getEdgeLinkNode = (nodes) => {
-    modalRef.current.openModal(nodes)
+  const handleChangeShowLabelItem = () => {
+    graph.current.networkChangeShowLabelItem()
   }
   return (
-    <div
-      style={{
-        position: 'absolute',
-        width: '100%',
-        padding: '25px 15px 15px 15px'
-      }}
-    >
-      <Card
-        bordered={false}
-        style={{
-          height: '550px',
-          boxSizing: 'border-box',
-          position: 'relative',
-          width: '1080px',
-          padding: '5px',
-          minWidth: '761px'
-        }}
-      >
+    <div>
+      <Card>
+        {/* <SplitterLayout>
+          <div>
+            <TopologyNavContainer handleSelectNode={this.handleSelectNode} />
+          </div> */}
         <div
           style={{
-            height: '140px',
-            boxSizing: 'border-box',
+            height: 'calc(100vh - 140px)',
             position: 'relative',
             padding: '15px 10px 15px 15px',
             minWidth: '761px'
           }}
         >
-          <TopologyToolbar
-            handleExportImage={handleExportImage}
-            handleFitViewPoin={handleFitViewPoin}
-            handleAddNode={handleAddNode}
-            handleAddEdge={handleAddEdge}
+          <TopologyGraph
+            onRef={(ref) => {
+              graph.current = ref
+            }}
+            getNodePosition={getNodePosition}
+            getEdgeLinkNode={getEdgeLinkNode}
+          />
+          <TopologyAddModal
+            onRef={(ref) => {
+              modal.current = ref
+            }}
             handleDisableEdit={handleDisableEdit}
-            handleSaveLayout={handleSaveLayout}
           />
         </div>
-        <div
-          style={{
-            borderStyle: 'double',
-            boxSizing: 'border-box',
-            position: 'relative',
-            top: '-50px',
-            height: '380px'
-          }}
-        ></div>
-
-        <TopologyGraph
-          onRef={(ref) => {
-            ref = { graphRef }
-          }}
-          // onRef={graphRef}
-          getNodePosition={getNodePosition}
-          getEdgeLinkNode={getEdgeLinkNode}
-        />
+        {/* </SplitterLayout> */}
       </Card>
     </div>
   )
 }
-
-export default TopologyPage
+export default Topology

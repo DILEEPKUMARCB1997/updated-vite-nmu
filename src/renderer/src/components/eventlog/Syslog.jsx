@@ -1,14 +1,8 @@
-/* eslint-disable no-undef */
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import { Card, Table, Button, Alert } from 'antd'
+import { Table, Button, Alert } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearSyslogData,
-  eventLogSelector,
-  initEventLogHistoryData
-} from '../../features/eventLogSlice'
+import { clearSyslogData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice.js'
 const columns = [
   {
@@ -63,11 +57,17 @@ const Syslog = () => {
 
   useEffect(() => {
     setTableLoading(tableLoading)
-    //dispatch(initEventLogHistoryData(syslogData))
   }, [tableLoading])
 
   const handleHistoryButtonOnClick = () => {
-    dispatch(initEventLogHistoryData({ type: 'syslog' }))
+    dispatch(
+      requestHistoryData({
+        type: 'syslog',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
     dispatch(openDialog('sysLogHistoryDialog'))
   }
   const handleClearButtonOnClick = () => {
