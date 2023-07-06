@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import General from './General/General'
 import Mail from './Mail/Mail'
+import Telegram from './Telegram/Telegram'
 
 const items = [
   {
@@ -18,7 +19,7 @@ const items = [
     page: <General />
   },
   { label: 'Mail', page: <Mail /> },
-  { label: 'Telegram' },
+  { label: 'Telegram', page: <Telegram /> },
   { label: 'SNMP' },
   { label: 'Advanced' }
   // { label: 'Notifications', page: <NotificationsContainer /> },

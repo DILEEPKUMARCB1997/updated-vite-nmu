@@ -23,13 +23,10 @@ const Dialog = ({ id, onClose, ...rest }) => {
           transferMember: <GroupMemberTransferDialog onClose={onClose} />,
           trapHistory: <TrapHistoryDialog onClose={onClose} />,
           eventHistory: <EventHistoryDialog onClose={onClose} />,
-<<<<<<< HEAD
           addUser: <AddUserDialog onClose={onClose} />,
           editUser: <EditUserDialog onClose={onClose} />,
-          aboutDialog: <AboutDialog onClose={onClose} />
-=======
+          aboutDialog: <AboutDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />
->>>>>>> b1b92760cd7e9ff7762cad11dfee749c85035c04
         }[id]
       }
     </div>

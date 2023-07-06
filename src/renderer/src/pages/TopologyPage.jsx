@@ -2,8 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useEffect } from 'react'
-import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
-
+import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
+import TopologyToolbar from '../components/topology/TopologyToolbar/TopologyToolbar'
 import {
   changeTopologyEvent,
   setTopologyData,
@@ -12,7 +12,7 @@ import {
 } from '../features/topologySlice'
 
 import { useDispatch } from 'react-redux'
-import TopologyToolbar from '../components/Topology/TopologyToolbar'
+
 import { Card } from 'antd'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 // import PropTypes from 'prop-types'
@@ -78,11 +78,10 @@ const TopologyPage = () => {
         bordered={false}
         style={{
           height: '550px',
-
           boxSizing: 'border-box',
           position: 'relative',
           width: '1080px',
-          padding: '15px',
+          padding: '5px',
           minWidth: '761px'
         }}
       >

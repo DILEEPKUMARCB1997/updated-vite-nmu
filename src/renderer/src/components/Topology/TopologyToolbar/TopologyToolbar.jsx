@@ -20,7 +20,7 @@ import {
   switchEditMode,
   setTopologyViewSettings,
   removeNetworkSelectElement
-} from '../../features/topologySlice'
+} from '../../../features/topologySlice'
 
 // import PropTypes from 'prop-types'
 

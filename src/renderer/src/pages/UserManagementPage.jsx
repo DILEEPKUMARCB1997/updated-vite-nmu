@@ -1,4 +1,4 @@
-import { App, Button, Card, Modal, Space, Table } from 'antd'
+import { App, Button, Card, Modal, Space, Table, theme } from 'antd'
 import React, { useEffect } from 'react'
 import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,8 @@ import {
 import { openDialog } from '../features/dialogSlice'
 
 const UserManagement = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const { modal } = App.useApp()
   const dispatch = useDispatch()
   const { loggedInUser, usersData } = useSelector(userManagementSelector)
@@ -71,7 +73,8 @@ const UserManagement = () => {
   const handleDelete = (values) => {
     console.log(values)
     modal.confirm({
-      title: 'Are you sure you want to delete this user',
+      title: 'Delete Confirmation',
+      content: 'Are you sure you want to delete this user ?',
       okText: 'Delete',
       onOk: () => {
         dispatch(deleteUserData(values))
