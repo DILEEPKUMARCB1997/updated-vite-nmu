@@ -156,14 +156,15 @@ import { Card } from 'antd'
 import { useRef, useEffect } from 'react'
 
 import {
-  changeTopologyEvent,
-  setTopologyData,
-  clearTopologyData,
-  requestSwitchPolling
+  changeTopologyEvent
+  // setTopologyData,
+  // clearTopologyData,
+  // requestSwitchPolling
 } from '../features/topologySlice'
 
 import { useDispatch } from 'react-redux'
 import TopologyToolbar from '../components/Topology/TopologyToolbar'
+// import TopologyAddModal from '../components/Topology/TopologyAddModal'
 
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 // import PropTypes from 'prop-types'
@@ -178,7 +179,7 @@ const TopologyPage = () => {
   // }
   const graphRef = useRef()
   const modalRef = useRef()
-  const dispatch = useDispatch()
+
   // useEffect(() => {
   //   window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
   //   dispatch(clearTopologyData())
@@ -237,6 +238,10 @@ const TopologyPage = () => {
           padding: '5px'
         }}
       >
+        {/* <SplitterLayout>
+          <div>
+            <TopologyNavContainer handleSelectNode={handleSelectNode} />
+          </div> */}
         <div
           style={{
             height: '140px',
@@ -254,6 +259,20 @@ const TopologyPage = () => {
             handleDisableEdit={handleDisableEdit}
             handleSaveLayout={handleSaveLayout}
           />
+          <TopologyGraph
+            onRef={(ref) => {
+              ref = { graphRef }
+            }}
+            getNodePosition={getNodePosition}
+            getEdgeLinkNode={getEdgeLinkNode}
+          />
+          {/* <TopologyAddModal
+            onRef={(ref) => {
+              modal.current = ref
+            }}
+            handleDisableEdit={handleDisableEdit}
+            handleSaveLayout={handleSaveLayout}
+          /> */}
         </div>
         {/* <div
           style={{
@@ -264,15 +283,6 @@ const TopologyPage = () => {
             height: '380px'
           }}
         ></div> */}
-
-        <TopologyGraph
-          onRef={(ref) => {
-            ref = { graphRef }
-          }}
-          // onRef={graphRef}
-          getNodePosition={getNodePosition}
-          getEdgeLinkNode={getEdgeLinkNode}
-        />
       </Card>
     </div>
   )

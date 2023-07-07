@@ -12,23 +12,30 @@ import './PreferencesDialog.css'
 const { Header, Sider } = Layout
 import Advanced from './Advanced/Advanced'
 import EnhanceSpin from './EnhanceSpin'
-// import General from './General/General'
+import General from './General/General'
+// import Mail from './Mail/Mail'
+
 const items = [
-  { label: 'General ', page: <Advanced /> },
+  {
+    label: 'General ',
+    icon: <SettingOutlined />,
+    page: <General />
+  },
   { label: 'Mail' },
   { label: 'Telegram' },
   { label: 'SNMP' },
-  { label: 'Advanced' }
+  { label: 'Advanced', page: <Advanced /> }
   // { label: 'Notifications', page: <NotificationsContainer /> },
 ]
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
-const PreferencesDialog = ({ onClose, notification }) => {
+
+const PreferencesDialog = ({ onClose }) => {
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
 
   const configChangeFlag = [selectedPage].isConfigChange
   const configValidFlag = [selectedPage].validsData
 
-  const handleMenuItemClick = (newIndex) => () => {
+  const handleMenuItemClick = (newIndex) => {
     if (newIndex === selectedIndex) return
 
     if (configChangeFlag && configValidFlag) {
@@ -143,7 +150,6 @@ const PreferencesDialog = ({ onClose, notification }) => {
             }}
             close={handleCancelButtonClick}
           >
-            {' '}
             <SettingOutlined /> Preference
           </Header>
           <Layout hasSider style={{ height: '540px' }}>

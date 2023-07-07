@@ -64,7 +64,7 @@ const DashboardPage = () => {
           </Col>
           <Col span={24}>
             <Card
-              title="EventGraph"
+              title="Events"
               size="small"
               bordered={false}
               style={{ height: 250 }}

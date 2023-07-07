@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 import { REQUEST_MP_SWITCH_POLLING_TOPOLOGY } from '../../../main/utils/IPCEvents'
 import {

@@ -100,10 +100,10 @@ const SyslogGraph = (props) => {
     }
   })
 
-  const onSyslogGraphClick = (barIndex) => {
-    let tableData = tableData[barIndex]
-    showSyslogTableData(tableData)
-  }
+  // const onSyslogGraphClick = (barIndex) => {
+  //   let tableData = tableData[barIndex]
+  //   showSyslogTableData(tableData)
+  // }
   const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
@@ -176,7 +176,7 @@ const SyslogGraph = (props) => {
           type="bar"
           height={210}
           width={400}
-          onClick={onSyslogGraphClick}
+          // onClick={onSyslogGraphClick}
         />
       </div>
     </>

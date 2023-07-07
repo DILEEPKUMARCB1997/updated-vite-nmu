@@ -9,7 +9,9 @@ import topologySlice from '../features/topologySlice'
 import UIControlSlice from '../features/UIControllSlice'
 import preferenceSlice from '../features/Preferences/preferenceSlice'
 import advancedSlice from '../features/Preferences/advancedSlice'
-import { generalSlice } from '../features/generalSlice'
+// import { generalSlice } from '../features/generalSlice'
+import { generalSlice } from '../features/Preferences/generalSlice'
+import { mailSlice } from '../features/Preferences/mailSlice'
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +25,9 @@ export const store = configureStore({
     UIControl: UIControlSlice.reducer,
     preference: preferenceSlice.reducer,
     advanced: advancedSlice.reducer,
-    general: generalSlice.reducer
+    general: generalSlice.reducer,
+
+    mail: mailSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })
