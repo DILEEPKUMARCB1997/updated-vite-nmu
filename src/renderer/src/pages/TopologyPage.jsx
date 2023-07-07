@@ -5,7 +5,7 @@ import TopologyAddModal from '../components/topology/TopologyAddModal'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import { changeTopologyEvent } from '../features/topologySlice'
 import { useDispatch } from 'react-redux'
-//import TopologyToolbar from '../components/topology/'
+import TopologyToolbar from '../components/topology/TopologyToolbar'
 //import TopologyNavContainer from './TopologyNavContainer'
 // import TopologyToolbarContainer from './TopologyToolbarContainer'
 // import TopologyGraphContainer from './TopologyGraphContainer'
@@ -73,7 +73,7 @@ const Topology = (props) => {
       <Card>
         {/* <SplitterLayout>
           <div>
-            <TopologyNavContainer handleSelectNode={this.handleSelectNode} />
+            <TopologyNavContainer handleSelectNode={handleSelectNode} />
           </div> */}
         <div
           style={{
@@ -83,6 +83,16 @@ const Topology = (props) => {
             minWidth: '761px'
           }}
         >
+          <TopologyToolbar
+            handleExportImage={handleExportImage}
+            handleFitViewPoint={handleFitViewPoint}
+            handleAddNode={handleAddNode}
+            handleSearchNode={handleSearchNode}
+            handleAddEdge={handleAddEdge}
+            handleDisableEdit={handleDisableEdit}
+            handleSaveLayout={handleSaveLayout}
+            handleChangeShowLabelItem={handleChangeShowLabelItem}
+          />
           <TopologyGraph
             onRef={(ref) => {
               graph.current = ref

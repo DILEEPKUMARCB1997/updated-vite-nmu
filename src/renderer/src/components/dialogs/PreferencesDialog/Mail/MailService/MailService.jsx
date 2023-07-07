@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { Component } from 'react'
-import { Select, Switch, Radio, Form, Input, Card } from 'antd'
+import React from 'react'
+import { Select, Switch, Radio, Form, Input, Card, Space } from 'antd'
 //import { useState } from 'react'
 import {
   mailSelector,
@@ -75,18 +75,18 @@ const MailService = (props) => {
       </Form.Item>
 
       <div>
-        <Form.Item onChange={handleServiceListRadioOnChange}>
-          <Radio color="primary" />
-          <span
-            style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}
-          >
-            {MAIL_SERVICE_LIST_RADIO_LABLE}
-          </span>
-        </Form.Item>
+        <Space.Compact onChange={handleServiceListRadioOnChange} />
+        <Radio color="primary" value={MAIL_SERVICE_LIST_RADIO_LABLE} />
+        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}>
+          {MAIL_SERVICE_LIST_RADIO_LABLE}
+        </span>
+
         <Select
           style={{
             width: `${serviceListSelectWidth}px`,
-            minWidth: '80px'
+            minWidth: '150px',
+            position: 'relative',
+            clear: 'both'
           }}
           disabled={isServiceOther}
           ref={(value) => {
@@ -96,15 +96,12 @@ const MailService = (props) => {
           dropdownStyle={{ zIndex: '1301' }}
           onChange={handleServiceSelectOnChange}
         >
-          {Array.isArray(serviceList)
-            ? serviceList.map((serviceItem) => {
-                return (
-                  <Option key={serviceList} value={serviceList}>
-                    {serviceItem}
-                  </Option>
-                )
-              })
-            : null}
+          {serviceList &&
+            serviceList.map((serviceItem) => (
+              <Option key={serviceItem} value={serviceItem}>
+                {serviceItem}
+              </Option>
+            ))}
         </Select>
       </div>
       <Form.Item
@@ -112,32 +109,31 @@ const MailService = (props) => {
         value="Other"
         onChange={handleUserDefinitionRadioOnChange}
       >
-        <Radio color="primary" />
+        <Radio color="primary" value={{ USER_DEFINITION_RADIO_LABLE }} />
         <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}>
           {USER_DEFINITION_RADIO_LABLE}
         </span>
       </Form.Item>
       <div style={{ marginLeft: '15px' }}>
         <Form.Item
-          type="textfield"
           error={isServiceOther && !isHostValid}
-          style={{ width: '200px' }}
+          style={{ width: '200px', borderBottom: '1px dotted  black' }}
           disabled={!isServiceOther}
           value={host}
           onChange={handleHostInputOnChange}
         >
-          <Input placeholder={USER_DEFINITION_HOST_INPUT_LABLE} />
+          <Input placeholder={USER_DEFINITION_HOST_INPUT_LABLE} bordered={false} />
         </Form.Item>
 
         <Form.Item
-          onError={isServiceOther && !isPortValid}
+          // onError={isServiceOther && !isPortValid}
           // error={isServiceOther && !isPortValid}
-          style={{ width: '200px' }}
+          style={{ width: '200px', borderBottom: '1px dotted black' }}
           disabled={!isServiceOther}
           value={port}
           onChange={handlePortInputOnChange}
         >
-          <Input placeholder={USER_DEFINITION_PORT_INPUT_LABLE} />
+          <Input placeholder={USER_DEFINITION_PORT_INPUT_LABLE} bordered={false} />
         </Form.Item>
       </div>
     </Card>

@@ -1,16 +1,26 @@
-import React, { Component } from 'react'
-import { Tag, Input, Form } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import { TextField, InputAdornment, IconButton } from '@material-ui/core'
-import { VisibilityOff, Visibility } from '@material-ui/icons'
-import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
-import styles from './MailSetting.scss'
+/* eslint-disable react/prop-types */
+import { useRef, useState } from 'react'
+import { Tag, Input, Form, Card, Button, Space } from 'antd'
+import { PlusOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+// import classNames from 'classnames'
+// import PropTypes from 'prop-types'
+//import { InputAdornment, IconButton } from '@material-ui/core'
+
+import {
+  addMailAccount,
+  mailSelector,
+  removeMailAccount,
+  setMailPassword,
+  setMailUsername
+} from '../../../../../features/Preferences/mailSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
+// import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
+// import styles from './MailSetting.scss'
 
 const FormItem = Form.Item
 
-const mailAccountTagData = [
+let mailAccountTagData = [
   { id: 'to', label: 'To', color: 'magenta' },
   { id: 'cc', label: 'Cc', color: 'geekblue' },
   { id: 'bcc', label: 'Bcc', color: 'purple' }
@@ -22,131 +32,122 @@ const PASSWORD_INPUT_LABLE = 'Password'
 const EMAIL_NOT_VALID_MSG = 'The input is not valid E-mail!'
 const EMAIL_EMPTY_MSG = 'Please input your E-mail!'
 
-class MailSetting extends Component {
-  formRef = React.createRef()
-  static propTypes = {
-    isUsernameValid: PropTypes.bool.isRequired,
-    isPasswordValid: PropTypes.bool.isRequired,
-    // form: PropTypes.object.isRequired,
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    addMailAccount: PropTypes.func.isRequired,
-    removeMailAccount: PropTypes.func.isRequired,
-    setUsername: PropTypes.func.isRequired,
-    setPassword: PropTypes.func.isRequired
+const MailSetting = (props) => {
+  const dispatch = useDispatch()
+  const { validsData } = useSelector(mailSelector)
+  console.log(validsData)
+  const formRef = useRef()
+  const { isUsernameValid, username, isPasswordValid, password } = props
+  const [showPassword, setShowPassword] = useState(false)
+  const [inputVisible, setInputVisible] = useState({ to: false, cc: false, bcc: false })
+
+  const handleUsernameInputOnChange = (event) => {
+    dispatch(setMailUsername(event.target.value))
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      showPassword: false,
-      inputVisible: {
-        to: false,
-        cc: false,
-        bcc: false
-      }
-    }
+  const handlePasswordInputOnChange = (event) => {
+    dispatch(setMailPassword(event.target.value))
   }
 
-  handleUsernameInputOnChange = (event) => {
-    this.props.setUsername(event.target.value)
+  const handleShowPasswordOnClick = () => {
+    setShowPassword(showPassword)
+    // setState((state) => ({ showPassword: !state.showPassword }))
   }
 
-  handlePasswordInputOnChange = (event) => {
-    this.props.setPassword(event.target.value)
-  }
-
-  handleShowPasswordOnClick = () => {
-    this.setState((state) => ({ showPassword: !state.showPassword }))
-  }
-
-  handlePasswordOnMouseDown = (event) => {
+  const handlePasswordOnMouseDown = (event) => {
     event.preventDefault()
   }
 
-  handleAddNewMailButtonOnClick = (id) => () => {
-    this.setState((prevState) => ({
-      inputVisible: {
-        ...prevState.inputValue,
-        [id]: true
-      }
+  const handleAddNewMailButtonOnClick = (id) => () => {
+    setInputVisible((prevState) => ({
+      ...prevState.inputValue,
+      [id]: true
     }))
   }
 
-  handleAddNewInputOnBlur = (id) => () => {
-    this.setState((prevState) => ({
-      inputVisible: {
-        ...prevState.inputVisible,
-        [id]: false
-      }
+  const handleAddNewInputOnBlur = (id) => () => {
+    setInputVisible((prevState) => ({
+      ...prevState.inputVisible,
+      [id]: false
     }))
   }
 
-  handleAddNewInputPressEnter = (id) => (event) => {
-    this.props.addMailAccount({
-      id,
-      value: event.email
-    })
-    this.setState({
-      inputVisible: {
-        ...this.state.inputVisible,
-        [id]: false
-      }
+  const handleAddNewInputPressEnter = (id) => (event) => {
+    dispatch(
+      addMailAccount({
+        id,
+        value: event.email
+      })
+    )
+    setInputVisible({
+      ...inputVisible,
+      [id]: false
     })
   }
 
-  handleRemoveTagButtonOnClick = (id, tag) => () => {
-    this.props.removeMailAccount({ id, tag })
+  const handleRemoveTagButtonOnClick = (id, tag) => () => {
+    dispatch(removeMailAccount({ id, tag }))
   }
 
-  render() {
-    const { isUsernameValid, username, isPasswordValid, password } = this.props
-    const { showPassword, inputVisible } = this.state
-    return (
-      <EnhanceSubContent title={TITLE}>
-        <TextField
-          error={!isUsernameValid}
-          className={styles.input}
-          value={username}
-          onChange={this.handleUsernameInputOnChange}
-          label={USERNAME_INPUT_LABLE}
+  // const { showPassword, inputVisible } = state
+  return (
+    <Card title={TITLE}>
+      <FormItem
+        error={!isUsernameValid}
+        style={{ width: '200px' }}
+        value={username}
+        onChange={handleUsernameInputOnChange}
+        //label={USERNAME_INPUT_LABLE}
+      >
+        <Input
+          placeholder={USERNAME_INPUT_LABLE}
+          bordered={false}
+          style={{ borderBottom: '1px solid black' }}
         />
-        <TextField
-          error={!isPasswordValid}
-          className={styles.input}
-          value={password}
-          onChange={this.handlePasswordInputOnChange}
-          label={PASSWORD_INPUT_LABLE}
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={this.handleShowPasswordOnClick}
-                  onMouseDown={this.handlePasswordOnMouseDown}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
+      </FormItem>
+      <FormItem
+        error={!isPasswordValid}
+        style={{ width: '200px' }}
+        value={password}
+        onChange={handlePasswordInputOnChange}
+        // label={PASSWORD_INPUT_LABLE}
+        type={showPassword ? 'text' : 'password'}
+        initialValue={{
+          endAdornment: (
+            <Space.Compact position="end">
+              <Button onClick={handleShowPasswordOnClick} onMouseDown={handlePasswordOnMouseDown}>
+                {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              </Button>
+            </Space.Compact>
+          )
+        }}
+      >
+        {' '}
+        <Input
+          placeholder={PASSWORD_INPUT_LABLE}
+          bordered={false}
+          style={{ borderBottom: '1px solid black' }}
         />
-        {mailAccountTagData.map((element) => (
-          <div key={element.id} className={styles.container}>
-            <span className={styles.label}>{`${element.label}:`}</span>
-            {this.props[element.id].map((tag) => (
+      </FormItem>
+      {mailAccountTagData &&
+        mailAccountTagData.map((element) => (
+          <div key={element.id} style={{ marginTop: '10px' }}>
+            <span
+              style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginTop: '10px' }}
+            >{`${element.label}:`}</span>
+            {[element.id].map((tag) => (
               <Tag
                 color={element.color}
                 key={tag}
                 closable
-                className={styles.tag}
-                onClose={this.handleRemoveTagButtonOnClick(element.id, tag)}
+                style={{ fontSize: '1rem' }}
+                onClose={handleRemoveTagButtonOnClick(element.id, tag)}
               >
                 {tag}
               </Tag>
             ))}
             {inputVisible[element.id] ? (
-              <Form ref={this.formRef} onFinish={this.handleAddNewInputPressEnter(element.id)}>
+              <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
                 <FormItem
                   name="email"
                   rules={[
@@ -163,25 +164,25 @@ class MailSetting extends Component {
                   <Input
                     autoFocus
                     type="text"
-                    className={styles.addTagInput}
-                    onBlur={this.handleAddNewInputOnBlur(element.id)}
+                    style={{ width: '200px' }}
+                    onBlur={handleAddNewInputOnBlur(element.id)}
                   />
                 </FormItem>
               </Form>
             ) : (
               <Tag
-                className={classNames(styles.tag, styles.newTag)}
+                style={{ fontSize: '1rem', borderStyle: 'dashed' }}
+                // className={classNames(styles.tag, styles.newTag)}
                 color="#6FBBD6"
-                onClick={this.handleAddNewMailButtonOnClick(element.id)}
+                onClick={handleAddNewMailButtonOnClick(element.id)}
               >
                 <PlusOutlined /> New Mail
               </Tag>
             )}
           </div>
         ))}
-      </EnhanceSubContent>
-    )
-  }
+    </Card>
+  )
 }
 
 // const wrappedMailSetting = Form.create()(MailSetting);

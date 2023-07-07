@@ -15,10 +15,11 @@ import { Mail } from './Mail/Mail'
 
 const items = [
   {
-    label: 'Mail',
-    page: <Mail />
+    label: 'General ',
+    icon: <SettingOutlined />,
+    page: <General />
   },
-  { label: 'General ', page: <General /> },
+  { label: 'Mail', page: <Mail /> },
   { label: 'Telegram' },
   { label: 'SNMP' },
   { label: 'Advanced' }
@@ -100,7 +101,7 @@ const PreferencesDialog = ({ onClose }) => {
                 top: '-10px'
               }}
             >
-              {(loading ? <Spin /> : <General />, (<Mail />))}
+              {loading ? <Spin /> : items[selectedIndex].page}
             </div>
           </Content>
         </Layout>

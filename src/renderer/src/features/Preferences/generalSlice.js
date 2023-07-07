@@ -38,9 +38,9 @@ export const generalSlice = createSlice({
     }
   },
   reducers: {
-    setNICActiveIndex: (state, { action }) => {
+    setNICActiveIndex: (state, action) => {
       //  const { action } = payload
-      const activeIndex = Number(action)
+      const activeIndex = Number(action.payload)
       const isNICValid = true
       return {
         ...state,
@@ -49,7 +49,7 @@ export const generalSlice = createSlice({
       }
     },
     clearGeneralData: (state, { payload }) => {
-      // const { action } = payload
+      //  const { action } = payload
       return {
         ...state,
         isConfigChange: false,
@@ -59,8 +59,7 @@ export const generalSlice = createSlice({
         }
       }
     },
-    initNICData: (state, { payload }) => {
-      const { action } = payload
+    initNICData: (state, action) => {
       return changeObjectState(state, { NICData: action.payload })
     }
   }

@@ -24,19 +24,19 @@ export const mailSlice = createSlice({
       isUsernameValid: true,
       isPasswordValid: true
     },
-    preService: '',
-    isConfigChange: false
+    preService: ''
   },
   reducers: {
-    setMailOpen: (state, { action }) => {
+    setMailOpen: (state, { payload }) => {
+      const { action } = payload
       const isOpen = !state.mailData.isOpen
       return {
         ...state,
         ...getStateOfSetValue(state, { isOpen })
       }
     },
-    setMailService: (state, { payload }) => {
-      const { service } = payload
+    setMailService: (state, action) => {
+      const { service } = action.payload
       let { preService } = state
       if (service === 'Other') {
         preService = state.mailData.service
@@ -47,7 +47,7 @@ export const mailSlice = createSlice({
         ...getStateOfSetValue(state, { service })
       }
     },
-    setMailHost: (state, { action }) => {
+    setMailHost: (state, action) => {
       const { host } = action.payload
       const isHostValid =
         valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
@@ -57,7 +57,7 @@ export const mailSlice = createSlice({
         ...getStateOfFormatValid(state, { isHostValid })
       }
     },
-    setMailPort: (state, { action }) => {
+    setMailPort: (state, action) => {
       const { port } = action.payload
       const isPortValid =
         port >= valueFormat.service.PORT_MIN && port <= valueFormat.service.PORT_MAX
@@ -66,24 +66,73 @@ export const mailSlice = createSlice({
         ...getStateOfSetValue(state, { port }),
         ...getStateOfFormatValid(state, { isPortValid })
       }
+    },
+    setMailUsername: (state, action) => {
+      const username = action.payload
+      const isUsernameValid = valueFormat.setting.ACCOUNT.test(username)
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { username }),
+        ...getStateOfFormatValid(state, { isUsernameValid })
+      }
+    },
+    setMailPassword: (state, action) => {
+      const password = action.payload
+      const isPasswordValid = valueFormat.setting.ACCOUNT.test(password)
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { password }),
+        ...getStateOfFormatValid(state, { isPasswordValid })
+      }
+    },
+    addMailAccount: (state, action) => {
+      const { id, value } = action.payload
+      if (state.mailData[id].indexOf(value) === -1) {
+        return {
+          ...state,
+          ...getStateOfSetValue(state, {
+            [id]: [...state.mailData[id], value]
+          })
+        }
+      }
+      return { ...state }
+    },
+    removeMailAccount: (state, action) => {
+      const { id, tag } = action.payload
+      const newData = state.mailData[id].filter((element) => element !== tag)
+      return {
+        ...state,
+        ...getStateOfSetValue(state, {
+          [id]: newData
+        })
+      }
     }
   }
 })
 
-export const { setMailHost, setMailOpen, setMailPort, setMailService } = mailSlice.actions
+export const {
+  setMailHost,
+  setMailOpen,
+  setMailPort,
+  setMailService,
+  addMailAccount,
+  removeMailAccount,
+  setMailPassword,
+  setMailUsername
+} = mailSlice.actions
 export const mailSelector = (state) => {
-  const { mailData, isConfigChange, validsData, preService } = state.mail
-  return { mailData, isConfigChange, validsData, preService }
+  const { mailData, validsData, preService } = state.mail
+  return { mailData, validsData, preService }
 }
 
-export const getStateOfSetValue = (state, payload) => ({
+const getStateOfSetValue = (state, payload) => ({
   isConfigChange: true,
   mailData: {
     ...state.mailData,
     ...payload
   }
 })
-export const getStateOfFormatValid = (state, valid) => ({
+const getStateOfFormatValid = (state, valid) => ({
   validsData: {
     ...state.validsData,
     ...valid
