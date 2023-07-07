@@ -4,8 +4,7 @@ const pagesList = {
   1: 'mail',
   2: 'telegram',
   3: 'snmp',
-  4: 'advanced',
-  5: 'notification'
+  4: 'advanced'
 }
 
 const preferenceSlice = createSlice({
@@ -30,10 +29,14 @@ const preferenceSlice = createSlice({
         selectedIndex: action.payload,
         selectedPage: pagesList[action.payload]
       }
+    },
+    updateLoadingVisible: (state) => {
+      return { ...state, loading: !state.loading }
     }
   }
 })
-export const { clearPreferencesData, setSelectIndex } = preferenceSlice.actions
+export const { clearPreferencesData, setSelectIndex, updateLoadingVisible } =
+  preferenceSlice.actions
 
 export const preferenceSelector = (state) => {
   const { loading, selectedIndex, selectedPage } = state.preference
