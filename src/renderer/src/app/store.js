@@ -10,6 +10,9 @@ import UIControlSlice from '../features/UIControllSlice'
 import preferenceSlice from '../features/Preferences/preferenceSlice'
 import { generalSlice } from '../features/generalSlice'
 import telegramSlice from '../features/Preferences/telegramSlice'
+import advancedSlice from '../features/Preferences/advancedSlice'
+// import { generalSlice } from '../features/generalSlice'
+import { mailSlice } from '../features/Preferences/mailSlice'
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +26,10 @@ export const store = configureStore({
     UIControl: UIControlSlice.reducer,
     preference: preferenceSlice.reducer,
     general: generalSlice.reducer,
-    telegram: telegramSlice.reducer
+    telegram: telegramSlice.reducer,
+    advanced: advancedSlice.reducer,
+
+    mail: mailSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

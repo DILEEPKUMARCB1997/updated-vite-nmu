@@ -108,9 +108,9 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraphData: (state, { payload }) => {
+    updateCustomGraphData: (state, action) => {
       const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
-        payload
+        action.payload
 
       return {
         ...state,
