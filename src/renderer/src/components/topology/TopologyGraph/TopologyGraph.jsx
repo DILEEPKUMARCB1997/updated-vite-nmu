@@ -84,7 +84,7 @@ const TopologyGraph = (props) => {
     })
 
     networkRef.current.Network.on('click', () => {
-      dispatch(openDeviceMenu(false))
+      dispatch(openDevicesMenu(false))
     })
     console.log(networkRef.current.Network)
 

@@ -111,7 +111,7 @@ const TrapHistoryDialog = ({ onClose }) => {
 
   return (
     <>
-      <Modal open onCancel={handleCloseButtonOnClick} footer={null} width={1200}>
+      <Modal open onCancel={handleCloseButtonOnClick} footer={null} width="80%">
         <Typography>
           <h5>Trap History</h5>
         </Typography>

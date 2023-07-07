@@ -12,7 +12,6 @@ import {
 } from '../../../../../features/Preferences/mailSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
-
 const { Option } = Select
 const { TextField } = Input
 

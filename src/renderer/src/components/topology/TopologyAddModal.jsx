@@ -62,8 +62,6 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
     setAddNodeMAC(event.target.value)
   }
   const handleModalOKButtonClick = () => {
-    //console.log(this.props.currentGroup);
-    //console.log(selectGroup);
     if (event === 'addNode') {
       if (isVirtualNode) {
         dispatch(
