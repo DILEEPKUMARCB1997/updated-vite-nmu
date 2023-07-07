@@ -7,7 +7,7 @@ import {
   generalSelector,
   clearGeneralData,
   setNICActiveIndex
-} from '../../../../features/generalSlice'
+} from '../../../../features/Preferences/generalSlice'
 
 const { Option } = Select
 

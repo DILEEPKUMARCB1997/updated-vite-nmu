@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 //import { REQUEST_MP_SWITCH_POLLING_TOPOLOGY } from '../../../main/utils/IPCEvents'
 import {
@@ -239,6 +240,60 @@ const topologySlice = createSlice({
         addDevice: {},
         removeDevice: []
       }
+    }
+  },
+  switchEditMode: (state, { payload }) => {
+    const { action } = payload
+    return { ...state, editMode: action.payload }
+  },
+  setTopologyViewSettings: (state, action) => {
+    return { ...state, [action.payload]: !state[action.payload] }
+  },
+  clearTopologyLayout: (state, { payload }) => {
+    const { action } = payload
+    return {
+      ...state,
+      virtualNodeData: {},
+      nodesData: {},
+      edgesData: {},
+      nodesIds: [],
+      selectNodes: [],
+      selectEdges: []
+    }
+  },
+  removeNetworkSelectElement: (state, { payload }) => {
+    let { nodesData, edgesData, virtualNodeData } = state
+    const { selectNodes, selectEdges, changeGroupMemberData } = state
+
+    selectNodes.forEach((element) => {
+      if (element.startsWith('virtual')) {
+        const { [element]: _, ...newData } = virtualNodeData
+        virtualNodeData = { ...newData }
+      } else {
+        const { [element]: _, ...newData } = nodesData
+        nodesData = { ...newData }
+        if (state.currentGroup === 'all') {
+          if (changeGroupMemberData.addDevice[element] !== undefined) {
+            changeGroupMemberData.addDevice[element] = undefined
+          } else {
+            changeGroupMemberData.removeDevice.push(element)
+          }
+        }
+      }
+    })
+    selectEdges.forEach((element) => {
+      const { [element]: _, ...newData } = edgesData
+      edgesData = { ...newData }
+    })
+    return {
+      ...state,
+      nodesData,
+      edgesData,
+      virtualNodeData,
+      nodesIds: Object.keys(nodesData),
+      selectNodes: [],
+      selectEdges: [],
+      changeGroupMemberData
     }
   }
 })

@@ -2,12 +2,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { eventLogSelector } from '../../features/eventLogSlice'
-
 import { useSelector } from 'react-redux'
 import EventListCard from './EventListCard'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
+  console.log(customEventListData)
 
   return (
     <div>
@@ -25,18 +25,6 @@ const EventList = () => {
           item={item}
         />
       ))}
-      {/* <EventListCard ledColor="#D50000" />
-        <EventListCard ledColor="#F57F17" />
-        <EventListCard ledColor="#46b300" />
-        <EventListCard ledColor="#D50000" />
-        <EventListCard ledColor="#F57F17" />
-        <EventListCard ledColor="#46b300" />
-        <EventListCard ledColor="#D50000" />
-        <EventListCard ledColor="#F57F17" />
-        <EventListCard ledColor="#46b300" />
-        <EventListCard ledColor="#D50000" />
-        <EventListCard ledColor="#F57F17" />
-        <EventListCard ledColor="#46b300" /> */}
     </div>
   )
 }

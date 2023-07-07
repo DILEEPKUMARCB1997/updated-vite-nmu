@@ -11,11 +11,12 @@ import {
 } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import General from './General/General'
-import Mail from './Mail/Mail'
+import { Mail } from './Mail/Mail'
 
 const items = [
   {
     label: 'General ',
+    icon: <SettingOutlined />,
     page: <General />
   },
   { label: 'Mail', page: <Mail /> },
