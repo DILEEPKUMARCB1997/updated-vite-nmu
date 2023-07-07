@@ -145,6 +145,9 @@
 // export default Topology
 
 import React from 'react'
+
+//import styles from './Topology.module.css'
+// import TopologyAddModal from '../components/topology/TopologyAddModal'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import { Card } from 'antd'
 /* eslint-disable no-const-assign */
@@ -231,7 +234,7 @@ const TopologyPage = () => {
           height: 550
         }}
         bodyStyle={{
-          padding: '15px'
+          padding: '5px'
         }}
       >
         <div

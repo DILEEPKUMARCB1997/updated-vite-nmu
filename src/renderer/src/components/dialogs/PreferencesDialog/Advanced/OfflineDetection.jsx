@@ -2,35 +2,32 @@
 import React from 'react'
 import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
 import { Input } from 'antd'
-// import className from 'classnames'
-import {
-  setFWUpdateBatchQuantity,
-  advancedSelector,
-  setFWUpdateConnectionTimeout
-} from '../../../../features/Preferences/advancedSlice'
 import { useDispatch, useSelector } from 'react-redux'
-// import './FirmwareUpdate.css'
+import {
+  setOfflinePollInterval,
+  advancedSelector,
+  setOfflineTimeout
+} from '../../../../features/Preferences/advancedSlice'
 
-const TITLE = 'Firmware Update'
-const BATCH_QUANTITY_INPUT_LABLE = 'Batch Quantity'
-const CONNECTION_TIMEOUT_INPUT_LABLE = 'Connection Timeout'
-
-const FirmwareUpdate = () => {
+const TITLE = 'Offline Detection'
+const POLLING_INTERVAL_INPUT_LABLE = 'Polling Interval'
+const TIMEOUT_INPUT_LABLE = 'Timeout'
+const OfflineDetection = () => {
   const dispatch = useDispatch()
-  const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = useSelector(advancedSelector)
+  const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = useSelector(advancedSelector)
 
-  const handleFWUpdateBatchQuantityInputOnChange = (event) => {
-    dispatch(setFWUpdateBatchQuantity(event.target.value))
+  const handleOfflinePollIntervalInputOnChange = (event) => {
+    //console.log(event.target.value);
+    dispatch(setOfflinePollInterval(event.target.value))
   }
-  const handleConnectionTimeoutInputOnChange = (event) => {
-    dispatch(setFWUpdateConnectionTimeout(event.target.value))
+  const handleOfflineTimeoutInputOnChange = (event) => {
+    dispatch(setOfflineTimeout(event.target.value))
   }
-
   return (
     <EnhanceSubContent title={TITLE}>
       <div>
         <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {BATCH_QUANTITY_INPUT_LABLE}
+          {POLLING_INTERVAL_INPUT_LABLE}
         </span>
         <Input
           style={{
@@ -39,14 +36,15 @@ const FirmwareUpdate = () => {
             height: '30px',
             width: '80px',
             paddingLeft: '3px',
-            marginLeft: '60px'
+            marginLeft: '10px'
           }}
-          onChange={handleFWUpdateBatchQuantityInputOnChange}
+          suffix="sec"
+          onChange={handleOfflinePollIntervalInputOnChange}
         ></Input>
       </div>
       <div style={{ marginTop: '15px' }}>
         <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {CONNECTION_TIMEOUT_INPUT_LABLE}
+          {TIMEOUT_INPUT_LABLE}
         </span>
         <Input
           style={{
@@ -55,14 +53,14 @@ const FirmwareUpdate = () => {
             height: '30px',
             width: '80px',
             paddingLeft: '3px',
-            marginLeft: '20px'
+            marginLeft: '63px'
           }}
           suffix="ms"
-          onChange={handleConnectionTimeoutInputOnChange}
+          onChange={handleOfflineTimeoutInputOnChange}
         />
       </div>
     </EnhanceSubContent>
   )
 }
 
-export default FirmwareUpdate
+export default OfflineDetection

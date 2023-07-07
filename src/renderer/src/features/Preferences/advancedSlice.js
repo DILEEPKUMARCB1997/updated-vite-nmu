@@ -1,4 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { updateLoadingVisible } from './preferenceSlice'
+import {
+  RESPONSE_RP_SETALL_ADVANCED_SETTINGS,
+  REQUEST_MP_SET_ALL_ADVANCED_SETTINGS,
+  RESPONSE_RP_GET_ALL_ADVANCED_SETTINGS,
+  REQUEST_MP_GET_ALL_ADVANCED_SETTINGS
+} from '../../../../main/utils/IPCEvents'
 
 const valueFormat = {
   common: {
@@ -35,6 +42,25 @@ const getStateOfFormatValid = (state, valid) => ({
     ...valid
   }
 })
+export const requestSetAdvancedData = (callback) => (dispatch, getState) => {
+  const { advancedData } = getState().advanced
+  window.electron.ipcRenderer.once(RESPONSE_RP_SETALL_ADVANCED_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    callback(arg.success)
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_ALL_ADVANCED_SETTINGS, advancedData)
+}
+export const requestGetAdvancedData = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_ALL_ADVANCED_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    if (arg.success) {
+      dispatch(initAdvancedData(arg.data))
+      dispatch(updateLoadingVisible())
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_ALL_ADVANCED_SETTINGS)
+  dispatch(updateLoadingVisible())
+}
 const advancedSlice = createSlice({
   name: 'advancedSlice',
   initialState: {
@@ -82,11 +108,65 @@ const advancedSlice = createSlice({
         ...getStateOfSetValue(state, { fwUpdateBatchQuantity }),
         ...getStateOfFormatValid(state, { isFWUpdateBatchQuantityValid })
       }
+    },
+    setFWUpdateConnectionTimeout: (state, action) => {
+      const { payload } = action
+      if (!valueFormat.common.words4.test(payload)) {
+        return { ...state }
+      }
+      const fwUpdateConnTimeout = Number(payload)
+      const isFWUpdateConnTimeoutValid =
+        payload <= valueFormat.FWUpdate.CONNECT_TIMEOUT_MAX &&
+        payload >= valueFormat.FWUpdate.CONNECT_TIMEOUT_MIN
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { fwUpdateConnTimeout }),
+        ...getStateOfFormatValid(state, { isFWUpdateConnTimeoutValid })
+      }
+    },
+    setOfflinePollInterval: (state, action) => {
+      const { payload } = action
+      if (!valueFormat.common.words4.test(payload)) {
+        return { ...state }
+      }
+      const offlinePollInterval = Number(payload)
+      const isOfflinePollIntervalValid =
+        offlinePollInterval <= valueFormat.offline.POLL_INTERVAL_MAX &&
+        offlinePollInterval >= valueFormat.offline.POLL_INTERVAL_MIN
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { offlinePollInterval }),
+        ...getStateOfFormatValid(state, { isOfflinePollIntervalValid })
+      }
+    },
+    setOfflineTimeout: (state, action) => {
+      const { payload } = action
+      if (!valueFormat.common.words4.test(payload)) {
+        return { ...state }
+      }
+      const offlineTimeout = Number(payload)
+      const isOfflineTimeoutValid =
+        payload <= valueFormat.offline.TIMEOUT_MAX && payload >= valueFormat.offline.TIMEOUT_MIN
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { offlineTimeout }),
+        ...getStateOfFormatValid(state, { isOfflineTimeoutValid })
+      }
+    },
+    initAdvancedData: (state, action) => {
+      return { ...state, advancedData: action.payload }
     }
   }
 })
-export const { setDefaultUsername, setDefaultPassword, setFWUpdateBatchQuantity } =
-  advancedSlice.actions
+export const {
+  setDefaultUsername,
+  setDefaultPassword,
+  setFWUpdateBatchQuantity,
+  setFWUpdateConnectionTimeout,
+  setOfflinePollInterval,
+  setOfflineTimeout,
+  initAdvancedData
+} = advancedSlice.actions
 
 export const advancedSelector = (state) => {
   const {

@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
+import './ConfigComarission.css'
+
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Row, Col, Card } from 'antd'
-import './ConfigComarission.css'
 
 function ConfigComparission() {
   const [asdf, setasdf] = useState('')
@@ -14,6 +15,7 @@ function ConfigComparission() {
       const text = e.target.result
       setasdf(text)
       console.log(text)
+      //alert(text);
     }
     reader.readAsText(e.target.files[0])
   }
@@ -24,6 +26,7 @@ function ConfigComparission() {
       const text1 = e.target.result
       setasdf1(text1)
       console.log(text1)
+      //alert(text1);
     }
     reader.readAsText(e.target.files[0])
   }
@@ -37,10 +40,10 @@ function ConfigComparission() {
             </div>
             <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '20px' }}>
               <Col span={12}>
-                <input type="file" className="choose" onChange={(e) => showFile(e)} />
+                <input type="file" onChange={(e) => showFile(e)} className="choose" />
               </Col>
               <Col span={12}>
-                <input type="file" className="choose" onChange={(e) => showFile1(e)} />
+                <input type="file" onChange={(e) => showFile1(e)} className="choose" />
               </Col>
               <Row
                 justify="space-around"

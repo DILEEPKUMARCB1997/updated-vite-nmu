@@ -14,6 +14,9 @@ import {
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
+function getRandomInt(min = 1, max = 9) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 const SyslogGraph = (props) => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
@@ -23,7 +26,7 @@ const SyslogGraph = (props) => {
     series: [
       {
         name: 'Syslog Message Count',
-        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2]
+        data: [2.3, 3.1, 4.0, 3.8, 4.0, 3.6, 3.2]
       }
     ],
     options: {
@@ -125,6 +128,25 @@ const SyslogGraph = (props) => {
       )
     }, 3000)
   }, [])
+
+  useEffect(() => {
+    if (Array.isArray(syslogGraphData.data) && syslogGraphData.data.length > 0) {
+      setGraphData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: syslogGraphData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: syslogGraphData.label
+          }
+        }
+      }))
+    }
+  }, [syslogGraphData])
 
   return (
     <>

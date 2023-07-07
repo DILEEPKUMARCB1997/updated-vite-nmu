@@ -7,7 +7,7 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
-import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
+import ConfigComparission from '../../pages/ConfigComparission'
 
 const AppRoutes = () => {
   let element = useRoutes([
