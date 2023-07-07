@@ -69,7 +69,7 @@ const AddUserDialog = ({ onClose }) => {
           createdBy: username
         }
         dispatch(setUserData(userData))
-        notification.success({ message: 'Successfully saved user data.' })
+        // notification.success({ message: 'Successfully saved user data.' })
         form.resetFields()
         onClose()
       })

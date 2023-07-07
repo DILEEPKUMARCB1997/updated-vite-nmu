@@ -15,7 +15,7 @@ export const setUserData = (param) => (dispatch, getState) => {
     if (arg.success) {
       console.log(arg.data)
       dispatch(requestGetUsersData())
-      // notification.success({ message: 'Successfully saved user data.' })
+      notification.success({ message: 'Successfully saved user data.' })
     } else {
       notification.error({ message: arg.msg })
     }
@@ -59,7 +59,7 @@ export const requestGetUsersData = () => (dispatch) => {
 }
 
 const userManagementSlice = createSlice({
-  name: 'usermgmtslice',
+  name: 'usermgmtSlice',
   initialState: {
     loggedInUser: {},
     usersData: [],

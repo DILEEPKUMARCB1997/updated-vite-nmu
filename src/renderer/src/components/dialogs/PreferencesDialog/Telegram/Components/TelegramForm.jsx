@@ -1,13 +1,35 @@
-import { Form, Input, InputNumber, Select, theme } from 'antd'
+import { App, Button, Form, Input, InputNumber, Select, theme } from 'antd'
 import React from 'react'
 import NumberInput from './NumberInput'
 import ControlButton from './ControlButton'
+import { useDispatch } from 'react-redux'
+import { saveTelegramUser } from '../../../../../features/Preferences/telegramSlice'
 
 const TelegramForm = () => {
+  const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
+  const [form] = Form.useForm()
+
+  const handleSubmit = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        dispatch(saveTelegramUser(values))
+        console.log(values)
+        form.resetFields()
+      })
+      .catch((errorInfo) => {
+        console.log('Validation Failed:', errorInfo)
+      })
+  }
+
+  const handleReset = () => {
+    form.resetFields()
+  }
+
   return (
-    <Form layout="vertical">
+    <Form layout="vertical" form={form}>
       {/* add user name */}
       <Form.Item
         name="telegramId"
@@ -57,9 +79,9 @@ const TelegramForm = () => {
         />
       </Form.Item>
       <Form.Item style={{ display: 'flex', justifyContent: 'end', margin: '0px' }}>
-        {/* <div style={{ marginLeft: '0px' }}> */}
-        <ControlButton text="Submit" />
-        <ControlButton text="Reset" background={token.colorBorder} />
+        {/* <div style={{ display: 'flex', justifyContent: 'end', margin: '0px' }}> */}
+        <ControlButton text="Submit" onClick={handleSubmit} />
+        <ControlButton text="Reset" background={token.colorBorder} onClick={handleReset} />
         {/* </div> */}
       </Form.Item>
     </Form>

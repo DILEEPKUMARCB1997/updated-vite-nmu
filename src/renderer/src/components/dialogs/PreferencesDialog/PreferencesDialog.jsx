@@ -31,6 +31,7 @@ const PreferencesDialog = ({ onClose }) => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
+
   const dispatch = useDispatch()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
 
@@ -68,7 +69,7 @@ const PreferencesDialog = ({ onClose }) => {
         >
           <SettingOutlined /> Preference
         </Header>
-        <Layout hasSider style={{ height: '540px' }}>
+        <Layout hasSider style={{ height: '100%' }}>
           <Sider
             breakpoint="lg"
             collapsedWidth="0"

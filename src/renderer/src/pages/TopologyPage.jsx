@@ -4,11 +4,12 @@
 import React, { useRef, useEffect } from 'react'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/topology/TopologyToolbar/TopologyToolbar'
+import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import {
   changeTopologyEvent,
-  setTopologyData,
-  clearTopologyData,
-  requestSwitchPolling
+  // setTopologyData,
+  clearTopologyData
+  // requestSwitchPolling
 } from '../features/topologySlice'
 
 import { useDispatch } from 'react-redux'
@@ -117,4 +118,4 @@ const TopologyPage = () => {
     </div>
   )
 }
-export default Topology
+export default TopologyPage

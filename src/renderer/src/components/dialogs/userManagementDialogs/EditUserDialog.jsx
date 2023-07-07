@@ -35,13 +35,13 @@ const EditUserDialog = ({ onClose }) => {
               form.resetFields()
             } else {
               dispatch(setUserData(updateUser))
-              notification.success({ message: 'User has been updated Successfully' })
+              // notification.success({ message: 'User has been updated Successfully' })
               form.resetFields()
             }
           } else {
             console.log(updateUser)
             dispatch(setUserData(updateUser))
-            notification.success({ message: 'User has been updated Successfully' })
+            // notification.success({ message: 'User has been updated Successfully' })
             form.resetFields()
           }
         }

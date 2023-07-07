@@ -8,9 +8,10 @@ import React from 'react'
 const ControlButton = (props) => {
   const { useToken } = theme
   const { token } = useToken()
-  const { text, type, color, style, background, size, onClick, ...other } = props
+  const { text, type, color, style, htmlType, background, size, onClick, ...other } = props
   return (
     <Button
+      htmlType={htmlType}
       type={type}
       size={size || 'large'}
       onClick={onClick}

@@ -10,13 +10,17 @@ const Telegram = () => {
   const { useToken } = theme
   const { token } = useToken()
   return (
+    // <div style={{ marginTop: '10px' }}>
     <Card bordered={true} className="elevation">
       <Row gutter={[18, 18]}>
         <Col span={24}>
           <Row gutter={[28, 28]}>
             <Col span={24}>
               <Card bordered={true} className="elevation">
-                <div className="card_Header_left" style={{ background: token.colorPrimary }}>
+                <div
+                  className="card_Header_left"
+                  style={{ background: token.colorPrimary, marginBottom: '0px' }}
+                >
                   <h3 className="heading">Telegram Token Setting</h3>
                 </div>
                 <br />
@@ -54,6 +58,7 @@ const Telegram = () => {
         </Col>
       </Row>
     </Card>
+    // </div>
   )
 }
 

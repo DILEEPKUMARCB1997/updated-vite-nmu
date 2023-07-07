@@ -9,6 +9,7 @@ import topologySlice from '../features/topologySlice'
 import UIControlSlice from '../features/UIControllSlice'
 import preferenceSlice from '../features/Preferences/preferenceSlice'
 import { generalSlice } from '../features/generalSlice'
+import telegramSlice from '../features/Preferences/telegramSlice'
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
     topology: topologySlice.reducer,
     UIControl: UIControlSlice.reducer,
     preference: preferenceSlice.reducer,
-    general: generalSlice.reducer
+    general: generalSlice.reducer,
+    telegram: telegramSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

@@ -8,7 +8,7 @@ import {
   addNewNode,
   addNewVirtualNode,
   topologySelector
-} from '../../features/topologySlice'
+} from '../../../features/topologySlice'
 
 const { Option } = Select
 const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
