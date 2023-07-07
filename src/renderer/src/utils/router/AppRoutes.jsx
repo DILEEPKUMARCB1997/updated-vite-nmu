@@ -11,6 +11,7 @@ import UserManagementPage from '../../pages/UserManagementPage'
 import DeviceConfigPage from '../../pages/DeviceConfigPage'
 import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
 import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
+import SNMP from '../../components/dialogs/PreferencesDialog/SNMP/SNMP'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -50,6 +51,10 @@ const AppRoutes = () => {
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
+        },
+        {
+          path: 'snmp',
+          element: <SNMP />
         }
       ]
     },

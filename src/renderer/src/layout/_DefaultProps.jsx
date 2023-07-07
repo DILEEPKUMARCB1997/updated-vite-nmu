@@ -5,7 +5,8 @@ import {
   ApartmentOutlined,
   UserOutlined,
   FileSearchOutlined,
-  WhatsAppOutlined
+  WhatsAppOutlined,
+  FieldTimeOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -46,6 +47,11 @@ const routes = {
         path: '/telegram',
         name: 'Telegram',
         icon: <WhatsAppOutlined />
+      },
+      {
+        path: '/snmp',
+        name: 'SNMP',
+        icon: <FieldTimeOutlined />
       }
     ]
   },
