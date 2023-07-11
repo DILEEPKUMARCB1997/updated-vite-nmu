@@ -27,8 +27,8 @@ export const mailSlice = createSlice({
     preService: ''
   },
   reducers: {
-    setMailOpen: (state, { payload }) => {
-      const { action } = payload
+    setMailOpen: (state) => {
+      //  const { action } = payload
       const isOpen = !state.mailData.isOpen
       return {
         ...state,

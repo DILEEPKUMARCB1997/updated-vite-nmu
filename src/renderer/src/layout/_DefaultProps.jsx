@@ -3,7 +3,8 @@ import {
   DashboardOutlined,
   DesktopOutlined,
   ApartmentOutlined,
-  FileSearchOutlined
+  FileSearchOutlined,
+  MailOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -34,6 +35,11 @@ const routes = {
         path: '/configComparission',
         name: 'ConfigComparission',
         icon: <FileSearchOutlined />
+      },
+      {
+        path: '/Mail',
+        name: 'Mail',
+        icon: <MailOutlined />
       }
     ]
   },

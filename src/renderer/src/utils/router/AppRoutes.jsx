@@ -8,6 +8,8 @@ import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
 import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
+//import MailService from '../../components/dialogs/PreferencesDialog/Mail/MailService/MailService'
+import { Mail } from '../../components/dialogs/PreferencesDialog/Mail/Mail'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -35,6 +37,10 @@ const AppRoutes = () => {
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
+        },
+        {
+          path: 'Mail',
+          element: <Mail />
         }
       ]
     },
