@@ -14,7 +14,7 @@ const valueFormat = {
   }
 }
 
-export const mailSlice = createSlice({
+const mailSlice = createSlice({
   name: 'mailSlice',
   initialState: {
     mailData: {},
@@ -124,6 +124,8 @@ export const mailSelector = (state) => {
   const { mailData, validsData, preService } = state.mail
   return { mailData, validsData, preService }
 }
+
+export default mailSlice
 
 const getStateOfSetValue = (state, payload) => ({
   isConfigChange: true,
