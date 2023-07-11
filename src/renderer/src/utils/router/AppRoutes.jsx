@@ -7,7 +7,7 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
-import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
+import ConfigComparission from '../../pages/ConfigComparission'
 //import MailService from '../../components/dialogs/PreferencesDialog/Mail/MailService/MailService'
 import { Mail } from '../../components/dialogs/PreferencesDialog/Mail/Mail'
 
