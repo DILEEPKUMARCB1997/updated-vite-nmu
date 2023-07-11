@@ -29,7 +29,10 @@ const Telegram = () => {
             </Col>
             <Col span={24}>
               <Card bordered={true} className="elevation">
-                <div className="card_Header_left" style={{ background: token.colorPrimary }}>
+                <div
+                  className="card_Header_left"
+                  style={{ background: token.colorPrimary, marginBottom: '0px' }}
+                >
                   <h3 className="heading">Telegram Bot Testing</h3>
                 </div>
                 <br />
@@ -38,7 +41,10 @@ const Telegram = () => {
             </Col>
             <Col span={10}>
               <Card bordered={true} className="elevation" bodyStyle={{ paddingBottom: '5px' }}>
-                <div className="card_Header_left" style={{ background: token.colorPrimary }}>
+                <div
+                  className="card_Header_left"
+                  style={{ background: token.colorPrimary, marginBottom: '0px' }}
+                >
                   <h3 className="heading">Telegram Users Setting</h3>
                 </div>
                 <br />
@@ -47,7 +53,10 @@ const Telegram = () => {
             </Col>
             <Col span={14}>
               <Card bordered={true} className="elevation" bodyStyle={{ paddingBottom: '0px' }}>
-                <div className="card_Header_left" style={{ background: token.colorPrimary }}>
+                <div
+                  className="card_Header_left"
+                  style={{ background: token.colorPrimary, marginBottom: '0px' }}
+                >
                   <h3 className="heading">Telegram Users List</h3>
                 </div>
                 <br />

@@ -8,11 +8,11 @@ import eventLogSlice from '../features/eventLogSlice'
 import topologySlice from '../features/topologySlice'
 import UIControlSlice from '../features/UIControllSlice'
 import preferenceSlice from '../features/Preferences/preferenceSlice'
-import { generalSlice } from '../features/generalSlice'
 import telegramSlice from '../features/Preferences/telegramSlice'
 import advancedSlice from '../features/Preferences/advancedSlice'
-// import { generalSlice } from '../features/generalSlice'
-import { mailSlice } from '../features/Preferences/mailSlice'
+import mailSlice from '../features/Preferences/mailSlice'
+import generalSlice from '../features/Preferences/generalSlice'
+import snmpSlice from '../features/Preferences/snmpSlice'
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +27,7 @@ export const store = configureStore({
     preference: preferenceSlice.reducer,
     general: generalSlice.reducer,
     telegram: telegramSlice.reducer,
+    snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
 
     mail: mailSlice.reducer

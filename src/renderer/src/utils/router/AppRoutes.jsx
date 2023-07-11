@@ -7,11 +7,11 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
-import UserManagementPage from '../../pages/UserManagementPage'
-import DeviceConfigPage from '../../pages/DeviceConfigPage'
+// import DeviceConfigPage from '../../pages/DeviceConfigPage'
 import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
-import ConfigComparission from '../../components/ConfigComparission/ConfigComparission'
 import SNMP from '../../components/dialogs/PreferencesDialog/SNMP/SNMP'
+import UserManagement from '../../pages/UserManagementPage'
+import ConfigComparission from '../../pages/ConfigComparission'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -38,12 +38,12 @@ const AppRoutes = () => {
         },
         {
           path: 'usermanagement',
-          element: <UserManagementPage />
+          element: <UserManagement />
         },
-        {
-          path: 'file',
-          element: <DeviceConfigPage />
-        },
+        // {
+        //   path: 'file',
+        //   element: <DeviceConfigPage />
+        // },
         {
           path: 'telegram',
           element: <Telegram />

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Modal, Menu, Layout } from 'antd'
+import { Modal, Menu, Layout, theme } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
 import {
@@ -155,96 +155,99 @@ const PreferencesDialog = ({ onClose }) => {
         >
           <SettingOutlined /> Preference
         </Header>
-        <Layout hasSider style={{ height: '100%' }}>
-          <Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-            onBreakpoint={(broken) => {
-              console.log(broken)
-            }}
-            onCollapse={(collapsed, type) => {
-              console.log(collapsed, type)
-            }}
-          >
-            <div className="demo-logo-vertical" />
-            <Menu
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={['5']}
-              items={items}
-              // onClick={handleMenuItemClick()}
-              style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
-            />
-          </Sider>
-    <div>
-      <Modal
-        open
-        onCancel={onClose}
-        footer={null}
-        width="100%"
-        // bodyStyle={{ height: '80vh', padding: '20px' }}
-        // style={{
-        //   top: 0,
-        //   bottom: 0,
-        //   left: 0,
-        //   right: 0,
-        //   marginLeft: 0,
-        //   marginRight: 0,
+      </Layout>
+      <Layout hasSider style={{ height: '100%' }}>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            console.log(broken)
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type)
+          }}
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={['5']}
+            items={items}
+            // onClick={handleMenuItemClick()}
+            style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
+          />
+        </Sider>
+      </Layout>
+      <div>
+        <Modal
+          open
+          onCancel={onClose}
+          footer={null}
+          width="100%"
+          // bodyStyle={{ height: '80vh', padding: '20px' }}
+          // style={{
+          //   top: 0,
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   marginLeft: 0,
+          //   marginRight: 0,
 
-        //   position: 'fixed'
-        // }}
-        bodyStyle={{ height: '600px' }}
-      >
-        <Layout>
-          <Header
-            style={{
-              background: ' #6fbbd6',
-              fontSize: 35,
-              height: '80px',
-              width: '1290px',
-              color: 'white',
-              position: 'relative',
-              top: '-10px',
-              fontWeight: 'bold'
-            }}
-            close={handleCancelButtonClick}
-          >
-            <SettingOutlined /> Preference
-          </Header>
-          <Layout hasSider style={{ height: '540px' }}>
-            <Sider>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Menu
-                  theme="dark"
-                  mode="inline"
-                  defaultSelectedKeys={['5']}
-                  defaultOpenKeys={['5']}
-                  style={{
-                    fontSize: '16px',
-                    color: 'white',
-                    position: 'relative',
-                    top: '-10px'
-                  }}
-                  items={items}
-                  onClick={handleMenuItemClick()}
-                  // key={item.label}
-                  // className={selectedIndex === index ? 'navItem' : null}
-                >
-                  {/* {items.map((item, index) => (
+          //   position: 'fixed'
+          // }}
+          bodyStyle={{ height: '600px' }}
+        >
+          <Layout>
+            <Header
+              style={{
+                background: ' #6fbbd6',
+                fontSize: 35,
+                height: '80px',
+                width: '1290px',
+                color: 'white',
+                position: 'relative',
+                top: '-10px',
+                fontWeight: 'bold'
+              }}
+              close={handleCancelButtonClick}
+            >
+              <SettingOutlined /> Preference
+            </Header>
+            <Layout hasSider style={{ height: '540px' }}>
+              <Sider>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <Menu
+                    theme="dark"
+                    mode="inline"
+                    defaultSelectedKeys={['5']}
+                    defaultOpenKeys={['5']}
+                    style={{
+                      fontSize: '16px',
+                      color: 'white',
+                      position: 'relative',
+                      top: '-10px'
+                    }}
+                    items={items}
+                    onClick={handleMenuItemClick()}
+                    // key={item.label}
+                    // className={selectedIndex === index ? 'navItem' : null}
+                  >
+                    {/* {items.map((item, index) => (
                     <MenuItem
                       key={item.label}
                       className={selectedIndex === index ? 'navItem' : null}
                       onClick={handleMenuItemClick()}
                     ></MenuItem>
                   ))} */}
-                </Menu>
-              </div>
-            </Sider>
-            {loading ? <EnhanceSpin /> : items[selectedIndex].page}
+                  </Menu>
+                </div>
+              </Sider>
+              {loading ? <EnhanceSpin /> : items[selectedIndex].page}
+            </Layout>
           </Layout>
-        </Layout>
-      </Modal>
-    </div>
+        </Modal>
+      </div>
+    </Modal>
   )
 }
 
