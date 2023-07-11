@@ -5,7 +5,7 @@ import { Input } from 'antd'
 // import className from 'classnames'
 import {
   setFWUpdateBatchQuantity,
-  advancedSelector,
+  // advancedSelector,
   setFWUpdateConnectionTimeout
 } from '../../../../features/Preferences/advancedSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,7 +17,7 @@ const CONNECTION_TIMEOUT_INPUT_LABLE = 'Connection Timeout'
 
 const FirmwareUpdate = () => {
   const dispatch = useDispatch()
-  const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = useSelector(advancedSelector)
+  // const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = useSelector(advancedSelector)
 
   const handleFWUpdateBatchQuantityInputOnChange = (event) => {
     dispatch(setFWUpdateBatchQuantity(event.target.value))

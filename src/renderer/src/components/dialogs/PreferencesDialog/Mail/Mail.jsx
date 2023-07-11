@@ -3,7 +3,7 @@ import React from 'react'
 import MailService from './MailService/MailService'
 import MailSetting from './MailSetting/MailSetting'
 
-export const Mail = () => {
+const Mail = () => {
   return (
     <div>
       <MailService />
@@ -11,3 +11,4 @@ export const Mail = () => {
     </div>
   )
 }
+export default Mail
