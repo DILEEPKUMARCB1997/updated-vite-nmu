@@ -182,7 +182,7 @@ const PreferencesDialog = ({ onClose }) => {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'left'
             }}
           >
             <Menu
@@ -202,7 +202,7 @@ const PreferencesDialog = ({ onClose }) => {
           <Content
             style={{
               padding: 24,
-              margin: '24px 16px 24px',
+              // margin: '24px 16px 24px',
               minHeight: 280,
               background: colorBgContainer,
               overflow: 'auto'

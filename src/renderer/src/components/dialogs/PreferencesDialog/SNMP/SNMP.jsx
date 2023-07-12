@@ -16,13 +16,13 @@ const SNMP = () => {
   }, [])
 
   return (
-    <Card>
-      {/* <div> */}
+    // <Card>
+    <div>
       <SNMPScan />
       <DefaultCommunity />
       <Other />
-      {/* </div> */}
-    </Card>
+    </div>
+    // </Card>
   )
 }
 
