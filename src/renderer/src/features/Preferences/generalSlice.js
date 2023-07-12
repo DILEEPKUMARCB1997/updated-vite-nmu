@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
+import { updateLoadingVisible } from './preferenceSlice'
 import {
   RESPONSE_RP_GET_ALL_NETWORK_INTERFACES,
   REQUEST_MP_GET_ALL_NETWORK_INTERFACES,
@@ -24,9 +25,11 @@ export const requestGetNICData = () => (dispatch) => {
     //console.log(arg);
     if (arg.success) {
       dispatch(initNICData(arg.data))
+      dispatch(updateLoadingVisible())
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_GET_ALL_NETWORK_INTERFACES)
+  dispatch(updateLoadingVisible())
 }
 
 const generalSlice = createSlice({

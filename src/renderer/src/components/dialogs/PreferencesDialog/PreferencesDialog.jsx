@@ -1,51 +1,73 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
+// // /* eslint-disable no-unused-vars */
+// // // /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Modal, Menu, Layout, theme } from 'antd'
+import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
 import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
+import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import './PreferencesDialog.css'
-const { Header, Sider } = Layout
 import Advanced from './Advanced/Advanced'
-import EnhanceSpin from './EnhanceSpin'
 import General from './General/General'
 import Mail from './Mail/Mail'
+import SNMP from './SNMP/SNMP'
 import Telegram from './Telegram/Telegram'
-// import Mail from './Mail/Mail'
+
+const { Header, Sider, Content } = Layout
+const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 
 const items = [
   {
-    label: 'General ',
-    icon: <SettingOutlined />,
+    label: 'General',
+    key: 'general',
     page: <General />
   },
-  { label: 'Mail', page: <Mail /> },
-  { label: 'Telegram', page: <Telegram /> },
-  { label: 'Mail' },
-  { label: 'Telegram' },
-  { label: 'SNMP' },
-  { label: 'Advanced', page: <Advanced /> }
-  // { label: 'Notifications', page: <NotificationsContainer /> },
+  {
+    label: 'Mail',
+    key: 'mail',
+    page: <Mail />
+  },
+  {
+    label: 'Telegram',
+    key: 'telegram',
+    page: <Telegram />
+  },
+  {
+    label: 'SNMP',
+    key: 'snmp',
+    page: <SNMP />
+  },
+  {
+    label: 'Advanced',
+    key: 'advanced',
+    page: <Advanced />
+  }
 ]
-const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 
 const PreferencesDialog = ({ onClose }) => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
-
-  const dispatch = useDispatch()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
+  const dispatch = useDispatch()
+  const { notification } = App.useApp()
 
   const configChangeFlag = [selectedPage].isConfigChange
   const configValidFlag = [selectedPage].validsData
 
-  const handleMenuItemClick = (newIndex) => {
-    if (newIndex === selectedIndex) return
+  const handleMenuItemClick = ({ key }) => {
+    console.log(key)
+
+    const fetchIndex = items.findIndex((e) => e.key === key)
+    console.log(fetchIndex)
+
+    if (fetchIndex === selectedIndex) return
 
     if (configChangeFlag && configValidFlag) {
       new Promise((resolve, reject) => {
@@ -53,14 +75,14 @@ const PreferencesDialog = ({ onClose }) => {
       })
         .then(() => {
           handleRequireSetData()
-          handleChangePage(newIndex)
+          handleChangePage(fetchIndex)
           return null
         })
         .catch(() => {
-          handleChangePage(newIndex)
+          handleChangePage(fetchIndex)
         })
     } else {
-      handleChangePage(newIndex)
+      handleChangePage(fetchIndex)
     }
   }
   const handleCancelButtonClick = () => {
@@ -102,8 +124,10 @@ const PreferencesDialog = ({ onClose }) => {
     })
   }
   const handleRequireSetData = () => {
-    const { selectedIndex } = this.props
     switch (selectedIndex) {
+      case 0:
+        requireSetNICData(handleShowResult(selectedIndex))
+        break
       case 4:
         requestSetAdvancedData(handleShowResult(selectedIndex))
         break
@@ -113,8 +137,11 @@ const PreferencesDialog = ({ onClose }) => {
     }
   }
 
-  const handleChangePage = (newIndex) => {
-    switch (newIndex) {
+  const handleChangePage = (fetchIndex) => {
+    switch (fetchIndex) {
+      case 0:
+        requestGetNICData()
+        break
       case 4:
         requestGetAdvancedData()
         break
@@ -122,7 +149,7 @@ const PreferencesDialog = ({ onClose }) => {
       default:
         break
     }
-    setSelectIndex(newIndex)
+    dispatch(setSelectIndex(fetchIndex))
   }
 
   return (
@@ -131,122 +158,60 @@ const PreferencesDialog = ({ onClose }) => {
       onCancel={onClose}
       footer={null}
       width="100%"
-      // bodyStyle={{ height: '80vh', padding: '20px' }}
       style={{
-        top: '10px',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        position: 'fixed'
+        top: '5px'
       }}
-      bodyStyle={{ height: '100%' }}
     >
-      <Layout>
+      <Layout style={{ height: '89vh' }}>
         <Header
           style={{
             background: ' #6fbbd6',
             fontSize: 35,
-            height: '90px',
-            width: '1460px',
-            position: 'relative',
-            top: '-10px'
+            height: '80px',
+            color: '#fff',
+            fontWeight: 'bold'
           }}
-          // close={handleCancelButtonClick}
+          close={handleCancelButtonClick}
         >
           <SettingOutlined /> Preference
         </Header>
-      </Layout>
-      <Layout hasSider style={{ height: '100%' }}>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken)
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type)
-          }}
-        >
-          <div className="demo-logo-vertical" />
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={['5']}
-            items={items}
-            // onClick={handleMenuItemClick()}
-            style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
-          />
-        </Sider>
-      </Layout>
-      <div>
-        <Modal
-          open
-          onCancel={onClose}
-          footer={null}
-          width="100%"
-          // bodyStyle={{ height: '80vh', padding: '20px' }}
-          // style={{
-          //   top: 0,
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   marginLeft: 0,
-          //   marginRight: 0,
 
-          //   position: 'fixed'
-          // }}
-          bodyStyle={{ height: '600px' }}
-        >
-          <Layout>
-            <Header
+        <Layout style={{ height: '100vh' }}>
+          <Sider
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Menu
+              theme="dark"
+              mode="inline"
+              // selectedKeys={[selectedIndex]}
               style={{
-                background: ' #6fbbd6',
-                fontSize: 35,
-                height: '80px',
-                width: '1290px',
+                fontSize: '16px',
                 color: 'white',
-                position: 'relative',
-                top: '-10px',
-                fontWeight: 'bold'
+                position: 'relative'
+                // top: '-10px'
               }}
-              close={handleCancelButtonClick}
-            >
-              <SettingOutlined /> Preference
-            </Header>
-            <Layout hasSider style={{ height: '540px' }}>
-              <Sider>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={['5']}
-                    defaultOpenKeys={['5']}
-                    style={{
-                      fontSize: '16px',
-                      color: 'white',
-                      position: 'relative',
-                      top: '-10px'
-                    }}
-                    items={items}
-                    onClick={handleMenuItemClick()}
-                    // key={item.label}
-                    // className={selectedIndex === index ? 'navItem' : null}
-                  >
-                    {/* {items.map((item, index) => (
-                    <MenuItem
-                      key={item.label}
-                      className={selectedIndex === index ? 'navItem' : null}
-                      onClick={handleMenuItemClick()}
-                    ></MenuItem>
-                  ))} */}
-                  </Menu>
-                </div>
-              </Sider>
-              {loading ? <EnhanceSpin /> : items[selectedIndex].page}
-            </Layout>
-          </Layout>
-        </Modal>
-      </div>
+              onClick={handleMenuItemClick}
+              items={items}
+            ></Menu>
+          </Sider>
+          <Content
+            style={{
+              padding: 24,
+              margin: '24px 16px 24px',
+              minHeight: 280,
+              background: colorBgContainer,
+              overflow: 'auto'
+            }}
+          >
+            {loading ? <Spin /> : items[selectedIndex].page}
+          </Content>
+        </Layout>
+      </Layout>
     </Modal>
   )
 }

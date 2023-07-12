@@ -5,8 +5,8 @@ import { Button, Input, Space } from 'antd'
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons'
 import {
   setDefaultUsername,
-  setDefaultPassword,
-  advancedSelector
+  setDefaultPassword
+  // advancedSelector
 } from '../../../../features/Preferences/advancedSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,8 +14,8 @@ const TITLE = 'Device Default Setting'
 
 const DeviceDefaultSetting = (props) => {
   const dispatch = useDispatch()
-  const { isDefaultPasswordValid, isDefaultUsernameValid, Def } = useSelector(advancedSelector)
-  const [showPassword, setShowPassword] = useState(false)
+  // const { isDefaultPasswordValid, isDefaultUsernameValid, Def } = useSelector(advancedSelector)
+  // const [showPassword, setShowPassword] = useState(false)
 
   const handleDefaultUsernameInputOnChange = (event) => {
     dispatch(setDefaultUsername(event.target.value))
