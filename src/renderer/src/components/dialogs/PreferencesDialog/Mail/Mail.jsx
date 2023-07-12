@@ -11,4 +11,5 @@ const Mail = () => {
     </div>
   )
 }
+
 export default Mail

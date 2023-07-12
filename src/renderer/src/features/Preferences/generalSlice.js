@@ -32,7 +32,7 @@ export const requestGetNICData = () => (dispatch) => {
   dispatch(updateLoadingVisible())
 }
 
-export const generalSlice = createSlice({
+const generalSlice = createSlice({
   name: 'generalSlice',
   initialState: {
     NICData: {},
@@ -74,6 +74,8 @@ export const generalSelector = (state) => {
   const { NICData, validsData } = state.general
   return { NICData, validsData }
 }
+
+export default generalSlice
 
 const getStateOfSetValue = (state, payload) => ({
   isConfigChange: true,

@@ -27,6 +27,7 @@ const GlobalStyle = () => {
           text-transform: uppercase;
           font-weight: 500;
           letter-spacing: 0.02857em;
+          
         }
       `}
     />

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // /* eslint-disable no-unused-vars */
 // // /* eslint-disable no-unused-vars */
@@ -12,15 +13,13 @@ import {
 } from '../../../features/Preferences/advancedSlice'
 import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
 import { useDispatch, useSelector } from 'react-redux'
-// import './PreferencesDialog.css'
-const { Header, Sider, Content, Footer } = Layout
 import Advanced from './Advanced/Advanced'
-
 import General from './General/General'
 import Mail from './Mail/Mail'
 import SNMP from './SNMP/SNMP'
 import Telegram from './Telegram/Telegram'
 
+const { Header, Sider, Content } = Layout
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 
 const items = [
@@ -50,6 +49,7 @@ const items = [
     page: <Advanced />
   }
 ]
+
 const PreferencesDialog = ({ onClose }) => {
   const {
     token: { colorBgContainer }
@@ -62,7 +62,7 @@ const PreferencesDialog = ({ onClose }) => {
   const configValidFlag = [selectedPage].validsData
 
   const handleMenuItemClick = ({ key }) => {
-    // console.log(key)
+    console.log(key)
 
     const fetchIndex = items.findIndex((e) => e.key === key)
     console.log(fetchIndex)
@@ -138,8 +138,6 @@ const PreferencesDialog = ({ onClose }) => {
   }
 
   const handleChangePage = (fetchIndex) => {
-    // const fetchIndex = items.findIndex((e) => e.key === e.key)
-    // console.log(fetchIndex)
     switch (fetchIndex) {
       case 0:
         requestGetNICData()
@@ -206,7 +204,8 @@ const PreferencesDialog = ({ onClose }) => {
               padding: 24,
               margin: '24px 16px 24px',
               minHeight: 280,
-              background: colorBgContainer
+              background: colorBgContainer,
+              overflow: 'auto'
             }}
           >
             {loading ? <Spin /> : items[selectedIndex].page}
@@ -214,66 +213,6 @@ const PreferencesDialog = ({ onClose }) => {
         </Layout>
       </Layout>
     </Modal>
-
-    // <Modal
-    //   open
-    //   width="100%"
-    //   footer={null}
-    //   style={{
-    //     top: '5px'
-    //   }}
-    //   //   bodyStyle={{ height: '200px' }}
-    // >
-    //   <Layout style={{ height: '89vh' }}>
-    //     <Header
-    //       style={{
-    //         background: '#000',
-    //         color: '#fff',
-    //         fontSize: '24px',
-    //         fontWeight: 'bold'
-    //       }}
-    //     >
-    //       Header
-    //     </Header>
-    //     <Layout style={{ height: '100vh' }}>
-    //       <Sider
-    //         style={{
-    //           display: 'flex',
-    //           justifyContent: 'center',
-    //           alignItems: 'center',
-    //           background: '#000',
-    //           color: '#fff'
-    //         }}
-    //       >
-    //         Sider
-    //       </Sider>
-    //       <Content
-    //         style={{
-    //           display: 'flex',
-    //           justifyContent: 'center',
-    //           alignItems: 'center',
-    //           flexWrap: 'wrap',
-    //           gap: '4px',
-    //           fontSize: '24px',
-    //           fontWeight: 'bold'
-    //         }}
-    //       >
-    //         Content
-    //       </Content>
-    //     </Layout>
-    //     {/* <Footer
-    //       style={{
-    //         background: '#000',
-    //         color: '#fff',
-    //         textAlign: 'center',
-    //         fontSize: '10px',
-    //         fontWeight: 'bold'
-    //       }}
-    //     >
-    //       Footer
-    //     </Footer> */}
-    //   </Layout>
-    // </Modal>
   )
 }
 
