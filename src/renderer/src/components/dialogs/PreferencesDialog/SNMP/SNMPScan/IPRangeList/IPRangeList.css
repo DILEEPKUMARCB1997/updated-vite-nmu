@@ -1,0 +1,20 @@
+.container {
+  margin-top: 5px;
+  text-align: right;
+  button {
+    margin-left: 5px;
+  }
+}
+
+.collapse {
+  width: 500px;
+}
+
+.list {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.item.item {
+  padding: 0px;
+}

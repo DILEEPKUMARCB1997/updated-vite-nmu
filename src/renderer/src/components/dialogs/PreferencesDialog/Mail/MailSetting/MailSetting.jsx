@@ -8,11 +8,10 @@ import {
   setMailUsername
 } from '../../../../../features/Preferences/mailSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input, Form, Tag, Card } from 'antd'
+import { Input, Form, Tag, Divider, theme } from 'antd'
 import { PlusOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 //import styles from './MailSetting.module.scss'
 
-const TITLE = 'Mail Settings'
 const USERNAME_INPUT_LABLE = 'Mail Username'
 const PASSWORD_INPUT_LABLE = 'Password'
 const EMAIL_NOT_VALID_MSG = 'The input is not valid E-mail!'
@@ -25,6 +24,8 @@ const mailAccountTagData = [
 ]
 
 const MailSetting = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const [showPassword, setShowPassword] = useState(false)
   const [inputVisible, setInputVisible] = useState({ to: false, cc: false, bcc: false })
   const [form] = Form.useForm()
@@ -37,23 +38,24 @@ const MailSetting = () => {
   }
 
   const handlePasswordInputOnChange = (e) => {
-    setMailPassword(e.target.value)
+    //console.log(e)
+    dispatch(setMailPassword(e.target.value))
   }
 
-  const handleShowPasswordOnClick = () => {
-    setShowPassword(!showPassword)
-  }
+  //const handleShowPasswordOnClick = () => {
+  //   dispatch(setShowPassword(!showPassword))
+  // }
 
-  const handlePasswordOnMouseDown = (e) => {
-    e.preventDefault()
-  }
+  // const handlePasswordOnMouseDown = (e) => {
+  //   e.preventDefault()
+  // }
 
-  const handleRemoveTagButtonOnClick = (id, tag) => () => {
+  const handleRemoveTagButtonOnClick = (id, tag) => {
     console.log(`Remove tag ${tag} from ${id}`)
     removeMailAccount({ id, tag })
   }
 
-  const handleAddNewMailButtonOnClick = (id) => () => {
+  const handleAddNewMailButtonOnClick = (id) => {
     setInputVisible({ ...inputVisible, [id]: true })
     form.resetFields()
   }
@@ -74,7 +76,20 @@ const MailSetting = () => {
   }
 
   return (
-    <Card title={TITLE}>
+    <div>
+      <Divider
+        orientation="left"
+        style={{
+          marginBottom: '15px',
+          marginTop: '15px',
+          fontSize: '20px',
+          color: token.colorPrimary,
+          borderCollapse: 'true'
+        }}
+      >
+        Mail Settings
+      </Divider>
+
       <Form.Item
         //error={!isUsernameValid}
         style={{ width: '200px', borderBottom: '1px solid black' }}
@@ -89,9 +104,9 @@ const MailSetting = () => {
         onChange={handlePasswordInputOnChange}
         placeholder={PASSWORD_INPUT_LABLE}
         type={showPassword ? 'text' : 'password'}
-        iconRender={(showPassword) => (showPassword ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
-        onClick={handleShowPasswordOnClick}
-        onMouseDown={handlePasswordOnMouseDown}
+        iconRender={(showPassword) => (showPassword ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+        //onClick={handleShowPasswordOnClick}
+        // onMouseDown={handlePasswordOnMouseDown}
       />
       <br />
       <br />
@@ -145,7 +160,7 @@ const MailSetting = () => {
           )}
         </div>
       ))}
-    </Card>
+    </div>
   )
 }
 

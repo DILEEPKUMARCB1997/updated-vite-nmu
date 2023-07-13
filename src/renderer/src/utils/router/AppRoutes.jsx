@@ -7,9 +7,11 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
+// import DeviceConfigPage from '../../pages/DeviceConfigPage'
+import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
+
+import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
-//import MailService from '../../components/dialogs/PreferencesDialog/Mail/MailService/MailService'
-import { Mail } from '../../components/dialogs/PreferencesDialog/Mail/Mail'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -35,12 +37,20 @@ const AppRoutes = () => {
           element: <TopologyPage />
         },
         {
-          path: 'ConfigComparission',
-          element: <ConfigComparission />
+          path: 'usermanagement',
+          element: <UserManagement />
+        },
+        // {
+        //   path: 'file',
+        //   element: <DeviceConfigPage />
+        // },
+        {
+          path: 'telegram',
+          element: <Telegram />
         },
         {
-          path: 'Mail',
-          element: <Mail />
+          path: 'ConfigComparission',
+          element: <ConfigComparission />
         }
       ]
     },

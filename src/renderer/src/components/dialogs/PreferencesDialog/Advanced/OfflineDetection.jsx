@@ -5,7 +5,7 @@ import { Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setOfflinePollInterval,
-  advancedSelector,
+  // advancedSelector,
   setOfflineTimeout
 } from '../../../../features/Preferences/advancedSlice'
 
@@ -14,7 +14,7 @@ const POLLING_INTERVAL_INPUT_LABLE = 'Polling Interval'
 const TIMEOUT_INPUT_LABLE = 'Timeout'
 const OfflineDetection = () => {
   const dispatch = useDispatch()
-  const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = useSelector(advancedSelector)
+  // const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = useSelector(advancedSelector)
 
   const handleOfflinePollIntervalInputOnChange = (event) => {
     //console.log(event.target.value);

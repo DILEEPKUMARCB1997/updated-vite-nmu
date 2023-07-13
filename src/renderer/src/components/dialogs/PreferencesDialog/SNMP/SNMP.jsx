@@ -1,25 +1,28 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { FieldTimeOutlined } from '@ant-design/icons'
-import { Menu } from 'antd'
-const items = [
-  {
-    label: 'SNMP ',
-    icon: <FieldTimeOutlined />
-  }
-]
+import { Card } from 'antd'
+import React, { useEffect } from 'react'
+import SNMPScan from './SNMPScan/SNMPScan'
+import DefaultCommunity from './DefaultCommunity/DefaultCommunity'
+import Other from './Others/Other'
+import { useDispatch } from 'react-redux'
+import { clearSNMPSettingData } from '../../../../features/Preferences/snmpSlice'
+
 const SNMP = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    return () => {
+      dispatch(clearSNMPSettingData())
+    }
+  }, [])
+
   return (
-    <div>
-      <Menu
-        theme="dark"
-        style={{ fontSize: '15px', justifyContent: 'center' }}
-        defaultSelectedKeys={['1']}
-        items={items}
-      >
-        <span>SNMP</span>
-      </Menu>
-    </div>
+    <Card>
+      {/* <div> */}
+      <SNMPScan />
+      <DefaultCommunity />
+      <Other />
+      {/* </div> */}
+    </Card>
   )
 }
 

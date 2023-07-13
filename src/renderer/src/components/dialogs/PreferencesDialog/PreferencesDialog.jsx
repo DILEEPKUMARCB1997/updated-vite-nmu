@@ -1,42 +1,158 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+// /* eslint-disable no-unused-vars */
+// // /* eslint-disable no-unused-vars */
+// // // /* eslint-disable no-unused-vars */
+import React from 'react'
+import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 
-import { Layout, Menu, theme, Modal, Spin } from 'antd'
 import {
-  clearPreferencesData,
-  preferenceSelector,
-  setSelectIndex
-} from '../../../features/Preferences/preferenceSlice'
+  requestSetAdvancedData,
+  requestGetAdvancedData
+} from '../../../features/Preferences/advancedSlice'
+import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
+import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import Advanced from './Advanced/Advanced'
 import General from './General/General'
-import { Mail } from './Mail/Mail'
+import Mail from './Mail/Mail'
+import SNMP from './SNMP/SNMP'
+import Telegram from './Telegram/Telegram'
+
+const { Header, Sider, Content } = Layout
+const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 
 const items = [
   {
-    label: 'General ',
-    icon: <SettingOutlined />,
+    label: 'General',
+    key: 'general',
     page: <General />
   },
-  { label: 'Mail', page: <Mail /> },
-  { label: 'Telegram' },
-  { label: 'SNMP' },
-  { label: 'Advanced' }
-  // { label: 'Notifications', page: <NotificationsContainer /> },
+  {
+    label: 'Mail',
+    key: 'mail',
+    page: <Mail />
+  },
+  {
+    label: 'Telegram',
+    key: 'telegram',
+    page: <Telegram />
+  },
+  {
+    label: 'SNMP',
+    key: 'snmp',
+    page: <SNMP />
+  },
+  {
+    label: 'Advanced',
+    key: 'advanced',
+    page: <Advanced />
+  }
 ]
-const { Header, Content, Sider } = Layout
-const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
+
 const PreferencesDialog = ({ onClose }) => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
-  const dispatch = useDispatch()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
+  const dispatch = useDispatch()
+  const { notification } = App.useApp()
 
-  useEffect(() => {
-    dispatch(clearPreferencesData())
-  }, [])
+  const configChangeFlag = [selectedPage].isConfigChange
+  const configValidFlag = [selectedPage].validsData
+
+  const handleMenuItemClick = ({ key }) => {
+    console.log(key)
+
+    const fetchIndex = items.findIndex((e) => e.key === key)
+    console.log(fetchIndex)
+
+    if (fetchIndex === selectedIndex) return
+
+    if (configChangeFlag && configValidFlag) {
+      const popup = new Promise((resolve, reject) => {
+        console.log(popup)
+        showConfirm(resolve, reject)
+      })
+        .then(() => {
+          handleRequireSetData()
+          handleChangePage(fetchIndex)
+          return null
+        })
+        .catch(() => {
+          handleChangePage(fetchIndex)
+        })
+    } else {
+      handleChangePage(fetchIndex)
+    }
+  }
+  const handleCancelButtonClick = () => {
+    if (configChangeFlag && configValidFlag) {
+      new Promise((resolve, reject) => {
+        showConfirm(resolve, reject)
+      })
+        .then(() => {
+          handleRequireSetData()
+          onClose()
+          return null
+        })
+        .catch(() => {
+          onClose()
+        })
+    } else {
+      onClose()
+    }
+  }
+  const showConfirm = (resolve, reject) => {
+    confirm({
+      zIndex: 1500,
+      title: CONFIRM_CONTENT_TXTT,
+      okText: 'Save',
+      onOk() {
+        resolve()
+      },
+      onCancel() {
+        reject()
+      }
+    })
+  }
+  const handleShowResult = (selectedIndex) => (result) => {
+    const type = result ? 'success' : 'error'
+    notification[type]({
+      message: `${items[selectedIndex].label} settings ${
+        result ? 'successfully saved.' : 'save error.'
+      }`
+    })
+  }
+  const handleRequireSetData = () => {
+    switch (selectedIndex) {
+      case 0:
+        requireSetNICData(handleShowResult(selectedIndex))
+        break
+      case 4:
+        requestSetAdvancedData(handleShowResult(selectedIndex))
+        break
+
+      default:
+        break
+    }
+  }
+
+  const handleChangePage = (fetchIndex) => {
+    switch (fetchIndex) {
+      case 0:
+        requestGetNICData()
+        break
+      case 4:
+        requestGetAdvancedData()
+        break
+
+      default:
+        break
+    }
+    dispatch(setSelectIndex(fetchIndex))
+  }
 
   return (
     <Modal
@@ -44,65 +160,57 @@ const PreferencesDialog = ({ onClose }) => {
       onCancel={onClose}
       footer={null}
       width="100%"
-      // bodyStyle={{ height: '80vh', padding: '20px' }}
       style={{
-        top: '10px',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        position: 'fixed'
+        top: '5px'
       }}
-      bodyStyle={{ height: '100%' }}
     >
-      <Layout>
+      <Layout style={{ height: '89vh' }}>
         <Header
           style={{
             background: ' #6fbbd6',
             fontSize: 35,
-            height: '90px',
-            width: '1460px',
-            position: 'relative',
-            top: '-10px'
+            height: '80px',
+            color: '#fff',
+            fontWeight: 'bold'
           }}
-          // close={handleCancelButtonClick}
+          close={handleCancelButtonClick}
         >
           <SettingOutlined /> Preference
         </Header>
-        <Layout hasSider style={{ height: '540px' }}>
+
+        <Layout style={{ height: '100vh' }}>
           <Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-            onBreakpoint={(broken) => {
-              console.log(broken)
-            }}
-            onCollapse={(collapsed, type) => {
-              console.log(collapsed, type)
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
-            <div className="demo-logo-vertical" />
             <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['5']}
-              items={items}
-              // onClick={handleMenuItemClick()}
-              style={{ fontSize: '16px', color: 'white', position: 'relative', top: '-10px' }}
-            />
-          </Sider>
-
-          <Content>
-            <div
+              // selectedKeys={[selectedIndex]}
               style={{
-                // padding: 0,
-                minHeight: 560,
-                width: '1250px',
-                background: colorBgContainer,
-                position: 'relative',
-                top: '-10px'
+                fontSize: '16px',
+                color: 'white',
+                position: 'relative'
+                // top: '-10px'
               }}
-            >
-              {loading ? <Spin /> : items[selectedIndex].page}
-            </div>
+              onClick={handleMenuItemClick}
+              items={items}
+            ></Menu>
+          </Sider>
+          <Content
+            style={{
+              padding: 24,
+              margin: '24px 16px 24px',
+              minHeight: 280,
+              background: colorBgContainer,
+              overflow: 'auto'
+            }}
+          >
+            {loading ? <Spin /> : items[selectedIndex].page}
           </Content>
         </Layout>
       </Layout>

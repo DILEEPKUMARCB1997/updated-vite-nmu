@@ -6,18 +6,19 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { App, Dropdown, Spin } from 'antd'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, WindowsFilled, SettingOutlined } from '@ant-design/icons'
 import ThemeController from '../utils/themes/ThemeController'
 import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
 import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
 import { nextInitRenderStep } from '../features/UIControllSlice'
+import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
 import { openDialog } from '../features/dialogSlice.js'
 import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
 
-const MainLayout = (props) => {
+const MainLayout = () => {
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()
@@ -28,7 +29,6 @@ const MainLayout = (props) => {
   useEffect(() => {
     setPathname(location.pathname || '/')
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
-
     setTimeout(() => {
       nextInitRenderStep()
     }, 800)
@@ -41,14 +41,16 @@ const MainLayout = (props) => {
     window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
   }, [location])
 
+  // useEffect(() => {})
+
   const nativeMenuListener = (event, arg) => {
+    console.log(arg)
     if (arg.action === 'preference') {
-      // if (!isAppPreferencesDialogOpen) {
-      // this.props.requestGetNICData()
+      // if (!this.props.isAppPreferencesDialogOpen) {
+      //   this.props.requestGetNICData()
       dispatch(openDialog('perferences'))
-      // }
     } else if (arg.action === 'about') {
-      dispatch(openDialog('about'))
+      dispatch(openDialog('aboutDialog'))
     }
   }
 

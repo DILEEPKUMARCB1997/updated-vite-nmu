@@ -354,7 +354,7 @@ const TopologyGraph = (props) => {
   )
 }
 
-export default TopologyGraph
+export default React.memo(TopologyGraph)
 
 const nodeFocusOption = {
   scale: 1.0,

@@ -4,7 +4,7 @@ import MailService from './MailService/MailService'
 import MailSetting from './MailSetting/MailSetting'
 import { Divider } from 'antd'
 
-export const Mail = () => {
+const Mail = () => {
   return (
     <div>
       <MailService />
@@ -13,3 +13,5 @@ export const Mail = () => {
     </div>
   )
 }
+
+export default Mail

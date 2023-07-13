@@ -14,7 +14,7 @@ const valueFormat = {
   }
 }
 
-export const mailSlice = createSlice({
+const mailSlice = createSlice({
   name: 'mailSlice',
   initialState: {
     mailData: {},
@@ -35,8 +35,9 @@ export const mailSlice = createSlice({
         ...getStateOfSetValue(state, { isOpen })
       }
     },
-    setMailService: (state, action) => {
-      const { service } = action.payload
+    setMailService: (state, { payload }) => {
+      console.log(payload)
+      const { service } = payload
       let { preService } = state
       if (service === 'Other') {
         preService = state.mailData.service
@@ -47,8 +48,8 @@ export const mailSlice = createSlice({
         ...getStateOfSetValue(state, { service })
       }
     },
-    setMailHost: (state, action) => {
-      const { host } = action.payload
+    setMailHost: (state, { payload }) => {
+      const { host } = payload
       const isHostValid =
         valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
       return {
@@ -57,8 +58,8 @@ export const mailSlice = createSlice({
         ...getStateOfFormatValid(state, { isHostValid })
       }
     },
-    setMailPort: (state, action) => {
-      const { port } = action.payload
+    setMailPort: (state, { payload }) => {
+      const { port } = payload
       const isPortValid =
         port >= valueFormat.service.PORT_MIN && port <= valueFormat.service.PORT_MAX
       return {
@@ -124,6 +125,8 @@ export const mailSelector = (state) => {
   const { mailData, validsData, preService } = state.mail
   return { mailData, validsData, preService }
 }
+
+export default mailSlice
 
 const getStateOfSetValue = (state, payload) => ({
   isConfigChange: true,

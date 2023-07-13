@@ -30,7 +30,7 @@ const preferenceSlice = createSlice({
         selectedPage: pagesList[action.payload]
       }
     },
-    updateLoadingVisible: (state) => {
+    updateLoadingVisible: (state, { payload }) => {
       return { ...state, loading: !state.loading }
     }
   }
