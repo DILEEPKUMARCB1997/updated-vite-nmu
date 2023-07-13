@@ -1,5 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {} from '../../../../main/utils/IPCEvents'
+import {
+  REQUEST_MP_GET_IP_RANGE_SETTINGS,
+  REQUEST_MP_GET_SNMP_SETTINGS,
+  REQUEST_MP_SET_IP_RANGE_SETTINGS,
+  REQUEST_MP_SET_SNMP_SETTINGS,
+  RESPONSE_RP_GET_IP_RANGE_SETTINGS,
+  RESPONSE_RP_GET_SNMP_SETTINGS,
+  RESPONSE_RP_SET_IP_RANGE_SETTINGS,
+  RESPONSE_RP_SET_SNMP_SETTINGS
+} from '../../../../main/utils/IPCEvents'
+import { updateLoadingVisible } from './preferenceSlice'
 
 const valueFormat = {
   common: {
@@ -15,8 +25,78 @@ const valueFormat = {
     SNMP_TIMEOUT_MIN: 3000
   },
   community: {
-    MAX_LENGTH: 255
+    MAX_LENGTH: 10
   }
+}
+
+export const requestGetIPRange = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_IP_RANGE_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    if (arg.success) {
+      dispatch(initIPRangeData(arg.data))
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_IP_RANGE_SETTINGS)
+}
+
+export const requestGetSNMPData = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_SNMP_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    if (arg.success) {
+      dispatch(initSnmpData(arg.data))
+      dispatch(updateLoadingVisible())
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_SNMP_SETTINGS)
+  dispatch(updateLoadingVisible())
+}
+
+export const requestSetSNMPData = (callback) => (dispatch, getState) => {
+  const {
+    ICMPTimeout,
+    SNMPPollInterval,
+    SNMPTimeout,
+    isEnable,
+    isIpFixed,
+    readCommunity,
+    writeCommunity,
+    version,
+    isPrecheck
+  } = getState().snmp.SNMPData
+  console.log('snmp data', getState().snmp.SNMPData)
+  const resultArray = []
+  window.electron.ipcRenderer.once(RESPONSE_RP_SET_IP_RANGE_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    resultArray.push(arg.success)
+    if (resultArray.length === 2) {
+      if (resultArray.every((element) => element)) {
+        callback(arg)
+      }
+    }
+  })
+  window.electron.ipcRenderer.once(RESPONSE_RP_SET_SNMP_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    resultArray.push(arg.success)
+    if (resultArray.length === 2) {
+      if (resultArray.every((element) => element)) {
+        callback(arg)
+      }
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_IP_RANGE_SETTINGS, {
+    ipRangeList: Object.values(getState().snmp.IPRangeData)
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_SNMP_SETTINGS, {
+    ICMPTimeout,
+    SNMPPollInterval,
+    SNMPTimeout,
+    isEnable,
+    isIpFixed,
+    readCommunity,
+    writeCommunity,
+    version,
+    isPrecheck
+  })
 }
 
 const snmpSlice = createSlice({
@@ -35,6 +115,18 @@ const snmpSlice = createSlice({
     }
   },
   reducers: {
+    initIPRangeData: (state, { payload }) => {
+      let IPRangeData = {}
+      payload.forEach((value, key) => {
+        IPRangeData = {
+          ...IPRangeData,
+          [key]: value
+        }
+      })
+    },
+    initSnmpData: (state, { payload }) => {
+      return { ...state, SNMPData: payload }
+    },
     setEnableSNMP: (state, { payload }) => {
       const isEnable = payload
       return {
@@ -45,6 +137,15 @@ const snmpSlice = createSlice({
     setSNMPPollInterval: (state, { payload }) => {
       if (!valueFormat.common.words2.test(payload)) {
         return { ...state }
+      }
+      const SNMPPollInterval = Number(payload)
+      const isSNMPPollIntervalValid =
+        SNMPPollInterval <= valueFormat.SNMPScan.POLLING_INTERVAL_MAX &&
+        SNMPPollInterval >= valueFormat.SNMPScan.POLLING_INTERVAL_MIN
+      return {
+        ...state,
+        ...getStateOfSetValue(state, { SNMPPollInterval }),
+        ...getStateOfFormatValid(state, { isSNMPPollIntervalValid })
       }
     },
     setICMPTimeout: (state, { payload }) => {
@@ -152,6 +253,11 @@ const snmpSlice = createSlice({
         isPrecheck
       }
     },
+    setSNMPAppInitialData: (state, { payload }) => {
+      const { isPrecheck } = payload
+      return { ...state, isPrecheck: isPrecheck || false }
+    },
+
     clearSNMPSettingData: (state) => {
       return {
         ...state,
@@ -171,6 +277,8 @@ const snmpSlice = createSlice({
 })
 
 export const {
+  initIPRangeData,
+  initSnmpData,
   setEnableSNMP,
   setSNMPPollInterval,
   setICMPTimeout,
@@ -182,6 +290,7 @@ export const {
   setReadCommunity,
   setWriteCommunity,
   setPrecheckSNMP,
+  setSNMPAppInitialData,
   clearSNMPSettingData
 } = snmpSlice.actions
 
