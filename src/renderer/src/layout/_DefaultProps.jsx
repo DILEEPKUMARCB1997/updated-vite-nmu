@@ -52,6 +52,11 @@ const routes = {
         path: '/snmp',
         name: 'SNMP',
         icon: <FieldTimeOutlined />
+      },
+      {
+        path: '/modal',
+        name: 'ModalCheck',
+        icon: <FieldTimeOutlined />
       }
     ]
   },

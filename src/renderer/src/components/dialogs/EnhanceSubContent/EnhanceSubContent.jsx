@@ -1,29 +1,32 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
-import { Divider } from 'antd'
-import PropTypes from 'prop-types'
-
-const EnhanceSubContent = (props) => {
-  const { title, children } = props
+import { Modal } from 'antd'
+const {confirm} = Modal
+const EnhanceSubContent = () => {
   return (
-    <div>
-      <Divider orientation="left" style={{ fontSize: '1.5rem', color: '#6fbbd6' }}>
-        {title}
-      </Divider>
-      {React.Children.toArray(children).map((child) => (
-        <div
-          key={child.key}
-          style={{ marginLeft: '5%', marginTop: '5px', padding: '0px 15px 0px 15px' }}
-        >
-          {child}
-        </div>
-      ))}
-    </div>
+const handleMenuItemClick = ({ key }) => {
+    console.log(key)
+    const fetchIndex = items.findIndex((e) => e.key === key)
+    console.log(fetchIndex)
+    if (fetchIndex === selectedIndex) return
+    if (configChangeFlag && configValidFlag) {
+      const Popup = new Promise((resolve, reject) => {
+        console.log(Popup)
+        showConfirm(resolve, reject)
+      })
+        .then(() => {
+          handleRequireSetData()
+          handleChangePage(fetchIndex)
+          return null
+        })
+        .catch(() => {
+          handleChangePage(fetchIndex)
+        })
+    } else {
+      handleChangePage(fetchIndex)
+    }
+  }
   )
-}
-
-EnhanceSubContent.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
 }
 
 export default EnhanceSubContent

@@ -3,6 +3,7 @@ import React from 'react'
 import DeviceDefaultSetting from './DeviceDefaultSetting'
 import FirmwareUpdate from './FirmwareUpdate'
 import OfflineDetection from './OfflineDetection'
+// import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
 
 const Advanced = () => {
   return (
@@ -10,6 +11,7 @@ const Advanced = () => {
       <DeviceDefaultSetting />
       <OfflineDetection />
       <FirmwareUpdate />
+      {/* <EnhanceSubContent /> */}
     </div>
   )
 }

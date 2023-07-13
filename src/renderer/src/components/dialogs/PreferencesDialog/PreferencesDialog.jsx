@@ -55,18 +55,17 @@ const PreferencesDialog = ({ onClose }) => {
     token: { colorBgContainer }
   } = theme.useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
+
   const dispatch = useDispatch()
-  const { notification } = App.useApp()
+  const { notification, modal } = App.useApp()
 
   const configChangeFlag = [selectedPage].isConfigChange
   const configValidFlag = [selectedPage].validsData
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
-
     const fetchIndex = items.findIndex((e) => e.key === key)
     console.log(fetchIndex)
-
     if (fetchIndex === selectedIndex) return
 
     if (configChangeFlag && configValidFlag) {
@@ -103,7 +102,7 @@ const PreferencesDialog = ({ onClose }) => {
     }
   }
   const showConfirm = (resolve, reject) => {
-    confirm({
+    modal.confirm({
       zIndex: 1500,
       title: CONFIRM_CONTENT_TXTT,
       okText: 'Save',
@@ -117,7 +116,7 @@ const PreferencesDialog = ({ onClose }) => {
   }
   const handleShowResult = (selectedIndex) => (result) => {
     const type = result ? 'success' : 'error'
-    notification[type]({
+    notification[type].success({
       message: `${items[selectedIndex].label} settings ${
         result ? 'successfully saved.' : 'save error.'
       }`
@@ -197,7 +196,9 @@ const PreferencesDialog = ({ onClose }) => {
               }}
               onClick={handleMenuItemClick}
               items={items}
-            ></Menu>
+            >
+              {showConfirm}
+            </Menu>
           </Sider>
           <Content
             style={{
@@ -208,7 +209,7 @@ const PreferencesDialog = ({ onClose }) => {
               overflow: 'auto'
             }}
           >
-            {loading ? <Spin /> : items[selectedIndex].page}
+            {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
           </Content>
         </Layout>
       </Layout>

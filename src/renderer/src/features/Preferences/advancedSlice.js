@@ -169,25 +169,11 @@ export const {
 } = advancedSlice.actions
 
 export const advancedSelector = (state) => {
-  const {
-    isConfigChange,
-    advancedData,
-    isDefaultUsernameValid,
-    isDefaultPasswordValid,
-    isFWUpdateBatchQuantityValid,
-    isFWUpdateConnTimeoutValid,
-    isOfflinePollIntervalValid,
-    isOfflineTimeoutValid
-  } = state.advanced
+  const { isConfigChange, advancedData, validsData } = state.advanced
   return {
     isConfigChange,
     advancedData,
-    isDefaultUsernameValid,
-    isDefaultPasswordValid,
-    isFWUpdateBatchQuantityValid,
-    isFWUpdateConnTimeoutValid,
-    isOfflinePollIntervalValid,
-    isOfflineTimeoutValid
+    validsData
   }
 }
 

@@ -12,6 +12,7 @@ import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegr
 import SNMP from '../../components/dialogs/PreferencesDialog/SNMP/SNMP'
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
+import ModalCheck from '../../pages/ModalCheck'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -55,6 +56,10 @@ const AppRoutes = () => {
         {
           path: 'snmp',
           element: <SNMP />
+        },
+        {
+          path: 'modal',
+          element: <ModalCheck />
         }
       ]
     },

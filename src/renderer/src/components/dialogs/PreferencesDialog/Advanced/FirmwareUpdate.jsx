@@ -1,67 +1,74 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
-import { Input } from 'antd'
-// import className from 'classnames'
+// import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
+import { Input, InputNumber, Form, Divider, theme } from 'antd'
+
 import {
   setFWUpdateBatchQuantity,
-  // advancedSelector,
+  advancedSelector,
   setFWUpdateConnectionTimeout
 } from '../../../../features/Preferences/advancedSlice'
 import { useDispatch, useSelector } from 'react-redux'
-// import './FirmwareUpdate.css'
-
-const TITLE = 'Firmware Update'
-const BATCH_QUANTITY_INPUT_LABLE = 'Batch Quantity'
-const CONNECTION_TIMEOUT_INPUT_LABLE = 'Connection Timeout'
 
 const FirmwareUpdate = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const dispatch = useDispatch()
   // const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = useSelector(advancedSelector)
-
-  const handleFWUpdateBatchQuantityInputOnChange = (event) => {
-    dispatch(setFWUpdateBatchQuantity(event.target.value))
+  const { advancedData } = useSelector(advancedSelector)
+  const { fwUpdateBatchQuantity, fwUpdateConnTimeout } = advancedData
+  // console.log(fwUpdateBatchQuantity)
+  // console.log(fwUpdateConnTimeout)
+  const handleFWUpdateBatchQuantityInputOnChange = (value) => {
+    console.log(value)
+    dispatch(setFWUpdateBatchQuantity(value))
   }
-  const handleConnectionTimeoutInputOnChange = (event) => {
-    dispatch(setFWUpdateConnectionTimeout(event.target.value))
+  const handleConnectionTimeoutInputOnChange = (value) => {
+    console.log(value)
+    dispatch(setFWUpdateConnectionTimeout(value))
   }
 
   return (
-    <EnhanceSubContent title={TITLE}>
-      <div>
-        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {BATCH_QUANTITY_INPUT_LABLE}
-        </span>
-        <Input
-          style={{
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            height: '30px',
-            width: '80px',
-            paddingLeft: '3px',
-            marginLeft: '60px'
-          }}
-          onChange={handleFWUpdateBatchQuantityInputOnChange}
-        ></Input>
+    <div>
+      <Divider
+        orientation="left"
+        style={{
+          marginBottom: '15px',
+          marginTop: '15px',
+          fontSize: '1.5rem',
+          color: token.colorPrimary
+        }}
+      >
+        Firmware Update
+      </Divider>
+      <div style={{ marginLeft: '60px', alignItems: 'center' }}>
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label={<p style={{ fontSize: '16px' }}>Batch Quantity</p>}
+        >
+          <InputNumber
+            defaultValue={fwUpdateBatchQuantity}
+            style={{ width: '150px', marginLeft: '50px' }}
+            controls={false}
+            onChange={handleFWUpdateBatchQuantityInputOnChange}
+          />
+        </Form.Item>
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label={<p style={{ fontSize: '16px' }}>Connection Timeout</p>}
+        >
+          <InputNumber
+            style={{ width: '150px', marginLeft: '10px' }}
+            addonAfter="ms"
+            controls={false}
+            defaultValue={fwUpdateConnTimeout}
+            onChange={handleConnectionTimeoutInputOnChange}
+          />
+        </Form.Item>
       </div>
-      <div style={{ marginTop: '15px' }}>
-        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {CONNECTION_TIMEOUT_INPUT_LABLE}
-        </span>
-        <Input
-          style={{
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            height: '30px',
-            width: '80px',
-            paddingLeft: '3px',
-            marginLeft: '20px'
-          }}
-          suffix="ms"
-          onChange={handleConnectionTimeoutInputOnChange}
-        />
-      </div>
-    </EnhanceSubContent>
+    </div>
   )
 }
 
