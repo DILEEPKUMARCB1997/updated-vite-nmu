@@ -12,7 +12,7 @@ import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
 import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
-import { nextInitRenderStep } from '../features/UIControllSlice'
+import { nextInitRenderStep, requestAppInitialData } from '../features/UIControllSlice'
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
 import { openDialog } from '../features/dialogSlice.js'
@@ -29,6 +29,7 @@ const MainLayout = () => {
   useEffect(() => {
     setPathname(location.pathname || '/')
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
+    dispatch(requestAppInitialData())
     setTimeout(() => {
       nextInitRenderStep()
     }, 800)

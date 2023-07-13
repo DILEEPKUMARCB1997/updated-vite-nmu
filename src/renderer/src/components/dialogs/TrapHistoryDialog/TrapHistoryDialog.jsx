@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Modal, DatePicker, Input, Button, Divider, Table, Typography } from 'antd'
+import { Modal, Input, Button, Divider, Table, Typography } from 'antd'
 import {
   requestHistoryData,
   eventLogSelector,
@@ -10,7 +10,8 @@ import {
   // clearHistoryData
 } from '../../../features/eventLogSlice'
 import { useDispatch, useSelector } from 'react-redux'
-const { RangePicker } = DatePicker
+import CustomRangePicker from '../Common Code/CustomRangePicker'
+
 const columns = [
   {
     key: 'createAt',
@@ -124,16 +125,7 @@ const TrapHistoryDialog = ({ onClose }) => {
           }}
           onChange={handleSourceIPInputOnChange}
         />
-        <RangePicker
-          popupStyle={{ zIndex: '1301' }}
-          showTime={{ format: 'HH:mm' }}
-          format="YYYY-MM-DD HH:mm"
-          placeholder={['Start Time', 'End Time']}
-          style={{
-            marginRight: '10px'
-          }}
-          onChange={rangePickerChange}
-        />
+        <CustomRangePicker onChange={rangePickerChange} />
         <Button type="primary" ghost onClick={handleRefreshButtonClick}>
           Refresh
         </Button>

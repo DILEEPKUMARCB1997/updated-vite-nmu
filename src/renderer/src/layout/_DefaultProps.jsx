@@ -4,9 +4,7 @@ import {
   DesktopOutlined,
   ApartmentOutlined,
   UserOutlined,
-  FileSearchOutlined,
-  WhatsAppOutlined,
-  FieldTimeOutlined
+  FileSearchOutlined
 } from '@ant-design/icons'
 
 const routes = {
@@ -38,20 +36,15 @@ const routes = {
         name: 'User Management',
         icon: <UserOutlined />
       },
+      // {
+      //   path: '/file',
+      //   name: 'Device config comparison',
+      //   icon: <FileSearchOutlined />
+      // },
       {
-        path: '/file',
+        path: '/ConfigComparission',
         name: 'Device config comparison',
         icon: <FileSearchOutlined />
-      },
-      {
-        path: '/telegram',
-        name: 'Telegram',
-        icon: <WhatsAppOutlined />
-      },
-      {
-        path: '/snmp',
-        name: 'SNMP',
-        icon: <FieldTimeOutlined />
       }
     ]
   },
