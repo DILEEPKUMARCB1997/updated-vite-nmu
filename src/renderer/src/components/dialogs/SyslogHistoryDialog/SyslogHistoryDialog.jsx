@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { Modal, Divider, Table, Input, Button, DatePicker } from 'antd'
+import { Modal, Divider, Table, Input, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,8 +9,8 @@ import {
   requestHistoryData,
   clearHistoryData
 } from '../../../features/eventLogSlice'
+import CustomRangePicker from '../Common Code/CustomRangePicker'
 
-const { RangePicker } = DatePicker
 const columns = [
   {
     key: 'createAt',
@@ -100,14 +100,7 @@ function SyslogHistoryDialog({ onClose }) {
           placeholder="Source IP"
           onChange={handleSourceIPInputOnChange}
         />
-        <RangePicker
-          style={{ marginBottom: '15px', marginLeft: '10px' }}
-          popupStyle={{ zIndex: '1301' }}
-          showTime={{ format: 'HH:mm' }}
-          format="YYYY-MM-DD HH:mm"
-          placeholder={['Start Time', 'End Time']}
-          onChange={rangePickerChange}
-        />
+        <CustomRangePicker onChange={rangePickerChange} />
         <Button
           onClick={handleRefreshButtonClick}
           type="primary"

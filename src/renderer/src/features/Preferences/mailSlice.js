@@ -98,6 +98,20 @@ const mailSlice = createSlice({
       }
       return { ...state }
     },
+    clearMailData: (state, { payload }) => {
+      return {
+        ...state,
+        mailData: {},
+        validData: {
+          isPortValid: true,
+          isHostValid: true,
+          isUsernameValid: true,
+          isPasswordValid: true
+        },
+        preService: '',
+        isConfigChange: false
+      }
+    },
     removeMailAccount: (state, action) => {
       const { id, tag } = action.payload
       const newData = state.mailData[id].filter((element) => element !== tag)
@@ -119,7 +133,8 @@ export const {
   addMailAccount,
   removeMailAccount,
   setMailPassword,
-  setMailUsername
+  setMailUsername,
+  clearMailData
 } = mailSlice.actions
 export const mailSelector = (state) => {
   const { mailData, validsData, preService } = state.mail

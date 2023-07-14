@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Radio, Input, Form, Divider, Switch, Select, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,7 +10,7 @@ import {
   setMailService
 } from '../../../../../features/Preferences/mailSlice'
 import { useRef } from 'react'
-const { Option } = Select
+//const { Option } = Select
 
 const ENABLE_SWITCH_LABLE = 'Enable Notification'
 const MAIL_SERVICE_LIST_RADIO_LABLE = 'Mail Service List'
@@ -84,6 +85,7 @@ const MailService = ({ serviceListSelectWidth }) => {
       </div>
       <Radio.Group value={services} onChange={handleServiceChange}>
         <Radio
+          checked={!isServiceOther}
           value="Gmail"
           onChange={handleServiceListRadioOnChange}
           style={{
@@ -109,7 +111,7 @@ const MailService = ({ serviceListSelectWidth }) => {
           value={service}
           dropdownStyle={{ zIndex: '1301' }}
           onChange={handleServiceSelectOnChange}
-          //  defaultValue="Gmail"
+          defaultValue="Gmail"
           options={[
             { value: '126', label: '126' },
             { value: '163', label: '163' },
@@ -133,6 +135,7 @@ const MailService = ({ serviceListSelectWidth }) => {
 
         <br />
         <Radio
+          checked={isServiceOther}
           value="other"
           onChange={handleUserDefinitionRadioOnChange}
           style={{

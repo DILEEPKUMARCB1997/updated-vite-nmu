@@ -1,5 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { Input, Form, Tag, Divider, theme } from 'antd'
+import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons'
+
 import {
   addMailAccount,
   mailSelector,
@@ -8,15 +10,10 @@ import {
   setMailUsername
 } from '../../../../../features/Preferences/mailSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input, Form, Tag, Divider, theme } from 'antd'
-import { PlusOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-//import styles from './MailSetting.module.scss'
-
-const USERNAME_INPUT_LABLE = 'Mail Username'
-const PASSWORD_INPUT_LABLE = 'Password'
 const EMAIL_NOT_VALID_MSG = 'The input is not valid E-mail!'
 const EMAIL_EMPTY_MSG = 'Please input your E-mail!'
-
+const USERNAME_INPUT_LABLE = 'Mail Username'
+const PASSWORD_INPUT_LABLE = 'Password'
 const mailAccountTagData = [
   { id: 'to', label: 'To', color: 'magenta' },
   { id: 'cc', label: 'Cc', color: 'geekblue' },
@@ -24,55 +21,48 @@ const mailAccountTagData = [
 ]
 
 const MailSetting = () => {
+  const { mailData } = useSelector(mailSelector)
+  const { Password } = mailData
+  const [showPassword, setShowPassword] = useState(false)
+  const [inputVisible, setInputVisible] = useState({
+    to: false,
+    cc: false,
+    bcc: false
+  })
+  const dispatch = useDispatch()
+  const formRef = useRef(null)
   const { useToken } = theme
   const { token } = useToken()
-  const [showPassword, setShowPassword] = useState(false)
-  const [inputVisible, setInputVisible] = useState({ to: false, cc: false, bcc: false })
-  const [form] = Form.useForm()
-  const dispatch = useDispatch()
-  const { validsData } = useSelector(mailSelector)
-  console.log(validsData)
 
-  const handleUsernameInputOnChange = (e) => {
-    dispatch(setMailUsername(e.target.value))
+  const handleShowPasswordOnClick = () => {
+    setShowPassword(!showPassword)
   }
 
-  const handlePasswordInputOnChange = (e) => {
-    //console.log(e)
-    dispatch(setMailPassword(e.target.value))
+  const handlePasswordInputOnChange = (event) => {
+    dispatch(setMailPassword(event.target.value))
   }
 
-  //const handleShowPasswordOnClick = () => {
-  //   dispatch(setShowPassword(!showPassword))
-  // }
-
-  // const handlePasswordOnMouseDown = (e) => {
-  //   e.preventDefault()
-  // }
-
-  const handleRemoveTagButtonOnClick = (id, tag) => {
-    console.log(`Remove tag ${tag} from ${id}`)
-    removeMailAccount({ id, tag })
+  const handleRemoveTagButtonOnClick = (id, tag) => () => {
+    removeMailAccount(id, tag)
+  }
+  const handleUsernameInputOnChange = (event) => {
+    dispatch(setMailUsername(event.target.value))
   }
 
-  const handleAddNewMailButtonOnClick = (id) => {
-    setInputVisible({ ...inputVisible, [id]: true })
-    form.resetFields()
-  }
-
-  const handleAddNewInputPressEnter = (id) => async (event) => {
-    //console.log(`Add new mail ${values.email} to ${id}`)
+  const handleAddNewInputPressEnter = (id) => (values) => {
+    addMailAccount(id, values.email)
     setInputVisible({ ...inputVisible, [id]: false })
-    dispatch(
-      addMailAccount({
-        id,
-        value: event.email
-      })
-    )
   }
 
   const handleAddNewInputOnBlur = (id) => () => {
     setInputVisible({ ...inputVisible, [id]: false })
+  }
+
+  const handleAddNewMailButtonOnClick = (id) => () => {
+    setInputVisible({ ...inputVisible, [id]: true })
+    setTimeout(() => {
+      formRef.current.getFieldInstance('email').focus()
+    }, 10)
   }
 
   return (
@@ -89,27 +79,35 @@ const MailSetting = () => {
       >
         Mail Settings
       </Divider>
-
       <Form.Item
         //error={!isUsernameValid}
         style={{ width: '200px', borderBottom: '1px solid black' }}
         onChange={handleUsernameInputOnChange}
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your username!'
+          }
+        ]}
       >
         <Input bordered={false} placeholder={USERNAME_INPUT_LABLE} />
       </Form.Item>
-      <Input.Password
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        value={Password}
         bordered={false}
-        // error={!isPasswordValid}
         style={{ width: '200px', borderBottom: '1px solid black' }}
         onChange={handlePasswordInputOnChange}
         placeholder={PASSWORD_INPUT_LABLE}
-        type={showPassword ? 'text' : 'password'}
-        iconRender={(showPassword) => (showPassword ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-        //onClick={handleShowPasswordOnClick}
-        // onMouseDown={handlePasswordOnMouseDown}
+        iconRender={(showPassword) =>
+          showPassword ? (
+            <EyeTwoTone onClick={handleShowPasswordOnClick} />
+          ) : (
+            <EyeInvisibleOutlined />
+          )
+        }
       />
-      <br />
-      <br />
       {mailAccountTagData.map((element) => (
         <div key={element.id} style={{ marginTop: '10px' }}>
           <span
@@ -127,7 +125,7 @@ const MailSetting = () => {
             </Tag>
           ))}
           {inputVisible[element.id] ? (
-            <Form form={form} onFinish={handleAddNewInputPressEnter(element.id)}>
+            <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
               <Form.Item
                 name="email"
                 rules={[

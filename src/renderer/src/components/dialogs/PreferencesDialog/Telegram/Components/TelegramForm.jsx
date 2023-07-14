@@ -1,11 +1,12 @@
 import { App, Button, Form, Input, InputNumber, Select, theme } from 'antd'
 import React from 'react'
-import NumberInput from './NumberInput'
 import ControlButton from './ControlButton'
 import { useDispatch } from 'react-redux'
 import { saveTelegramUser } from '../../../../../features/Preferences/telegramSlice'
+import { useState } from 'react'
 
 const TelegramForm = () => {
+  const [data, setData] = useState({ id: '0', telegramId: '', telegramName: '', telegramType: '' })
   const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
@@ -14,9 +15,8 @@ const TelegramForm = () => {
   const handleSubmit = () => {
     form
       .validateFields()
-      .then((values) => {
-        dispatch(saveTelegramUser(values))
-        console.log(values)
+      .then(() => {
+        dispatch(saveTelegramUser(data))
         form.resetFields()
       })
       .catch((errorInfo) => {
@@ -40,6 +40,7 @@ const TelegramForm = () => {
             message: 'Please input the Telegram Id!'
           }
         ]}
+        onChange={(e) => setData({ ...data, telegramId: e.target.value })}
       >
         {/* <Input disabled={isEdit} /> */}
         <InputNumber placeholder="Telegram Id" style={{ width: '100%' }} />
@@ -54,6 +55,7 @@ const TelegramForm = () => {
             message: 'Please input the Telegram Name!'
           }
         ]}
+        onChange={(e) => setData({ ...data, telegramName: e.target.value })}
       >
         <Input placeholder="Telegram Name" />
       </Form.Item>
@@ -76,6 +78,9 @@ const TelegramForm = () => {
             { value: 'Private', label: 'Private' },
             { value: 'Group', label: 'Group' }
           ]}
+          onChange={(value) => {
+            setData({ ...data, telegramType: value })
+          }}
         />
       </Form.Item>
       <Form.Item style={{ display: 'flex', justifyContent: 'end', margin: '0px' }}>

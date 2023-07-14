@@ -19,6 +19,12 @@ import General from './General/General'
 import Mail from './Mail/Mail'
 import SNMP from './SNMP/SNMP'
 import Telegram from './Telegram/Telegram'
+import {
+  requestGetIPRange,
+  requestGetSNMPData,
+  requestSetSNMPData
+} from '../../../features/Preferences/snmpSlice'
+import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
 
 const { Header, Sider, Content } = Layout
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
@@ -56,6 +62,7 @@ const PreferencesDialog = ({ onClose }) => {
     token: { colorBgContainer }
   } = theme.useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
+  console.log(selectedPage)
   const dispatch = useDispatch()
   const { notification } = App.useApp()
 
@@ -126,9 +133,15 @@ const PreferencesDialog = ({ onClose }) => {
     })
   }
   const handleRequireSetData = () => {
+    console.log(selectedIndex)
     switch (selectedIndex) {
       case 0:
         requireSetNICData(handleShowResult(selectedIndex))
+        break
+      case 2:
+        break
+      case 3:
+        requestSetSNMPData(handleShowResult(selectedIndex))
         break
       case 4:
         requestSetAdvancedData(handleShowResult(selectedIndex))
@@ -143,6 +156,13 @@ const PreferencesDialog = ({ onClose }) => {
     switch (fetchIndex) {
       case 0:
         requestGetNICData()
+        break
+      case 2:
+        dispatch(getTelegramToken())
+        break
+      case 3:
+        dispatch(requestGetIPRange())
+        dispatch(requestGetSNMPData())
         break
       case 4:
         requestGetAdvancedData()
@@ -184,7 +204,7 @@ const PreferencesDialog = ({ onClose }) => {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'left'
             }}
           >
             <Menu
@@ -204,7 +224,7 @@ const PreferencesDialog = ({ onClose }) => {
           <Content
             style={{
               padding: 24,
-              margin: '24px 16px 24px',
+              // margin: '24px 16px 24px',
               minHeight: 280,
               background: colorBgContainer,
               overflow: 'auto'

@@ -45,10 +45,6 @@ const AppRoutes = () => {
         //   element: <DeviceConfigPage />
         // },
         {
-          path: 'telegram',
-          element: <Telegram />
-        },
-        {
           path: 'ConfigComparission',
           element: <ConfigComparission />
         }
