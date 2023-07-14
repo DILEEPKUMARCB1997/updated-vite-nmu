@@ -22,7 +22,7 @@ const mailAccountTagData = [
 
 const MailSetting = () => {
   const { mailData } = useSelector(mailSelector)
-  const { Password } = mailData
+  const { password, username } = mailData
   const [showPassword, setShowPassword] = useState(false)
   const [inputVisible, setInputVisible] = useState({
     to: false,
@@ -79,35 +79,45 @@ const MailSetting = () => {
       >
         Mail Settings
       </Divider>
+
       <Form.Item
-        //error={!isUsernameValid}
-        style={{ width: '200px', borderBottom: '1px solid black' }}
-        onChange={handleUsernameInputOnChange}
         name="username"
         rules={[
           {
+            type: 'email',
+            message: EMAIL_NOT_VALID_MSG
+          },
+          {
             required: true,
-            message: 'Please input your username!'
+            message: EMAIL_EMPTY_MSG
           }
         ]}
       >
-        <Input bordered={false} placeholder={USERNAME_INPUT_LABLE} />
+        <Input
+          bordered={false}
+          style={{ width: '200px', borderBottom: '1px solid black' }}
+          value={username}
+          onChange={handleUsernameInputOnChange}
+          placeholder={USERNAME_INPUT_LABLE}
+        />
       </Form.Item>
-      <Input
-        type={showPassword ? 'text' : 'password'}
-        value={Password}
-        bordered={false}
-        style={{ width: '200px', borderBottom: '1px solid black' }}
-        onChange={handlePasswordInputOnChange}
-        placeholder={PASSWORD_INPUT_LABLE}
-        iconRender={(showPassword) =>
-          showPassword ? (
-            <EyeTwoTone onClick={handleShowPasswordOnClick} />
-          ) : (
-            <EyeInvisibleOutlined />
-          )
-        }
-      />
+      <Form.Item name="password">
+        <Input.Password
+          bordered={false}
+          style={{ width: '200px', borderBottom: '1px solid black' }}
+          value={password}
+          onChange={handlePasswordInputOnChange}
+          placeholder={PASSWORD_INPUT_LABLE}
+          iconRender={(inputVisible) =>
+            inputVisible ? (
+              <EyeTwoTone onClick={handleShowPasswordOnClick} />
+            ) : (
+              <EyeInvisibleOutlined onClick={handleShowPasswordOnClick} />
+            )
+          }
+        />
+      </Form.Item>
+
       {mailAccountTagData.map((element) => (
         <div key={element.id} style={{ marginTop: '10px' }}>
           <span
