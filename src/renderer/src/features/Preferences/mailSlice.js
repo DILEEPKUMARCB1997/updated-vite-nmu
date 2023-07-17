@@ -27,16 +27,17 @@ const mailSlice = createSlice({
     preService: ''
   },
   reducers: {
-    setMailOpen: (state, { payload }) => {
-      const { action } = payload
+    setMailOpen: (state) => {
+      //  const { action } = payload
       const isOpen = !state.mailData.isOpen
       return {
         ...state,
         ...getStateOfSetValue(state, { isOpen })
       }
     },
-    setMailService: (state, action) => {
-      const { service } = action.payload
+    setMailService: (state, { payload }) => {
+      console.log(payload)
+      const { service } = payload
       let { preService } = state
       if (service === 'Other') {
         preService = state.mailData.service
@@ -47,8 +48,8 @@ const mailSlice = createSlice({
         ...getStateOfSetValue(state, { service })
       }
     },
-    setMailHost: (state, action) => {
-      const { host } = action.payload
+    setMailHost: (state, { payload }) => {
+      const { host } = payload
       const isHostValid =
         valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
       return {
@@ -57,8 +58,8 @@ const mailSlice = createSlice({
         ...getStateOfFormatValid(state, { isHostValid })
       }
     },
-    setMailPort: (state, action) => {
-      const { port } = action.payload
+    setMailPort: (state, { payload }) => {
+      const { port } = payload
       const isPortValid =
         port >= valueFormat.service.PORT_MIN && port <= valueFormat.service.PORT_MAX
       return {
@@ -97,6 +98,20 @@ const mailSlice = createSlice({
       }
       return { ...state }
     },
+    clearMailData: (state, { payload }) => {
+      return {
+        ...state,
+        mailData: {},
+        validData: {
+          isPortValid: true,
+          isHostValid: true,
+          isUsernameValid: true,
+          isPasswordValid: true
+        },
+        preService: '',
+        isConfigChange: false
+      }
+    },
     removeMailAccount: (state, action) => {
       const { id, tag } = action.payload
       const newData = state.mailData[id].filter((element) => element !== tag)
@@ -118,7 +133,8 @@ export const {
   addMailAccount,
   removeMailAccount,
   setMailPassword,
-  setMailUsername
+  setMailUsername,
+  clearMailData
 } = mailSlice.actions
 export const mailSelector = (state) => {
   const { mailData, validsData, preService } = state.mail

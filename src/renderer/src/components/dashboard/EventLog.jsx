@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
-import { SyncOutlined } from '@ant-design/icons'
 import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
-import ReactApexChart from 'react-apexcharts'
+import { SyncOutlined } from '@ant-design/icons'
 
 const EventLog = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   console.log(customGraphData)
   const dispatch = useDispatch()
-
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -32,14 +31,14 @@ const EventLog = () => {
     options: {
       chart: {
         type: 'bar',
-
-        height: 320,
+        height: 100,
         toolbar: {
           show: false
         },
         offsetY: -20,
         offsetX: -5
       },
+
       legend: {
         show: true,
         showForSingleSeries: true,
@@ -80,7 +79,6 @@ const EventLog = () => {
       },
       fill: {
         type: 'solid',
-
         gradient: {
           shade: 'lights',
           type: 'horizontal',
@@ -89,15 +87,16 @@ const EventLog = () => {
           inverseColors: false,
           opacityFrom: 0.85,
           opacityTo: 0.85,
-          stops: [50, 0, 100]
+          stops: [0, 50]
         }
       }
     }
   })
+
   useEffect(() => {
     setTimeout(() => {
       requestHistoryData({
-        type: 'custom',
+        type: 'syslog',
         sourceIP: '',
         ge: '',
         le: ''
@@ -106,6 +105,7 @@ const EventLog = () => {
   }, [])
 
   useEffect(() => {
+    dispatch(requestHistoryData(customGraphData))
     if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
       setEventLogData((prev) => ({
         ...prev,
@@ -136,12 +136,10 @@ const EventLog = () => {
   }
 
   return (
-    <>
-      {' '}
+    <div>
       <div
         style={{
-          margin: '0px 5px',
-          marginTop: '0px',
+          padding: '0px 5px',
           display: 'flex',
           justifyContent: 'space-between'
         }}
@@ -151,17 +149,13 @@ const EventLog = () => {
           <Button icon={<SyncOutlined onClick={handleRefreshGraph} />} />
         </Tooltip>
       </div>
-      <div>
-        <ReactApexChart
-          options={eventLogData.options}
-          series={eventLogData.series}
-          type="bar"
-          height={210}
-          width={400}
-        />
-      </div>
-    </>
+      <ReactApexChart
+        options={eventLogData.options}
+        series={eventLogData.series}
+        type="bar"
+        height={210}
+      />
+    </div>
   )
 }
-
 export default EventLog

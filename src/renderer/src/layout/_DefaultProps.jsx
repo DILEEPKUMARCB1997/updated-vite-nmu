@@ -31,16 +31,12 @@ const routes = {
         name: 'Topology',
         icon: <ApartmentOutlined />
       },
+
       {
         path: '/usermanagement',
         name: 'User Management',
         icon: <UserOutlined />
       },
-      // {
-      //   path: '/file',
-      //   name: 'Device config comparison',
-      //   icon: <FileSearchOutlined />
-      // },
       {
         path: '/ConfigComparission',
         name: 'Device config comparison',
