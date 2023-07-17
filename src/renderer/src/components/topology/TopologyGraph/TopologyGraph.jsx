@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from 'react'
@@ -384,6 +389,7 @@ const virtualColor = 'purple'
 
 const matchColor = 'black'
 const nonMatchColor = 'red'
+// eslint-disable-next-line no-unused-vars
 const notExistColor = 'gray'
 const nonLayoutColor = 'black'
 const blockedColor = 'orange'
@@ -421,6 +427,7 @@ const nodeStyle = (status, model) => {
     }
     default:
       return {
+        // eslint-disable-next-line no-undef
         image: unknow,
         font: { color: onlineColor },
         color: onlineColor

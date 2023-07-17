@@ -6,12 +6,13 @@
 import React from 'react'
 import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
-import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
+
 import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
 import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
+import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Advanced from './Advanced/Advanced'
 import General from './General/General'
@@ -85,7 +86,8 @@ const PreferencesDialog = ({ onClose }) => {
     if (fetchIndex === selectedIndex) return
 
     if (configChangeFlag && configValidFlag) {
-      new Promise((resolve, reject) => {
+      const popup = new Promise((resolve, reject) => {
+        console.log(popup)
         showConfirm(resolve, reject)
       })
         .then(() => {

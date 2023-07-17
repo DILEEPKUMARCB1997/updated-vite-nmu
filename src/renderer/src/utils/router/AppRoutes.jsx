@@ -7,6 +7,11 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
+<<<<<<< HEAD
+=======
+import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
+
+>>>>>>> f3c37c3315583904b1688492cf2205c75dc2fc52
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
 import TopologyPage from '../../pages/TopologyPage'
