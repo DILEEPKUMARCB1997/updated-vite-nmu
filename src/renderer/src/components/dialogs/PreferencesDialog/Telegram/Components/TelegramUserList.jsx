@@ -35,7 +35,8 @@ const TelegramUserList = () => {
       render: (text, record) => (
         <Space size="middle">
           <Popconfirm
-            title="Are you sure want to delete user ？"
+            title="Delete Congfirmation!"
+            description="Are you sure want to delete user ？"
             okText="Yes"
             cancelText="No"
             onConfirm={() => handleDelete(record)}

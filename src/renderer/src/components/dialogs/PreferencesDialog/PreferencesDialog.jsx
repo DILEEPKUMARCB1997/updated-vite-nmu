@@ -24,6 +24,7 @@ import {
   requestSetSNMPData
 } from '../../../features/Preferences/snmpSlice'
 import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
+// const { confirm } = Modal
 
 const { Header, Sider, Content } = Layout
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
@@ -57,16 +58,23 @@ const items = [
 ]
 
 const PreferencesDialog = ({ onClose }) => {
+  const { modal } = App.useApp()
   const {
     token: { colorBgContainer }
   } = theme.useToken()
-  const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
-  console.log(selectedPage)
+
+  const data = useSelector(preferenceSelector)
+  const { loading, selectedIndex, selectedPage } = data
+
   const dispatch = useDispatch()
   const { notification } = App.useApp()
+  console.log([selectedPage])
 
   const configChangeFlag = [selectedPage].isConfigChange
-  const configValidFlag = [selectedPage].validsData
+  const configValidFlag = ![selectedPage].validsData
+
+  console.log(configChangeFlag)
+  console.log(configValidFlag)
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
@@ -110,7 +118,7 @@ const PreferencesDialog = ({ onClose }) => {
     }
   }
   const showConfirm = (resolve, reject) => {
-    confirm({
+    modal.warning({
       zIndex: 1500,
       title: CONFIRM_CONTENT_TXTT,
       okText: 'Save',
@@ -134,15 +142,15 @@ const PreferencesDialog = ({ onClose }) => {
     console.log(selectedIndex)
     switch (selectedIndex) {
       case 0:
-        requireSetNICData(handleShowResult(selectedIndex))
+        dispatch(requireSetNICData(handleShowResult(selectedIndex)))
         break
       case 2:
         break
       case 3:
-        requestSetSNMPData(handleShowResult(selectedIndex))
+        dispatch(requestSetSNMPData(handleShowResult(selectedIndex)))
         break
       case 4:
-        requestSetAdvancedData(handleShowResult(selectedIndex))
+        dispatch(requestSetAdvancedData(handleShowResult(selectedIndex)))
         break
 
       default:
@@ -179,7 +187,8 @@ const PreferencesDialog = ({ onClose }) => {
       footer={null}
       width="100%"
       style={{
-        top: '5px'
+        top: '5px',
+        zIndex: '1008'
       }}
     >
       <Layout style={{ height: '89vh' }}>

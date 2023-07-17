@@ -28,11 +28,13 @@ const TopologyGraph = (props) => {
   // TopologyGraph.PropTypes = {
   //   onRef: PropTypes.func.isRequired
   // }
+  console.log(props)
+  const { onRef } = props
   const networkRef = useRef()
   console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
-  const [networks, setNetworks] = useState(null)
+  const [network, setNetwork] = useState(null)
   const [nodeData, setNodeData] = useState({
     nodeMACAddress: '',
     nodeDeviceType: '',
@@ -68,9 +70,15 @@ const TopologyGraph = (props) => {
     model: nodeData.model
   })
 
-  useEffect((prev) => {
+  useEffect(() => {
+    console.log(props)
+  }, [])
+
+  useEffect(() => {
     //ComponentDidMount Code
-    props.onRef(networkRef)
+    // eslint-disable-next-line react/prop-types
+    onRef(networkRef.current)
+    console.log(networkRef.current)
     window.addEventListener('resize', updateDimensions)
     window.addEventListener('enter-full-screen', updateDimensions)
     networkRef.current.Network.on('select', (params) => {
@@ -86,7 +94,6 @@ const TopologyGraph = (props) => {
     networkRef.current.Network.on('click', () => {
       dispatch(openDevicesMenu(false))
     })
-    console.log(networkRef.current.Network)
 
     networkRef.current.Network.on('oncontext', (params) => {
       const { x, y } = params.pointer.DOM
@@ -138,7 +145,8 @@ const TopologyGraph = (props) => {
     }
 
     return () => {
-      props.onRef(undefined)
+      // eslint-disable-next-line react/prop-types
+      onRef(undefined)
     }
   }, [])
 
@@ -148,10 +156,10 @@ const TopologyGraph = (props) => {
     0.85, -2.85, 0.95, -2.95
   ]
 
-  // const initNetworkInstance = (networkInstance) => {
-  //   console.log(networkInstance)
-
-  // }
+  const initNetworkInstance = (networkInstance) => {
+    // networkRef.current.Network = networkInstance
+    setNetwork(networkInstance)
+  }
 
   const updateDimensions = () => {
     networkRef.current.Network.redraw()
@@ -322,8 +330,10 @@ const TopologyGraph = (props) => {
     }
   }
 
+  console.log(networkRef.current)
+
   return (
-    <div>
+    <div style={{ border: 'double', marginTop: '50px', height: 'calc(100%-96px)' }}>
       <ContextMenuTrigger
         id="default_table_row_menu"
         MACAddress={nodeData.nodeMACAddress}
@@ -339,10 +349,11 @@ const TopologyGraph = (props) => {
       >
         <Graph
           ref={networkRef}
+          // onRef={onRef}
           graph={graph}
           options={options}
           events={events}
-          getNetwork={(network) => setNetworks(network)}
+          getNetwork={initNetworkInstance}
         />
       </ContextMenuTrigger>
     </div>

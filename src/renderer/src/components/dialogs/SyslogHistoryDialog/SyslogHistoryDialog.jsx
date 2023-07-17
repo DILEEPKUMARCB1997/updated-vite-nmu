@@ -96,7 +96,7 @@ function SyslogHistoryDialog({ onClose }) {
     >
       <div>
         <Input
-          style={{ width: 150, marginTop: '10px' }}
+          style={{ width: 150, margin: '0px 10px 0px 10px' }}
           placeholder="Source IP"
           onChange={handleSourceIPInputOnChange}
         />

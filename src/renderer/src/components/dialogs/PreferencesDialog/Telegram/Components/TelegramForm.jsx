@@ -42,8 +42,7 @@ const TelegramForm = () => {
         ]}
         onChange={(e) => setData({ ...data, telegramId: e.target.value })}
       >
-        {/* <Input disabled={isEdit} /> */}
-        <InputNumber placeholder="Telegram Id" style={{ width: '100%' }} />
+        <InputNumber placeholder="Telegram Id" style={{ width: '100%' }} controls={false} />
       </Form.Item>
 
       <Form.Item
