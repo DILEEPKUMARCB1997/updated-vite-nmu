@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
-
+import {
+  REQUEST_MP_GET_MAIL_SETTINGS,
+  RESPONSE_RP_GET_MAIL_SETTINGS,
+  REQUEST_MP_SET_MAIL_SETTINGS,
+  RESPONSE_RP_SET_MAIL_SETTINGS
+} from '../../../../main/utils/IPCEvents'
+import { updateLoadingVisible } from './preferenceSlice'
 const valueFormat = {
   service: {
     HOST_DOMAIN: /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/,
@@ -12,6 +18,35 @@ const valueFormat = {
   setting: {
     ACCOUNT: /^[a-z,A-Z,0-9,.,_,@]{0,100}$/
   }
+}
+
+export const requestGetMail = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_MAIL_SETTINGS, (event, arg) => {
+    if (arg.success) {
+      dispatch(initMailData(arg.data))
+      dispatch(updateLoadingVisible())
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_MAIL_SETTINGS)
+  dispatch(updateLoadingVisible())
+}
+export const requestSetMail = (callback) => (dispatch, getState) => {
+  const { mailData } = getState().mail
+  window.electron.ipcRenderer.once(RESPONSE_RP_SET_MAIL_SETTINGS, (event, arg) => {
+    //console.log(arg);
+    callback(arg.success)
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_MAIL_SETTINGS, {
+    isOpen: mailData.isOpen,
+    service: mailData.service,
+    host: mailData.host,
+    port: mailData.port,
+    username: mailData.username,
+    password: mailData.password,
+    to: converMailArrayDataToString(mailData.to),
+    cc: converMailArrayDataToString(mailData.cc),
+    bcc: converMailArrayDataToString(mailData.bcc)
+  })
 }
 
 const mailSlice = createSlice({
@@ -35,9 +70,21 @@ const mailSlice = createSlice({
         ...getStateOfSetValue(state, { isOpen })
       }
     },
-    setMailService: (state, { payload }) => {
-      console.log(payload)
-      const { service } = payload
+    initMailData: (state, action) => {
+      const { to, cc, bcc } = action.payload
+      return {
+        ...state,
+        mailData: {
+          ...action.payload,
+          to: to === '' ? [] : to.split(','),
+          cc: cc === '' ? [] : cc.split(','),
+          bcc: bcc === '' ? [] : bcc.split(',')
+        }
+      }
+    },
+
+    setMailService: (state, action) => {
+      const service = action.payload
       let { preService } = state
       if (service === 'Other') {
         preService = state.mailData.service
@@ -48,8 +95,8 @@ const mailSlice = createSlice({
         ...getStateOfSetValue(state, { service })
       }
     },
-    setMailHost: (state, { payload }) => {
-      const { host } = payload
+    setMailHost: (state, action) => {
+      const host = action.payload
       const isHostValid =
         valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
       return {
@@ -58,8 +105,9 @@ const mailSlice = createSlice({
         ...getStateOfFormatValid(state, { isHostValid })
       }
     },
-    setMailPort: (state, { payload }) => {
-      const { port } = payload
+
+    setMailPort: (state, action) => {
+      const port = action.payload
       const isPortValid =
         port >= valueFormat.service.PORT_MIN && port <= valueFormat.service.PORT_MAX
       return {
@@ -134,6 +182,7 @@ export const {
   removeMailAccount,
   setMailPassword,
   setMailUsername,
+  initMailData,
   clearMailData
 } = mailSlice.actions
 export const mailSelector = (state) => {
@@ -156,3 +205,14 @@ const getStateOfFormatValid = (state, valid) => ({
     ...valid
   }
 })
+
+const converMailArrayDataToString = (arrayData) => {
+  let tempString = ''
+  arrayData.forEach((element, index) => {
+    tempString = tempString.concat(element)
+    if (index !== arrayData.length - 1) {
+      tempString = tempString.concat(',')
+    }
+  })
+  return tempString
+}

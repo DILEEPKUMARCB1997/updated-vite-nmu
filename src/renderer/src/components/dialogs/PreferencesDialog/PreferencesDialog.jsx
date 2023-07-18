@@ -30,6 +30,7 @@ import {
   requestSetSNMPData
 } from '../../../features/Preferences/snmpSlice'
 import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
+import { requestGetMail, requestSetMail } from '../../../features/Preferences/mailSlice'
 
 const { Header, Sider, Content } = Layout
 
@@ -85,6 +86,7 @@ const PreferencesDialog = ({ onClose }) => {
   const configValidFlag = useSelector(
     (state) => !Object.values(state[selectedPage].validsData).includes(false)
   )
+
   console.log(configChangeFlag)
   console.log(configValidFlag)
 
@@ -155,6 +157,9 @@ const PreferencesDialog = ({ onClose }) => {
       case 0:
         dispatch(requireSetNICData(handleShowResult(selectedIndex)))
         break
+      case 1:
+        dispatch(requestSetMail(handleShowResult(selectedIndex)))
+        break
       case 2:
         break
       case 3:
@@ -173,6 +178,9 @@ const PreferencesDialog = ({ onClose }) => {
     switch (fetchIndex) {
       case 0:
         dispatch(requestGetNICData())
+        break
+      case 1:
+        dispatch(requestGetMail())
         break
       case 2:
         dispatch(getTelegramToken())
