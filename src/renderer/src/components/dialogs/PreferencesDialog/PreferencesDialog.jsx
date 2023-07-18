@@ -11,11 +11,13 @@ import {
   setSelectIndex,
   clearPreferencesData
 } from '../../../features/Preferences/preferenceSlice'
+
 import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
 import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
+
 import { useDispatch, useSelector } from 'react-redux'
 import Advanced from './Advanced/Advanced'
 import General from './General/General'

@@ -1,10 +1,6 @@
-/* eslint-disable react/prop-types */
-import { useRef, useState } from 'react'
-import { Tag, Input, Form, Card, Button, Space } from 'antd'
-import { PlusOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
-// import classNames from 'classnames'
-// import PropTypes from 'prop-types'
-//import { InputAdornment, IconButton } from '@material-ui/core'
+import React, { useState, useRef } from 'react'
+import { Input, Form, Tag, Divider, theme } from 'antd'
+import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons'
 
 import {
   addMailAccount,
@@ -14,176 +10,166 @@ import {
   setMailUsername
 } from '../../../../../features/Preferences/mailSlice'
 import { useDispatch, useSelector } from 'react-redux'
-
-// import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
-// import styles from './MailSetting.scss'
-
-const FormItem = Form.Item
-
-let mailAccountTagData = [
+const EMAIL_NOT_VALID_MSG = 'The input is not valid E-mail!'
+const EMAIL_EMPTY_MSG = 'Please input your E-mail!'
+const USERNAME_INPUT_LABLE = 'Mail Username'
+const PASSWORD_INPUT_LABLE = 'Password'
+const mailAccountTagData = [
   { id: 'to', label: 'To', color: 'magenta' },
   { id: 'cc', label: 'Cc', color: 'geekblue' },
   { id: 'bcc', label: 'Bcc', color: 'purple' }
 ]
 
-const TITLE = 'Mail Settings'
-const USERNAME_INPUT_LABLE = 'Mail Username'
-const PASSWORD_INPUT_LABLE = 'Password'
-const EMAIL_NOT_VALID_MSG = 'The input is not valid E-mail!'
-const EMAIL_EMPTY_MSG = 'Please input your E-mail!'
-
-const MailSetting = (props) => {
-  const dispatch = useDispatch()
-  const { validsData } = useSelector(mailSelector)
-  console.log(validsData)
-  const formRef = useRef()
-  const { isUsernameValid, username, isPasswordValid, password } = props
+const MailSetting = () => {
+  const { mailData } = useSelector(mailSelector)
+  const { password, username } = mailData
   const [showPassword, setShowPassword] = useState(false)
-  const [inputVisible, setInputVisible] = useState({ to: false, cc: false, bcc: false })
+  const [inputVisible, setInputVisible] = useState({
+    to: false,
+    cc: false,
+    bcc: false
+  })
+  const dispatch = useDispatch()
+  const formRef = useRef(null)
+  const { useToken } = theme
+  const { token } = useToken()
 
-  const handleUsernameInputOnChange = (event) => {
-    dispatch(setMailUsername(event.target.value))
+  const handleShowPasswordOnClick = () => {
+    setShowPassword(!showPassword)
   }
 
   const handlePasswordInputOnChange = (event) => {
     dispatch(setMailPassword(event.target.value))
   }
 
-  const handleShowPasswordOnClick = () => {
-    setShowPassword(showPassword)
-    // setState((state) => ({ showPassword: !state.showPassword }))
+  const handleRemoveTagButtonOnClick = (id, tag) => () => {
+    removeMailAccount(id, tag)
+  }
+  const handleUsernameInputOnChange = (event) => {
+    dispatch(setMailUsername(event.target.value))
   }
 
-  const handlePasswordOnMouseDown = (event) => {
-    event.preventDefault()
-  }
-
-  const handleAddNewMailButtonOnClick = (id) => () => {
-    setInputVisible((prevState) => ({
-      ...prevState.inputValue,
-      [id]: true
-    }))
+  const handleAddNewInputPressEnter = (id) => (values) => {
+    addMailAccount(id, values.email)
+    setInputVisible({ ...inputVisible, [id]: false })
   }
 
   const handleAddNewInputOnBlur = (id) => () => {
-    setInputVisible((prevState) => ({
-      ...prevState.inputVisible,
-      [id]: false
-    }))
+    setInputVisible({ ...inputVisible, [id]: false })
   }
 
-  const handleAddNewInputPressEnter = (id) => (event) => {
-    dispatch(
-      addMailAccount({
-        id,
-        value: event.email
-      })
-    )
-    setInputVisible({
-      ...inputVisible,
-      [id]: false
-    })
+  const handleAddNewMailButtonOnClick = (id) => () => {
+    setInputVisible({ ...inputVisible, [id]: true })
+    setTimeout(() => {
+      formRef.current.getFieldInstance('email').focus()
+    }, 10)
   }
 
-  const handleRemoveTagButtonOnClick = (id, tag) => () => {
-    dispatch(removeMailAccount({ id, tag }))
-  }
-
-  // const { showPassword, inputVisible } = state
   return (
-    <Card title={TITLE}>
-      <FormItem
-        error={!isUsernameValid}
-        style={{ width: '200px' }}
-        value={username}
-        onChange={handleUsernameInputOnChange}
-        //label={USERNAME_INPUT_LABLE}
-      >
-        <Input
-          placeholder={USERNAME_INPUT_LABLE}
-          bordered={false}
-          style={{ borderBottom: '1px solid black' }}
-        />
-      </FormItem>
-      <FormItem
-        error={!isPasswordValid}
-        style={{ width: '200px' }}
-        value={password}
-        onChange={handlePasswordInputOnChange}
-        // label={PASSWORD_INPUT_LABLE}
-        type={showPassword ? 'text' : 'password'}
-        initialValue={{
-          endAdornment: (
-            <Space.Compact position="end">
-              <Button onClick={handleShowPasswordOnClick} onMouseDown={handlePasswordOnMouseDown}>
-                {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-              </Button>
-            </Space.Compact>
-          )
+    <div>
+      <Divider
+        orientation="left"
+        style={{
+          marginBottom: '15px',
+          marginTop: '15px',
+          fontSize: '20px',
+          color: token.colorPrimary,
+          borderCollapse: 'true'
         }}
       >
-        {' '}
+        Mail Settings
+      </Divider>
+
+      <Form.Item
+        name="username"
+        rules={[
+          {
+            type: 'email',
+            message: EMAIL_NOT_VALID_MSG
+          },
+          {
+            required: true,
+            message: EMAIL_EMPTY_MSG
+          }
+        ]}
+      >
         <Input
-          placeholder={PASSWORD_INPUT_LABLE}
           bordered={false}
-          style={{ borderBottom: '1px solid black' }}
+          style={{ width: '200px', borderBottom: '1px solid black' }}
+          value={username}
+          onChange={handleUsernameInputOnChange}
+          placeholder={USERNAME_INPUT_LABLE}
         />
-      </FormItem>
-      {mailAccountTagData &&
-        mailAccountTagData.map((element) => (
-          <div key={element.id} style={{ marginTop: '10px' }}>
-            <span
-              style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginTop: '10px' }}
-            >{`${element.label}:`}</span>
-            {[element.id].map((tag) => (
-              <Tag
-                color={element.color}
-                key={tag}
-                closable
-                style={{ fontSize: '1rem' }}
-                onClose={handleRemoveTagButtonOnClick(element.id, tag)}
-              >
-                {tag}
-              </Tag>
-            ))}
-            {inputVisible[element.id] ? (
-              <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
-                <FormItem
-                  name="email"
-                  rules={[
-                    {
-                      type: 'email',
-                      message: EMAIL_NOT_VALID_MSG
-                    },
-                    {
-                      required: true,
-                      message: EMAIL_EMPTY_MSG
-                    }
-                  ]}
-                >
-                  <Input
-                    autoFocus
-                    type="text"
-                    style={{ width: '200px' }}
-                    onBlur={handleAddNewInputOnBlur(element.id)}
-                  />
-                </FormItem>
-              </Form>
+      </Form.Item>
+      <Form.Item name="password">
+        <Input.Password
+          bordered={false}
+          style={{ width: '200px', borderBottom: '1px solid black' }}
+          value={password}
+          onChange={handlePasswordInputOnChange}
+          placeholder={PASSWORD_INPUT_LABLE}
+          iconRender={(inputVisible) =>
+            inputVisible ? (
+              <EyeTwoTone onClick={handleShowPasswordOnClick} />
             ) : (
-              <Tag
-                style={{ fontSize: '1rem', borderStyle: 'dashed' }}
-                // className={classNames(styles.tag, styles.newTag)}
-                color="#6FBBD6"
-                onClick={handleAddNewMailButtonOnClick(element.id)}
+              <EyeInvisibleOutlined onClick={handleShowPasswordOnClick} />
+            )
+          }
+        />
+      </Form.Item>
+
+      {mailAccountTagData.map((element) => (
+        <div key={element.id} style={{ marginTop: '10px' }}>
+          <span
+            style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginTop: '10px' }}
+          >{`${element.label}:`}</span>
+          {[element.id].map((tag) => (
+            <Tag
+              color={element.color}
+              key={tag}
+              closable
+              style={{ fontSize: '1rem' }}
+              onClose={handleRemoveTagButtonOnClick(element.id, tag)}
+            >
+              {tag}
+            </Tag>
+          ))}
+          {inputVisible[element.id] ? (
+            <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: 'email',
+                    message: EMAIL_NOT_VALID_MSG
+                  },
+                  {
+                    required: true,
+                    message: EMAIL_EMPTY_MSG
+                  }
+                ]}
               >
-                <PlusOutlined /> New Mail
-              </Tag>
-            )}
-          </div>
-        ))}
-    </Card>
+                <Input
+                  autoFocus
+                  type="text"
+                  style={{ width: '200px' }}
+                  onBlur={handleAddNewInputOnBlur(element.id)}
+                />
+              </Form.Item>
+            </Form>
+          ) : (
+            <Tag
+              style={{ fontSize: '1rem', borderStyle: 'dashed' }}
+              color="#6FBBD6"
+              onClick={handleAddNewMailButtonOnClick(element.id)}
+            >
+              <PlusOutlined /> New Mail
+            </Tag>
+          )}
+        </div>
+      ))}
+    </div>
   )
 }
 
-// const wrappedMailSetting = Form.create()(MailSetting);
 export default MailSetting
