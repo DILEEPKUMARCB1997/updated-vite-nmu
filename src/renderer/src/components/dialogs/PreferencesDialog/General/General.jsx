@@ -46,7 +46,7 @@ const General = (props) => {
           width: `${NICSelectWidth}px`,
           minWidth: '400px',
           marginTop: '10px',
-          marginBottom: '20px'
+          marginBottom: '10px'
         }}
         value="default"
         dropdownStyle={{ zIndex: '1301' }}

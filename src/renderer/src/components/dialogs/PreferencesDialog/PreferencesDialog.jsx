@@ -160,10 +160,10 @@ const PreferencesDialog = ({ onClose }) => {
   const handleChangePage = (fetchIndex) => {
     switch (fetchIndex) {
       case 0:
-        requestGetNICData()
+        dispatch(requestGetNICData())
         break
       case 1:
-        requestGetMail()
+        dispatch(requestGetMail())
         break
       case 2:
         dispatch(getTelegramToken())

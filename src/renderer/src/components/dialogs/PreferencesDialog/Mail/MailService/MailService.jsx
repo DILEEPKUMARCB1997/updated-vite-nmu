@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
-import { Select, Switch, Radio, Input, theme, Form, Divider, InputNumber } from 'antd'
-
+import { Select, Switch, Radio, theme, Form, Divider, InputNumber } from 'antd'
 import {
   mailSelector,
   setMailHost,
@@ -83,6 +82,7 @@ const MailService = (props) => {
       </span>
       <div>
         <Radio
+          defaultChecked="Gmail"
           style={{ marginTop: '20px', marginRight: '0px' }}
           checked={!isServiceOther}
           onChange={handleServiceListRadioOnChange}

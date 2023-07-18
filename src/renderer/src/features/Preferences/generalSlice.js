@@ -35,6 +35,7 @@ export const requestGetNICData = () => (dispatch) => {
 const generalSlice = createSlice({
   name: 'generalSlice',
   initialState: {
+    isConfigChange: false,
     NICData: {},
     validsData: {
       isNICValid: true
@@ -51,8 +52,9 @@ const generalSlice = createSlice({
         ...getStateOfFormatValid(state, { isNICValid })
       }
     },
+
     clearGeneralData: (state, { payload }) => {
-      //  const { action } = payload
+      ///const { action } = payload
       return {
         ...state,
         isConfigChange: false,
@@ -77,18 +79,17 @@ export const generalSelector = (state) => {
 
 export default generalSlice
 
+const getStateOfFormatValid = (state, valid) => ({
+  validsData: {
+    ...state.validsData,
+    ...valid
+  }
+})
 const getStateOfSetValue = (state, payload) => ({
   isConfigChange: true,
   NICData: {
     ...state.NICData,
     ...payload
-  }
-})
-
-const getStateOfFormatValid = (state, valid) => ({
-  validsData: {
-    ...state.validsData,
-    ...valid
   }
 })
 const changeObjectState = (state, newValue) => ({
