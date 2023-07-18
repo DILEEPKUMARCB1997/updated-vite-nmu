@@ -25,7 +25,7 @@ import {
   requestSetSNMPData
 } from '../../../features/Preferences/snmpSlice'
 import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
-// const { confirm } = Modal
+import { requestGetMail, requestSetMail } from '../../../features/Preferences/mailSlice'
 
 const { Header, Sider, Content } = Layout
 const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
@@ -71,10 +71,7 @@ const PreferencesDialog = ({ onClose }) => {
   console.log([selectedPage])
 
   const configChangeFlag = [selectedPage].isConfigChange
-  const configValidFlag = ![selectedPage].validsData
-
-  console.log(configChangeFlag)
-  console.log(configValidFlag)
+  const configValidFlag = [selectedPage].validsData
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
@@ -85,8 +82,7 @@ const PreferencesDialog = ({ onClose }) => {
     if (fetchIndex === selectedIndex) return
 
     if (configChangeFlag && configValidFlag) {
-      const popup = new Promise((resolve, reject) => {
-        console.log(popup)
+      new Promise((resolve, reject) => {
         showConfirm(resolve, reject)
       })
         .then(() => {
@@ -145,6 +141,9 @@ const PreferencesDialog = ({ onClose }) => {
       case 0:
         dispatch(requireSetNICData(handleShowResult(selectedIndex)))
         break
+      case 1:
+        requestSetMail(handleShowResult(selectedIndex))
+        break
       case 2:
         break
       case 3:
@@ -163,6 +162,9 @@ const PreferencesDialog = ({ onClose }) => {
     switch (fetchIndex) {
       case 0:
         requestGetNICData()
+        break
+      case 1:
+        requestGetMail()
         break
       case 2:
         dispatch(getTelegramToken())
@@ -200,7 +202,7 @@ const PreferencesDialog = ({ onClose }) => {
             color: '#fff',
             fontWeight: 'bold'
           }}
-          close={handleCancelButtonClick}
+          onClick={handleCancelButtonClick}
         >
           <SettingOutlined /> Preference
         </Header>
