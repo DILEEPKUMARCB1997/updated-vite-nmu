@@ -1,4 +1,4 @@
-import { Button, DatePicker, Divider, Input, Modal, Table } from 'antd'
+import { Button, Divider, Input, Modal, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -6,6 +6,7 @@ import {
   eventLogSelector,
   requestHistoryData
 } from '../../../features/eventLogSlice'
+import CustomRangePicker from '../Common Code/CustomRangePicker'
 
 const EventHistoryDialog = ({ onClose }) => {
   const [tableLoading, setTableLoading] = useState(true)
@@ -13,7 +14,6 @@ const EventHistoryDialog = ({ onClose }) => {
   const [dateRange, setDateRange] = useState({ ge: '', le: '' })
   const { eventHistoryData } = useSelector(eventLogSelector)
   const dispatch = useDispatch()
-  const { RangePicker } = DatePicker
   const columns = [
     {
       key: 'createAt',
@@ -93,13 +93,7 @@ const EventHistoryDialog = ({ onClose }) => {
           style={{ width: '150px', margin: '0px 10px 0px 10px' }}
           onChange={handleMACAddressInputChange}
         />
-        <RangePicker
-          popupStyle={{ zIndex: '1301' }}
-          showTime={{ format: 'HH:mm' }}
-          placeholder={['Start Time', 'End Time']}
-          style={{ marginRight: '10px' }}
-          onChange={rangePickerChange}
-        />
+        <CustomRangePicker onChange={rangePickerChange} />
         <Button
           type="primary"
           ghost

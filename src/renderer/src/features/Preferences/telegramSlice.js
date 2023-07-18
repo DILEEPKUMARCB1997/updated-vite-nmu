@@ -53,7 +53,6 @@ export const getTelegramUser = () => (dispatch) => {
 
 export const saveTelegramUser = (params) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_TELEGRAM_USER, (event, arg) => {
-    console.log(arg)
     if (arg.success) {
       notification.success({ message: 'Successfully saved telegram user.' })
       dispatch(getTelegramUser())

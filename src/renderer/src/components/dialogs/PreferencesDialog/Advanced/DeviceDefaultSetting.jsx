@@ -14,11 +14,13 @@ const DeviceDefaultSetting = (props) => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
-  const { advancedData, validsData } = useSelector(advancedSelector)
+  const { advancedData, validsData, isConfigChange } = useSelector(advancedSelector)
+  console.log(isConfigChange)
   const { isDefaultUsernameValid, isDefaultPasswordValid } = validsData
   const { defaultUsername, defaultPassword } = advancedData
 
   const handleDefaultUsernameInputOnChange = (event) => {
+    console.log(event)
     dispatch(setDefaultUsername(event.target.value))
   }
 

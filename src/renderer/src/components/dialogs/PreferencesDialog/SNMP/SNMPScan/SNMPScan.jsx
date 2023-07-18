@@ -1,4 +1,5 @@
-import { Divider, Form, Input, InputNumber, Switch, Typography, theme } from 'antd'
+import { Divider, Form, InputNumber, Switch, Typography, theme } from 'antd'
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
 import IPRangeList from './IPRangeList/IPRangeList'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,10 +13,10 @@ import {
 
 const SNMPScan = () => {
   const dispatch = useDispatch()
-  // const { SNMPData } = useSelector(snmpSelector)
-  const data = useSelector(snmpSelector)
-  console.log(data)
-  const { isEnable, SNMPPollInterval, SNMPTimeout, ICMPTimeout } = data.SNMPData
+  const { SNMPData, validsData } = useSelector(snmpSelector)
+
+  const { isEnable, SNMPPollInterval, SNMPTimeout, ICMPTimeout } = SNMPData
+  const { isSNMPPollIntervalValid, isICMPTimeoutValid, isSNMPTimeoutValid } = validsData
   const { useToken } = theme
   const { token } = useToken()
 
@@ -69,32 +70,36 @@ const SNMPScan = () => {
         <Form.Item colon={false} style={{ fontWeight: 'bolder' }} label="SNMP Polling Interval">
           <InputNumber
             style={{ width: '200px', marginLeft: '10px' }}
+            status={isSNMPPollIntervalValid ? null : 'error'}
             maxLength={2}
             addonAfter="min"
             controls={false}
             defaultValue={SNMPPollInterval}
-            // value={SNMPPollInterval}
+            value={SNMPPollInterval}
             onChange={handleSNMPPollIntervalInputOnChange}
           />
         </Form.Item>
         <Form.Item colon={false} style={{ fontWeight: 'bold' }} label="ICMP Timeout">
           <InputNumber
             style={{ width: '200px', marginLeft: '65px' }}
+            status={isICMPTimeoutValid ? null : 'error'}
             maxLength={4}
             addonAfter="ms"
             controls={false}
             defaultValue={ICMPTimeout}
-            // value={ICMPTimeout}
+            value={ICMPTimeout}
             onChange={handleICMPTimeoutInputOnChange}
           />
         </Form.Item>
         <Form.Item colon={false} style={{ fontWeight: 'bolder' }} label="SNMP Timeout">
           <InputNumber
             style={{ width: '200px', marginLeft: '60px' }}
+            status={isSNMPTimeoutValid ? null : 'error'}
+            colorAddonAfter="red"
             maxLength={4}
             addonAfter="ms"
             controls={false}
-            // value={SNMPTimeout}s
+            value={SNMPTimeout}
             defaultValue={SNMPTimeout}
             onChange={handleSNMPTimeoutInputOnChange}
           />

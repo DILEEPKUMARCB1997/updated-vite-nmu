@@ -8,11 +8,8 @@ import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
-import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
-import SNMP from '../../components/dialogs/PreferencesDialog/SNMP/SNMP'
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
-import ModalCheck from '../../pages/ModalCheck'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -46,20 +43,8 @@ const AppRoutes = () => {
         //   element: <DeviceConfigPage />
         // },
         {
-          path: 'telegram',
-          element: <Telegram />
-        },
-        {
           path: 'ConfigComparission',
           element: <ConfigComparission />
-        },
-        {
-          path: 'snmp',
-          element: <SNMP />
-        },
-        {
-          path: 'modal',
-          element: <ModalCheck />
         }
       ]
     },

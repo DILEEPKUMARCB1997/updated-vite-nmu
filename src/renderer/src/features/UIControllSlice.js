@@ -1,5 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
+import {
+  REQUEST_MP_GET_APP_INITIAL_DATA,
+  RESPONSE_RP_GET_APP_INITIAL_DATA
+} from '../../../main/utils/IPCEvents'
+import { setSNMPAppInitialData } from './Preferences/snmpSlice'
+
+export const requestAppInitialData = () => (dispatch) => {
+  window.electron.ipcRenderer.on(RESPONSE_RP_GET_APP_INITIAL_DATA, (event, arg) => {
+    const { appInitialData } = arg.data
+    dispatch(setSNMPAppInitialData({ ...appInitialData.SNMP }))
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_APP_INITIAL_DATA)
+}
 
 const UIControlSlice = createSlice({
   name: 'UIControlSlice',

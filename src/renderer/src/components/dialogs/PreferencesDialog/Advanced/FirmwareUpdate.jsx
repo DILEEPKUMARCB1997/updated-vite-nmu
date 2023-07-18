@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-// import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
 import { Input, InputNumber, Form, Divider, theme } from 'antd'
-
 import {
   setFWUpdateBatchQuantity,
   advancedSelector,
@@ -15,10 +13,10 @@ const FirmwareUpdate = () => {
   const { token } = useToken()
   const dispatch = useDispatch()
   // const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = useSelector(advancedSelector)
-  const { advancedData } = useSelector(advancedSelector)
+  const { advancedData, validsData, isConfigChange } = useSelector(advancedSelector)
   const { fwUpdateBatchQuantity, fwUpdateConnTimeout } = advancedData
-  // console.log(fwUpdateBatchQuantity)
-  // console.log(fwUpdateConnTimeout)
+  const { isFWUpdateBatchQuantityValid, isFWUpdateConnTimeoutValid } = validsData
+
   const handleFWUpdateBatchQuantityInputOnChange = (value) => {
     console.log(value)
     dispatch(setFWUpdateBatchQuantity(value))
@@ -48,8 +46,9 @@ const FirmwareUpdate = () => {
           label={<p style={{ fontSize: '16px' }}>Batch Quantity</p>}
         >
           <InputNumber
-            defaultValue={fwUpdateBatchQuantity}
+            status={isFWUpdateBatchQuantityValid ? null : 'error'}
             style={{ width: '150px', marginLeft: '50px' }}
+            defaultValue={fwUpdateBatchQuantity}
             controls={false}
             onChange={handleFWUpdateBatchQuantityInputOnChange}
           />
@@ -60,6 +59,7 @@ const FirmwareUpdate = () => {
           label={<p style={{ fontSize: '16px' }}>Connection Timeout</p>}
         >
           <InputNumber
+            status={isFWUpdateConnTimeoutValid ? null : 'error'}
             style={{ width: '150px', marginLeft: '10px' }}
             addonAfter="ms"
             controls={false}

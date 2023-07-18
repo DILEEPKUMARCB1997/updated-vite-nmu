@@ -12,11 +12,9 @@ const OfflineDetection = () => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
-  const { advancedData } = useSelector(advancedSelector)
+  const { advancedData, validsData, isConfigChange } = useSelector(advancedSelector)
   const { offlinePollInterval, offlineTimeout } = advancedData
-  // const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = validsData
-  // console.log(offlinePollInterval)
-  // console.log(offlineTimeout)
+  const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = validsData
 
   const handleOfflinePollIntervalInputOnChange = (value) => {
     console.log(value)
@@ -46,6 +44,7 @@ const OfflineDetection = () => {
           label={<p style={{ fontSize: '16px' }}>Polling Interval</p>}
         >
           <InputNumber
+            status={isOfflinePollIntervalValid ? null : 'error'}
             style={{ width: '150px', marginLeft: '10px' }}
             addonAfter="sec"
             maxLength={2}
@@ -60,6 +59,7 @@ const OfflineDetection = () => {
           label={<p style={{ fontSize: '16px' }}>Timeout</p>}
         >
           <InputNumber
+            status={isOfflineTimeoutValid ? null : 'error'}
             style={{ width: '150px', marginLeft: '65px' }}
             addonAfter="ms"
             controls={false}
