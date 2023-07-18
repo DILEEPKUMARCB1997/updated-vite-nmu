@@ -26,7 +26,6 @@ const MailService = (props) => {
   const { isOpen, host, port, service } = mailData
   const { useToken } = theme
   const { token } = useToken()
-  // const [service, setService] = useState('')
   const [isServiceOther, setIsServiceOther] = useState(service === 'Other')
   const formRef = useRef()
   const dispatch = useDispatch()
@@ -38,9 +37,6 @@ const MailService = (props) => {
   const handleHostInputOnChange = (value) => {
     dispatch(setMailHost(value))
   }
-  // const handleServiceChange = (e) => {
-  //   setService(e.target.value)
-  // }
 
   const handlePortInputOnChange = (value) => {
     dispatch(setMailPort(value))
@@ -87,7 +83,6 @@ const MailService = (props) => {
       </span>
       <div>
         <Radio
-          // value="Gmail"
           style={{ marginTop: '20px', marginRight: '0px' }}
           checked={!isServiceOther}
           onChange={handleServiceListRadioOnChange}
@@ -195,7 +190,7 @@ const MailService = (props) => {
                 style={{ borderBottom: '1px dotted black' }}
                 colon={false}
                 label={USER_DEFINITION_PORT_INPUT_LABLE}
-                //validateStatus={isPortValid ? 'success' : 'error'}
+                validateStatus={isPortValid ? 'success' : 'error'}
               >
                 <InputNumber
                   controls={false}

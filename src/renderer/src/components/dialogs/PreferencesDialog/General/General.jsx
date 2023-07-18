@@ -29,18 +29,25 @@ const General = (props) => {
   return (
     <div style={{ width: '100%' }}>
       <Divider
+        orientation="left"
         style={{
           width: '100%',
           fontSize: '1.5rem',
           color: ' #6fbbd6',
           marginTop: '10px',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          alignItems: 'baseline'
         }}
       >
         Network Interface Card
       </Divider>
       <Select
-        style={{ width: `${NICSelectWidth}px`, minWidth: '400px' }}
+        style={{
+          width: `${NICSelectWidth}px`,
+          minWidth: '400px',
+          marginTop: '10px',
+          marginBottom: '20px'
+        }}
         value="default"
         dropdownStyle={{ zIndex: '1301' }}
         onChange={handleNICSelectOnChange}
