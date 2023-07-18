@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Table, Button, Alert } from 'antd'
+import { Table, Button, Alert, ConfigProvider, theme } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearSyslogData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
@@ -50,6 +50,8 @@ const columns = [
 ]
 
 const Syslog = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const { syslogData } = useSelector(eventLogSelector)
   console.log(syslogData)
   const dispatch = useDispatch()
@@ -75,7 +77,17 @@ const Syslog = () => {
   }
 
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
+    >
       <Button
         variant="outlined"
         type="primary"
@@ -107,7 +119,7 @@ const Syslog = () => {
         pagination={{ pageSize: 25 }}
         scroll={{ y: 'calc(100vh - 365px)' }}
       />
-    </div>
+    </ConfigProvider>
   )
 }
 

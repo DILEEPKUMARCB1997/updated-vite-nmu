@@ -4,7 +4,7 @@
 // // /* eslint-disable no-unused-vars */
 // // // /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
+import { Modal, Menu, Layout, App, Spin, theme, Drawer } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 
 import {
@@ -60,9 +60,8 @@ const items = [
 
 const PreferencesDialog = ({ onClose }) => {
   const { modal } = App.useApp()
-  const {
-    token: { colorBgContainer }
-  } = theme.useToken()
+  const { useToken } = theme
+  const { token } = useToken()
 
   const data = useSelector(preferenceSelector)
   const { loading, selectedIndex, selectedPage } = data
@@ -189,14 +188,13 @@ const PreferencesDialog = ({ onClose }) => {
       footer={null}
       width="100%"
       style={{
-        top: '5px',
-        zIndex: '1008'
+        top: '5px'
       }}
     >
       <Layout style={{ height: '89vh' }}>
         <Header
           style={{
-            background: ' #6fbbd6',
+            background: token.colorPrimaryHover,
             fontSize: 35,
             height: '80px',
             color: '#fff',
@@ -235,7 +233,7 @@ const PreferencesDialog = ({ onClose }) => {
               padding: 24,
               // margin: '24px 16px 24px',
               minHeight: 280,
-              background: colorBgContainer,
+              background: token.colorBgContainer,
               overflow: 'auto'
             }}
           >
