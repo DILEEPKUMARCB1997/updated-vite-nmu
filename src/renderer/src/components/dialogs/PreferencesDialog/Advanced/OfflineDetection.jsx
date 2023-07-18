@@ -1,65 +1,74 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import EnhanceSubContent from '../../EnhanceSubContent/EnhanceSubContent'
-import { Input } from 'antd'
+import { Divider, theme, InputNumber, Form } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setOfflinePollInterval,
-  // advancedSelector,
-  setOfflineTimeout
+  setOfflineTimeout,
+  advancedSelector
 } from '../../../../features/Preferences/advancedSlice'
 
-const TITLE = 'Offline Detection'
-const POLLING_INTERVAL_INPUT_LABLE = 'Polling Interval'
-const TIMEOUT_INPUT_LABLE = 'Timeout'
 const OfflineDetection = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const dispatch = useDispatch()
-  // const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = useSelector(advancedSelector)
+  const { advancedData, validsData, isConfigChange } = useSelector(advancedSelector)
+  const { offlinePollInterval, offlineTimeout } = advancedData
+  const { isOfflinePollIntervalValid, isOfflineTimeoutValid } = validsData
 
-  const handleOfflinePollIntervalInputOnChange = (event) => {
-    //console.log(event.target.value);
-    dispatch(setOfflinePollInterval(event.target.value))
+  const handleOfflinePollIntervalInputOnChange = (value) => {
+    console.log(value)
+    dispatch(setOfflinePollInterval(value))
   }
-  const handleOfflineTimeoutInputOnChange = (event) => {
-    dispatch(setOfflineTimeout(event.target.value))
+  const handleOfflineTimeoutInputOnChange = (value) => {
+    console.log(value)
+    dispatch(setOfflineTimeout(value))
   }
   return (
-    <EnhanceSubContent title={TITLE}>
-      <div>
-        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {POLLING_INTERVAL_INPUT_LABLE}
-        </span>
-        <Input
-          style={{
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            height: '30px',
-            width: '80px',
-            paddingLeft: '3px',
-            marginLeft: '10px'
-          }}
-          suffix="sec"
-          onChange={handleOfflinePollIntervalInputOnChange}
-        ></Input>
+    <div>
+      <Divider
+        orientation="left"
+        style={{
+          marginBottom: '15px',
+          marginTop: '15px',
+          fontSize: '1.5rem',
+          color: token.colorPrimary
+        }}
+      >
+        Offline Detection
+      </Divider>
+      <div style={{ marginLeft: '60px', alignItems: 'center' }}>
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label={<p style={{ fontSize: '16px' }}>Polling Interval</p>}
+        >
+          <InputNumber
+            status={isOfflinePollIntervalValid ? null : 'error'}
+            style={{ width: '150px', marginLeft: '10px' }}
+            addonAfter="sec"
+            maxLength={2}
+            controls={false}
+            defaultValue={offlinePollInterval}
+            onChange={handleOfflinePollIntervalInputOnChange}
+          />
+        </Form.Item>
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label={<p style={{ fontSize: '16px' }}>Timeout</p>}
+        >
+          <InputNumber
+            status={isOfflineTimeoutValid ? null : 'error'}
+            style={{ width: '150px', marginLeft: '65px' }}
+            addonAfter="ms"
+            controls={false}
+            defaultValue={offlineTimeout}
+            onChange={handleOfflineTimeoutInputOnChange}
+          />
+        </Form.Item>
       </div>
-      <div style={{ marginTop: '15px' }}>
-        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black' }}>
-          {TIMEOUT_INPUT_LABLE}
-        </span>
-        <Input
-          style={{
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            height: '30px',
-            width: '80px',
-            paddingLeft: '3px',
-            marginLeft: '63px'
-          }}
-          suffix="ms"
-          onChange={handleOfflineTimeoutInputOnChange}
-        />
-      </div>
-    </EnhanceSubContent>
+    </div>
   )
 }
 

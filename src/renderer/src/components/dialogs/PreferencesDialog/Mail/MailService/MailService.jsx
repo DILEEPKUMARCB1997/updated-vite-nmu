@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'

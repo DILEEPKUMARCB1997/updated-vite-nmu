@@ -35,6 +35,7 @@ export const requestGetNICData = () => (dispatch) => {
 const generalSlice = createSlice({
   name: 'generalSlice',
   initialState: {
+    isConfigChange: false,
     NICData: {},
     validsData: {
       isNICValid: true
