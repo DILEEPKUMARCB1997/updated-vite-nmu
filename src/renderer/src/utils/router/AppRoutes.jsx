@@ -8,7 +8,6 @@ import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
-import Telegram from '../../components/dialogs/PreferencesDialog/Telegram/Telegram'
 
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'

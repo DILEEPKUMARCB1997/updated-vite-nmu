@@ -76,8 +76,8 @@ const advancedSlice = createSlice({
     }
   },
   reducers: {
-    setDefaultUsername: (state, action) => {
-      const defaultUsername = action.payload
+    setDefaultUsername: (state, { payload }) => {
+      const defaultUsername = payload
       const isDefaultUsernameValid = defaultUsername.length < valueFormat.device.USERNAME_MAX_LENGTH
       return {
         ...state,
@@ -85,8 +85,8 @@ const advancedSlice = createSlice({
         ...getStateOfFormatValid(state, { isDefaultUsernameValid })
       }
     },
-    setDefaultPassword: (state, action) => {
-      const defaultPassword = action.payload
+    setDefaultPassword: (state, { payload }) => {
+      const defaultPassword = payload
       const isDefaultPasswordValid = defaultPassword.length < valueFormat.device.PASSWORD_MAX_LENGTH
       return {
         ...state,
@@ -155,6 +155,21 @@ const advancedSlice = createSlice({
     },
     initAdvancedData: (state, action) => {
       return { ...state, advancedData: action.payload }
+    },
+    clearAdvancedData: (state) => {
+      return {
+        ...state,
+        advancedData: {},
+        isConfigChange: false,
+        validsData: {
+          isDefaultUsernameValid: true,
+          isDefaultPasswordValid: true,
+          isFWUpdateBatchQuantityValid: true,
+          isFWUpdateConnTimeoutValid: true,
+          isOfflinePollIntervalValid: true,
+          isOfflineTimeoutValid: true
+        }
+      }
     }
   }
 })
@@ -165,29 +180,16 @@ export const {
   setFWUpdateConnectionTimeout,
   setOfflinePollInterval,
   setOfflineTimeout,
-  initAdvancedData
+  initAdvancedData,
+  clearAdvancedData
 } = advancedSlice.actions
 
 export const advancedSelector = (state) => {
-  const {
-    isConfigChange,
-    advancedData,
-    isDefaultUsernameValid,
-    isDefaultPasswordValid,
-    isFWUpdateBatchQuantityValid,
-    isFWUpdateConnTimeoutValid,
-    isOfflinePollIntervalValid,
-    isOfflineTimeoutValid
-  } = state.advanced
+  const { isConfigChange, advancedData, validsData } = state.advanced
   return {
     isConfigChange,
     advancedData,
-    isDefaultUsernameValid,
-    isDefaultPasswordValid,
-    isFWUpdateBatchQuantityValid,
-    isFWUpdateConnTimeoutValid,
-    isOfflinePollIntervalValid,
-    isOfflineTimeoutValid
+    validsData
   }
 }
 

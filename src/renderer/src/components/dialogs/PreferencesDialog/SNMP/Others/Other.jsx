@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Divider, Switch, Typography, theme } from 'antd'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'

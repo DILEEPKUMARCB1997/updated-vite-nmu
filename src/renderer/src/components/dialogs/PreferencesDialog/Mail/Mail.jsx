@@ -10,7 +10,9 @@ import { useDispatch } from 'react-redux'
 const Mail = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(clearMailData())
+    return () => {
+      dispatch(clearMailData())
+    }
   }, [])
   return (
     <div style={{ display: 'inline-grid', width: '100%' }}>
