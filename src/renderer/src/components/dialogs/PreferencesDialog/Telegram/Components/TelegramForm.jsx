@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
+import { useState } from 'react'
 import { App, Button, Form, Input, InputNumber, Select, theme } from 'antd'
-import React from 'react'
+
 import ControlButton from './ControlButton'
 import { useDispatch } from 'react-redux'
 import { saveTelegramUser } from '../../../../../features/Preferences/telegramSlice'
-import { useState } from 'react'
 
 const TelegramForm = () => {
   const [data, setData] = useState({ id: '0', telegramId: '', telegramName: '', telegramType: '' })

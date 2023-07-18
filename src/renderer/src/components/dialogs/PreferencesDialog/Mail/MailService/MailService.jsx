@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
 import { Select, Switch, Radio, Input, theme, Form, Divider, InputNumber } from 'antd'
 
@@ -18,7 +20,7 @@ const USER_DEFINITION_PORT_INPUT_LABLE = 'Port'
 const USER_DEFINITION_HOST_INPUT_LABLE = 'Host'
 
 const MailService = (props) => {
-  const { serviceListSelectWidth, serviceList } = props
+  const { serviceListSelectWidth } = props
   const { mailData, preService, validsData } = useSelector(mailSelector)
   const { isHostValid, isPortValid } = validsData
   const { isOpen, host, port, service } = mailData
@@ -182,7 +184,7 @@ const MailService = (props) => {
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && isHostValid ? null : 'error'}
+                  status={isServiceOther && !isHostValid ? null : 'error'}
                   bordered={false}
                   value={host}
                   onChange={handleHostInputOnChange}
@@ -197,7 +199,7 @@ const MailService = (props) => {
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && isPortValid ? null : 'error'}
+                  status={isServiceOther && !isPortValid ? null : 'error'}
                   bordered={false}
                   value={port}
                   onChange={handlePortInputOnChange}
