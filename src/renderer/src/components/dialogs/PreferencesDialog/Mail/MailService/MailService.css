@@ -1,0 +1,23 @@
+.switch {
+  width: 250px;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  margin-right: 10px;
+}
+
+.select {
+  min-width: 80px;
+}
+
+.content {
+  margin-left: 15px;
+  display: inline-grid;
+}
+
+.input {
+  width: 200px;
+}

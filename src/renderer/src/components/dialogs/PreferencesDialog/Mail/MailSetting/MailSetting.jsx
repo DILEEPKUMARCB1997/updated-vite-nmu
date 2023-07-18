@@ -43,6 +43,7 @@ const MailSetting = () => {
   }
 
   const handleRemoveTagButtonOnClick = (id, tag) => () => {
+    console.log(tag)
     removeMailAccount(id, tag)
   }
   const handleUsernameInputOnChange = (event) => {
@@ -50,6 +51,7 @@ const MailSetting = () => {
   }
 
   const handleAddNewInputPressEnter = (id) => (values) => {
+    console.log(values)
     addMailAccount(id, values.email)
     setInputVisible({ ...inputVisible, [id]: false })
   }
@@ -59,6 +61,7 @@ const MailSetting = () => {
   }
 
   const handleAddNewMailButtonOnClick = (id) => () => {
+    console.log(id)
     setInputVisible({ ...inputVisible, [id]: true })
     setTimeout(() => {
       formRef.current.getFieldInstance('email').focus()
@@ -79,45 +82,45 @@ const MailSetting = () => {
       >
         Mail Settings
       </Divider>
-
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            type: 'email',
-            message: EMAIL_NOT_VALID_MSG
-          },
-          {
-            required: true,
-            message: EMAIL_EMPTY_MSG
-          }
-        ]}
-      >
-        <Input
-          bordered={false}
-          style={{ width: '200px', borderBottom: '1px solid black' }}
-          value={username}
-          onChange={handleUsernameInputOnChange}
-          placeholder={USERNAME_INPUT_LABLE}
-        />
-      </Form.Item>
-      <Form.Item name="password">
-        <Input.Password
-          bordered={false}
-          style={{ width: '200px', borderBottom: '1px solid black' }}
-          value={password}
-          onChange={handlePasswordInputOnChange}
-          placeholder={PASSWORD_INPUT_LABLE}
-          iconRender={(inputVisible) =>
-            inputVisible ? (
-              <EyeTwoTone onClick={handleShowPasswordOnClick} />
-            ) : (
-              <EyeInvisibleOutlined onClick={handleShowPasswordOnClick} />
-            )
-          }
-        />
-      </Form.Item>
-
+      <Form ref={formRef}>
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              type: 'email',
+              message: EMAIL_NOT_VALID_MSG
+            },
+            {
+              required: true,
+              message: EMAIL_EMPTY_MSG
+            }
+          ]}
+        >
+          <Input
+            bordered={false}
+            style={{ width: '200px', borderBottom: '1px solid black' }}
+            value={username}
+            onChange={handleUsernameInputOnChange}
+            placeholder={USERNAME_INPUT_LABLE}
+          />
+        </Form.Item>
+        <Form.Item name="password">
+          <Input.Password
+            bordered={false}
+            style={{ width: '200px', borderBottom: '1px solid black' }}
+            value={password}
+            onChange={handlePasswordInputOnChange}
+            placeholder={PASSWORD_INPUT_LABLE}
+            iconRender={(visible) =>
+              visible ? (
+                <EyeTwoTone onClick={handleShowPasswordOnClick} />
+              ) : (
+                <EyeInvisibleOutlined />
+              )
+            }
+          />
+        </Form.Item>
+      </Form>
       {mailAccountTagData.map((element) => (
         <div key={element.id} style={{ marginTop: '10px' }}>
           <span
