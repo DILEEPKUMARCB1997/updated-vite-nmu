@@ -18,12 +18,14 @@ const General = (props) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(clearGeneralData())
-    dispatch(setNICActiveIndex())
+    return () => {
+      dispatch(clearGeneralData())
+    }
+    // dispatch(setNICActiveIndex())
   }, [])
 
   const handleNICSelectOnChange = (value) => {
-    setNICActiveIndex(value)
+    dispatch(setNICActiveIndex(value))
   }
 
   return (

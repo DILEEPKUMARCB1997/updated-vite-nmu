@@ -3,16 +3,21 @@
 // /* eslint-disable no-unused-vars */
 // // /* eslint-disable no-unused-vars */
 // // // /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
+import {
+  preferenceSelector,
+  setSelectIndex,
+  clearPreferencesData
+} from '../../../features/Preferences/preferenceSlice'
 
 import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
 import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
-import { preferenceSelector, setSelectIndex } from '../../../features/Preferences/preferenceSlice'
+
 import { useDispatch, useSelector } from 'react-redux'
 import Advanced from './Advanced/Advanced'
 import General from './General/General'
@@ -28,7 +33,6 @@ import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
 import { requestGetMail, requestSetMail } from '../../../features/Preferences/mailSlice'
 
 const { Header, Sider, Content } = Layout
-const CONFIRM_CONTENT_TXTT = 'Do you want to save settings of this page?'
 
 const items = [
   {
@@ -64,23 +68,37 @@ const PreferencesDialog = ({ onClose }) => {
   } = theme.useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
   console.log(selectedPage)
-  const dispatch = useDispatch()
-  const { notification } = App.useApp()
 
-  const configChangeFlag = [selectedPage].isConfigChange
-  const configValidFlag = [selectedPage].validsData
+  const dispatch = useDispatch()
+  const { notification, modal } = App.useApp()
+  useEffect(() => {
+    return () => {
+      dispatch(clearPreferencesData())
+    }
+  }, [])
+
+  // const configChangeFlag = [selectedPage].isConfigChange
+  // const configValidFlag = ![selectedPage].validsData
+  // console.log(configChangeFlag)
+  // console.log(configValidFlag)
+
+  const configChangeFlag = useSelector((state) => state[selectedPage].isConfigChange)
+  const configValidFlag = useSelector(
+    (state) => !Object.values(state[selectedPage].validsData).includes(false)
+  )
+
   console.log(configChangeFlag)
   console.log(configValidFlag)
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
-
     const fetchIndex = items.findIndex((e) => e.key === key)
     console.log(fetchIndex)
 
     if (fetchIndex === selectedIndex) return
-
     if (configChangeFlag && configValidFlag) {
+      console.log(configChangeFlag)
+      console.log(configValidFlag)
       new Promise((resolve, reject) => {
         showConfirm(resolve, reject)
       })
@@ -114,9 +132,9 @@ const PreferencesDialog = ({ onClose }) => {
     }
   }
   const showConfirm = (resolve, reject) => {
-    confirm({
+    modal.confirm({
       zIndex: 1500,
-      title: CONFIRM_CONTENT_TXTT,
+      title: 'Do you want to save settings of this page?',
       okText: 'Save',
       onOk() {
         resolve()
@@ -127,8 +145,7 @@ const PreferencesDialog = ({ onClose }) => {
     })
   }
   const handleShowResult = (selectedIndex) => (result) => {
-    const type = result ? 'success' : 'error'
-    notification[type]({
+    notification.success({
       message: `${items[selectedIndex].label} settings ${
         result ? 'successfully saved.' : 'save error.'
       }`
@@ -138,18 +155,18 @@ const PreferencesDialog = ({ onClose }) => {
     console.log(selectedIndex)
     switch (selectedIndex) {
       case 0:
-        requireSetNICData(handleShowResult(selectedIndex))
+        dispatch(requireSetNICData(handleShowResult(selectedIndex)))
         break
       case 1:
-        requestSetMail(handleShowResult(selectedIndex))
+        dispatch(requestSetMail(handleShowResult(selectedIndex)))
         break
       case 2:
         break
       case 3:
-        requestSetSNMPData(handleShowResult(selectedIndex))
+        dispatch(requestSetSNMPData(handleShowResult(selectedIndex)))
         break
       case 4:
-        requestSetAdvancedData(handleShowResult(selectedIndex))
+        dispatch(requestSetAdvancedData(handleShowResult(selectedIndex)))
         break
 
       default:
@@ -160,10 +177,10 @@ const PreferencesDialog = ({ onClose }) => {
   const handleChangePage = (fetchIndex) => {
     switch (fetchIndex) {
       case 0:
-        requestGetNICData()
+        dispatch(requestGetNICData())
         break
       case 1:
-        requestGetMail()
+        dispatch(requestGetMail())
         break
       case 2:
         dispatch(getTelegramToken())
@@ -173,7 +190,7 @@ const PreferencesDialog = ({ onClose }) => {
         dispatch(requestGetSNMPData())
         break
       case 4:
-        requestGetAdvancedData()
+        dispatch(requestGetAdvancedData())
         break
 
       default:
@@ -238,7 +255,7 @@ const PreferencesDialog = ({ onClose }) => {
               overflow: 'auto'
             }}
           >
-            {loading ? <Spin /> : items[selectedIndex].page}
+            {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
           </Content>
         </Layout>
       </Layout>
