@@ -83,7 +83,6 @@ const MailService = (props) => {
       </span>
       <div>
         <Radio
-          defaultChecked="Gmail"
           style={{ marginTop: '20px', marginRight: '0px' }}
           checked={!isServiceOther}
           onChange={handleServiceListRadioOnChange}
@@ -95,7 +94,7 @@ const MailService = (props) => {
           </span>
         </Radio>
         <Select
-          defaultValue="Gmail"
+          //defaultValue="Gmail"
           style={{
             width: `${serviceListSelectWidth}px`,
             marginLeft: '20px',
