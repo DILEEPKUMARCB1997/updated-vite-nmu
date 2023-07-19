@@ -63,21 +63,6 @@ const items = [
 ]
 
 const PreferencesDialog = ({ onClose }) => {
-<<<<<<< HEAD
-  const { modal } = App.useApp()
-  const { useToken } = theme
-  const { token } = useToken()
-
-  const data = useSelector(preferenceSelector)
-  const { loading, selectedIndex, selectedPage } = data
-
-  const dispatch = useDispatch()
-  const { notification } = App.useApp()
-  console.log([selectedPage])
-
-  const configChangeFlag = [selectedPage].isConfigChange
-  const configValidFlag = [selectedPage].validsData
-=======
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -104,7 +89,6 @@ const PreferencesDialog = ({ onClose }) => {
 
   console.log(configChangeFlag)
   console.log(configValidFlag)
->>>>>>> be76a185b3c8421adfc82395c60931173898b2f8
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
@@ -148,11 +132,7 @@ const PreferencesDialog = ({ onClose }) => {
     }
   }
   const showConfirm = (resolve, reject) => {
-<<<<<<< HEAD
-    modal.warning({
-=======
     modal.confirm({
->>>>>>> be76a185b3c8421adfc82395c60931173898b2f8
       zIndex: 1500,
       title: 'Do you want to save settings of this page?',
       okText: 'Save',
@@ -232,7 +212,7 @@ const PreferencesDialog = ({ onClose }) => {
       <Layout style={{ height: '89vh' }}>
         <Header
           style={{
-            background: token.colorPrimaryHover,
+            background: '#6fbbd6',
             fontSize: 35,
             height: '80px',
             color: '#fff',
@@ -271,7 +251,7 @@ const PreferencesDialog = ({ onClose }) => {
               padding: 24,
               // margin: '24px 16px 24px',
               minHeight: 280,
-              background: token.colorBgContainer,
+              background: colorBgContainer,
               overflow: 'auto'
             }}
           >

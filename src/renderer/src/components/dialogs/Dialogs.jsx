@@ -30,7 +30,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
           aboutDialog: <AboutDialog onClose={onClose} />,
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />,
-          snmpScanProgerss: <SNMPScanProgressDialog onClose={onClose} />
+          snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />
         }[id]
       }
     </div>

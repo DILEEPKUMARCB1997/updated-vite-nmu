@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const dialogSlice = createSlice({
   name: 'dialogSlice',
-  initialState: { dialogs: [], isAppPreferencesDialogOpen: [] },
+  initialState: { dialogs: [] },
   reducers: {
     openDialog: (state, { payload }) => {
       if (state.dialogs.includes(payload)) {
@@ -26,8 +26,8 @@ const dialogSlice = createSlice({
 export const { openDialog, closeDialog } = dialogSlice.actions
 
 export const dialogSelector = (state) => {
-  const { dialogs, isAppPreferencesDialogOpen } = state.dialog
-  return { dialogs, isAppPreferencesDialogOpen }
+  const { dialogs } = state.dialog
+  return { dialogs }
 }
 
 export default dialogSlice
