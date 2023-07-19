@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react'
 import { Modal, InputNumber, Select, Input, Checkbox, Card } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-// import {
-//   addNewEdge,
-//   addNewNode,
-//   addNewVirtualNode,
-//   topologySelector
-// } from '../../../features/topologySlice'
+import {
+  addNewEdge,
+  addNewNode,
+  addNewVirtualNode,
+  topologySelector
+} from '../../../features/topologySlice'
 
 const { Option } = Select
 const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
@@ -29,7 +29,7 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
   const [addNodePosition, setAddNodePosition] = useState('')
 
   useEffect(() => {
-    //onRef(modalRef)
+    // onRef(modalRef)
   }, [])
 
   const openModal = (data) => {

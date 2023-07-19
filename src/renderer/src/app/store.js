@@ -13,6 +13,7 @@ import advancedSlice from '../features/Preferences/advancedSlice'
 import mailSlice from '../features/Preferences/mailSlice'
 import generalSlice from '../features/Preferences/generalSlice'
 import snmpSlice from '../features/Preferences/snmpSlice'
+import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 
 export const store = configureStore({
   reducer: {
@@ -29,8 +30,8 @@ export const store = configureStore({
     telegram: telegramSlice.reducer,
     snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
-
-    mail: mailSlice.reducer
+    mail: mailSlice.reducer,
+    snmpScanProgress: snmpScanProgressSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Modal, Input, Button, Divider, Table, Typography } from 'antd'
+import { Modal, Input, Button, Divider, Table, Typography, ConfigProvider, theme } from 'antd'
 import {
   requestHistoryData,
   eventLogSelector,
@@ -72,6 +72,8 @@ const columns = [
 ]
 
 const TrapHistoryDialog = ({ onClose }) => {
+  const { useToken } = theme
+  const { token } = useToken()
   const dispatch = useDispatch()
   const { trapHistoryData } = useSelector(eventLogSelector)
   const [tableLoading, setTableLoading] = useState(true)
@@ -111,7 +113,17 @@ const TrapHistoryDialog = ({ onClose }) => {
   }
 
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
+    >
       <Modal open onCancel={handleCloseButtonOnClick} footer={null} width="80%">
         <Typography>
           <h5>Trap History</h5>
@@ -141,7 +153,7 @@ const TrapHistoryDialog = ({ onClose }) => {
           scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
         />
       </Modal>
-    </>
+    </ConfigProvider>
   )
 }
 

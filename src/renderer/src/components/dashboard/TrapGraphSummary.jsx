@@ -138,7 +138,7 @@ const TrapGraphSummary = () => {
       >
         <i>{trapGraphData.lastUpdated}</i>
         <Tooltip title="Refresh">
-          <Button icon={<SyncOutlined onClick={handleRefresh} />} />
+          <Button icon={<SyncOutlined />} onClick={handleRefresh} />
         </Tooltip>
       </div>
       <div>

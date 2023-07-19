@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { Modal, Divider, Table, Input, Button } from 'antd'
+import { Modal, Divider, Table, Input, Button, ConfigProvider, theme } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -57,6 +57,8 @@ const columns = [
 ]
 
 function SyslogHistoryDialog({ onClose }) {
+  const { useToken } = theme
+  const { token } = useToken()
   const { syslogHistoryData } = useSelector(eventLogSelector)
   console.log(syslogHistoryData)
 
@@ -87,41 +89,53 @@ function SyslogHistoryDialog({ onClose }) {
   }
 
   return (
-    <Modal
-      title="Syslog History"
-      open
-      width="80%"
-      footer={null}
-      onCancel={handleCloseButtonOnClick}
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
     >
-      <div>
-        <Input
-          style={{ width: 150, marginTop: '10px' }}
-          placeholder="Source IP"
-          onChange={handleSourceIPInputOnChange}
+      <Modal
+        title="Syslog History"
+        open
+        width="80%"
+        footer={null}
+        onCancel={handleCloseButtonOnClick}
+      >
+        <div>
+          <Input
+            style={{ width: 150, margin: '0px 10px 0px 10px' }}
+            placeholder="Source IP"
+            onChange={handleSourceIPInputOnChange}
+          />
+          <CustomRangePicker onChange={rangePickerChange} />
+          <Button
+            onClick={handleRefreshButtonClick}
+            type="primary"
+            ghost
+            style={{ marginBottom: '15px', marginLeft: '10px' }}
+          >
+            {' '}
+            Refresh{' '}
+          </Button>
+        </div>
+        <Divider style={{ margin: '10px 0px' }} />
+        <Table
+          loading={tableLoading}
+          rowKey="syslogId"
+          bordered
+          columns={columns}
+          dataSource={syslogHistoryData}
+          pagination={{ pageSize: 25 }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
         />
-        <CustomRangePicker onChange={rangePickerChange} />
-        <Button
-          onClick={handleRefreshButtonClick}
-          type="primary"
-          ghost
-          style={{ marginBottom: '15px', marginLeft: '10px' }}
-        >
-          {' '}
-          Refresh{' '}
-        </Button>
-      </div>
-      <Divider style={{ margin: '10px 0px' }} />
-      <Table
-        loading={tableLoading}
-        rowKey="syslogId"
-        bordered
-        columns={columns}
-        dataSource={syslogHistoryData}
-        pagination={{ pageSize: 25 }}
-        scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
-      />
-    </Modal>
+      </Modal>
+    </ConfigProvider>
   )
 }
 
