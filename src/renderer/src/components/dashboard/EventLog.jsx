@@ -15,12 +15,12 @@ const EventLog = () => {
       {
         name: 'Information',
         color: '#46b300',
-        data: customGraphData.CriticalData
+        data: customGraphData.InformationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: customGraphData.CriticalData
+        data: customGraphData.WarningData
       },
       {
         name: 'Critical',

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef } from 'react'
 import { Input, Form, Tag, Divider, theme } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons'
@@ -64,7 +65,7 @@ const MailSetting = () => {
     console.log(id)
     setInputVisible({ ...inputVisible, [id]: true })
     setTimeout(() => {
-      formRef.current.getFieldInstance('email').focus()
+      formRef.current.getFieldInstance('email')
     }, 10)
   }
 

@@ -7,6 +7,7 @@ import {
   RESPONSE_RP_SET_MAIL_SETTINGS
 } from '../../../../main/utils/IPCEvents'
 import { updateLoadingVisible } from './preferenceSlice'
+
 const valueFormat = {
   service: {
     HOST_DOMAIN: /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/,
@@ -215,4 +216,14 @@ const converMailArrayDataToString = (arrayData) => {
     }
   })
   return tempString
+}
+const mail = (state) => {
+  console.log(state)
+  let serviceListSelectWidth = 80
+  state.mail.mailData.serviceList.forEach((element) => {
+    const minWidth = element.length * 12
+    if (minWidth > serviceListSelectWidth) {
+      serviceListSelectWidth = minWidth
+    }
+  })
 }

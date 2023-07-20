@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, switchGroupView } from '../../features/discoverySlice'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
+import { initFirmwareUpdateData } from '../../features/firmwareUpdate'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -29,7 +30,11 @@ const DevicesControl = () => {
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
-
+  const handleOKButtonOnClick = () => {
+    //console.log(handleOKButtonOnClick)
+    initFirmwareUpdateData()
+    dispatch(openDialog('FWU'))
+  }
   const handleGroupAddClick = () => {
     window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
       cmd: 'addGroup',
@@ -57,7 +62,7 @@ const DevicesControl = () => {
           <Button icon={<SyncOutlined />} />
         </Tooltip>
         <Tooltip title="Firmware Update">
-          <Button icon={<UploadOutlined />} />
+          <Button icon={<UploadOutlined />} onClick={handleOKButtonOnClick} />
         </Tooltip>
         <Tooltip title="Network Settings">
           <Button icon={<ShareAltOutlined />} />

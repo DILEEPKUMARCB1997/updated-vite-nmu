@@ -175,11 +175,11 @@ const MailService = (props) => {
                 colon={false}
                 style={{ marginTop: '30px', borderBottom: '1px dotted black' }}
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
-                validateStatus={!isHostValid ? 'success' : 'error'}
+                validateStatus={isHostValid ? 'success' : 'error'}
+                help={!isHostValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && !isHostValid ? null : 'error'}
                   bordered={false}
                   value={host}
                   onChange={handleHostInputOnChange}
@@ -187,14 +187,15 @@ const MailService = (props) => {
                 />
               </Form.Item>
               <Form.Item
+                name="port"
                 style={{ borderBottom: '1px dotted black' }}
                 colon={false}
                 label={USER_DEFINITION_PORT_INPUT_LABLE}
                 validateStatus={isPortValid ? 'success' : 'error'}
+                help={!isPortValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && !isPortValid ? null : 'error'}
                   bordered={false}
                   value={port}
                   onChange={handlePortInputOnChange}

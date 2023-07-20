@@ -13,6 +13,7 @@ import EditUserDialog from './userManagementDialogs/EditUserDialog'
 import AboutDialog from './AboutDialog/AboutDialog'
 import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
+import FWUDialog from '../FWU Dialog/FWUDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -28,7 +29,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           editUser: <EditUserDialog onClose={onClose} />,
           aboutDialog: <AboutDialog onClose={onClose} />,
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
-          perferences: <PreferencesDialog onClose={onClose} />
+          perferences: <PreferencesDialog onClose={onClose} />,
+          FWU: <FWUDialog onClose={onClose} />
         }[id]
       }
     </div>
