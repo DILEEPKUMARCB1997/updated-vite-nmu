@@ -8,6 +8,7 @@ import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 import TopologyPage from '../../pages/TopologyPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
+import ResetToDefault from '../../pages/ResetToDefault'
 
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
@@ -46,6 +47,10 @@ const AppRoutes = () => {
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
+        },
+        {
+          path: 'ResetToDefault',
+          element: <ResetToDefault />
         }
       ]
     },
