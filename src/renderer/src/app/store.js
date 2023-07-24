@@ -14,6 +14,7 @@ import mailSlice from '../features/Preferences/mailSlice'
 import generalSlice from '../features/Preferences/generalSlice'
 import snmpSlice from '../features/Preferences/snmpSlice'
 import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
+import networkSettingSlice from '../features/networkSettingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +32,8 @@ export const store = configureStore({
     snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
     mail: mailSlice.reducer,
-    snmpScanProgress: snmpScanProgressSlice.reducer
+    snmpScanProgress: snmpScanProgressSlice.reducer,
+    networkSetting: networkSettingSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

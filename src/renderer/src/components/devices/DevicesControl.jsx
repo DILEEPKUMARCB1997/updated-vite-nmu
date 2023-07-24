@@ -60,7 +60,10 @@ const DevicesControl = () => {
           <Button icon={<UploadOutlined />} />
         </Tooltip>
         <Tooltip title="Network Settings">
-          <Button icon={<ShareAltOutlined />} />
+          <Button
+            icon={<ShareAltOutlined />}
+            onClick={() => dispatch(openDialog('networkSetting'))}
+          />
         </Tooltip>
         <Tooltip title="Reset To Default">
           <Button icon={<RedoOutlined />} />
