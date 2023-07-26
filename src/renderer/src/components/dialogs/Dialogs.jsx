@@ -14,6 +14,8 @@ import AboutDialog from './AboutDialog/AboutDialog'
 import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
 import ResetToDefaultDialog from './ResetToDefaultDialog/ResetToDefaultDialog'
+import SNMPScanProgressDialog from './SNMPScanProgressDialog/SNMPScanProgressDialog'
+import BackupRestoreDialog from './BackupRestoreDialog/BackupRestoreDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -30,7 +32,9 @@ const Dialog = ({ id, onClose, ...rest }) => {
           aboutDialog: <AboutDialog onClose={onClose} />,
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />,
-          resetToDefault: <ResetToDefaultDialog onClose={onClose} />
+          resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
+          snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
+          backupRestore: <BackupRestoreDialog onClose={onClose} />
         }[id]
       }
     </div>

@@ -3,6 +3,7 @@ import {
   RESPONSE_RP_RESET_TO_DEFAULT,
   REQUEST_MP_RESET_TO_DEFAULT
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from '../features/dialogSlice'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -28,6 +29,24 @@ export const requestResetToDefault = () => (dispatch, getState) => {
   dispatch(updateResetTaskStatus(RUNNING))
   window.electron.ipcRenderer.send(REQUEST_MP_RESET_TO_DEFAULT, devices)
 }
+export const initResetToDefaultData = () => (dispatch, getState) => {
+  const resetToDefaultStatus = {}
+
+  const { defaultDeviceData, selected } = getState().discovery
+  selected.forEach((MACAddress) => {
+    resetToDefaultStatus[MACAddress] = {
+      IPAddress: defaultDeviceData[MACAddress].IPAddress,
+      model: defaultDeviceData[MACAddress].model,
+      status: WAITING
+    }
+  })
+  dispatch({
+    type: INIT_RESET_TO_DEFAULT_DATA,
+    payload: { resetToDefaultStatus, waitingDeviceCount: selected.length }
+  })
+  dispatch(openDialog('resetToDefault'))
+}
+
 const resetToDefaultSlice = createSlice({
   name: 'resetToDefaultSlice',
   initialState: {
@@ -64,11 +83,23 @@ const resetToDefaultSlice = createSlice({
         ...state,
         taskStatus: action.payload
       }
+    },
+    INIT_RESET_TO_DEFAULT_DATA: (state, action) => {
+      const { resetToDefaultStatus, waitingDeviceCount } = action.payload
+      return {
+        ...state,
+        resetToDefaultStatus,
+        waitingDeviceCount
+      }
     }
   }
 })
-export const { clearResetToDefaultData, updateDevicesResetStatus, updateResetTaskStatus } =
-  resetToDefaultSlice.actions
+export const {
+  clearResetToDefaultData,
+  updateDevicesResetStatus,
+  updateResetTaskStatus,
+  INIT_RESET_TO_DEFAULT_DATA
+} = resetToDefaultSlice.actions
 
 export const resetToDefaultSelector = (state) => {
   const { resetToDefaultStatus, taskStatus, waitingDeviceCount } = state.resetToDefault

@@ -15,10 +15,16 @@ import { clearUsersData } from '../features/userManagementSlice'
 import { nextInitRenderStep, requestAppInitialData } from '../features/UIControllSlice'
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
-import { openDialog } from '../features/dialogSlice.js'
-import { SEND_RP_OPEN_NATIVE_MENU } from '../../../main/utils/IPCEvents'
+import { closeDialog, dialogSelector, openDialog } from '../features/dialogSlice.js'
+import { SEND_RP_OPEN_NATIVE_MENU, SEND_RP_SNMP_SCAN_STATUS } from '../../../main/utils/IPCEvents'
+import { requestGetNICData } from '../features/Preferences/generalSlice'
+import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
+import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
 
 const MainLayout = () => {
+  const { dialogs } = useSelector(dialogSelector)
+  const isAppPreferencesDialogOpen = dialogs.includes('perferences')
+  console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()
@@ -30,6 +36,7 @@ const MainLayout = () => {
     setPathname(location.pathname || '/')
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     dispatch(requestAppInitialData())
+    dispatch(requestDiscoveryAfterLogin())
     setTimeout(() => {
       nextInitRenderStep()
     }, 800)
@@ -39,19 +46,36 @@ const MainLayout = () => {
     setTimeout(() => {
       nextInitRenderStep()
     }, 2200)
-    window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
+    window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
+    return () => {
+      window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
+    }
   }, [location])
 
   // useEffect(() => {})
 
   const nativeMenuListener = (event, arg) => {
     console.log(arg)
+    // console.log(isAppPreferencesDialogOpen)
     if (arg.action === 'preference') {
-      // if (!this.props.isAppPreferencesDialogOpen) {
-      //   this.props.requestGetNICData()
-      dispatch(openDialog('perferences'))
+      if (!isAppPreferencesDialogOpen) {
+        dispatch(requestGetNICData())
+        dispatch(openDialog('perferences'))
+      }
     } else if (arg.action === 'about') {
       dispatch(openDialog('aboutDialog'))
+    }
+  }
+
+  const SNMPStatusListener = (event, arg) => {
+    if (arg.scanStatus === 'a') {
+      dispatch(changeSnmpScanStep(arg.scanStatus))
+      setTimeout(() => {
+        dispatch(closeDialog('snmpScanProgress'))
+        dispatch(clearSnmpScanProgress())
+      }, 2000)
+    } else {
+      dispatch(changeSnmpScanStep(arg.scanSta))
     }
   }
 

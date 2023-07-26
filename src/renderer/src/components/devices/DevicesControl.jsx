@@ -13,7 +13,7 @@ import {
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
-import { discoverySelector, switchGroupView } from '../../features/discoverySlice'
+import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
 
@@ -36,6 +36,9 @@ const DevicesControl = () => {
       groupName: groupAddInput
     })
   }
+  // const handleResetToDefault = () => {
+  //   dispatch(openDialog('resetToDefault'))
+  // }
 
   const content = (
     <Flexbox gap={5}>
@@ -54,7 +57,7 @@ const DevicesControl = () => {
     <Card bordered={false} bodyStyle={{ paddingBlock: 8 }}>
       <Flexbox gap={20} direction="horizontal">
         <Tooltip title="Discovery">
-          <Button icon={<SyncOutlined />} />
+          <Button icon={<SyncOutlined />} onClick={() => dispatch(requestDiscovery())} />
         </Tooltip>
         <Tooltip title="Firmware Update">
           <Button icon={<UploadOutlined />} />
@@ -63,10 +66,13 @@ const DevicesControl = () => {
           <Button icon={<ShareAltOutlined />} />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} />
+          <Button icon={<RedoOutlined />} onClick={() => dispatch(openDialog('resetToDefault'))} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
-          <Button icon={<CloudUploadOutlined />} />
+          <Button
+            icon={<CloudUploadOutlined />}
+            onClick={() => dispatch(openDialog('backupRestore'))}
+          />
         </Tooltip>
         <Tooltip title="Schedule Backup">
           <Button icon={<ClockCircleOutlined />} />

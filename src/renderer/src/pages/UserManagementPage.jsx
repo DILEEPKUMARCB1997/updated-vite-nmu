@@ -1,4 +1,4 @@
-import { App, Button, Card, Modal, Space, Table, theme } from 'antd'
+import { App, Button, Card, ConfigProvider, Modal, Space, Table, theme } from 'antd'
 import React, { useEffect } from 'react'
 import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -48,7 +48,7 @@ const UserManagement = () => {
           <Space size="middle">
             <Button
               type="primary"
-              // style={{ background: token.colorSuccess }}
+              style={{ background: token.colorSuccess }}
               shape="circle"
               onClick={() => handleEdit(record)}
               icon={<EditOutlined />}
@@ -102,31 +102,44 @@ const UserManagement = () => {
   }, [])
 
   return (
-    <Card
-      title="List of Users"
-      bodyStyle={{ paddingTop: '5px', paddingBottom: '0px' }}
-      extra={
-        <Button type="primary" icon={<UserAddOutlined />} ghost onClick={handleAddUser}>
-          Add User
-        </Button>
-      }
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
     >
-      <Table
-        rowKey="UserId"
-        columns={columns}
-        dataSource={usersData}
-        size="middle"
-        pagination={{
-          position: ['bottomCenter'],
-          showQuickJumper: true,
-          size: 'default',
-          total: usersData.length,
-          defaultPageSize: 10,
-          pageSizeOptions: [10, 15, 20, 25],
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
-        }}
-      />
-    </Card>
+      <Card
+        title="List of Users"
+        bodyStyle={{ paddingTop: '5px', paddingBottom: '0px' }}
+        extra={
+          <Button type="primary" icon={<UserAddOutlined />} ghost onClick={handleAddUser}>
+            Add User
+          </Button>
+        }
+      >
+        <Table
+          style={{ colorFillAlter: token.colorPrimaryBg }}
+          rowKey="UserId"
+          columns={columns}
+          dataSource={usersData}
+          size="middle"
+          pagination={{
+            position: ['bottomCenter'],
+            showQuickJumper: true,
+            size: 'default',
+            total: usersData.length,
+            defaultPageSize: 10,
+            pageSizeOptions: [10, 15, 20, 25],
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+          }}
+        />
+      </Card>
+    </ConfigProvider>
   )
 }
 
