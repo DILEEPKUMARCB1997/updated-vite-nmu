@@ -81,7 +81,7 @@ const DevicesControl = () => {
           <Button icon={<CalendarOutlined />} />
         </Tooltip>
         <Tooltip title="Trap Settings">
-          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('testDialog'))} />
+          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('trapSetting'))} />
         </Tooltip>
         <Tooltip title="Add New Group">
           <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">

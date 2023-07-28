@@ -1,22 +1,27 @@
 /* eslint-disable no-unused-vars */
-import { Modal, Typography, Divider, Row, Col, theme } from 'antd'
-import { CloudUploadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
+import { Modal, Typography, Row, Col, theme } from 'antd'
+import { ClusterOutlined } from '@ant-design/icons'
 import DeviceList from './DeviceList/DeviceList'
-import FileList from './FileList/FileList'
-// import { backupRestoreSelector } from '../../../features/backupRestoreSlice'
-// import { useSelector } from 'react-redux'
+import TrapConfiguration from './TrapConfiguration/TrapConfiguration'
+import { clearData } from '../../../features/trapSettingSlice'
+import { useDispatch } from 'react-redux'
 
-const BackupRestoreDialog = ({ onClose }) => {
-  // const { selectDevice } = useSelector(backupRestoreSelector)
+const TrapSettingDialog = ({ onClose }) => {
+  const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
+
   useEffect(() => {
     setTimeout(() => {
       setDidMount({ didMount: true })
     }, 200)
+    return () => {
+      dispatch(clearData())
+    }
   }, [])
+
   const handleCancelButtonOnClick = () => {
     setDidMount({ didMount: false })
     setTimeout(() => {
@@ -30,7 +35,7 @@ const BackupRestoreDialog = ({ onClose }) => {
         onCancel={onClose}
         width={1000}
         bodyStyle={{
-          height: '500px'
+          height: '600px'
         }}
         style={{
           top: '5px'
@@ -38,12 +43,20 @@ const BackupRestoreDialog = ({ onClose }) => {
         footer={null}
       >
         <Typography.Title
-          level={4}
-          style={{ color: token.colorPrimary }}
+          level={3}
+          style={{
+            color: 'white',
+            padding: '15px',
+            height: '80px',
+            background: '#2e96f3',
+            marginBottom: '3px',
+            backgroundColor: ' linear-gradient(60deg, #6fbbd6, #2e96f3)',
+            boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2)'
+          }}
           onClick={handleCancelButtonOnClick}
         >
           {' '}
-          <CloudUploadOutlined /> Backup and Restore
+          <ClusterOutlined /> Trap Configuration
         </Typography.Title>
 
         <Row gutter={24}>
@@ -53,7 +66,7 @@ const BackupRestoreDialog = ({ onClose }) => {
           </Col>
           <Col className="gutter-row" span={12}>
             {' '}
-            <FileList didMount={didMount} />
+            <TrapConfiguration didMount={didMount} />
           </Col>
         </Row>
       </Modal>
@@ -61,4 +74,4 @@ const BackupRestoreDialog = ({ onClose }) => {
   )
 }
 
-export default BackupRestoreDialog
+export default TrapSettingDialog

@@ -16,6 +16,7 @@ import snmpSlice from '../features/Preferences/snmpSlice'
 import resetToDefaultSlice from '../features/resetToDefaultSlice'
 import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import backupRestoreSlice from '../features/backupRestoreSlice'
+import trapSettingSlice from '../features/trapSettingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -35,7 +36,8 @@ export const store = configureStore({
     mail: mailSlice.reducer,
     resetToDefault: resetToDefaultSlice.reducer,
     snmpScanProgress: snmpScanProgressSlice.reducer,
-    backupRestore: backupRestoreSlice.reducer
+    backupRestore: backupRestoreSlice.reducer,
+    trapSetting: trapSettingSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

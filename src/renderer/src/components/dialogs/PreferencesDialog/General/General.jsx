@@ -12,8 +12,9 @@ import {
 const { Option } = Select
 
 const General = (props) => {
-  const { activeNIC, NICSelectWidth, NICData } = props
+  const { NICData, NICSelectWidth } = props
   // const { NICData } = useSelector(generalSelector)
+
   console.log(NICData)
   const dispatch = useDispatch()
 
