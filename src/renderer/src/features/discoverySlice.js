@@ -1,5 +1,30 @@
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
+import { openDialog } from './dialogSlice'
+import {
+  REQUEST_MP_DISCOVERY_ALL_DEVICES,
+  RESPONSE_RP_DISCOVERY_ALL_DEVICES
+} from '../../../main/utils/IPCEvents'
+
+export const requestDiscovery = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
+    console.log(arg)
+    if (arg.isEnableSNMP) {
+      dispatch(openDialog('snmpScanProgress'))
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
+}
+
+export const requestDiscoveryAfterLogin = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
+    // console.log(arg);
+    if (arg.isEnableSNMP) {
+      // dispatch(openDialog('snmpScanProgress'));
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
+}
 
 const discoverySlice = createSlice({
   name: 'discoverySlice',

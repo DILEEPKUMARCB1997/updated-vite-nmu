@@ -10,6 +10,7 @@ import {
   setSNMPTimeout,
   snmpSelector
 } from '../../../../../features/Preferences/snmpSlice'
+import { CloseCircleOutlined } from '@ant-design/icons'
 
 const SNMPScan = () => {
   const dispatch = useDispatch()
@@ -67,11 +68,24 @@ const SNMPScan = () => {
         <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />
         <IPRangeList />
         <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />
-        <Form.Item colon={false} style={{ fontWeight: 'bolder' }} label="SNMP Polling Interval">
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label="SNMP Polling Interval"
+          rules={[
+            {
+              message: 'Wrong number'
+            }
+          ]}
+        >
           <InputNumber
-            style={{ width: '200px', marginLeft: '10px' }}
+            style={{
+              width: '200px',
+              marginLeft: '10px'
+            }}
             status={isSNMPPollIntervalValid ? null : 'error'}
             maxLength={2}
+            prefix={isSNMPPollIntervalValid ? null : <CloseCircleOutlined />}
             addonAfter="min"
             controls={false}
             defaultValue={SNMPPollInterval}

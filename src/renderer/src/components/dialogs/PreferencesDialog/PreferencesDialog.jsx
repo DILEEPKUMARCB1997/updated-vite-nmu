@@ -212,7 +212,7 @@ const PreferencesDialog = ({ onClose }) => {
       <Layout style={{ height: '89vh' }}>
         <Header
           style={{
-            background: ' #6fbbd6',
+            background: '#6fbbd6',
             fontSize: 35,
             height: '80px',
             color: '#fff',

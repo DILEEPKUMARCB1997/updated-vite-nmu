@@ -7,40 +7,18 @@ import {
   RESPONSE_RP_STOP_FIRMWARE_UPDATE
 } from '../../../main/utils/IPCEvents'
 import { createSlice } from '@reduxjs/toolkit'
-//import { openDialog } from './dialogSlice'
-
-// export const initFirmwareUpdateData = () => (dispatch, getState) => {
-//   const { defaultDeviceData } = getState().discovery
-//   const { selected } = getState().discovery
-//   let deviceData = {}
-//   let deviceRealTimeData = {}
-//   selected.forEach((MACAddress) => {
-//     deviceData = {
-//       ...deviceData,
-//       [MACAddress]: {
-//         IPAddress: defaultDeviceData[MACAddress].IPAddress,
-//         model: defaultDeviceData[MACAddress].model
-//       }
-//     }
-//     deviceRealTimeData = {
-//       ...deviceRealTimeData,
-//       [MACAddress]: {
-//         uploadProgress: 0,
-//         code: 'none'
-//       }
-//     }
-//   })
-//   dispatch({
-//     type: INIT_FIRMWARE_UPDATE_DATA,
-//     payload: {
-//       deviceData,
-//       deviceRealTimeData
-//     }
-//   })
-//   dispatch(openDialog('FWU'))
-// }
+export const codes = {
+  none: { type: 'normal', label: 'Waiting' },
+  a: { type: 'normal', label: 'Upload Image' },
+  c: { type: 'normal', label: 'User Cancel' },
+  S001: { type: 'normal', label: 'Erasing' },
+  S002: { type: 'success', label: 'Update Successful' },
+  E001: { type: 'error', label: 'Upload Fail(E001)' },
+  E007: { type: 'error', label: 'Upload Fail(E007)' },
+  TO: { type: 'error', label: 'Connect Timeout' }
+}
 export const requestStartFirmwareUpdate = () => (dispatch, getState) => {
-  const sendData = getState().firmwareUpdate.deviceData
+  const sendData = getState().firmwareUpdate
   window.electron.ipcRenderer.once(RESPONSE_RP_START_FIRMWARE_UPDATE, (event, arg) => {
     if (arg.success) {
       dispatch({ type: changeFirmwareUpdateStatus, payload: 1 })

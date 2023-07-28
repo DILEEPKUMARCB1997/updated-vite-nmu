@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 // import './SNMPTrap.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Alert, Button, Card } from 'antd'
+import { Table, Alert, Button, Card, theme, ConfigProvider } from 'antd'
 
 import { clearTrapData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
@@ -68,6 +68,8 @@ const columns = [
 ]
 
 const SNMPTrap = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const dispatch = useDispatch()
   const { trapData } = useSelector(eventLogSelector)
   console.log(trapData)
@@ -93,7 +95,17 @@ const SNMPTrap = () => {
   }
 
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
+    >
       <Button
         type="primary"
         ghost
@@ -123,7 +135,7 @@ const SNMPTrap = () => {
         pagination={{ pageSize: 25 }}
         scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
       />
-    </div>
+    </ConfigProvider>
   )
 }
 

@@ -14,6 +14,8 @@ import AboutDialog from './AboutDialog/AboutDialog'
 import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
+import SNMPScanProgressDialog from './SNMPScanProgressDialog/SNMPScanProgressDialog'
+import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -30,7 +32,9 @@ const Dialog = ({ id, onClose, ...rest }) => {
           aboutDialog: <AboutDialog onClose={onClose} />,
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />,
-          FWU: <FWUDialog onClose={onClose} />
+          FWU: <FWUDialog onClose={onClose} />,
+          snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />
         }[id]
       }
     </div>

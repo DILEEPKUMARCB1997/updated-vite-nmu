@@ -13,10 +13,9 @@ import {
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
-import { discoverySelector, switchGroupView } from '../../features/discoverySlice'
+import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
-import { initFirmwareUpdateData } from '../../features/firmwareUpdate'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -30,11 +29,7 @@ const DevicesControl = () => {
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
-  const handleOKButtonOnClick = () => {
-    //console.log(handleOKButtonOnClick)
-    initFirmwareUpdateData()
-    dispatch(openDialog('FWU'))
-  }
+
   const handleGroupAddClick = () => {
     window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
       cmd: 'addGroup',
@@ -59,10 +54,15 @@ const DevicesControl = () => {
     <Card bordered={false} bodyStyle={{ paddingBlock: 8 }}>
       <Flexbox gap={20} direction="horizontal">
         <Tooltip title="Discovery">
-          <Button icon={<SyncOutlined />} />
+          <Button icon={<SyncOutlined />} onClick={() => dispatch(requestDiscovery())} />
         </Tooltip>
         <Tooltip title="Firmware Update">
-          <Button icon={<UploadOutlined />} onClick={handleOKButtonOnClick} />
+          <Button
+            icon={<UploadOutlined />}
+            onClick={() => {
+              dispatch(openDialog('FWU'))
+            }}
+          />
         </Tooltip>
         <Tooltip title="Network Settings">
           <Button icon={<ShareAltOutlined />} />
@@ -77,7 +77,10 @@ const DevicesControl = () => {
           <Button icon={<ClockCircleOutlined />} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
-          <Button icon={<CalendarOutlined />} />
+          <Button
+            icon={<CalendarOutlined />}
+            onClick={() => dispatch(openDialog('syslogSetting'))}
+          />
         </Tooltip>
         <Tooltip title="Trap Settings">
           <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('testDialog'))} />
