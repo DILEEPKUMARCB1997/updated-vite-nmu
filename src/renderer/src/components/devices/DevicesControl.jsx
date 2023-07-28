@@ -57,7 +57,12 @@ const DevicesControl = () => {
           <Button icon={<SyncOutlined />} onClick={() => dispatch(requestDiscovery())} />
         </Tooltip>
         <Tooltip title="Firmware Update">
-          <Button icon={<UploadOutlined />} />
+          <Button
+            icon={<UploadOutlined />}
+            onClick={() => {
+              dispatch(openDialog('FWU'))
+            }}
+          />
         </Tooltip>
         <Tooltip title="Network Settings">
           <Button icon={<ShareAltOutlined />} />
@@ -72,7 +77,10 @@ const DevicesControl = () => {
           <Button icon={<ClockCircleOutlined />} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
-          <Button icon={<CalendarOutlined />} />
+          <Button
+            icon={<CalendarOutlined />}
+            onClick={() => dispatch(openDialog('syslogSetting'))}
+          />
         </Tooltip>
         <Tooltip title="Trap Settings">
           <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('testDialog'))} />

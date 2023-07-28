@@ -44,6 +44,7 @@ export const requestGraphData = (Items) => {
 }
 export const requestCustomGraphData = (Items) => {
   let label = []
+  let data = []
   let InformationData = []
   let CriticalData = []
   let WarningData = []
@@ -92,6 +93,7 @@ export const requestCustomGraphData = (Items) => {
       -2
     )}`
     label.push(gelabel)
+    data.push(result.length)
     InformationData.push(resultInformation.length)
     CriticalData.push(resultCritical.length)
     WarningData.push(resultWarning.length)

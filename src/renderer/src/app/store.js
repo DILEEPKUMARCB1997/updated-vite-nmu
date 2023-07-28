@@ -13,7 +13,9 @@ import advancedSlice from '../features/Preferences/advancedSlice'
 import mailSlice from '../features/Preferences/mailSlice'
 import generalSlice from '../features/Preferences/generalSlice'
 import snmpSlice from '../features/Preferences/snmpSlice'
+import firmwareSlice from '../features/firmwareUpdate'
 import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
+import syslogSettingSlice from '../features/SyslogSettingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -30,8 +32,10 @@ export const store = configureStore({
     telegram: telegramSlice.reducer,
     snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
+    firmware: firmwareSlice.reducer,
     mail: mailSlice.reducer,
-    snmpScanProgress: snmpScanProgressSlice.reducer
+    snmpScanProgress: snmpScanProgressSlice.reducer,
+    syslogSetting: syslogSettingSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

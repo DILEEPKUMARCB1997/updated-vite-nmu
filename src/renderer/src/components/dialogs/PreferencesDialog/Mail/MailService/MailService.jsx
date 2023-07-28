@@ -2,8 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
-import { Select, Switch, Radio, Input, theme, Form, Divider, InputNumber } from 'antd'
-
+import { Select, Switch, Radio, theme, Form, Divider, InputNumber } from 'antd'
 import {
   mailSelector,
   setMailHost,
@@ -19,17 +18,25 @@ const MAIL_SERVICE_LIST_RADIO_LABLE = 'Mail Service List'
 const USER_DEFINITION_RADIO_LABLE = 'User Definition'
 const USER_DEFINITION_PORT_INPUT_LABLE = 'Port'
 const USER_DEFINITION_HOST_INPUT_LABLE = 'Host'
-
+const { Option } = Select
 const MailService = (props) => {
-  const { serviceListSelectWidth } = props
+  // const { serviceListSelectWidth } = props
   const { mailData, preService, validsData } = useSelector(mailSelector)
   const { isHostValid, isPortValid } = validsData
-  const { isOpen, host, port, service } = mailData
+  const { isOpen, host, port, service, serviceList } = mailData
   const { useToken } = theme
   const { token } = useToken()
   const [isServiceOther, setIsServiceOther] = useState(service === 'Other')
   const formRef = useRef()
   const dispatch = useDispatch()
+
+  let serviceListSelectWidth = 80
+  serviceList.forEach((element) => {
+    const minWidth = element.length * 12
+    if (minWidth > serviceListSelectWidth) {
+      serviceListSelectWidth = minWidth
+    }
+  })
 
   const handleMailOpenSwitchOnChange = () => {
     dispatch(setMailOpen())
@@ -95,7 +102,7 @@ const MailService = (props) => {
           </span>
         </Radio>
         <Select
-          defaultValue="Gmail"
+          //defaultValue="Gmail"
           style={{
             width: `${serviceListSelectWidth}px`,
             marginLeft: '20px',
@@ -104,50 +111,14 @@ const MailService = (props) => {
           disabled={isServiceOther}
           value={isServiceOther ? 'Other' : service}
           onChange={handleServiceSelectOnChange}
-          options={[
-            { value: 'FastMail', label: 'FastMail' },
-            { value: 'GandiMail', label: 'GandiMail' },
-            { value: 'Gmail', label: 'Gmail' },
-            { value: 'Godaddy', label: 'Godaddy' },
-            { value: 'GodaddyAsia', label: 'GodaddyAsia' },
-            { value: 'GodaddyEurope', label: 'GodaddyEurope' },
-            { value: 'hot.ee', label: 'hot.ee' },
-            { value: 'Hotmail', label: 'Hotmail' },
-            { value: 'iCloud', label: 'iCloud' },
-            { value: 'mail.ee', label: 'mail.ee' },
-            { value: 'Mail.ru', label: 'Mail.ru' },
-            { value: 'Maildev', label: 'Maildev' },
-            { value: 'Mailgun', label: 'Mailgun' },
-            { value: 'Mailjet', label: 'Mailjet' },
-            { value: 'Mailosaur', label: 'Mailosaur' },
-            { value: 'Mandrill', label: 'Mandrill' },
-            { value: 'Naver', label: 'Naver' },
-            { value: 'OpenMailBox', label: 'OpenMailBox' },
-            { value: 'Outlook365', label: 'Outlook365' },
-            { value: 'Postmark', label: 'Postmark' },
-            { value: 'QQ', label: 'QQ' },
-            { value: 'QQex', label: 'QQex' },
-            { value: 'SendCloud', label: 'SendCloud' },
-            { value: 'SendGrid', label: 'SendGrid' },
-            { value: '126', label: '126' },
-            { value: '163', label: '163' },
-            { value: '1und1', label: '1und1' },
-            { value: 'AOL', label: 'AOL' },
-            { value: 'DebugMail', label: 'DebugMail' },
-            { value: 'DynectEmail', label: 'DynectEmail' },
-            { value: 'SendinBlue', label: 'SendinBlue' },
-            { value: 'SendPulse', label: 'SendPulse' },
-            { value: 'SES', label: 'SES' },
-            { value: 'SES-US-EAST-1', label: 'SES-US-EAST-1' },
-            { value: 'SES-US-WEST-2', label: 'SES-US-WEST-2' },
-            { value: 'SES-EU-WEST-1', label: 'SES-EU-WEST-1' },
-            { value: 'Sparkpost', label: 'Sparkpost' },
-            { value: 'Yahoo', label: 'Yahoo' },
-            { value: 'Yandex', label: 'Yandex' },
-            { value: 'Zoho', label: 'Zoho' },
-            { value: 'qiye.aliyun', label: 'qiye.aliyun' }
-          ]}
-        ></Select>
+        >
+          {' '}
+          {serviceList.map((serviceItem) => (
+            <Option key={serviceItem} value={serviceItem}>
+              {serviceItem}
+            </Option>
+          ))}
+        </Select>
         <br />
         <Radio
           style={{ marginTop: '20px' }}
@@ -176,11 +147,11 @@ const MailService = (props) => {
                 colon={false}
                 style={{ marginTop: '30px', borderBottom: '1px dotted black' }}
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
-                validateStatus={!isHostValid ? 'success' : 'error'}
+                validateStatus={isHostValid ? 'success' : 'error'}
+                help={!isHostValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && !isHostValid ? null : 'error'}
                   bordered={false}
                   value={host}
                   onChange={handleHostInputOnChange}
@@ -188,14 +159,15 @@ const MailService = (props) => {
                 />
               </Form.Item>
               <Form.Item
+                name="port"
                 style={{ borderBottom: '1px dotted black' }}
                 colon={false}
                 label={USER_DEFINITION_PORT_INPUT_LABLE}
                 validateStatus={isPortValid ? 'success' : 'error'}
+                help={!isPortValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
-                  status={isServiceOther && !isPortValid ? null : 'error'}
                   bordered={false}
                   value={port}
                   onChange={handlePortInputOnChange}

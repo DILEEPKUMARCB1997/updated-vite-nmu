@@ -12,9 +12,10 @@ import {
 const { Option } = Select
 
 const General = (props) => {
-  const { activeNIC, NICSelectWidth, NICData } = props
-  // const { NICData } = useSelector(generalSelector)
-  console.log(NICData)
+  const { NICData } = useSelector(generalSelector)
+  const { niList } = NICData
+  // console.log(niList)
+  //console.log(NICData)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -23,6 +24,15 @@ const General = (props) => {
     }
     // dispatch(setNICActiveIndex())
   }, [])
+
+  let NICSelectWidth = 400
+  // niList.forEach((element) => {
+  //   console.log(element)
+  //   const minWidth = element.name.length * 12
+  //   if (minWidth > NICSelectWidth) {
+  //     NICSelectWidth = minWidth
+  //   }
+  // })
 
   const handleNICSelectOnChange = (value) => {
     dispatch(setNICActiveIndex(value))
@@ -48,14 +58,14 @@ const General = (props) => {
           width: `${NICSelectWidth}px`,
           minWidth: '400px',
           marginTop: '10px',
-          marginBottom: '20px'
+          marginBottom: '10px'
         }}
-        value="default"
+        //value="default"
         dropdownStyle={{ zIndex: '1301' }}
         onChange={handleNICSelectOnChange}
       >
-        {NICData &&
-          NICData.map((NICInfo, index) => (
+        {niList &&
+          niList.map((NICInfo, index) => (
             <Option key={NICInfo.name} value={index}>
               {`${NICInfo.name} - ${NICInfo.IPAddress}`}
             </Option>
