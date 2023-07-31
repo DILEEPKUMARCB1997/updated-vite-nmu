@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
+import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
 
@@ -72,7 +73,7 @@ const DevicesControl = () => {
           <Button icon={<CloudUploadOutlined />} />
         </Tooltip>
         <Tooltip title="Schedule Backup">
-          <Button icon={<ClockCircleOutlined />} />
+          <Button icon={<ClockCircleOutlined />} onClick={() => dispatch(initScheduleBackup())} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
           <Button icon={<CalendarOutlined />} />

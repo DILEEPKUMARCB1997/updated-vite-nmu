@@ -41,78 +41,78 @@ const DeviceList = () => {
       align: 'center'
     }
   ]
-  const dataSources = [
-    {
-      key: '1',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '2',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '3',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '4',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '5',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '6',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '7',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '8',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '9',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    },
-    {
-      key: '10',
-      model: 'Mike',
-      MACAddress: 32,
-      IPAddress: '10 Downing Street',
-      progress: 'succcess'
-    }
-  ]
+  // const dataSources = [
+  //   {
+  //     key: '1',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '2',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '3',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '4',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '5',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '6',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '7',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '8',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '9',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   },
+  //   {
+  //     key: '10',
+  //     model: 'Mike',
+  //     MACAddress: 32,
+  //     IPAddress: '10 Downing Street',
+  //     progress: 'succcess'
+  //   }
+  // ]
 
   // const data = Object.entries(deviceList)
   // console.log(data)
@@ -141,14 +141,14 @@ const DeviceList = () => {
           Calculate
         </Button>
       </div>
-      {status === 'wait' && (
+      {status !== 'wait' && (
         <Progress
           percent={(completeNum / deviceNum) * 100}
           strokeColor={token.colorPrimary}
           style={{ marginTop: '5px', marginBottom: '5px' }}
         />
       )}
-      {status !== 'finish' && (
+      {status === 'finish' && (
         <Typography.Text>{`* Network setting finish with ${failNum} fail.`}</Typography.Text>
       )}
       <div style={{ height: '250px', marginTop: '10px' }}>

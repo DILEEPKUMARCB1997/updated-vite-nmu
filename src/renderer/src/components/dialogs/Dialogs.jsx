@@ -15,6 +15,7 @@ import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
 import SNMPScanProgressDialog from './SNMPScanProgressDialog/SNMPScanProgressDialog'
 import NetworkSettingDialog from './NetworkSettingsDialog/NetworkSettingDialog'
+import ScheduleBackupDialog from './ScheduleBackupDialog/ScheduleBackupDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -32,7 +33,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />,
           snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
-          networkSetting: <NetworkSettingDialog onClose={onClose} />
+          networkSetting: <NetworkSettingDialog onClose={onClose} />,
+          scheduleBackup: <ScheduleBackupDialog onClose={onClose} />
         }[id]
       }
     </div>
