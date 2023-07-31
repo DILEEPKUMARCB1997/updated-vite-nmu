@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
+import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
@@ -69,7 +70,10 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Network Settings">
-          <Button icon={<ShareAltOutlined />} />
+          <Button
+            icon={<ShareAltOutlined />}
+            onClick={() => dispatch(openDialog('networkSetting'))}
+          />
         </Tooltip>
         <Tooltip title="Reset To Default">
           <Button icon={<RedoOutlined />} onClick={() => dispatch(openSnack('resetToDefault'))} />
@@ -81,7 +85,7 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Schedule Backup">
-          <Button icon={<ClockCircleOutlined />} />
+          <Button icon={<ClockCircleOutlined />} onClick={() => dispatch(initScheduleBackup())} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
           <Button
