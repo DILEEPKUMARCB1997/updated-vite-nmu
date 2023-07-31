@@ -2,8 +2,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { notification } from 'antd'
 import {
+  REQUEST_MP_GET_CONFIG_FILES,
   REQUEST_MP_GET_THE_SCHEDULE_BACKUP_DATA,
   REQUEST_MP_SET_THE_SCHEDULE_BACKUP_DATA,
+  RESPONSE_RP_GET_CONFIG_FILES,
   RESPONSE_RP_GET_THE_SCHEDULE_BACKUP_DATA,
   RESPONSE_RP_SET_THE_SCHEDULE_BACKUP_DATA
 } from '../../../main/utils/IPCEvents'
@@ -74,6 +76,19 @@ export const getScheduledData = () => (dispatch) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_THE_SCHEDULE_BACKUP_DATA, {})
 }
 
+export const getBackupFile = (param) => (dispatch) => {
+  //console.log(param);
+  if (param.MACAddress !== '') {
+    window.electron.ipcRenderer.once(RESPONSE_RP_GET_CONFIG_FILES, (event, arg) => {
+      const { files } = arg.data
+      dispatch(setFiles({ files }))
+    })
+    window.electron.ipcRenderer.send(REQUEST_MP_GET_CONFIG_FILES, {
+      MACAddress: param.MACAddress
+    })
+  }
+}
+
 const scheduleBackupSlice = createSlice({
   name: 'scheduleBackupSlice',
   initialState: {
@@ -98,18 +113,22 @@ const scheduleBackupSlice = createSlice({
     initDeviceStatus: (state) => {
       return state
     },
+    setFiles: (state, { payload }) => {
+      const { files } = payload
+      return { ...state, files }
+    },
     setEditMode: (state, { payload }) => {
-      console.log(payload)
+      console.log(payload, deviceScheduleList[payload.scheduleId])
       return {
         ...state,
         isEditMode: payload.isEditMode,
-        scheduleId: payload.scheduleId
-        // scheduleName: deviceScheduleList[payload.scheduleId].scheduleName,
-        // frequency: deviceScheduleList[payload.scheduleId].frequency,
-        // scheduleDate: deviceScheduleList[payload.scheduleId].scheduleDate,
-        // scheduleTime: deviceScheduleList[payload.scheduleId].scheduleTime,
-        // weeekDay: deviceScheduleList[payload.scheduleId].weeekDay,
-        // customFrequency: deviceScheduleList[payload.scheduleId].customFrequency
+        scheduleId: payload.scheduleId,
+        scheduleName: deviceScheduleList[payload.scheduleId].scheduleName,
+        frequency: deviceScheduleList[payload.scheduleId].frequency,
+        scheduleDate: deviceScheduleList[payload.scheduleId].scheduleDate,
+        scheduleTime: deviceScheduleList[payload.scheduleId].scheduleTime,
+        weeekDay: deviceScheduleList[payload.scheduleId].weeekDay,
+        customFrequency: deviceScheduleList[payload.scheduleId].customFrequency
       }
     },
     setScheduledData: (state, { payload }) => {
@@ -151,6 +170,7 @@ const scheduleBackupSlice = createSlice({
 
 export const {
   setEditMode,
+  setFiles,
   cancelClick,
   initDeviceStatus,
   setScheduledData,

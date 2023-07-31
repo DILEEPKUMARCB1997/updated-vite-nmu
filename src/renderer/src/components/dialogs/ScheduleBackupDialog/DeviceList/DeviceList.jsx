@@ -82,11 +82,12 @@ const DeviceList = (props) => {
     dispatch(initScheduleMemberData({ scheduleId, scheduleName }))
   }
 
-  const handleEditSchedule = (scheduleId) => {
+  const handleEditSchedule = (scheduleId, scheduleName) => {
+    console.log(scheduleId)
     notification.info({
       message: 'Schedule Backup configuration is in EDIT mode'
     })
-    dispatch(setEditMode({ isEditMode: true, scheduleId: scheduleId }))
+    dispatch(setEditMode({ isEditMode: true, scheduleId: scheduleId, scheduleName: scheduleName }))
   }
 
   const handleDeleteSchedule = (scheduleId) => {
@@ -105,7 +106,6 @@ const DeviceList = (props) => {
         boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
       }}
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
-      bodyStyle={{}}
     >
       {scheduledBackupListId.map((scheduleId) => (
         <Collapse

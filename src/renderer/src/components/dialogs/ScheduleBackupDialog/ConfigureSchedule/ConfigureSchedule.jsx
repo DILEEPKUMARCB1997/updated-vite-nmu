@@ -116,6 +116,7 @@ const ConfigureSchedule = () => {
 
   useEffect(() => {
     if (isEditMode) {
+      console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
       setScheduleName(scheduleName)
       setFrequency(frequency)
       setScheduleDate(now.getFullYear() + '-' + nowMonth + '-' + now.getDate())
