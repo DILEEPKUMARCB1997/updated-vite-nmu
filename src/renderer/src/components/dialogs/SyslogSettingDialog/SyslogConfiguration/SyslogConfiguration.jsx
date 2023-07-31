@@ -11,14 +11,13 @@ const SyslogConfiguration = () => {
   console.log(isTaskRunning)
   const [logToFlash, setLogToFlash] = useState(1)
   const [logToServer, setLogToServer] = useState(1)
-  const [serverIP, setServerIP] = useState('')
-  const [serverPort, setServerPort] = useState(514)
+  //const [logLevel, setLogLevel] = useState(0)
   const [server, setServer] = useState({
     // logToFlash: 1,
-    logLevel: 7
+    logLevel: 7,
     //logToServer: 1,
-    // serverIP: '',
-    //serverPort: 514
+    serverIP: '',
+    serverPort: 514
   })
 
   const handleChangeLogToFlash = (name) => (event) => {
@@ -49,18 +48,18 @@ const SyslogConfiguration = () => {
       /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
     const ipAddress = event.target.value
     if (ipAddress.match(IPFormat)) {
-      setServerIP(event.target.value)
+      setServer({ serverIP: event.target.value })
     } else {
-      setServerIP(event.target.value)
+      setServer({ serverIP: event.target.value })
     }
   }
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
-        setServerPort(event.target.value)
+        setServer({ serverPort: event.target.value })
       }
     } else {
-      setServerPort(event.target.value)
+      setServer({ serverPort: event.target.value })
     }
   }
   const handleOnStartButton = () => {
@@ -126,19 +125,19 @@ const SyslogConfiguration = () => {
             <Form.Item
               colon={false}
               label="Server IP"
-              validateStatus={serverIP === ''}
-              help={serverIP === '' ? 'ServerIP is required' : ''}
+              validateStatus={server.serverIP === ''}
+              help={server.serverIP === '' ? 'ServerIP is required' : ''}
             >
-              <Input value={serverIP} onChange={handleServerInputChange} />
+              <Input value={server.serverIP} onChange={handleServerInputChange} />
             </Form.Item>
             <Form.Item
               label="Server Port"
               colon={false}
-              validateStatus={serverPort === ''}
-              help={serverPort === '' ? 'Server port is required' : ''}
+              validateStatus={server.serverPort === ''}
+              help={server.serverPort === '' ? 'Server port is required' : ''}
             >
               <Input
-                value={serverPort}
+                value={server.serverPort}
                 onChange={handleServerPortChange}
                 type="number"
                 min="1"
