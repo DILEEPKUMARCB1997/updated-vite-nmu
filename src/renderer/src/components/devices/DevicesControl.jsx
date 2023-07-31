@@ -15,6 +15,7 @@ import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
+import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
 
 const options = [
@@ -60,13 +61,18 @@ const DevicesControl = () => {
           <Button icon={<SyncOutlined />} onClick={() => dispatch(requestDiscovery())} />
         </Tooltip>
         <Tooltip title="Firmware Update">
-          <Button icon={<UploadOutlined />} />
+          <Button
+            icon={<UploadOutlined />}
+            onClick={() => {
+              dispatch(openDialog('FWU'))
+            }}
+          />
         </Tooltip>
         <Tooltip title="Network Settings">
           <Button icon={<ShareAltOutlined />} />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={() => dispatch(openDialog('resetToDefault'))} />
+          <Button icon={<RedoOutlined />} onClick={() => dispatch(openSnack('resetToDefault'))} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
@@ -78,7 +84,10 @@ const DevicesControl = () => {
           <Button icon={<ClockCircleOutlined />} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
-          <Button icon={<CalendarOutlined />} />
+          <Button
+            icon={<CalendarOutlined />}
+            onClick={() => dispatch(openDialog('syslogSetting'))}
+          />
         </Tooltip>
         <Tooltip title="Trap Settings">
           <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('trapSetting'))} />

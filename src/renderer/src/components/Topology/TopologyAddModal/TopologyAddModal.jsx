@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
-import { Modal, InputNumber, Select, Input, Checkbox, Card } from 'antd'
+import { useEffect, useState, useRef } from 'react'
+import { Modal, InputNumber, Select, Input, Checkbox, Card, Divider } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   addNewEdge,
@@ -9,32 +9,40 @@ import {
   addNewVirtualNode,
   topologySelector
 } from '../../../features/topologySlice'
-
 const { Option } = Select
 const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
 
-const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
+function TopologyAddModal(props) {
+  //const { onClose } = props
   const { currentGroup, event, nodesIds } = useSelector(topologySelector)
   console.log(currentGroup)
-  const dispatch = useDispatch()
-  //const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isVirtualNode, setIsVirtualNode] = useState(false)
   const [open, setOpen] = useState(false)
-  const [addNodeMax, setAddNodeMax] = useState([])
+  const [addNodePosition, setAddNodePosition] = useState({})
   const [addNodeMAC, setAddNodeMAC] = useState('')
-  const [toPort, setToPort] = useState(1)
-  const [selectGroup, setSelectGroup] = useState([])
-  const [addEdgeNodes, setAddEdgeNodes] = useState({ from: '', to: '' })
+  const [addEdgeNodes, setAddEdgeNodes] = useState({
+    from: '',
+    to: ''
+  })
+  const [addNodeMax, setAddNodeMax] = useState({
+    from: 1,
+    to: 1
+  })
   const [fromPort, setFromPort] = useState(1)
-  const [addNodePosition, setAddNodePosition] = useState('')
+  const [toPort, setToPort] = useState(1)
+  const [isVirtualNode, setIsVirtualNode] = useState(false)
+  const [selectGroup, setSelectGroup] = useState([])
+
+  const ref = useRef()
 
   useEffect(() => {
-    // onRef(modalRef)
+    props.onRef(ref.current)
+    return () => {
+      props.onRef(undefined)
+    }
   }, [])
 
   const openModal = (data) => {
-    //console.log(props);
-    if (event === 'addNode') {
+    if (props.event === 'addNode') {
       setOpen(true)
       setAddNodePosition(data)
     } else {
@@ -48,7 +56,7 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
   }
 
   const findPortMaxLength = (modeln) => {
-    let Model = nodesData[modeln].model.toString('utf8')
+    let Model = props.nodesData[modeln].model.toString('utf8')
     let MaxValue = 1
     if (Model.indexOf('-') > -1) {
       MaxValue = parseInt(Model.substring(Model.indexOf('-') - 2, Model.indexOf('-')))
@@ -61,62 +69,176 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
   const handleAddNodeMACInputChange = (event) => {
     setAddNodeMAC(event.target.value)
   }
+
   const handleModalOKButtonClick = () => {
-    if (event === 'addNode') {
+    if (props.event === 'addNode') {
       if (isVirtualNode) {
-        dispatch(
-          addNewVirtualNode({
-            x: addNodePosition.x,
-            y: addNodePosition.y
-          })
-        )
+        addNewVirtualNode({
+          x: addNodePosition.x,
+          y: addNodePosition.y
+        })
       } else {
-        dispatch(
-          addNewNode({
-            MACAddress: addNodeMAC,
-            x: addNodePosition.x,
-            y: addNodePosition.y,
-            groupIds: selectGroup
-          })
-        )
+        addNewNode({
+          MACAddress: addNodeMAC,
+          x: addNodePosition.x,
+          y: addNodePosition.y,
+          groupIds: selectGroup
+        })
       }
     } else {
-      dispatch(
-        addNewEdge({
-          fromId: addEdgeNodes.from,
-          toId: addEdgeNodes.to,
-          fromPort: fromPort,
-          toPort: toPort
-        })
-      )
+      addNewEdge({
+        fromId: addEdgeNodes.from,
+        toId: addEdgeNodes.to,
+        fromPort: fromPort,
+        toPort: toPort
+      })
     }
-    handleModalCancel()
+    // handleModalCancel()
   }
 
-  const handleModalCancel = () => {
-    setOpen(open)
-    setAddNodePosition({})
-    setAddNodeMAC('')
-    setAddEdgeNodes({
-      from: '',
-      to: ''
-    })
-    setAddNodeMax({
-      from: 1,
-      to: 1
-    })
-
-    setFromPort(1)
-    setToPort(1)
-
-    setIsVirtualNode(false)
-    setSelectGroup([])
-    dispatch(handleDisableEdit())
-  }
+  // const handleModalCancel = () => {
+  //   setOpen(false)
+  // setAddNodePosition({})
+  // setAddNodeMAC('')
+  // setAddEdgeNodes({
+  //   from: '',
+  //   to: ''
+  // })
+  // setAddNodeMax({
+  //   from: 1,
+  //   to: 1
+  // })
+  // setFromPort(1)
+  // setToPort(1)
+  // setIsVirtualNode(false)
+  // setSelectGroup([])
+  // props.handleDisableEdit()
+  //}
 
   const handleModalCancelButtonClick = () => {
-    handleModalCancel()
+    props.onClose()
   }
+
+  // const handleFromPortInputChange = (value) => {
+  //   if (value !== undefined) {
+  //     setFromPort(value)
+  //   }
+  // }
+
+  // const handleToPortInputChange = (value) => {
+  //   if (value !== undefined) {
+  //     setToPort(value)
+  //   }
+  // }
+
+  // const { Option } = Select
+  // const MACAddressFormat = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
+
+  // const TopologyAddModal = ({ handleDisableEdit, nodesData, onClose }) => {
+  // const { currentGroup, event, nodesIds } = useSelector(topologySelector)
+  // console.log(currentGroup)
+  //   const dispatch = useDispatch()
+  //   //const [isModalOpen, setIsModalOpen] = useState(false)
+  //   const [isVirtualNode, setIsVirtualNode] = useState(false)
+  //   const [open, setOpen] = useState(false)
+  //   const [addNodeMax, setAddNodeMax] = useState([])
+  //   const [addNodeMAC, setAddNodeMAC] = useState('')
+  //   const [toPort, setToPort] = useState(1)
+  //   const [selectGroup, setSelectGroup] = useState([])
+  //   const [addEdgeNodes, setAddEdgeNodes] = useState({ from: '', to: '' })
+  //   const [fromPort, setFromPort] = useState(1)
+  //   const [addNodePosition, setAddNodePosition] = useState('')
+
+  //   useEffect(() => {
+  //     // onRef(modalRef)
+  //   }, [])
+
+  //   const openModal = (data) => {
+  //     //console.log(props);
+  //     if (event === 'addNode') {
+  //       setOpen(true)
+  //       setAddNodePosition(data)
+  //     } else {
+  //       setOpen(true)
+  //       setAddEdgeNodes(data)
+  //       setAddNodeMax({
+  //         from: data.from.startsWith('virtual') ? 1 : findPortMaxLength(data.from),
+  //         to: data.to.startsWith('virtual') ? 1 : findPortMaxLength(data.to)
+  //       })
+  //     }
+  //   }
+
+  //   const findPortMaxLength = (modeln) => {
+  //     let Model = nodesData[modeln].model.toString('utf8')
+  //     let MaxValue = 1
+  //     if (Model.indexOf('-') > -1) {
+  //       MaxValue = parseInt(Model.substring(Model.indexOf('-') - 2, Model.indexOf('-')))
+  //     } else {
+  //       MaxValue = parseInt(Model.substring(Model.length - 2, Model.length))
+  //     }
+  //     return MaxValue.toString() === 'NaN' ? 28 : MaxValue
+  //   }
+
+  //   const handleAddNodeMACInputChange = (event) => {
+  //     setAddNodeMAC(event.target.value)
+  //   }
+  //   const handleModalOKButtonClick = () => {
+  //     if (event === 'addNode') {
+  //       if (isVirtualNode) {
+  //         dispatch(
+  //           addNewVirtualNode({
+  //             x: addNodePosition.x,
+  //             y: addNodePosition.y
+  //           })
+  //         )
+  //       } else {
+  //         dispatch(
+  //           addNewNode({
+  //             MACAddress: addNodeMAC,
+  //             x: addNodePosition.x,
+  //             y: addNodePosition.y,
+  //             groupIds: selectGroup
+  //           })
+  //         )
+  //       }
+  //     } else {
+  //       dispatch(
+  //         addNewEdge({
+  //           fromId: addEdgeNodes.from,
+  //           toId: addEdgeNodes.to,
+  //           fromPort: fromPort,
+  //           toPort: toPort
+  //         })
+  //       )
+  //     }
+  //     handleModalCancel()
+  //   }
+
+  //   const handleModalCancel = () => {
+  //     setOpen(open)
+  //     setAddNodePosition({})
+  //     setAddNodeMAC('')
+  //     setAddEdgeNodes({
+  //       from: '',
+  //       to: ''
+  //     })
+  //     setAddNodeMax({
+  //       from: 1,
+  //       to: 1
+  //     })
+
+  //     setFromPort(1)
+  //     setToPort(1)
+
+  //     setIsVirtualNode(false)
+  //     setSelectGroup([])
+  //     dispatch(handleDisableEdit())
+  //   }
+
+  //   const handleModalCancelButtonClick = () => {
+  //     onClose()
+  //     //handleModalCancel()
+  //   }
 
   const handleFromPortInputChange = (value) => {
     if (value !== undefined) {
@@ -166,19 +288,23 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
       groupSelectWidth = minWidth
     }
   })
-
   return (
     <Modal
-      destroyOnClose
+      // destroyOnClose
+      open
+      //  onCancel={onClose}
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
       onOk={handleModalOKButtonClick}
-      onCancel={handleModalCancelButtonClick}
+      onCancel={() => {
+        handleModalCancelButtonClick
+      }}
       okButtonProps={{ disabled: disableOKButton }}
     >
+      <Divider />
       {event === 'addNode' ? (
-        <Card style={{ marginTop: '15px' }}>
+        <div>
           <Checkbox
-            style={{ marginBottom: '5px' }}
+            // className={styles.checkbox}
             checked={isVirtualNode}
             onChange={handleVirtualNodeCheckOnChange}
           >
@@ -205,18 +331,20 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
               ))}
             </Select>
           )}
-        </Card>
+        </div>
       ) : (
-        <Card style={{ marginTop: '15px' }}>
+        <div>
           <div>
             {'From '}
-            <span style={{ color: 'blue', fontSize: '1.06rem', marginTop: '5px' }}>
+            <span style={{ color: 'blue', fontSize: '1.06rem' }}>
               {isFromVirtual ? 'Virtual Node' : addEdgeNodes.from}
             </span>
             {!isFromVirtual && (
-              <div style={{ display: 'inline' }}>
+              <div style={{ display: 'inline', borderBottom: '90px' }}>
+                {' Port '}
                 {
                   <InputNumber
+                    style={{ marginLeft: '10px' }}
                     placeholder="Port"
                     min={1}
                     max={addNodeMax.from}
@@ -227,15 +355,17 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
               </div>
             )}
           </div>
-          <div style={{ marginTop: '5px' }}>
+          <div style={{ marginTop: '10px' }}>
             {'To '}
             <span style={{ color: 'blue', fontSize: '1.06rem' }}>
               {isToVirtual ? 'Virtual Node' : addEdgeNodes.to}
             </span>
             {!isToVirtual && (
-              <div style={{ display: 'inline ' }}>
+              <div style={{ display: 'inline' }}>
+                {' Port '}
                 {
                   <InputNumber
+                    style={{ marginLeft: '25px' }}
                     placeholder="Port"
                     min={1}
                     max={addNodeMax.to}
@@ -246,8 +376,9 @@ const TopologyAddModal = ({ handleDisableEdit, nodesData }) => {
               </div>
             )}
           </div>
-        </Card>
+        </div>
       )}
+      <Divider />
     </Modal>
   )
 }

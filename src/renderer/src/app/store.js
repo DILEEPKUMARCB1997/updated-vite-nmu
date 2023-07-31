@@ -17,6 +17,10 @@ import resetToDefaultSlice from '../features/resetToDefaultSlice'
 import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import backupRestoreSlice from '../features/backupRestoreSlice'
 import trapSettingSlice from '../features/trapSettingSlice'
+import firmwareSlice from '../features/firmwareUpdate'
+// import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
+import syslogSettingSlice from '../features/SyslogSettingSlice'
+import snackSlice from '../features/snackSlice'
 
 export const store = configureStore({
   reducer: {
@@ -33,11 +37,15 @@ export const store = configureStore({
     telegram: telegramSlice.reducer,
     snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
+    firmware: firmwareSlice.reducer,
     mail: mailSlice.reducer,
     resetToDefault: resetToDefaultSlice.reducer,
     snmpScanProgress: snmpScanProgressSlice.reducer,
     backupRestore: backupRestoreSlice.reducer,
-    trapSetting: trapSettingSlice.reducer
+    trapSetting: trapSettingSlice.reducer,
+    // snmpScanProgress: snmpScanProgressSlice.reducer,
+    syslogSetting: syslogSettingSlice.reducer,
+    snack: snackSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })
