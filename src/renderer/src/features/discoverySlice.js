@@ -76,11 +76,28 @@ const discoverySlice = createSlice({
     },
     switchGroupView: (state, { payload }) => {
       state.groupView = payload
+    },
+    showDiscoveryTableCheckBox: (state, action) => {
+      return {
+        ...state,
+        showCheckBox: action.payload
+      }
+    },
+    clearDiscoverTableSelect: (state) => {
+      return {
+        ...state,
+        selected: []
+      }
     }
   }
 })
 
-export const { updateDiscoveryData, switchGroupView } = discoverySlice.actions
+export const {
+  updateDiscoveryData,
+  switchGroupView,
+  showDiscoveryTableCheckBox,
+  clearDiscoverTableSelect
+} = discoverySlice.actions
 
 export const discoverySelector = (state) => {
   const {
