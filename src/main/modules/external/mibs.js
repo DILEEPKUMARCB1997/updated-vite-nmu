@@ -20,7 +20,7 @@ const mib = {
     '1.3.6.1.4.1.11317.0.0.21', // Wieland L2MS 20
     '1.3.6.1.4.1.54555.0.275.33', //  YARUS L3
     '1.3.6.1.4.1.13576.7.5002.1', //wago 2408
-    '1.3.6.1.4.1.13576.7.5001.1', //wago 2408
+    '1.3.6.1.4.1.13576.7.5001.1' //wago 2408
   ],
   public: {
     system: {
@@ -30,7 +30,7 @@ const mib = {
       sysContact: '1.3.6.1.2.1.1.4.0',
       sysName: '1.3.6.1.2.1.1.5.0',
       sysLocation: '1.3.6.1.2.1.1.6.0',
-      sysServices: '1.3.6.1.2.1.1.7.0',
+      sysServices: '1.3.6.1.2.1.1.7.0'
     },
     interfaces: {
       ifIndex: '1.3.6.1.2.1.2.2.1.1', // get port name
@@ -52,11 +52,11 @@ const mib = {
       ifHCOutUcastPkts: '1.3.6.1.2.1.31.1.1.1.11',
       ifHCOutMulticastPkts: '1.3.6.1.2.1.31.1.1.1.12',
       ifHCOutBroadcastPkts: '1.3.6.1.2.1.31.1.1.1.13',
-      ifHighSpeed: '1.3.6.1.2.1.31.1.1.1.15', // get port speed
+      ifHighSpeed: '1.3.6.1.2.1.31.1.1.1.15' // get port speed
     },
     ifMIB: {
-      ifAlias: '1.3.6.1.2.1.31.1.1.1.18',
-    },
+      ifAlias: '1.3.6.1.2.1.31.1.1.1.18'
+    }
   },
   private: {
     systemInfo: {
@@ -66,22 +66,22 @@ const mib = {
       systemKernelVer: '.1.7.0',
       powerInfo: {
         powerInfoNumber: '.1.9.1.1.1',
-        powerInfoStatus: '.1.9.1.1.2',
+        powerInfoStatus: '.1.9.1.1.2'
       },
-      systemModel: '.1.10.0',
+      systemModel: '.1.10.0'
     },
     syslogSetting: {
       syslogStatus: '.10.1.2.1.0',
       serverPort: '.10.1.2.3.0',
       eventServerLevel: '.10.1.2.4.0',
       eventLogToFlash: '.10.1.2.5.0',
-      eventServerIP: '.10.1.2.6.0',
+      eventServerIP: '.10.1.2.6.0'
     },
     trapSetting: {
       snmpTrapServerStatus: '.8.6.1.5.0',
       snmpTrapServerIP: '.8.6.1.7.0',
       snmpTrapServerPort: '.8.6.1.6.0',
-      snmpTrapServerTrapComm: '.8.6.1.3.0',
+      snmpTrapServerTrapComm: '.8.6.1.3.0'
     },
     basicSetting: {
       ipConfiguration: {
@@ -90,7 +90,7 @@ const mib = {
         ipConfigurationSubMask: '.2.3.1.1.4.1',
         ipConfigurationGateway: '.2.3.1.1.5.1',
         ipConfigurationDNS1: '.2.3.1.1.6.1',
-        ipConfigurationDNS2: '.2.3.1.1.7.1',
+        ipConfigurationDNS2: '.2.3.1.1.7.1'
       },
       backupAndRestore: {
         backupServerIP: '.2.6.1.0',
@@ -98,33 +98,33 @@ const mib = {
         backupStatus: '.2.6.3.0',
         restoreServerIP: '.2.6.4.0',
         restoreAgentBoardFwFileName: '.2.6.5.0',
-        restoreStatus: '.2.6.6.0',
+        restoreStatus: '.2.6.6.0'
       },
       factoryDefault: {
-        factoryDefaultAction: '.2.8.1.0',
+        factoryDefaultAction: '.2.8.1.0'
       },
       systemReboot: {
-        systemRebootAction: '.2.9.1.0',
+        systemRebootAction: '.2.9.1.0'
       },
       saveConfig: {
-        saveCfgMgtAction: '.13.1.0',
-      },
+        saveCfgMgtAction: '.13.1.0'
+      }
     },
     portConfiguration: {
       portControl: {
-        portStatusPortMode: '.3.1.2.1.3', // get port mode
-      },
+        portStatusPortMode: '.3.1.2.1.3' // get port mode
+      }
     },
     diagnosis: {
       locate: {
-        locateBeep: '.17.2.1.0',
-      },
-    },
+        locateBeep: '.17.2.1.0'
+      }
+    }
   },
   lldp: {
     lldpLocChassisId: '1.0.8802.1.1.2.1.3.2',
     lldpRemChassisId: '1.0.8802.1.1.2.1.4.1.1.5', // get self port, remote MAC.
-    lldpRemPortId: '1.0.8802.1.1.2.1.4.1.1.7', // get remote port,
+    lldpRemPortId: '1.0.8802.1.1.2.1.4.1.1.7' // get remote port,
   },
   erps: {
     erpsEnabled: '.4.4.1',
@@ -133,17 +133,17 @@ const mib = {
     erpsWestPortStatus: '.4.4.3.1.4.',
     erpsEastPortStatus: '.4.4.3.1.5.',
     erpsWestPort: '.4.4.3.1.2.',
-    erpsEastPort: '.4.4.3.1.3.',
+    erpsEastPort: '.4.4.3.1.3.'
   },
   rstp: {
     rstpEnabled: '.4.2.1',
     rstpPortInfoRole: '.4.3.2.1.8',
-    rstpPortInfoStat: '.4.3.2.1.7',
-  },
-};
-
-function getMib() {
-  return mib;
+    rstpPortInfoStat: '.4.3.2.1.7'
+  }
 }
 
-export default { getMib };
+function getMib() {
+  return mib
+}
+
+export default { getMib }

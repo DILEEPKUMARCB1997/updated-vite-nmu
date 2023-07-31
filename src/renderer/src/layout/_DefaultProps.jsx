@@ -41,6 +41,11 @@ const routes = {
         path: '/ConfigComparission',
         name: 'Device config comparison',
         icon: <FileSearchOutlined />
+      },
+      {
+        path: '/ResetToDefault',
+        name: 'ResetToDefault',
+        icon: <FileSearchOutlined />
       }
     ]
   },
