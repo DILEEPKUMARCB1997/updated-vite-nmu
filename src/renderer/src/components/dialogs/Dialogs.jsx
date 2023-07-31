@@ -15,6 +15,8 @@ import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
 import ResetToDefaultDialog from './ResetToDefaultDialog/ResetToDefaultDialog'
 import SNMPScanProgressDialog from './SNMPScanProgressDialog/SNMPScanProgressDialog'
+import NetworkSettingDialog from './NetworkSettingsDialog/NetworkSettingDialog'
+import ScheduleBackupDialog from './ScheduleBackupDialog/ScheduleBackupDialog'
 import BackupRestoreDialog from './BackupRestoreDialog/BackupRestoreDialog'
 import TrapSettingDialog from './TrapSettingDialog/TrapSettingDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
@@ -35,13 +37,13 @@ const Dialog = ({ id, onClose, ...rest }) => {
           aboutDialog: <AboutDialog onClose={onClose} />,
           addIPRange: <AddIPRangeDialog onClose={onClose} />,
           perferences: <PreferencesDialog onClose={onClose} />,
-
-          resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
+          networkSetting: <NetworkSettingDialog onClose={onClose} />,
+          scheduleBackup: <ScheduleBackupDialog onClose={onClose} />,
+          FWU: <FWUDialog onClose={onClose} />,
+          resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
-          FWU: <FWUDialog onClose={onClose} />,
-          //snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
           syslogSetting: <SyslogSettingDialog onClose={onClose} />
         }[id]
       }
