@@ -13,12 +13,17 @@ import advancedSlice from '../features/Preferences/advancedSlice'
 import mailSlice from '../features/Preferences/mailSlice'
 import generalSlice from '../features/Preferences/generalSlice'
 import snmpSlice from '../features/Preferences/snmpSlice'
-import firmwareSlice from '../features/firmwareUpdate'
+import resetToDefaultSlice from '../features/resetToDefaultSlice'
 import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import networkSettingSlice from '../features/networkSettingSlice'
 import scheduleBackupSlice from '../features/scheduleBackupSlice'
 import scheduleBackupMemberSlice from '../features/scheduleBackupMemberSlice'
+import backupRestoreSlice from '../features/backupRestoreSlice'
+import trapSettingSlice from '../features/trapSettingSlice'
+import firmwareSlice from '../features/firmwareUpdate'
+// import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import syslogSettingSlice from '../features/SyslogSettingSlice'
+import snackSlice from '../features/snackSlice'
 
 export const store = configureStore({
   reducer: {
@@ -37,11 +42,16 @@ export const store = configureStore({
     advanced: advancedSlice.reducer,
     firmware: firmwareSlice.reducer,
     mail: mailSlice.reducer,
+    resetToDefault: resetToDefaultSlice.reducer,
     snmpScanProgress: snmpScanProgressSlice.reducer,
     networkSetting: networkSettingSlice.reducer,
     scheduleBackup: scheduleBackupSlice.reducer,
     scheduleBackupMember: scheduleBackupMemberSlice.reducer,
-    syslogSetting: syslogSettingSlice.reducer
+    syslogSetting: syslogSettingSlice.reducer,
+    backupRestore: backupRestoreSlice.reducer,
+    trapSetting: trapSettingSlice.reducer,
+    // snmpScanProgress: snmpScanProgressSlice.reducer,
+    snack: snackSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

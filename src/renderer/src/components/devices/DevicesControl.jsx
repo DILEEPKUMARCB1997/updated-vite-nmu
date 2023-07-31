@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
+import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
 
 const options = [
@@ -37,6 +38,9 @@ const DevicesControl = () => {
       groupName: groupAddInput
     })
   }
+  // const handleResetToDefault = () => {
+  //   dispatch(openDialog('resetToDefault'))
+  // }
 
   const content = (
     <Flexbox gap={5}>
@@ -72,10 +76,13 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} />
+          <Button icon={<RedoOutlined />} onClick={() => dispatch(openSnack('resetToDefault'))} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
-          <Button icon={<CloudUploadOutlined />} />
+          <Button
+            icon={<CloudUploadOutlined />}
+            onClick={() => dispatch(openDialog('backupRestore'))}
+          />
         </Tooltip>
         <Tooltip title="Schedule Backup">
           <Button icon={<ClockCircleOutlined />} onClick={() => dispatch(initScheduleBackup())} />
@@ -87,7 +94,7 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Trap Settings">
-          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('testDialog'))} />
+          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('trapSetting'))} />
         </Tooltip>
         <Tooltip title="Add New Group">
           <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">
