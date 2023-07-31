@@ -17,6 +17,8 @@ import { discoverySelector, requestDiscovery, switchGroupView } from '../../feat
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
+import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
+import { setSNMPSelectOnly } from '../../features/discoverySlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -41,6 +43,15 @@ const DevicesControl = () => {
   //   dispatch(openDialog('resetToDefault'))
   // }
 
+  const handleButtonClick = () => {
+    switch (dispatch(removeBatchOperateEvent())) {
+      case 'resetToDefault':
+        dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
+
+        dispatch(setSNMPSelectOnly(true))
+        break
+    }
+  }
   const content = (
     <Flexbox gap={5}>
       <Input
@@ -72,7 +83,7 @@ const DevicesControl = () => {
           <Button icon={<ShareAltOutlined />} />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={() => dispatch(openSnack('resetToDefault'))} />
+          <Button icon={<RedoOutlined />} onClick={handleButtonClick} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
