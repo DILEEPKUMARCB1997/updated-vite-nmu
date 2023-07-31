@@ -14,8 +14,8 @@ const { Option } = Select
 const General = (props) => {
   const { NICData } = useSelector(generalSelector)
   const { niList } = NICData
-  // console.log(niList)
-  //console.log(NICData)
+  console.log(niList)
+  console.log(NICData)
   const dispatch = useDispatch()
 
   useEffect(() => {
