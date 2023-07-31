@@ -20,6 +20,7 @@ const IPRangeList = () => {
   const dispatch = useDispatch()
 
   const { IPRangeData } = useSelector(snmpSelector)
+  console.log(Object.entries(IPRangeData))
 
   const handleAddIPRangeButtonClick = () => {
     dispatch(openDialog('addIPRange'))
@@ -38,13 +39,11 @@ const IPRangeList = () => {
     <Collapse className="collapse">
       <Panel header={HEADER}>
         <List
-          className="list"
           split={false}
           itemLayout="horizontal"
           dataSource={Object.entries(IPRangeData)}
           renderItem={(item) => (
             <ListItem
-              className="item"
               style={{ margin: '5px' }}
               actions={[
                 <Button
