@@ -29,7 +29,7 @@ export const requestHistoryData = (param) => (dispatch) => {
       }
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
-        dispatch(updateCustomGraphData(resultCustom))
+        dispatch(updateCustomGraph(resultCustom))
         break
       }
       case 'syslog': {
@@ -63,6 +63,7 @@ const dashboardSlice = createSlice({
     },
     customGraphData: {
       label: [],
+      data: [],
       InformationData: [],
       CriticalData: [],
       WarningData: [],
@@ -108,22 +109,23 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraphData: (state, action) => {
-      const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
-        action.payload
 
+    updateCustomGraph: (state, action) => {
+      const { payload } = action
       return {
         ...state,
         customGraphData: {
-          label: label,
-          InformationData: InformationData,
-          CriticalData: CriticalData,
-          WarningData: WarningData,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          data: payload.data,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated,
+          informationData: payload.InformationData,
+          criticalData: payload.CriticalData,
+          warningData: payload.WarningData
         }
       }
     },
+
     updateSyslogTableData: (state, { payload }) => {
       //  const { payload } = action
       return {
@@ -157,7 +159,7 @@ export const {
   updateSyslogTableData,
   openDialog,
   updateCustomTableData,
-  updateCustomGraphData,
+  updateCustomGraph,
   updateTrapTableData
 } = dashboardSlice.actions
 

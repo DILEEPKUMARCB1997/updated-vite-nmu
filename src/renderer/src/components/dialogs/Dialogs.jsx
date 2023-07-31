@@ -13,9 +13,11 @@ import EditUserDialog from './userManagementDialogs/EditUserDialog'
 import AboutDialog from './AboutDialog/AboutDialog'
 import PreferencesDialog from './PreferencesDialog/PreferencesDialog'
 import AddIPRangeDialog from './AddIPRangeDialog/AddIPRangeDialog'
+import FWUDialog from '../FWU Dialog/FWUDialog'
 import SNMPScanProgressDialog from './SNMPScanProgressDialog/SNMPScanProgressDialog'
 import NetworkSettingDialog from './NetworkSettingsDialog/NetworkSettingDialog'
 import ScheduleBackupDialog from './ScheduleBackupDialog/ScheduleBackupDialog'
+import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -34,7 +36,9 @@ const Dialog = ({ id, onClose, ...rest }) => {
           perferences: <PreferencesDialog onClose={onClose} />,
           snmpScanProgress: <SNMPScanProgressDialog onClose={onClose} />,
           networkSetting: <NetworkSettingDialog onClose={onClose} />,
-          scheduleBackup: <ScheduleBackupDialog onClose={onClose} />
+          scheduleBackup: <ScheduleBackupDialog onClose={onClose} />,
+          FWU: <FWUDialog onClose={onClose} />,
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />
         }[id]
       }
     </div>
