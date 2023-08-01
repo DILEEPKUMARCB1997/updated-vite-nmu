@@ -17,10 +17,7 @@ export const requestAppInitialData = () => (dispatch) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_APP_INITIAL_DATA)
 }
 export const setBatchOperateEvent = (payload) => (dispatch) => {
-  dispatch({
-    type: SET_BATCH_OPERATE_EVENT,
-    payload
-  })
+  dispatch(SET_BATCH_OPERATE_EVENT(payload))
   dispatch(showDiscoveryTableCheckBox(true))
   if (SNMPOnlyEvents.includes(payload.event)) {
     dispatch(setSNMPSelectOnly(true))

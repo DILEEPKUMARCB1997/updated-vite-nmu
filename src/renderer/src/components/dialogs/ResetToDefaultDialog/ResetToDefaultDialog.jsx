@@ -38,7 +38,11 @@ const columns = [
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status'
+    key: 'status',
+    render: (data) =>
+      data
+        ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
+        : results[2] === ERROR && <span style={{ color: 'red' }} />
   }
 ]
 
@@ -46,6 +50,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
+  console.log(resetToDefaultStatus)
   // const resetToDefaultStatus = [1, 2, 3, 4, 5]
   // const data = Object.entries(resetToDefaultStatus).map(([MACAddress, element]) => (
 
@@ -64,6 +69,11 @@ const ResetToDefaultDialog = ({ onClose }) => {
   // useEffect(() => {
   //   setInputData()
   // }, [])
+  const dataSource = []
+  useEffect(() => {
+    dataSource.push(resetToDefaultStatus)
+    console.log(dataSource)
+  }, [])
   const dispatch = useDispatch()
   const handleCancelButtonOnClick = () => {
     dispatch(clearResetToDefaultData())
@@ -98,22 +108,23 @@ const ResetToDefaultDialog = ({ onClose }) => {
           </Typography.Title>
           <div style={{ padding: '24px' }}>
             <Table
-              rowKey="MACAddress"
+              rowKey={resetToDefaultStatus.key}
               size="middle"
               // dataSource={data(resetToDefaultStatus)}
               columns={columns}
+              dataSource={[resetToDefaultStatus]}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                // total: data(resetToDefaultStatus).length,
+                total: dataSource.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
               }}
               bordered
             >
-              {Object.entries(resetToDefaultStatus).map(([MACAddress, element]) => (
+              {/* {Object.entries(resetToDefaultStatus).map(([MACAddress, element]) => (
                 <Table.Summary.Row key={MACAddress}>
                   <Typography style={{ fontSize: '1rem', fontWeight: '300', padding: '12px, 8px' }}>
                     {element.modal}
@@ -130,7 +141,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
                     {results[element.status]}
                   </Typography>
                 </Table.Summary.Row>
-              ))}
+              ))} */}
             </Table>
           </div>
           {taskStatus === RUNNING && <Progress />}

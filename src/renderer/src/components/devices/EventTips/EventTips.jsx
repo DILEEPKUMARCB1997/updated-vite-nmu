@@ -50,6 +50,16 @@ const EventTips = () => {
   return (
     <div>
       <Alert
+        style={{
+          position: 'fixed',
+          borderTop: 'none',
+          zIndex: 1000,
+          left: 'calc(50% - 250px)',
+          top: '56px',
+          minHeight: '0px',
+          width: '500px',
+          margin: '10px 0px'
+        }}
         action={[
           showBatchOperateTips ? undefined : (
             <span

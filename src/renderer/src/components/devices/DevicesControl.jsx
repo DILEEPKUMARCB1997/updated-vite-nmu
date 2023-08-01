@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
-import { openSnack } from '../../features/snackSlice'
+// import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
@@ -44,10 +44,11 @@ const DevicesControl = () => {
   //   dispatch(openDialog('resetToDefault'))
   // }
 
-  const handleButtonClick = () => {
-    switch (dispatch(removeBatchOperateEvent())) {
+  const handleButtonClick = (key) => {
+    dispatch(removeBatchOperateEvent())
+    switch (key) {
       case 'resetToDefault':
-        dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
+        dispatch(setBatchOperateEvent('resetToDefault'))
 
         dispatch(setSNMPSelectOnly(true))
         break
@@ -87,7 +88,12 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={handleButtonClick} />
+          <Button
+            icon={<RedoOutlined />}
+            onClick={handleButtonClick}
+            // onClick={() => dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))}
+            // onChange={() => dispatch(setSNMPSelectOnly(true))}
+          />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button

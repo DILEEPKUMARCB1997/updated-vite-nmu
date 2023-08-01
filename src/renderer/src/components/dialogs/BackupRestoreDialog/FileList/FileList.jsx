@@ -25,11 +25,16 @@ const FileList = () => {
     <div>
       <Card
         size="small"
-        style={{ width: '100%', height: '100%' }}
+        // style={{ width: '100%', height: '100%' }}
         bordered={false}
-        bodyStyle={{ padding: '5px' }}
+        // bodyStyle={{ padding: '5px' }}
+        style={{
+          height: '450px',
+          borderRadius: '4px',
+          boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
+        }}
       >
-        <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
           Files
         </Typography.Title>
         <div
@@ -41,7 +46,7 @@ const FileList = () => {
           <Table style={{ width: '100%' }}>
             {files.map((file) => (
               // <Row key={file}></Row>
-              <Table.Summary.Row key={file}>
+              <Row key={file}>
                 {mode === 'restore' && (
                   <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>
                     <Checkbox
@@ -65,7 +70,7 @@ const FileList = () => {
                     </Button>
                   )}
                 </td>
-              </Table.Summary.Row>
+              </Row>
             ))}
           </Table>
         </div>
