@@ -88,6 +88,12 @@ const discoverySlice = createSlice({
         ...state,
         selected: []
       }
+    },
+    setSNMPSelectOnly: (state, action) => {
+      return {
+        ...state,
+        SNMPSelectOnly: action.payload
+      }
     }
   }
 })
@@ -96,7 +102,8 @@ export const {
   updateDiscoveryData,
   switchGroupView,
   showDiscoveryTableCheckBox,
-  clearDiscoverTableSelect
+  clearDiscoverTableSelect,
+  setSNMPSelectOnly
 } = discoverySlice.actions
 
 export const discoverySelector = (state) => {
