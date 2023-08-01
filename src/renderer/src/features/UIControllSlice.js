@@ -6,7 +6,9 @@ import {
 } from '../../../main/utils/IPCEvents'
 import { setSNMPAppInitialData } from './Preferences/snmpSlice'
 import { showDiscoveryTableCheckBox, clearDiscoverTableSelect } from './discoverySlice'
+import { setSNMPSelectOnly } from './discoverySlice'
 
+const SNMPOnlyEvents = ['resetToDefault', 'backupRestore', 'syslogSetting', 'trapSetting']
 export const requestAppInitialData = () => (dispatch) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_APP_INITIAL_DATA, (event, arg) => {
     const { appInitialData } = arg.data
@@ -14,6 +16,16 @@ export const requestAppInitialData = () => (dispatch) => {
   })
   window.electron.ipcRenderer.send(REQUEST_MP_GET_APP_INITIAL_DATA)
 }
+export const setBatchOperateEvent = (payload) => (dispatch) => {
+  dispatch(SET_BATCH_OPERATE_EVENT(payload))
+  dispatch(showDiscoveryTableCheckBox(true))
+  if (SNMPOnlyEvents.includes(payload.event)) {
+    dispatch(setSNMPSelectOnly(true))
+  } else {
+    dispatch(setSNMPSelectOnly(false))
+  }
+}
+
 export const removeBatchOperateEvent = () => (dispatch) => {
   dispatch(REMOVE_BATCH_OPERATE_EVENT())
   dispatch(showDiscoveryTableCheckBox(false))
@@ -40,12 +52,20 @@ const UIControlSlice = createSlice({
     },
     REMOVE_BATCH_OPERATE_EVENT: (state, { payload }) => {
       return { ...state, showBatchOperateTips: false, batchOperateEvent: '' }
+    },
+    SET_BATCH_OPERATE_EVENT: (state, action) => {
+      const { event } = action.payload
+      return { ...state, showBatchOperateTips: true, batchOperateEvent: event }
     }
   }
 })
 
-export const { openDevicesMenu, nextInitRenderStep, REMOVE_BATCH_OPERATE_EVENT } =
-  UIControlSlice.actions
+export const {
+  openDevicesMenu,
+  nextInitRenderStep,
+  REMOVE_BATCH_OPERATE_EVENT,
+  SET_BATCH_OPERATE_EVENT
+} = UIControlSlice.actions
 
 export const UIControlSelector = (state) => {
   const {

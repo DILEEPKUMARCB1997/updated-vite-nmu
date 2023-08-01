@@ -5,7 +5,6 @@ import { UIControlSelector, removeBatchOperateEvent } from '../../../features/UI
 import { initResetToDefaultData } from '../../../features/resetToDefaultSlice'
 import { discoverySelector } from '../../../features/discoverySlice'
 import { useDispatch, useSelector } from 'react-redux'
-import './EventTips.css'
 
 const messages = {
   resetToDefault: 'Reset To Default'
@@ -19,6 +18,7 @@ const EventTips = () => {
   })
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
   const { SNMPSelectOnly } = useSelector(discoverySelector)
+  console.log(SNMPSelectOnly)
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
@@ -50,7 +50,29 @@ const EventTips = () => {
   return (
     <div>
       <Alert
-        // {showBatchOperateTips ? undefined : 'hide'}
+        style={{
+          position: 'fixed',
+          borderTop: 'none',
+          zIndex: 1000,
+          left: 'calc(50% - 250px)',
+          top: '56px',
+          minHeight: '0px',
+          width: '500px',
+          margin: '10px 0px'
+        }}
+        action={[
+          showBatchOperateTips ? undefined : (
+            <span
+              style={{
+                height: '0px',
+                overflow: 'hidden',
+                paddingTop: '0px',
+                paddingBottom: '0px',
+                borderBottom: 'none'
+              }}
+            />
+          )
+        ]}
         // className={('alert', showBatchOperateTips ? undefined : 'hide')}
         // className={classNames('alert', showBatchOperateTips ? undefined : 'hide')}
         message={messages[batchOperateEvent]}

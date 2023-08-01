@@ -2,7 +2,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSnack, closeSnack, snackSelector } from '../../features/snackSlice'
-import TestDialog from '../dialogs/TestDialog'
+
 import ResetToDefaultSnack from './ResetToDefaultSnack/ResetToDefaultSnack'
 
 const Snack = ({ id, onClose, ...rest }) => {
@@ -10,7 +10,6 @@ const Snack = ({ id, onClose, ...rest }) => {
     <div>
       {
         {
-          testDialog: <TestDialog onClose={onClose} />,
           resetToDefault: <ResetToDefaultSnack onClose={onClose} />
         }[id]
       }

@@ -60,17 +60,22 @@ const TrapConfiguration = () => {
   return (
     <Card
       size="small"
-      style={{ width: '100%', height: '100%' }}
+      // style={{ width: '100%', height: '100%' }}
       bordered={false}
-      bodyStyle={{ padding: '5px' }}
+      // bodyStyle={{ padding: '5px' }}
+      style={{
+        height: '450px',
+        borderRadius: '4px',
+        boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
+      }}
     >
-      <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+      <Typography.Title level={5} style={{ color: token.colorPrimary }}>
         Trap Configuration Field
       </Typography.Title>
 
       <Row justify="space-around" align="middle">
         <Col span={24}>
-          <Form>
+          <Form style={{ paddingTop: '20px' }}>
             <Form.Item style={{ width: '230px' }}>
               <Input
                 status={trapServerIP === '' ? 'ServerIP is required' : ''}
