@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { syslogSettingSelector } from '../../../../features/SyslogSettingSlice'
-import { useSelector } from 'react-redux'
+import { startTask, syslogSettingSelector } from '../../../../features/SyslogSettingSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import { App, Button, Card, Form, Input, Row, Select, Switch } from 'antd'
 
 const { Option } = Select
@@ -9,15 +9,17 @@ const SyslogConfiguration = () => {
   const { deviceStatus, isTaskRunning } = useSelector(syslogSettingSelector)
   console.log(deviceStatus)
   console.log(isTaskRunning)
+  const dispatch = useDispatch()
   const [logToFlash, setLogToFlash] = useState(1)
   const [logToServer, setLogToServer] = useState(1)
-  //const [logLevel, setLogLevel] = useState(0)
+  const [serverIP, setServerIP] = useState('')
+  const [serverPort, setServerPort] = useState(514)
   const [server, setServer] = useState({
     // logToFlash: 1,
-    logLevel: 7,
+    logLevel: 7
     //logToServer: 1,
-    serverIP: '',
-    serverPort: 514
+    /// serverIP: '',
+    //  serverPort: 514
   })
 
   const handleChangeLogToFlash = (name) => (event) => {
@@ -48,23 +50,23 @@ const SyslogConfiguration = () => {
       /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
     const ipAddress = event.target.value
     if (ipAddress.match(IPFormat)) {
-      setServer({ serverIP: event.target.value })
+      setServerIP({ serverIP: event.target.value })
     } else {
-      setServer({ serverIP: event.target.value })
+      setServerIP({ serverIP: event.target.value })
     }
   }
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
-        setServer({ serverPort: event.target.value })
+        setServerPort({ serverPort: event.target.value })
       }
     } else {
-      setServer({ serverPort: event.target.value })
+      setServerPort({ serverPort: event.target.value })
     }
   }
   const handleOnStartButton = () => {
-    if (ValidateIPaddress(server.serverIP)) {
-      // startTask
+    if (ValidateIPaddress(serverIP)) {
+      dispatch(startTask())
     } else {
       notification.error({
         message: 'Invalid ip address'
@@ -125,19 +127,19 @@ const SyslogConfiguration = () => {
             <Form.Item
               colon={false}
               label="Server IP"
-              validateStatus={server.serverIP === ''}
-              help={server.serverIP === '' ? 'ServerIP is required' : ''}
+              validateStatus={serverIP === ''}
+              help={serverIP === '' ? 'ServerIP is required' : ''}
             >
-              <Input value={server.serverIP} onChange={handleServerInputChange} />
+              <Input value={serverIP} onChange={handleServerInputChange} />
             </Form.Item>
             <Form.Item
               label="Server Port"
               colon={false}
-              validateStatus={server.serverPort === ''}
-              help={server.serverPort === '' ? 'Server port is required' : ''}
+              validateStatus={serverPort === ''}
+              help={serverPort === '' ? 'Server port is required' : ''}
             >
               <Input
-                value={server.serverPort}
+                value={serverPort}
                 onChange={handleServerPortChange}
                 type="number"
                 min="1"
