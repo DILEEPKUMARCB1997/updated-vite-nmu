@@ -30,7 +30,7 @@ const BackupRestoreDialog = ({ onClose }) => {
         onCancel={onClose}
         width={1000}
         bodyStyle={{
-          height: '500px'
+          height: '520px'
         }}
         style={{
           top: '5px'
@@ -47,11 +47,11 @@ const BackupRestoreDialog = ({ onClose }) => {
         </Typography.Title>
 
         <Row gutter={24}>
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={14}>
             {' '}
             <DeviceList didMount={didMount} />
           </Col>
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={10}>
             {' '}
             <FileList didMount={didMount} />
           </Col>

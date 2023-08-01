@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   Card,
   Select,
@@ -49,21 +49,20 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (element) =>
-      element
-        ? element.status === SUCCESS && <span style={{ color: 'green' }} />
-        : element.status === ERROR && <span style={{ color: 'red' }} />
+    render: (data) =>
+      data
+        ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
+        : results[2] === ERROR && <span style={{ color: 'red' }} />
   }
 ]
 
-const DeviceList = ({ deviceStatus = [] }) => {
-  console.log(deviceStatus)
+const DeviceList = () => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
-  const { mode, isTaskRunning, isRestoreFisish, selectDevice } = useSelector(backupRestoreSelector)
-
-  const handleModeSelectOnChange = () => {
+  const { mode, isTaskRunning, isRestoreFisish, deviceStatus } = useSelector(backupRestoreSelector)
+  console.log(deviceStatus)
+  const handleModeSelectOnChange = (mode) => {
     dispatch(changeMode({ mode }))
   }
   const handleStartButtonOnClick = () => {
@@ -88,6 +87,11 @@ const DeviceList = ({ deviceStatus = [] }) => {
   //   return rec.includes(true)
   //   // })
   // }
+  const dataSource = []
+  useEffect(() => {
+    dataSource.push(deviceStatus)
+    console.log(dataSource)
+  }, [])
 
   return (
     <ConfigProvider
@@ -103,11 +107,17 @@ const DeviceList = ({ deviceStatus = [] }) => {
     >
       <Card
         size="small"
-        style={{ width: '100%', height: '100%' }}
+        // style={{ width: '100%', height: '100%' }}
         bordered={false}
-        bodyStyle={{ padding: '5px' }}
+        // bodyStyle={{ padding: '5px' }}
+        // headStyle={{ backgroundColor: token.colorPrimaryBorder }}
+        style={{
+          height: '450px',
+          borderRadius: '4px',
+          boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
+        }}
       >
-        <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
           Devices
         </Typography.Title>
         <div
@@ -143,8 +153,8 @@ const DeviceList = ({ deviceStatus = [] }) => {
             </Select>
             {isTaskRunning ? (
               <Progress
-                type="circle"
                 style={{
+                  width: '300px',
                   verticalAlign: 'middle'
                 }}
               />
@@ -169,22 +179,22 @@ const DeviceList = ({ deviceStatus = [] }) => {
             }}
           >
             <Table
-              rowKey="MACAddress"
+              rowKey={deviceStatus.key}
               columns={columns}
+              dataSource={[deviceStatus]}
               style={{ width: '100%' }}
-              // onClick={handleDeviceListItemOnClick()}
-              // dataSource={data(deviceStatus)}
+              onClick={handleDeviceListItemOnClick}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                // total: data(deviceStatus).length,
+                total: dataSource.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
               }}
             >
-              {Object.entries(deviceStatus).map(([MACAddress, element]) => (
+              {/* {Object.entries(deviceStatus).map(([MACAddress, element]) => (
                 <Table.Summary.Row
                   // {MACAddress === selectDevice && <span style={{backgroundColor:"#26c6da"}}/>}
                   key={MACAddress}
@@ -206,7 +216,7 @@ const DeviceList = ({ deviceStatus = [] }) => {
                     {results[element.status]}
                   </Typography.Text>
                 </Table.Summary.Row>
-              ))}
+              ))} */}
             </Table>
           </div>
           <Alert message={TIPS_TEXT} banner type="info" showIcon style={{ top: '-20px' }} />

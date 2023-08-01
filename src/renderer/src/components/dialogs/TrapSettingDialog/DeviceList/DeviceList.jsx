@@ -73,11 +73,16 @@ const DeviceList = () => {
     >
       <Card
         size="small"
-        style={{ width: '100%', height: '100%' }}
+        // style={{ width: '100%', height: '100%' }}
         bordered={false}
-        bodyStyle={{ padding: '5px' }}
+        style={{
+          height: '450px',
+          borderRadius: '4px',
+          boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
+        }}
+        // bodyStyle={{ padding: '5px' }}
       >
-        <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
           Devices
         </Typography.Title>
         <div style={{ height: '400px' }}>
