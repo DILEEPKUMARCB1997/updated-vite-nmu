@@ -21,6 +21,7 @@ import BackupRestoreDialog from './BackupRestoreDialog/BackupRestoreDialog'
 import TrapSettingDialog from './TrapSettingDialog/TrapSettingDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
 import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
+import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -44,7 +45,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
-          syslogSetting: <SyslogSettingDialog onClose={onClose} />
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />,
+          transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />
         }[id]
       }
     </div>

@@ -48,12 +48,12 @@ const NetworkSettingDialog = ({ onClose }) => {
 
   return (
     <Modal
-      // title={
-      //   <Typography.Title level={5}>
-      //     <ShareAltOutlined /> Network Setting
-      //   </Typography.Title>
-      // }
-      title="Network Setting"
+      title={
+        <Typography.Title level={4}>
+          <ShareAltOutlined /> - Network Setting
+        </Typography.Title>
+      }
+      // title="Network Setting"
       open
       style={{ top: 20 }}
       onCancel={handleCancelButtonClick}

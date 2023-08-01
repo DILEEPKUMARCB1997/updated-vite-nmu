@@ -77,17 +77,17 @@ const DeviceList = (props) => {
     }
   ]
 
-  const handleEditMember = () => {
+  const handleEditMember = (scheduleId, scheduleName) => {
     dispatch(openDialog('transferScheduleMember'))
     dispatch(initScheduleMemberData({ scheduleId, scheduleName }))
   }
 
-  const handleEditSchedule = (scheduleId, scheduleName) => {
+  const handleEditSchedule = (scheduleId) => {
     console.log(scheduleId)
     notification.info({
       message: 'Schedule Backup configuration is in EDIT mode'
     })
-    dispatch(setEditMode({ isEditMode: true, scheduleId: scheduleId, scheduleName: scheduleName }))
+    dispatch(setEditMode({ isEditMode: true, scheduleId: scheduleId }))
   }
 
   const handleDeleteSchedule = (scheduleId) => {
@@ -137,7 +137,12 @@ const DeviceList = (props) => {
             }
           >
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0px' }}>
-              <Button type="text" onClick={handleEditMember}>
+              <Button
+                type="text"
+                onClick={() => {
+                  handleEditMember(scheduleId, data[scheduleId].scheduleName)
+                }}
+              >
                 Edit Member
               </Button>
               <Button
