@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Card, Collapse, Divider, Table, Typography, notification, theme } from 'antd'
+import { App, Button, Card, Collapse, Divider, Table, Typography, notification, theme } from 'antd'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -19,15 +19,10 @@ import {
 } from '../../../../../../main/utils/IPCEvents'
 
 const DeviceList = (props) => {
-  const {
-    isRestoreFinish,
-    deviceStatus,
-    selectDevice,
-    isTaskRunning,
-    mode,
-    scheduledBackup,
-    isEditMode
-  } = useSelector(scheduleBackupSelector)
+  const { modal } = App.useApp()
+  const { isRestoreFinish, deviceStatus, selectDevice, isTaskRunning, mode, scheduledBackup } =
+    useSelector(scheduleBackupSelector)
+
   const scheduledBackupListId = Object.keys(scheduledBackup)
   console.log(scheduledBackupListId)
   const dispatch = useDispatch()
@@ -92,7 +87,14 @@ const DeviceList = (props) => {
 
   const handleDeleteSchedule = (scheduleId) => {
     console.log(scheduleId)
-    dispatch(deleteSchedule({ scheduleId: scheduleId }))
+    modal.confirm({
+      title: 'Delete Confirmation',
+      content: 'Are you sure you want to delete this Scheduled Backup ?',
+      okText: 'Delete',
+      onOk: () => {
+        dispatch(deleteSchedule({ scheduleId: scheduleId }))
+      }
+    })
   }
 
   return (

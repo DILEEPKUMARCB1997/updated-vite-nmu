@@ -1,5 +1,5 @@
 import { Button, Card, Form, Input, InputNumber, Select, Typography, theme } from 'antd'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react'
 import { datePad } from '../../../../../../main/modules/common/tools'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,7 +20,8 @@ const ConfigureSchedule = () => {
     scheduleDate,
     scheduleTime,
     weeekDay,
-    customFrequency
+    customFrequency,
+    scheduleId
   } = useSelector(scheduleBackupSelector)
   console.log(
     isEditMode,
@@ -31,6 +32,7 @@ const ConfigureSchedule = () => {
     weeekDay,
     customFrequency
   )
+  console.log(scheduleId)
   const dispatch = useDispatch()
   const now = new Date()
   const nowYear = datePad(now.getFullYear().toString())
@@ -39,6 +41,8 @@ const ConfigureSchedule = () => {
   const nowHours = datePad(now.getHours().toString())
   const nowMinutes = datePad(now.getMinutes().toString())
   const nowSeconds = datePad(now.getSeconds().toString())
+
+  console.log(now.getFullYear() + '-' + nowMonth + '-' + nowDate)
 
   // const [frequency, setFrequency] = useState(2)
   // const [customFrequency, setCustomFrequency] = useState(1)
@@ -54,7 +58,7 @@ const ConfigureSchedule = () => {
     frequency: 2,
     customFrequency: 1,
     scheduleTime: nowHours + ':' + nowMinutes,
-    scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + now.getDate(),
+    scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate,
     weeekDay: 0
   })
   console.log(state)
@@ -125,7 +129,7 @@ const ConfigureSchedule = () => {
           weeekDay: 0,
           customFrequency: 1,
           scheduleTime: nowHours + ':' + nowMinutes,
-          scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + now.getDate()
+          scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate
         })
         form.resetFields()
       })
@@ -146,7 +150,7 @@ const ConfigureSchedule = () => {
       weeekDay: 0,
       customFrequency: 1,
       scheduleTime: nowHours + ':' + nowMinutes,
-      scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + now.getDate()
+      scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate
     })
     form.resetFields()
   }
@@ -163,13 +167,13 @@ const ConfigureSchedule = () => {
       setState({
         scheduleName,
         frequency: frequency,
-        scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + now.getDate(),
-        scheduleTime: nowHours + ':' + nowMinutes,
+        scheduleDate: scheduleDate,
+        scheduleTime: scheduleTime,
         weeekDay: weeekDay,
         customFrequency: customFrequency
       })
     }
-  }, [isEditMode])
+  }, [scheduleId])
 
   return (
     <Card
@@ -191,8 +195,7 @@ const ConfigureSchedule = () => {
           label={
             <label style={{ color: state.scheduleName === '' ? 'red' : '' }}>Schedule Name</label>
           }
-          s
-          name="scheduleName"
+          // name="scheduleName"
           // help="Schedule Name is Required"
           colon={false}
           rules={[
