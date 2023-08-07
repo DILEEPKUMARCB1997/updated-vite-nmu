@@ -39,12 +39,13 @@ const IPRangeList = () => {
     <Collapse className="collapse">
       <Panel header={HEADER}>
         <List
+          className="list"
           split={false}
           itemLayout="horizontal"
           dataSource={Object.entries(IPRangeData)}
           renderItem={(item) => (
             <ListItem
-              style={{ margin: '5px' }}
+              className="item"
               actions={[
                 <Button
                   size="small"

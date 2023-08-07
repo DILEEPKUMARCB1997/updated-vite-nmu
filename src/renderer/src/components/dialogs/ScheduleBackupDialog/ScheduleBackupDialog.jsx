@@ -47,9 +47,15 @@ const ScheduleBackupDialog = ({ onClose }) => {
       closable={true}
       okButtonProps={{ style: { display: 'none' } }}
       cancelButtonProps={{ style: { display: 'none' } }}
-      bodyStyle={{ height: 'calc(100vh - 150px)', overflow: 'auto', margin: 0, padding: 10 }}
+      bodyStyle={{
+        height: 'calc(100vh - 150px)',
+        overflow: 'auto',
+        margin: 0,
+        paddingTop: 10,
+        paddingBottom: '10px'
+      }}
     >
-      <Row gutter={[15, 15]} style={{ margin: '15px' }}>
+      <Row gutter={[15, 15]} style={{ margin: '0px' }}>
         <Col span={24}>
           <ConfigureSchedule />
         </Col>

@@ -60,9 +60,9 @@ const NetworkSettingDialog = ({ onClose }) => {
       onOk={handleStartButtonClick}
       maskClosable={false}
       width={1000}
-      closable={false}
+      closable={true}
       okText="start"
-      cancelButtonProps={{ disabled: disableCancel }}
+      cancelButtonProps={{ disabled: !disableCancel }}
       okButtonProps={{ disabled: !enableStart }}
     >
       <Row gutter={[15]}>
