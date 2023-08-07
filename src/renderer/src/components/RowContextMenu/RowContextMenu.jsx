@@ -12,11 +12,15 @@ import {
   CloudUploadOutlined,
   RiseOutlined
 } from '@ant-design/icons'
+//import { shell } from 'electron'
 //import WebBrowserDialog from '../dialogs/webBrowswerDialog/WebBrowserDialog'
 import { useDispatch } from 'react-redux'
 import { openDialog } from '../../features/dialogSlice'
 //import { openDialog } from '../../../features/dialogSlice'
 import { requestOpenWebData } from '../../features/openWebSlice'
+///const shell = require('electron').shell
+//import { shell } from 'electron'
+//import WebBrowserDialog from '../dialogs/webBrowswerDialog/WebBrowserDialog'
 
 const RowContextMenu = () => {
   const dispatch = useDispatch()
@@ -25,7 +29,25 @@ const RowContextMenu = () => {
     console.log('click ', e)
     setCurrent(e.key)
   }
+
+  const handleItemClick = (event, data) => {
+    const { IPAddress, MACAddress, model, deviceType } = data
+    switch (data.id) {
+      case 'openOnOSbrowser':
+        // shell.openExternal(`http://${IPAddress}`)
+        // shell.openExternal(
+        //   'https://marketplace.visualstudio.com/items?itemName=lzrnic.javascript-vscode-extension'
+        // )
+        break
+      case 'openOnApplication':
+        return handleOpenWeb(IPAddress, MACAddress)
+      default:
+        break
+    }
+  }
   const handleOpenWeb = (IPAddress, MACAddress) => {
+    console.log(IPAddress)
+    console.log(MACAddress)
     dispatch(
       requestOpenWebData({
         IPAddress,
@@ -34,6 +56,7 @@ const RowContextMenu = () => {
     )
     dispatch(openDialog('webBrowser'))
   }
+
   return (
     <div>
       <Menu
@@ -41,6 +64,7 @@ const RowContextMenu = () => {
         // onChange={handleOpenWeb}
         selectedKeys={[current]}
         mode="vertical"
+        onOpenChange={handleOpenWeb}
         items={[
           {
             label: 'OpenWeb',

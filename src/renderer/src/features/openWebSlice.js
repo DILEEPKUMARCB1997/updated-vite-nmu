@@ -51,6 +51,6 @@ export const { changeNextUrl, clearOpenWebData, initOpenWebData } = openWebSlice
 
 export const openWebSelector = (state) => {
   const { URL, IPAddress } = state.openWeb
-  return { IPAddress, URL }
+  return { URL, IPAddress }
 }
 export default openWebSlice

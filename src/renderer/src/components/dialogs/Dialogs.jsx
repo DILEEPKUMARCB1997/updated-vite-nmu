@@ -45,8 +45,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
-          syslogSetting: <SyslogSettingDialog onClose={onClose} />,
-          webBrowser: <WebBrowserDialog onClose={onClose} />
+          webBrowser: <WebBrowserDialog onClose={onClose} />,
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />
         }[id]
       }
     </div>

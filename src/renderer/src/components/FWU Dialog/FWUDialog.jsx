@@ -16,6 +16,7 @@ import FWUTable from './FWUTable/FWUTable'
 import FWUButton from './FWUButton/FWUButton'
 import { useDispatch } from 'react-redux'
 import OpenFile from './OpenFile/OpenFile'
+import Typography from 'antd/es/typography/Typography'
 //import FWUTableTab from './FWUTable/FWUTableTab/FWUTableTab'
 
 const FWUDialog = ({ onClose }) => {
@@ -46,28 +47,23 @@ const FWUDialog = ({ onClose }) => {
   })
   return (
     <Modal
+      title={<Typography.Title level={4}>firmwareUpdate</Typography.Title>}
       footer={null}
       onCancel={onClose}
       open
+      maskClosable={false}
       width="80%"
       transitionName={Transition}
       bodyStyle={{ height: '80vh', padding: '10px' }}
       style={{ marginTop: '10px', position: 'relative', top: '5px' }}
     >
-      <Card
-        title="Firmware Update"
-        bordered={false}
-        style={{ height: '80vh' }}
-        headStyle={{ background: 'blue', fontSize: '1.8rem', textDecorationColor: 'white' }}
-      >
-        <StepView />
-        <br />
-        <OpenFile />
-        <br />
-        <br />
-        <FWUTable />
-        <FWUButton handleDialogOnClose={handleDialogOnClose} />
-      </Card>
+      <StepView />
+      <br />
+      <OpenFile />
+      <br />
+      <br />
+      <FWUTable />
+      <FWUButton handleDialogOnClose={handleDialogOnClose} />
     </Modal>
   )
 }

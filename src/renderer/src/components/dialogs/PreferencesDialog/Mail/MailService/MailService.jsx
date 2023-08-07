@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
-import { Select, Switch, Radio, theme, Form, Divider, InputNumber } from 'antd'
+import { Select, Switch, Radio, theme, Form, Divider, InputNumber, Typography } from 'antd'
 import {
   mailSelector,
   setMailHost,
@@ -43,7 +43,7 @@ const MailService = (props) => {
   }
 
   const handleHostInputOnChange = (value) => {
-    dispatch(setMailHost(value))
+    setMailHost(value)
   }
 
   const handlePortInputOnChange = (value) => {
@@ -144,11 +144,17 @@ const MailService = (props) => {
             <Form ref={formRef}>
               <Form.Item
                 name="host"
+                rules={[
+                  {
+                    required: true,
+                    message: 'host is required'
+                  }
+                ]}
                 colon={false}
                 style={{ marginTop: '30px', borderBottom: '1px dotted black' }}
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
-                validateStatus={isHostValid ? 'success' : 'error'}
-                help={!isHostValid ? '' : 'please enter valid port'}
+                // validateStatus={isHostValid ? 'success' : 'error'}
+                // help={!isHostValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
@@ -160,11 +166,17 @@ const MailService = (props) => {
               </Form.Item>
               <Form.Item
                 name="port"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Server port is required'
+                  }
+                ]}
                 style={{ borderBottom: '1px dotted black' }}
                 colon={false}
                 label={USER_DEFINITION_PORT_INPUT_LABLE}
-                validateStatus={isPortValid ? 'success' : 'error'}
-                help={!isPortValid ? '' : 'please enter valid port'}
+                // validateStatus={isPortValid ? 'success' : 'error'}
+                // help={!isPortValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
