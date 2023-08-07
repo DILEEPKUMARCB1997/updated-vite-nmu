@@ -24,6 +24,7 @@ import firmwareSlice from '../features/firmwareUpdate'
 // import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import syslogSettingSlice from '../features/SyslogSettingSlice'
 import snackSlice from '../features/snackSlice'
+import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
 
 export const store = configureStore({
@@ -51,7 +52,9 @@ export const store = configureStore({
     syslogSetting: syslogSettingSlice.reducer,
     backupRestore: backupRestoreSlice.reducer,
     trapSetting: trapSettingSlice.reducer,
+    // snmpScanProgress: snmpScanProgressSlice.reducer,
     snack: snackSlice.reducer,
+    openWeb: openWebSlice.reducer,
     deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'

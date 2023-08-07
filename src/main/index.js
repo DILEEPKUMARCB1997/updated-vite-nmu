@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, Tray, app, dialog, ipcMain, nativeTheme } from 'electron'
+import { BrowserWindow, Menu, Tray, app, dialog, ipcMain, nativeTheme, shell } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
