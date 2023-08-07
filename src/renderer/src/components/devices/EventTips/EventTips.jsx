@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Alert } from 'antd'
+import { Alert, Modal } from 'antd'
 import React from 'react'
 import { UIControlSelector, removeBatchOperateEvent } from '../../../features/UIControllSlice'
 import { initResetToDefaultData } from '../../../features/resetToDefaultSlice'
 import { discoverySelector } from '../../../features/discoverySlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
+import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
+import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 
 const messages = {
   resetToDefault: 'Reset To Default',
@@ -29,11 +31,18 @@ const EventTips = () => {
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
+      case 'firmwareUpdate':
+        dispatch(initFirmwareUpdateData())
+        console.log(initFirmwareUpdateData())
+        break
       case 'resetToDefault':
         dispatch(initResetToDefaultData())
         break
       case 'backupRestore':
         dispatch(initBackupRestoreData())
+        break
+      case 'syslogSetting':
+        dispatch(initSyslogSettingData())
         break
       default:
         break
@@ -58,7 +67,7 @@ const EventTips = () => {
   }
 
   return (
-    <div>
+    <Modal open footer={null}>
       <Alert
         style={{
           position: 'fixed',
@@ -116,7 +125,7 @@ const EventTips = () => {
           </div>
         }
       />
-    </div>
+    </Modal>
   )
 }
 

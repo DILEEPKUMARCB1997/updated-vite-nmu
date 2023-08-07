@@ -147,6 +147,10 @@ const backupRestoreSlice = createSlice({
       const { mode } = action.payload
       return { ...state, mode }
     },
+    initDeviceStatus: (state, action) => {
+      const { deviceStatus } = action.payload
+      return { ...state, deviceStatus }
+    },
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
     },
@@ -195,10 +199,6 @@ const backupRestoreSlice = createSlice({
       const { files, selectDevice } = action.payload
       const deviceStatus = { ...state.deviceStatus }
       deviceStatus[selectDevice].files = [...files]
-      return { ...state, deviceStatus }
-    },
-    initDeviceStatus: (state, action) => {
-      const { deviceStatus } = action.payload
       return { ...state, deviceStatus }
     }
   }

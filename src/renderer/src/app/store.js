@@ -25,6 +25,8 @@ import firmwareSlice from '../features/firmwareUpdate'
 import syslogSettingSlice from '../features/SyslogSettingSlice'
 // import snackSlice from '../features/snackSlice'
 import singleNetworkSettingSlice from '../features/singleNetworkSettingSlice'
+import snackSlice from '../features/snackSlice'
+import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
 
 export const store = configureStore({
@@ -56,6 +58,8 @@ export const store = configureStore({
     // snack: snackSlice.reducer,
     singleNetworkSetting: singleNetworkSettingSlice.reducer,
     // snack: snackSlice.reducer,
+    snack: snackSlice.reducer,
+    openWeb: openWebSlice.reducer,
     deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
