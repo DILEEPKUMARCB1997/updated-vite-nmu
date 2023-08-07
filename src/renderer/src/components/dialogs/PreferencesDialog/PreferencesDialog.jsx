@@ -66,6 +66,8 @@ const PreferencesDialog = ({ onClose }) => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
+  const { useToken } = theme
+  const { token } = useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
   console.log(selectedPage)
 
@@ -212,8 +214,8 @@ const PreferencesDialog = ({ onClose }) => {
       <Layout style={{ height: '89vh' }}>
         <Header
           style={{
-            background: '#6fbbd6',
             fontSize: 35,
+            backgroundColor: token.colorPrimaryBorder,
             height: '80px',
             color: '#fff',
             fontWeight: 'bold'

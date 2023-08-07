@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ConfigProvider, Card, Typography, Table, theme } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+// import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import { trapSettingSelector } from '../../../../features/trapSettingSlice'
 import { useSelector } from 'react-redux'
 
@@ -13,45 +13,30 @@ const columns = [
     title: 'Modal',
     dataIndex: 'modal',
     key: 'modal',
-    sorter: (a, b) => a.modal - b.modal,
-    render: (element) => {
-      {
-        element.modal
-      }
-    }
+    sorter: (a, b) => a.modal - b.modal
   },
   {
     title: 'MAC Address',
     dataIndex: 'MACAddress',
     key: 'MACAddress',
-    sorter: (a, b) => a.MACAddress - b.MACAddress,
-    render: (element) => {
-      {
-        element.MACAddress
-      }
-    }
+    sorter: (a, b) => a.MACAddress - b.MACAddress
   },
   {
     title: 'IP Address',
     dataIndex: 'IPAddress',
     key: 'IPAddress',
-    sorter: (a, b) => a.IPAddress - b.IPAddress,
-    render: (element) => {
-      {
-        element.IPAddress
-      }
-    }
+    sorter: (a, b) => a.IPAddress - b.IPAddress
   },
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status',
-    render: (element) =>
-      element ? (
-        <CheckOutlined style={{ color: '#49aa19' }} />
-      ) : (
-        <CloseOutlined style={{ color: 'red' }} />
-      )
+    key: 'status'
+    // render: (element) =>
+    //   element ? (
+    //     <span style={{ color: 'green' }}>SUCCESS</span>
+    //   ) : (
+    //     <span style={{ color: 'red' }}>ERROR</span>
+    //   )
   }
 ]
 const DeviceList = () => {
@@ -59,6 +44,11 @@ const DeviceList = () => {
 
   const { useToken } = theme
   const { token } = useToken()
+  const dataSource = []
+  useEffect(() => {
+    dataSource.push(deviceStatus)
+    console.log(dataSource)
+  }, [])
   return (
     <ConfigProvider
       theme={{
@@ -73,6 +63,7 @@ const DeviceList = () => {
     >
       <Card
         size="small"
+        title=" Devices"
         // style={{ width: '100%', height: '100%' }}
         bordered={false}
         style={{
@@ -80,11 +71,9 @@ const DeviceList = () => {
           borderRadius: '4px',
           boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
         }}
+        headStyle={{ backgroundColor: token.colorPrimaryBorder }}
         // bodyStyle={{ padding: '5px' }}
       >
-        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
-          Devices
-        </Typography.Title>
         <div style={{ height: '400px' }}>
           <div
             style={{
@@ -100,12 +89,12 @@ const DeviceList = () => {
               columns={columns}
               style={{ width: '100%' }}
               // onClick={handleDeviceListItemOnClick()}
-              // dataSource={data(deviceStatus)}
+              dataSource={[deviceStatus]}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                // total: data(deviceStatus).length,
+                total: dataSource.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`

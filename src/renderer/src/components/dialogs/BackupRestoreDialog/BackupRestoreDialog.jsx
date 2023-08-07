@@ -26,26 +26,24 @@ const BackupRestoreDialog = ({ onClose }) => {
   return (
     <div>
       <Modal
+        title={
+          <Typography.Title level={4}>
+            {' '}
+            <CloudUploadOutlined /> - Backup and Restore
+          </Typography.Title>
+        }
         open
-        onCancel={onClose}
+        onCancel={handleCancelButtonOnClick}
         width={1000}
-        bodyStyle={{
-          height: '520px'
-        }}
+        maskClosable={false}
+        // bodyStyle={{
+        //   height: '520px'
+        // }}
         style={{
-          top: '5px'
+          top: '20px'
         }}
         footer={null}
       >
-        <Typography.Title
-          level={4}
-          style={{ color: token.colorPrimary }}
-          onClick={handleCancelButtonOnClick}
-        >
-          {' '}
-          <CloudUploadOutlined /> Backup and Restore
-        </Typography.Title>
-
         <Row gutter={24}>
           <Col className="gutter-row" span={14}>
             {' '}

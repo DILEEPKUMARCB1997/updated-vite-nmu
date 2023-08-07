@@ -25,6 +25,7 @@ const FileList = () => {
     <div>
       <Card
         size="small"
+        title="Files"
         // style={{ width: '100%', height: '100%' }}
         bordered={false}
         // bodyStyle={{ padding: '5px' }}
@@ -33,10 +34,8 @@ const FileList = () => {
           borderRadius: '4px',
           boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
         }}
+        headStyle={{ backgroundColor: token.colorPrimaryBorder }}
       >
-        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
-          Files
-        </Typography.Title>
         <div
           style={{
             height: '400px',
