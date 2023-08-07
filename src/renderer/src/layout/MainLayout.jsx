@@ -25,7 +25,7 @@ import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
   const isAppPreferencesDialogOpen = dialogs.includes('perferences')
-  console.log(isAppPreferencesDialogOpen)
+  // console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()

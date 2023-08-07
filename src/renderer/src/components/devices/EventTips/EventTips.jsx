@@ -11,6 +11,7 @@ const messages = {
   resetToDefault: 'Reset To Default',
   backupRestore: 'Backup and Restore'
 }
+
 const TIPS = '(This feature only for device with SNMP support.)'
 
 const EventTips = () => {
@@ -22,6 +23,7 @@ const EventTips = () => {
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
   // console.log(batchOperateEvent)
   // console.log(showBatchOperateTips)
+  console.log(messages[batchOperateEvent])
   const { SNMPSelectOnly } = useSelector(discoverySelector)
   // console.log(SNMPSelectOnly)
 
@@ -60,10 +62,11 @@ const EventTips = () => {
       <Alert
         style={{
           position: 'fixed',
-          borderTop: 'none',
+          // borderTop: 'none',
           zIndex: 1000,
           left: 'calc(50% - 250px)',
           top: '150px',
+          top: '156px',
           minHeight: '0px',
           width: '500px',
           margin: '10px 0px'

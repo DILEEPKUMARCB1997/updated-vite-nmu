@@ -21,6 +21,9 @@ import BackupRestoreDialog from './BackupRestoreDialog/BackupRestoreDialog'
 import TrapSettingDialog from './TrapSettingDialog/TrapSettingDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
 import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
+import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
+import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDrawer'
+import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -44,7 +47,10 @@ const Dialog = ({ id, onClose, ...rest }) => {
           resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
-          syslogSetting: <SyslogSettingDialog onClose={onClose} />
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />,
+          transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />,
+          advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
+          singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />
         }[id]
       }
     </div>

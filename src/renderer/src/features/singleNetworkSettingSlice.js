@@ -1,4 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {
+  RESPONSE_RP_SET_SNMP_DEVICE_NETWORK_SETTINGS,
+  RESPONSE_RP_SET_GWD_DEVICE_NETWORK_SETTINGS,
+  REQUEST_MP_SET_SNMP_DEVICE_NETWORK_SETTINGS,
+  REQUEST_MP_SET_GWD_DEVICE_NETWORK_SETTINGS
+} from '../../../main/utils/IPCEvents'
 const IPFormat =
   /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
 export const clearSingleNetworkSettingData = () => (dispatch) => {
@@ -7,6 +13,49 @@ export const clearSingleNetworkSettingData = () => (dispatch) => {
     dispatch(clearData())
   }, 200)
 }
+export const requestSetNetworkSetting = (callback) => (dispatch, getState) => {
+  const {
+    isSNMPmode,
+    isDHCP,
+    MACAddress,
+    IPAddress,
+    netmask,
+    gateway,
+    dns1,
+    dns2,
+    oldIPAddress,
+    hostname
+  } = getState().singleNetworkSetting
+  const responseChannel = isSNMPmode
+    ? RESPONSE_RP_SET_SNMP_DEVICE_NETWORK_SETTINGS
+    : RESPONSE_RP_SET_GWD_DEVICE_NETWORK_SETTINGS
+  const requestChannel = isSNMPmode
+    ? REQUEST_MP_SET_SNMP_DEVICE_NETWORK_SETTINGS
+    : REQUEST_MP_SET_GWD_DEVICE_NETWORK_SETTINGS
+  let data = { MACAddress, hostname }
+  if (isSNMPmode) {
+    const snmpData = isDHCP ? { isDHCP } : { isDHCP, IPAddress, netmask, gateway, dns1, dns2 }
+    data = { ...data, ...snmpData }
+  } else {
+    data = {
+      ...data,
+      oldIPAddress,
+      newIPAddress: IPAddress,
+      netmask,
+      gateway
+    }
+  }
+
+  window.electron.ipcRenderer.once(`${responseChannel} ${MACAddress}`, (event, arg) => {
+    if (arg.success) {
+      callback(true, 'Set network settngs success!')
+    } else {
+      callback(true, 'Set network settngs fail!')
+    }
+  })
+  window.electron.ipcRenderer.send(requestChannel, data)
+}
+
 const singleNetworkSettingSlice = createSlice({
   name: 'singleNetworkSettingSlice',
   initialState: {

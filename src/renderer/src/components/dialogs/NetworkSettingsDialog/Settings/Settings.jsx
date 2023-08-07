@@ -23,10 +23,12 @@ const Settings = () => {
     validDNS1,
     validDNS2
   } = useSelector(networkSettingSelector)
+  console.log(status)
   const { useToken } = theme
   const { token } = useToken()
 
   const handleDHCPCheckboxCheck = (e) => {
+    console.log(e.target.checked)
     dispatch(setNetworkSettingDHCP(e.target.checked))
   }
 
@@ -51,13 +53,14 @@ const Settings = () => {
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
     >
       <Checkbox
+        disabled={status !== 'wait'}
         style={{ marginBottom: '10px' }}
         checked={isDHCP}
         onChange={handleDHCPCheckboxCheck}
       >
         DHCP
       </Checkbox>
-      <Form.Item label="Netmask" colon={false} style={{ margin: '5px' }} on>
+      <Form.Item label="Netmask" colon={false} style={{ margin: '5px' }}>
         <Input
           disabled={status !== 'wait' || isDHCP}
           value={netmask}

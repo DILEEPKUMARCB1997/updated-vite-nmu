@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { Drawer, theme, Button, Typography, Checkbox, Form, Input, Alert } from 'antd'
+import { Drawer, theme, Button, Typography, Checkbox, Form, Input, Alert, notification } from 'antd'
 import React, { useState } from 'react'
 import {
   clearSingleNetworkSettingData,
   singleNetworkSettingSelector,
   setDHCP,
   setNetworkAddressData,
-  setHostname
+  setHostname,
+  requestSetNetworkSetting
 } from '../../../features/singleNetworkSettingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -15,17 +16,11 @@ const networkSettingTips =
   'Please make sure device username password setting and SNMP community is correct.'
 
 const SingleNetworkSettingDrawer = () => {
-  const [open, setOpen] = useState(false)
-  const showDrawer = () => {
-    setOpen(true)
-  }
-  const onClose = () => {
-    setOpen(false)
-  }
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
   const {
+    drawerVisible,
     model,
     MACAddress,
     isDHCP,
@@ -49,6 +44,17 @@ const SingleNetworkSettingDrawer = () => {
   const handleDHCPCheckboxOnCheck = (event) => {
     dispatch(setDHCP({ isDHCP: event.target.checked }))
   }
+  const handleApplyButtonOnClick = () => {
+    dispatch(
+      requestSetNetworkSetting((result, mag) => {
+        const type = result ? 'success' : 'error'
+        notification[type]({
+          message: mag
+        })
+      })
+    )
+    handleCloseDrawer()
+  }
   const handleNetworkAddressInputOnChange = (type, valid) => (event) => {
     dispatch(
       setNetworkAddressData({
@@ -63,21 +69,38 @@ const SingleNetworkSettingDrawer = () => {
   }
   return (
     <div>
-      <Button type="primary" onClick={showDrawer}>
-        Open
-      </Button>
       <Drawer
-        // closable={false}
-        // destroyOnClose
-        title={<span style={{ fontSize: '24px', color: token.colorPrimary }}>Network Setting</span>}
-        placement="right"
-        // open
-        open={open}
+        open={drawerVisible}
+        title={
+          <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+            {' '}
+            Network Setting
+          </Typography.Title>
+        }
+        closable={false}
+        maskClosable={false}
+        onClose={handleCloseDrawer}
+        destroyOnClose
         width={400}
-        onClose={onClose}
-        // onClose={handleCloseDrawer}
+        headerStyle={{ paddingBottom: '0px' }}
+        bodyStyle={{ backgroundColor: token.colorBgLayout }}
+        footer={
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <Button style={{ marginRight: '10px' }} onClick={handleCloseDrawer}>
+              Cancel
+            </Button>
+            <Button type="primary" onClick={handleApplyButtonOnClick}>
+              Apply
+            </Button>
+          </div>
+        }
       >
-        <Typography.Text>{`${model}(${MACAddress})`}</Typography.Text>
+        <Typography style={{ marginBottom: '10px' }}>{`${model}(${MACAddress})`}</Typography>
         <Form layout="vertical">
           <Form.Item>
             <Checkbox
@@ -88,7 +111,7 @@ const SingleNetworkSettingDrawer = () => {
               DHCP
             </Checkbox>
           </Form.Item>
-          <Form.Item label="IP Address" colon={false}>
+          <Form.Item label="IP Address" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validIPAddress}
               disabled={isDHCP}
@@ -96,7 +119,7 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('IPAddress', validIPAddress)}
             />
           </Form.Item>
-          <Form.Item label="Netmask" colon={false}>
+          <Form.Item label="Netmask" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validNetmask}
               disabled={isDHCP}
@@ -104,7 +127,7 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('netmask', validNetmask)}
             />
           </Form.Item>
-          <Form.Item label="Gateway" colon={false}>
+          <Form.Item label="Gateway" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validGateway}
               disabled={isDHCP}
@@ -113,7 +136,7 @@ const SingleNetworkSettingDrawer = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Preferred DNS server" colon={false}>
+          <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validDNS1}
               disabled={isDHCP}
@@ -121,7 +144,7 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('dns1', validDNS1)}
             />
           </Form.Item>
-          <Form.Item label="Alternate DNS server" colon={false}>
+          <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validDNS2}
               disabled={isDHCP}
@@ -129,11 +152,15 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('dns2', validDNS2)}
             />
           </Form.Item>
-          <Form.Item label="Hostname" colon={false}>
+          <Form.Item label="Hostname" colon={false} style={{ margin: '2px' }}>
             <Input value={hostname} onChange={handleHostnameInputOnChange} />
           </Form.Item>
         </Form>
-        <Alert message={networkSettingTips} />
+        <Alert message={networkSettingTips} banner />
+        {/* <div>
+          <Button>Cancel</Button>
+          <Button>Apply</Button>
+        </div> */}
       </Drawer>
     </div>
   )

@@ -7,7 +7,6 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
-import DrawerPage from '../../pages/DrawerPage'
 
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
@@ -47,10 +46,6 @@ const AppRoutes = () => {
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
-        },
-        {
-          path: 'Drawer',
-          element: <DrawerPage />
         }
       ]
     },

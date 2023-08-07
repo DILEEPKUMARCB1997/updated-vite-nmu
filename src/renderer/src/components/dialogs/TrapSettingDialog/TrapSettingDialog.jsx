@@ -31,23 +31,24 @@ const TrapSettingDialog = ({ onClose }) => {
   return (
     <div>
       <Modal
+        title={
+          <Typography.Title level={4}>
+            {' '}
+            <ClusterOutlined /> - Trap Configuration
+          </Typography.Title>
+        }
         open
-        onCancel={onClose}
+        onCancel={handleCancelButtonOnClick}
         width={1000}
         maskClosable={false}
-        bodyStyle={{
-          height: '520px'
-        }}
+        // bodyStyle={{
+        //   height: '520px'
+        // }}
         style={{
           top: '20px'
         }}
         footer={null}
       >
-        <Typography.Title level={4} onClick={handleCancelButtonOnClick}>
-          {' '}
-          <ClusterOutlined /> - Trap Configuration
-        </Typography.Title>
-
         <Row gutter={24}>
           <Col className="gutter-row" span={14}>
             {' '}

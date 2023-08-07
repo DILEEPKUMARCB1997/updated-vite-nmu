@@ -41,11 +41,6 @@ const routes = {
         path: '/ConfigComparission',
         name: 'Device config comparison',
         icon: <FileSearchOutlined />
-      },
-      {
-        path: '/Drawer',
-        name: 'Drawer',
-        icon: <FileSearchOutlined />
       }
     ]
   },

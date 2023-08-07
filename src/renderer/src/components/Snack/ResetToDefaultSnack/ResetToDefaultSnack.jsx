@@ -10,10 +10,10 @@ import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
 const ResetToDefaultSnack = ({ onClose }) => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(setSNMPSelectOnly(false))
+    dispatch(setSNMPSelectOnly(true))
   }, [])
   const handleOKButtonOnClick = () => {
-    dispatch(initResetToDefaultData())
+    // dispatch(initResetToDefaultData())
     dispatch(openDialog('resetToDefault'))
   }
   const handleSnackOnClose = () => {

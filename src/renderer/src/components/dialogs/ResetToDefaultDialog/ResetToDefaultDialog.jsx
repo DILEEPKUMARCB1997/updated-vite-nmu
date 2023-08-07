@@ -94,9 +94,18 @@ const ResetToDefaultDialog = ({ onClose }) => {
   return (
     <div>
       <Modal
+        title={
+          <Typography.Title
+            level={4}
+
+            // disabled={taskStatus === RUNNING}
+          >
+            <RedoOutlined /> - Reset To Default
+          </Typography.Title>
+        }
         open
-        onCancel={onClose}
-        width=" 1000px"
+        onCancel={handleCancelButtonOnClick}
+        width={1000}
         footer={null}
         bodyStyle={{ height: '350px' }}
         style={{ top: '20px' }}
@@ -113,13 +122,6 @@ const ResetToDefaultDialog = ({ onClose }) => {
             }
           }}
         >
-          <Typography.Title
-            level={4}
-            onClick={handleCancelButtonOnClick}
-            disabled={taskStatus === RUNNING}
-          >
-            <RedoOutlined /> - Reset To Default
-          </Typography.Title>
           <div style={{ padding: '24px' }}>
             <Table
               rowKey={resetToDefaultStatus.key}

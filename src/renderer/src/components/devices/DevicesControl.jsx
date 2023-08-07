@@ -8,7 +8,9 @@ import {
   ClockCircleOutlined,
   CalendarOutlined,
   ClusterOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
+  NodeIndexOutlined,
+  SettingOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -20,7 +22,9 @@ import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
-import { openSnack } from '../../features/snackSlice'
+// import { openSnack } from '../../features/snackSlice'
+import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+import { openDrawer } from '../../features/singleNetworkSettingSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -140,6 +144,22 @@ const DevicesControl = () => {
           <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">
             <Button icon={<UsergroupAddOutlined />} />
           </Popover>
+        </Tooltip>
+        <Tooltip title="Advance Setting">
+          <Button
+            icon={<NodeIndexOutlined />}
+            onClick={() => {
+              dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Network Setting">
+          <Button
+            icon={<SettingOutlined />}
+            onClick={() => {
+              dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+            }}
+          />
         </Tooltip>
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />

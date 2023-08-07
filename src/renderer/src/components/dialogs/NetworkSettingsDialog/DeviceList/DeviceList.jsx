@@ -1,14 +1,27 @@
 import { Button, Card, Form, Input, Progress, Table, Typography, theme } from 'antd'
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { networkSettingSelector } from '../../../../features/networkSettingSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  calculateIPAddress,
+  networkSettingSelector,
+  setStartAddress
+} from '../../../../features/networkSettingSlice'
 
 const DeviceList = () => {
-  const { status, completeNum, deviceNum, failNum, deviceList } =
-    useSelector(networkSettingSelector)
+  const {
+    isDHCP,
+    status,
+    completeNum,
+    deviceNum,
+    failNum,
+    deviceList,
+    startAddress,
+    validStartAddress
+  } = useSelector(networkSettingSelector)
   console.log(deviceList)
   const { useToken } = theme
   const { token } = useToken()
+  const dispatch = useDispatch()
 
   const columns = [
     {
@@ -30,8 +43,8 @@ const DeviceList = () => {
       dataIndex: 'IPAddress',
       key: 'IPAddress',
       width: 130,
-      align: 'center'
-      // action: <Input />
+      align: 'center',
+      action: <Input />
     },
     {
       title: 'Progress',
@@ -41,86 +54,20 @@ const DeviceList = () => {
       align: 'center'
     }
   ]
-  // const dataSources = [
-  //   {
-  //     key: '1',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '2',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '3',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '4',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '5',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '6',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '7',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '8',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '9',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   },
-  //   {
-  //     key: '10',
-  //     model: 'Mike',
-  //     MACAddress: 32,
-  //     IPAddress: '10 Downing Street',
-  //     progress: 'succcess'
-  //   }
-  // ]
 
-  // const data = Object.entries(deviceList)
-  // console.log(data)
   const dataSource = []
   useEffect(() => {
     dataSource.push(deviceList)
     console.log(dataSource)
   })
+
+  const handleStartAddressInputChange = (e) => {
+    dispatch(setStartAddress(e.target.value))
+  }
+
+  const handleCalculateButtonClick = () => {
+    dispatch(calculateIPAddress())
+  }
 
   return (
     <Card
@@ -135,9 +82,18 @@ const DeviceList = () => {
     >
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <Form.Item label="Start Address" colon={false} style={{ margin: '0px', tableLayout: true }}>
-          <Input />
+          <Input
+            value={startAddress}
+            disabled={status !== 'wait' || isDHCP}
+            onChange={handleStartAddressInputChange}
+          />
         </Form.Item>
-        <Button type="primary" style={{ marginLeft: '20px' }}>
+        <Button
+          type="primary"
+          style={{ marginLeft: '20px' }}
+          disabled={!validStartAddress || status !== 'wait' || isDHCP}
+          onClick={handleCalculateButtonClick}
+        >
           Calculate
         </Button>
       </div>
@@ -155,7 +111,7 @@ const DeviceList = () => {
         <Table
           rowKey={deviceList.key}
           columns={columns}
-          dataSource={[deviceList]}
+          dataSource={dataSource}
           size="small"
           pagination={{
             position: ['bottomRight'],

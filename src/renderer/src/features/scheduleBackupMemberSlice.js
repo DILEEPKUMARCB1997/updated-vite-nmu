@@ -3,7 +3,9 @@ import { getScheduledData } from './scheduleBackupSlice'
 import { notification } from 'antd'
 import {
   REQUEST_MP_DELETE_SCHEDULE,
-  RESPONSE_RP_DELETE_SCHEDULE
+  REQUEST_MP_SET_THE_SCHEDULE_DEVICE_DATA,
+  RESPONSE_RP_DELETE_SCHEDULE,
+  RESPONSE_RP_SET_THE_SCHEDULE_DEVICE_DATA
 } from '../../../main/utils/IPCEvents'
 
 export const initScheduleMemberData = (payload) => (dispatch, getState) => {
@@ -44,6 +46,30 @@ export const deleteSchedule = (param) => (dispatch, getState) => {
   })
 }
 
+export const requestSetScheduleMember = () => (dispatch, getState) => {
+  let MACAddressList = []
+  let scheduleId = getState().scheduleBackupMember.scheduleId
+  getState().scheduleBackupMember.allDevice.forEach((element) => {
+    if (getState().scheduleBackupMember.memberKeys.includes(element.key)) {
+      MACAddressList = [...MACAddressList, element.MACAddress]
+    }
+  })
+  window.electron.ipcRenderer.once(RESPONSE_RP_SET_THE_SCHEDULE_DEVICE_DATA, (event, arg) => {
+    if (arg.success) {
+      dispatch(getScheduledData())
+    } else {
+      notification.error({ message: 'Scheduled member change fail.' })
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_SCHEDULE_DEVICE_DATA, {
+    scheduleId: getState().scheduleBackupMember.scheduleId,
+    MACAddressList
+  })
+
+  //console.log(MACAddressList);
+  //console.log(scheduleId);
+}
+
 const scheduleBackupMemberSlice = createSlice({
   name: 'scheduleBackupMemberSlice',
   initialState: {
@@ -61,11 +87,25 @@ const scheduleBackupMemberSlice = createSlice({
         scheduleName: payload.scheduleName,
         scheduleId: payload.scheduleId
       }
+    },
+    transferMember: (state, { payload }) => {
+      return { ...state, memberKeys: payload }
+    },
+
+    clearScheduleMemberData: (state, { payload }) => {
+      return {
+        ...state,
+        allDevice: [],
+        memberKeys: [],
+        scheduleName: '',
+        scheduleId: ''
+      }
     }
   }
 })
 
-export const { initializeScheduleMemberData } = scheduleBackupMemberSlice.actions
+export const { initializeScheduleMemberData, transferMember, clearScheduleMemberData } =
+  scheduleBackupMemberSlice.actions
 
 export const scheduleBackupMemberSelector = (state) => {
   const { allDevice, memberKeys, scheduleName, scheduleId } = state.scheduleBackupMember
