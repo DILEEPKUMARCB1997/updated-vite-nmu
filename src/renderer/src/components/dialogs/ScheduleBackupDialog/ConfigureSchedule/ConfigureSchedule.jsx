@@ -1,5 +1,5 @@
 import { Button, Card, Form, Input, InputNumber, Select, Typography, theme } from 'antd'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react'
 import { datePad } from '../../../../../../main/modules/common/tools'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,13 +7,32 @@ import {
   cancelClick,
   getScheduledData,
   requestAddScheduleBackup,
-  scheduleBackupSelector
+  scheduleBackupSelector,
+  setEditMode
 } from '../../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
 
 const ConfigureSchedule = () => {
-  const { isEditMode } = useSelector(scheduleBackupSelector)
-  console.log(isEditMode)
+  const {
+    isEditMode,
+    frequency,
+    scheduleName,
+    scheduleDate,
+    scheduleTime,
+    weeekDay,
+    customFrequency,
+    scheduleId
+  } = useSelector(scheduleBackupSelector)
+  console.log(
+    isEditMode,
+    frequency,
+    scheduleName,
+    scheduleDate,
+    scheduleTime,
+    weeekDay,
+    customFrequency
+  )
+  console.log(scheduleId)
   const dispatch = useDispatch()
   const now = new Date()
   const nowYear = datePad(now.getFullYear().toString())
@@ -23,23 +42,26 @@ const ConfigureSchedule = () => {
   const nowMinutes = datePad(now.getMinutes().toString())
   const nowSeconds = datePad(now.getSeconds().toString())
 
-  const [frequency, setFrequency] = useState(2)
-  const [customFrequency, setCustomFrequency] = useState(1)
-  const [scheduleName, setScheduleName] = useState('')
-  const [scheduleTime, setScheduleTime] = useState(nowHours + ':' + nowMinutes)
-  const [scheduleDate, setScheduleDate] = useState(
-    now.getFullYear() + '-' + nowMonth + '-' + now.getDate()
-  )
-  const [weeekDay, setWeekDay] = useState(0)
+  console.log(now.getFullYear() + '-' + nowMonth + '-' + nowDate)
 
-  // const [state, setState] = useState({
-  //   frequency: 2,
-  //   customFrequency: 1,
-  //   scheduleName: '',
-  //   scheduleTime: nowHours + ':' + nowMinutes,
-  //   scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + now.getDate(),
-  //   weeekDay: 0
-  // })
+  // const [frequency, setFrequency] = useState(2)
+  // const [customFrequency, setCustomFrequency] = useState(1)
+  // const [scheduleName, setScheduleName] = useState('')
+  // const [scheduleTime, setScheduleTime] = useState(nowHours + ':' + nowMinutes)
+  // const [scheduleDate, setScheduleDate] = useState(
+  //   now.getFullYear() + '-' + nowMonth + '-' + now.getDate()
+  // )
+  // const [weeekDay, setWeekDay] = useState(0)
+
+  const [state, setState] = useState({
+    scheduleName: '',
+    frequency: 2,
+    customFrequency: 1,
+    scheduleTime: nowHours + ':' + nowMinutes,
+    scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate,
+    weeekDay: 0
+  })
+  console.log(state)
   const [form] = Form.useForm()
   const { useToken } = theme
   const { token } = useToken()
@@ -47,35 +69,39 @@ const ConfigureSchedule = () => {
   const handleNameInputChange = (e) => {
     console.log(e.target.value)
     if (e.target.value.length <= 20) {
-      setScheduleName(e.target.value)
-      // setState({ scheduleName: e.target.value })
+      // setScheduleName(e.target.value)
+      setState({ ...state, scheduleName: e.target.value })
     }
   }
 
   const handleSelectChange = (value) => {
     console.log(value)
-    setFrequency(value)
-    // setState({})
+    // setFrequency(value)
+    setState({ ...state, frequency: value })
   }
 
   const handleDateChange = (e) => {
     console.log(e.target.value)
-    setScheduleDate(e.target.value)
+    // setScheduleDate(e.target.value)
+    setState({ ...state, scheduleDate: e.target.value })
   }
 
   const handleSelectChangeWeek = (value) => {
     console.log(value)
-    setWeekDay(value)
+    // setWeekDay(value)
+    setState({ ...state, weeekDay: value })
   }
 
   const handleChangeCustom = (e) => {
     if (e.target.value > 0 && e.target.value < 31) {
-      setCustomFrequency(e.target.value)
+      // setCustomFrequency(e.target.value)
+      setState({ ...state, customFrequency: e.target.value })
     }
   }
 
   const handleTimeChange = (e) => {
-    setScheduleTime(e.target.value)
+    // setScheduleTime(e.target.value)
+    setState({ ...state, scheduleTime: e.target.value })
   }
 
   const handleScheduleBackupClick = () => {
@@ -83,21 +109,28 @@ const ConfigureSchedule = () => {
       .validateFields()
       .then(() => {
         dispatch(
-          requestAddScheduleBackup({
-            scheduleName,
-            scheduleTime,
-            scheduleDate,
-            frequency,
-            weeekDay,
-            customFrequency
-          })
+          requestAddScheduleBackup(state)
+          // scheduleName,
+          // scheduleTime,
+          // scheduleDate,
+          // frequency,
+          // weeekDay,
+          // customFrequency
         )
         dispatch(getScheduledData())
         dispatch(cancelClick())
-        setScheduleName('')
-        setFrequency(2)
-        setWeekDay(0)
-        setCustomFrequency(1)
+        // setScheduleName('')
+        // setFrequency(2)
+        // setWeekDay(0)
+        // setCustomFrequency(1)
+        setState({
+          scheduleName: '',
+          frequency: 2,
+          weeekDay: 0,
+          customFrequency: 1,
+          scheduleTime: nowHours + ':' + nowMinutes,
+          scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate
+        })
         form.resetFields()
       })
       .catch((errorInfo) => {
@@ -107,24 +140,40 @@ const ConfigureSchedule = () => {
 
   const handleScheduleBackupCancelClick = () => {
     dispatch(cancelClick())
-    setScheduleName('')
-    setFrequency(2)
-    setWeekDay(0)
-    setCustomFrequency(1)
+    // setScheduleName('')
+    // setFrequency(2)
+    // setWeekDay(0)
+    // setCustomFrequency(1)
+    setState({
+      scheduleName: '',
+      frequency: 2,
+      weeekDay: 0,
+      customFrequency: 1,
+      scheduleTime: nowHours + ':' + nowMinutes,
+      scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate
+    })
     form.resetFields()
   }
 
   useEffect(() => {
     if (isEditMode) {
       console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
-      setScheduleName(scheduleName)
-      setFrequency(frequency)
-      setScheduleDate(now.getFullYear() + '-' + nowMonth + '-' + now.getDate())
-      setScheduleTime(nowHours + ':' + nowMinutes)
-      setWeekDay(weeekDay)
-      setCustomFrequency(customFrequency)
+      const now = new Date(scheduleDate + '' + scheduleTime)
+      const nowYear = datePad(now.getFullYear().toString())
+      const nowMonth = datePad(now.getMonth() + 1).toString()
+      const nowDate = datePad(now.getDate().toString())
+      const nowHours = datePad(now.getHours().toString())
+      const nowMinutes = datePad(now.getMinutes().toString())
+      setState({
+        scheduleName,
+        frequency: frequency,
+        scheduleDate: scheduleDate,
+        scheduleTime: scheduleTime,
+        weeekDay: weeekDay,
+        customFrequency: customFrequency
+      })
     }
-  }, [isEditMode])
+  }, [scheduleId])
 
   return (
     <Card
@@ -143,9 +192,10 @@ const ConfigureSchedule = () => {
         form={form}
       >
         <Form.Item
-          label={<label style={{ color: scheduleName === '' ? 'red' : '' }}>Schedule Name</label>}
-          s
-          name="scheduleName"
+          label={
+            <label style={{ color: state.scheduleName === '' ? 'red' : '' }}>Schedule Name</label>
+          }
+          // name="scheduleName"
           // help="Schedule Name is Required"
           colon={false}
           rules={[
@@ -156,17 +206,21 @@ const ConfigureSchedule = () => {
           ]}
           help={
             <Typography style={{ color: 'red' }}>
-              {scheduleName === '' ? 'Schedule Name is Required' : ''}
+              {state.scheduleName === '' ? 'Schedule Name is Required' : ''}
             </Typography>
           }
           style={{ color: token.colorError }}
         >
-          <Input style={{ width: '200px' }} value={scheduleName} onChange={handleNameInputChange} />
+          <Input
+            style={{ width: '200px' }}
+            value={state.scheduleName}
+            onChange={handleNameInputChange}
+          />
         </Form.Item>
         <Form.Item label="Frequency" colon={false}>
           <Select
             placeholder="Frequency"
-            value={frequency}
+            value={state.frequency}
             onChange={handleSelectChange}
             style={{ width: '200px' }}
             options={[
@@ -184,7 +238,7 @@ const ConfigureSchedule = () => {
                 <Form.Item label="Schedule Date" colon={false}>
                   <Input
                     type="date"
-                    value={scheduleDate}
+                    value={state.scheduleDate}
                     style={{ width: '200px' }}
                     onChange={handleDateChange}
                   />
@@ -193,7 +247,7 @@ const ConfigureSchedule = () => {
               3: (
                 <Form.Item label="Week Day" colon={false}>
                   <Select
-                    value={weeekDay}
+                    value={state.weeekDay}
                     onChange={handleSelectChangeWeek}
                     style={{ width: '200px' }}
                     options={[
@@ -212,12 +266,12 @@ const ConfigureSchedule = () => {
                 <Form.Item label="Frequency (In days)" hidden={false}>
                   <InputNumber
                     style={{ width: '200px' }}
-                    value={customFrequency}
+                    value={state.customFrequency}
                     onChange={handleChangeCustom}
                   />
                 </Form.Item>
               )
-            }[frequency]
+            }[state.frequency]
           }
         </div>
 
@@ -225,7 +279,7 @@ const ConfigureSchedule = () => {
           <Input
             type="time"
             style={{ width: '200px' }}
-            value={scheduleTime}
+            value={state.scheduleTime}
             onChange={handleTimeChange}
           />
         </Form.Item>
@@ -235,7 +289,7 @@ const ConfigureSchedule = () => {
           type="primary"
           style={{ marginRight: '10px' }}
           onClick={handleScheduleBackupClick}
-          disabled={scheduleName === ''}
+          disabled={state.scheduleName === ''}
         >
           {isEditMode ? 'Edit Schedule' : 'Create Schedule'}
         </Button>

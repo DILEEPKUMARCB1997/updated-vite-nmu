@@ -48,21 +48,21 @@ const NetworkSettingDialog = ({ onClose }) => {
 
   return (
     <Modal
-      // title={
-      //   <Typography.Title level={5}>
-      //     <ShareAltOutlined /> Network Setting
-      //   </Typography.Title>
-      // }
-      title="Network Setting"
+      title={
+        <Typography.Title level={4}>
+          <ShareAltOutlined /> - Network Setting
+        </Typography.Title>
+      }
+      // title="Network Setting"
       open
       style={{ top: 20 }}
       onCancel={handleCancelButtonClick}
       onOk={handleStartButtonClick}
       maskClosable={false}
       width={1000}
-      closable={false}
+      closable={true}
       okText="start"
-      cancelButtonProps={{ disabled: disableCancel }}
+      cancelButtonProps={{ disabled: !disableCancel }}
       okButtonProps={{ disabled: !enableStart }}
     >
       <Row gutter={[15]}>

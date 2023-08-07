@@ -30,7 +30,7 @@ const FileList = () => {
         dataSource={files}
         renderItem={(item) => (
           // console.log(item.toString())
-          <ListItem style={{ margin: '5px' }}>
+          <ListItem>
             <ListItemMeta title={item} avatar={<StarOutlined />} style={{ marginBottom: '0px' }} />
           </ListItem>
         )}

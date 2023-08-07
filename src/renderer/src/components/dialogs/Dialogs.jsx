@@ -22,6 +22,8 @@ import TrapSettingDialog from './TrapSettingDialog/TrapSettingDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
 import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
 import WebBrowserDialog from './webBrowswerDialog/WebBrowserDialog'
+import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
+import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDrawer'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -46,7 +48,9 @@ const Dialog = ({ id, onClose, ...rest }) => {
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
           webBrowser: <WebBrowserDialog onClose={onClose} />,
-          syslogSetting: <SyslogSettingDialog onClose={onClose} />
+          syslogSetting: <SyslogSettingDialog onClose={onClose} />,
+          transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />,
+          advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />
         }[id]
       }
     </div>

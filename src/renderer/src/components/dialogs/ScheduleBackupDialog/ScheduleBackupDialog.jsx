@@ -1,4 +1,4 @@
-import { Card, Col, Modal, Row } from 'antd'
+import { Card, Col, Modal, Row, Typography } from 'antd'
 import React from 'react'
 import ConfigureSchedule from './ConfigureSchedule/ConfigureSchedule'
 import DeviceList from './DeviceList/DeviceList'
@@ -10,6 +10,7 @@ import {
   scheduleBackupSelector
 } from '../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
+import { CloudUploadOutlined } from '@ant-design/icons'
 
 const ScheduleBackupDialog = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -32,7 +33,11 @@ const ScheduleBackupDialog = ({ onClose }) => {
 
   return (
     <Modal
-      title="Schedule Backup"
+      title={
+        <Typography.Title level={4}>
+          <CloudUploadOutlined /> - Schedule Backup
+        </Typography.Title>
+      }
       open
       style={{ top: 20 }}
       onCancel={handleCancelButtonOnClick}
@@ -42,9 +47,15 @@ const ScheduleBackupDialog = ({ onClose }) => {
       closable={true}
       okButtonProps={{ style: { display: 'none' } }}
       cancelButtonProps={{ style: { display: 'none' } }}
-      bodyStyle={{ height: 'calc(100vh - 150px)', overflow: 'auto', margin: 0, padding: 10 }}
+      bodyStyle={{
+        height: 'calc(100vh - 150px)',
+        overflow: 'auto',
+        margin: 0,
+        paddingTop: 10,
+        paddingBottom: '10px'
+      }}
     >
-      <Row gutter={[15, 15]} style={{ margin: '15px' }}>
+      <Row gutter={[15, 15]} style={{ margin: '0px' }}>
         <Col span={24}>
           <ConfigureSchedule />
         </Col>
