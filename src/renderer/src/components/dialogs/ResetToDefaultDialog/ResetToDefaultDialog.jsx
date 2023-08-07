@@ -33,16 +33,23 @@ const columns = [
   {
     title: 'IP Address',
     dataIndex: 'IPAddress',
-    key: 'IPAddress'
+    key: 'IPAddress',
+    sorter: (a, b) => a.IPAddress - b.IPAddress
   },
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status',
-    render: (data) =>
-      data
-        ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
-        : results[2] === ERROR && <span style={{ color: 'red' }} />
+    key: 'status'
+    // render: (data) =>
+    //   data
+    //     ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
+    //     : results[2] === ERROR && <span style={{ color: 'red' }} />
+    // render: (element) =>
+    //   element ? (
+    //     <span style={{ color: 'green' }}>SUCCESS</span>
+    //   ) : (
+    //     <span style={{ color: 'red' }}>ERROR</span>
+    //   )
   }
 ]
 
@@ -86,7 +93,15 @@ const ResetToDefaultDialog = ({ onClose }) => {
 
   return (
     <div>
-      <Modal open onCancel={onClose} width=" 1000px" footer={null} bodyStyle={{ height: '350px' }}>
+      <Modal
+        open
+        onCancel={onClose}
+        width=" 1000px"
+        footer={null}
+        bodyStyle={{ height: '350px' }}
+        style={{ top: '20px' }}
+        maskClosable={false}
+      >
         <ConfigProvider
           theme={{
             inherit: true,
@@ -100,11 +115,10 @@ const ResetToDefaultDialog = ({ onClose }) => {
         >
           <Typography.Title
             level={4}
-            style={{ color: token.colorPrimary }}
             onClick={handleCancelButtonOnClick}
             disabled={taskStatus === RUNNING}
           >
-            <RedoOutlined /> Reset To Default
+            <RedoOutlined /> - Reset To Default
           </Typography.Title>
           <div style={{ padding: '24px' }}>
             <Table

@@ -34,30 +34,18 @@ const TrapSettingDialog = ({ onClose }) => {
         open
         onCancel={onClose}
         width={1000}
+        maskClosable={false}
         bodyStyle={{
           height: '520px'
         }}
         style={{
-          top: '5px'
+          top: '20px'
         }}
         footer={null}
       >
-        <Typography.Title
-          level={4}
-          // style={{
-          //   color: 'white',
-          //   padding: '15px',
-          //   height: '80px',
-          //   background: '#2e96f3',
-          //   marginBottom: '3px',
-          //   backgroundColor: ' linear-gradient(60deg, #6fbbd6, #2e96f3)',
-          //   boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2)'
-          // }}
-          style={{ color: token.colorPrimary }}
-          onClick={handleCancelButtonOnClick}
-        >
+        <Typography.Title level={4} onClick={handleCancelButtonOnClick}>
           {' '}
-          <ClusterOutlined /> Trap Configuration
+          <ClusterOutlined /> - Trap Configuration
         </Typography.Title>
 
         <Row gutter={24}>

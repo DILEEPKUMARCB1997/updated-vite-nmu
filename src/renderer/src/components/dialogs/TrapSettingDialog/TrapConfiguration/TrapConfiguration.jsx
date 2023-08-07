@@ -19,19 +19,19 @@ const TrapConfiguration = () => {
   const { token } = useToken()
 
   const handleServerInputChange = (event) => {
-    setTrapServerIP({ trapServerIP: event.target.value })
+    setTrapServerIP(event.target.value)
   }
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
-        setTrapServerPort({ trapServerPort: event.target.value })
+        setTrapServerPort(event.target.value)
       }
     } else {
-      setTrapServerPort({ trapServerPort: event.target.value })
+      setTrapServerPort(event.target.value)
     }
   }
   const handleCommInputChange = (event) => {
-    setTrapCommString({ trapCommString: event.target.value })
+    setTrapCommString(event.target.value)
   }
 
   const handleOnStartButton = () => {
@@ -57,9 +57,11 @@ const TrapConfiguration = () => {
     }
     return false
   }
+
   return (
     <Card
       size="small"
+      title="Trap Configuration Field"
       // style={{ width: '100%', height: '100%' }}
       bordered={false}
       // bodyStyle={{ padding: '5px' }}
@@ -68,35 +70,57 @@ const TrapConfiguration = () => {
         borderRadius: '4px',
         boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
       }}
+      headStyle={{ backgroundColor: token.colorPrimaryBorder }}
     >
-      <Typography.Title level={5} style={{ color: token.colorPrimary }}>
-        Trap Configuration Field
-      </Typography.Title>
-
       <Row justify="space-around" align="middle">
         <Col span={24}>
           <Form style={{ paddingTop: '20px' }}>
-            <Form.Item style={{ width: '230px' }}>
+            <Form.Item
+              name="trapServerIP"
+              style={{ width: '230px' }}
+              // validateStatus={trapServerIP === ''}
+              // help={trapServerIP === '' ? 'ServerIP is required' : ''}
+              rules={[
+                {
+                  required: true,
+                  message: 'ServerIP is required'
+                }
+              ]}
+            >
               <Input
-                status={trapServerIP === '' ? 'ServerIP is required' : ''}
+                // status={trapServerIP === '' ? 'ServerIP is required' : ''}
                 placeholder=" Trap Server IP"
                 value={trapServerIP}
                 onChange={handleServerInputChange}
               />
             </Form.Item>
-            <Form.Item style={{ width: '230px' }}>
-              <InputNumber
-                status={trapServerPort === '' ? 'Server port is required' : ''}
+            <Form.Item
+              style={{ width: '230px', paddingTop: '10px' }}
+              validateStatus={trapServerPort === ''}
+              help={trapServerPort === '' ? 'Server port is required' : ''}
+            >
+              <Input
+                type="number"
                 placeholder="Trap Server Port"
                 style={{ width: '230px' }}
                 value={trapServerPort}
                 onChange={handleServerPortChange}
-                controls
               />
             </Form.Item>
-            <Form.Item style={{ width: '230px' }}>
+            <Form.Item
+              name="trapCommString"
+              style={{ width: '230px', paddingTop: '10px' }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Trap Comm string is required'
+                }
+              ]}
+              // validateStatus={trapCommString === ''}
+              // help={trapCommString === '' ? 'Trap Comm string is required' : ''}
+            >
               <Input
-                status={trapCommString === '' ? 'Trap Comm string is required' : ''}
+                // status={trapCommString === '' ? 'Trap Comm string is required' : ''}
                 placeholder="Trap Comm String"
                 value={trapCommString}
                 onChange={handleCommInputChange}

@@ -43,8 +43,8 @@ const routes = {
         icon: <FileSearchOutlined />
       },
       {
-        path: '/ResetToDefault',
-        name: 'ResetToDefault',
+        path: '/Drawer',
+        name: 'Drawer',
         icon: <FileSearchOutlined />
       }
     ]

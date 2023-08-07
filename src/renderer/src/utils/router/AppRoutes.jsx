@@ -7,7 +7,7 @@ import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
 // import DeviceConfigPage from '../../pages/DeviceConfigPage'
-import ResetToDefault from '../../pages/ResetToDefault'
+import DrawerPage from '../../pages/DrawerPage'
 
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
@@ -49,8 +49,8 @@ const AppRoutes = () => {
           element: <ConfigComparission />
         },
         {
-          path: 'ResetToDefault',
-          element: <ResetToDefault />
+          path: 'Drawer',
+          element: <DrawerPage />
         }
       ]
     },

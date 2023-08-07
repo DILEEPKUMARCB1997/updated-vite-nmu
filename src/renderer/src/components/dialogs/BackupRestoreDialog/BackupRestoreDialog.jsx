@@ -29,21 +29,18 @@ const BackupRestoreDialog = ({ onClose }) => {
         open
         onCancel={onClose}
         width={1000}
+        maskClosable={false}
         bodyStyle={{
           height: '520px'
         }}
         style={{
-          top: '5px'
+          top: '20px'
         }}
         footer={null}
       >
-        <Typography.Title
-          level={4}
-          style={{ color: token.colorPrimary }}
-          onClick={handleCancelButtonOnClick}
-        >
+        <Typography.Title level={4} onClick={handleCancelButtonOnClick}>
           {' '}
-          <CloudUploadOutlined /> Backup and Restore
+          <CloudUploadOutlined /> - Backup and Restore
         </Typography.Title>
 
         <Row gutter={24}>
