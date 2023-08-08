@@ -29,6 +29,8 @@ import snackSlice from '../features/snackSlice'
 import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
 import deviceBasicOperatorSlice from '../features/deviceBasiceOperatorSlice'
+import singleBackupRestoreSlice from '../features/singleBackupRestoreSlice'
+import portInformationSlice from '../features/portInformationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -55,14 +57,13 @@ export const store = configureStore({
     syslogSetting: syslogSettingSlice.reducer,
     backupRestore: backupRestoreSlice.reducer,
     trapSetting: trapSettingSlice.reducer,
-    // snmpScanProgress: snmpScanProgressSlice.reducer,
-    // snack: snackSlice.reducer,
     singleNetworkSetting: singleNetworkSettingSlice.reducer,
-    // snack: snackSlice.reducer,
     snack: snackSlice.reducer,
     openWeb: openWebSlice.reducer,
     deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
-    deviceBasicOperator: deviceBasicOperatorSlice.reducer
+    deviceBasicOperator: deviceBasicOperatorSlice.reducer,
+    singleBackupRestore: singleBackupRestoreSlice.reducer,
+    portInformation: portInformationSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

@@ -14,7 +14,9 @@ import {
   NodeIndexOutlined,
   UngroupOutlined,
   LineHeightOutlined,
-  SettingOutlined
+  SettingOutlined,
+  BackwardOutlined,
+  FundOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -31,6 +33,7 @@ import {
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
 
 const options = [
@@ -82,31 +85,6 @@ const DevicesControl = () => {
       }, 1000)
     }
   }
-
-  // const handleReboot = async (MACAddress, IPAddress, deviceType) => {
-  //   const confirmed =
-  //     ((await modal.success({
-  //       title: 'Success !',
-  //       type: 'success',
-  //       content: 'Device reboot success.'
-  //     })) &&
-  //       modal.confirm({
-  //         title: 'Confirm',
-  //         content: 'This will reboot the device.'
-  //       })) ||
-  //     modal.error({
-  //       title: 'Error',
-  //       type: 'error',
-  //       content: 'Device reboot error.'
-  //     })
-  //   dispatch(
-  //     requestDeviceReboot({
-  //       MACAddress,
-  //       IPAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
 
   const handleBeep = async (IPAddress, MACAddress, deviceType) => {
     const confirmed = await modal.confirm({
@@ -206,13 +184,30 @@ const DevicesControl = () => {
             //onClick={handleOpenTelnet}
           />
         </Tooltip>
-        <Tooltip title="Network Setting">
+
+        <Tooltip title="Port Information">
+          <Button
+            icon={<FundOutlined />}
+            onClick={() => {
+              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Single Network Setting">
           <Button
             icon={<SettingOutlined />}
             onClick={() => {
               dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
             }}
           ></Button>
+        </Tooltip>
+        <Tooltip title="Backup and Restore">
+          <Button
+            icon={<BackwardOutlined />}
+            onClick={() => {
+              dispatch(openDialog('singleBackupConfig'))
+            }}
+          />
         </Tooltip>
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />

@@ -107,7 +107,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
         onCancel={handleCancelButtonOnClick}
         width={1000}
         footer={null}
-        bodyStyle={{ height: '350px' }}
+        bodyStyle={{ height: '300px' }}
         style={{ top: '20px' }}
         maskClosable={false}
       >

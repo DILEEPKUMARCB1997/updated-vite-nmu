@@ -14,11 +14,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const networkSettingTips =
   'Please make sure device username password setting and SNMP community is correct.'
-
-const SingleNetworkSettingDrawer = () => {
+const SNMPonlyInputItem = [
+  { id: 'dns1', label: 'Preferred DNS server', valid: 'validDNS1' },
+  { id: 'dns2', label: 'Alternate DNS server', valid: 'validDNS2' }
+]
+let enableApply
+const SingleNetworkSettingDrawer = (props) => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
+
   const {
     drawerVisible,
     model,
@@ -37,6 +42,11 @@ const SingleNetworkSettingDrawer = () => {
     validDNS2,
     hostname
   } = useSelector(singleNetworkSettingSelector)
+  if (isSNMPmode) {
+    enableApply = validIPAddress && validNetmask && validGateway && validDNS1 && validDNS2
+  } else {
+    enableApply = validIPAddress && validNetmask && validGateway
+  }
 
   const handleCloseDrawer = () => {
     dispatch(clearSingleNetworkSettingData())
@@ -94,7 +104,11 @@ const SingleNetworkSettingDrawer = () => {
             <Button style={{ marginRight: '10px' }} onClick={handleCloseDrawer}>
               Cancel
             </Button>
-            <Button type="primary" onClick={handleApplyButtonOnClick}>
+            <Button
+              type="primary"
+              // disabled={!enableApply}
+              onClick={handleApplyButtonOnClick}
+            >
               Apply
             </Button>
           </div>
@@ -135,7 +149,8 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('gateway', validGateway)}
             />
           </Form.Item>
-
+          {/* {isSNMPmode && ( */}
+          {/* <> */}
           <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validDNS1}
@@ -152,15 +167,14 @@ const SingleNetworkSettingDrawer = () => {
               onChange={handleNetworkAddressInputOnChange('dns2', validDNS2)}
             />
           </Form.Item>
+          {/* </> */}
+          {/* )} */}
+
           <Form.Item label="Hostname" colon={false} style={{ margin: '2px' }}>
             <Input value={hostname} onChange={handleHostnameInputOnChange} />
           </Form.Item>
         </Form>
         <Alert message={networkSettingTips} banner />
-        {/* <div>
-          <Button>Cancel</Button>
-          <Button>Apply</Button>
-        </div> */}
       </Drawer>
     </div>
   )
