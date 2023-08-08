@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button, Card, Input, Popover, Segmented, Tooltip } from 'antd'
 import {
   SyncOutlined,
@@ -10,7 +11,8 @@ import {
   ClusterOutlined,
   UsergroupAddOutlined,
   NodeIndexOutlined,
-  FundOutlined
+  FundOutlined,
+  SettingOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -22,8 +24,10 @@ import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 import { openDialog } from '../../features/dialogSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
+// import { openSnack } from '../../features/snackSlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
+import { openDrawer } from '../../features/singleNetworkSettingSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -48,16 +52,37 @@ const DevicesControl = () => {
   //   dispatch(openDialog('resetToDefault'))
   // }
 
-  const handleButtonClick = (key) => {
+  const handleResetButtonClick = () => {
     dispatch(removeBatchOperateEvent())
-    switch (key) {
-      case 'resetToDefault':
-        dispatch(setBatchOperateEvent('resetToDefault'))
-
-        dispatch(setSNMPSelectOnly(true))
-        break
-    }
+    dispatch(setBatchOperateEvent('resetToDefault'))
+    // dispatch(openSnack('resetToDefault'))
+    dispatch(setSNMPSelectOnly(true))
   }
+
+  // const handleBackButtonClick = () => {
+  //   dispatch(removeBatchOperateEvent())
+  //   dispatch(setBatchOperateEvent('backupRestore'))
+  //   // dispatch(openSnack('backupRestore'))
+  //   dispatch(setSNMPSelectOnly(true))
+  // }
+  // const handleButtonClick = (key) => () => {
+  //   dispatch(removeBatchOperateEvent())
+  //   switch (key) {
+  //     case 'resetToDefault':
+  //       dispatch(setBatchOperateEvent('resetToDefault'))
+
+  //       dispatch(setSNMPSelectOnly(true))
+  //       break
+  //     case 'backupRestore':
+  //       dispatch(setBatchOperateEvent('backupRestore'))
+
+  //       dispatch(setSNMPSelectOnly(true))
+  //       break
+
+  //     default:
+  //       break
+  //   }
+  // }
   const content = (
     <Flexbox gap={5}>
       <Input
@@ -94,7 +119,8 @@ const DevicesControl = () => {
         <Tooltip title="Reset To Default">
           <Button
             icon={<RedoOutlined />}
-            onClick={handleButtonClick}
+            onClick={() => dispatch(openDialog('resetToDefault'))}
+            // onClick={handleResetButtonClick}
             // onClick={() => dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))}
             // onChange={() => dispatch(setSNMPSelectOnly(true))}
           />
@@ -135,6 +161,14 @@ const DevicesControl = () => {
             icon={<FundOutlined />}
             onClick={() => {
               dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Single Network Setting">
+          <Button
+            icon={<SettingOutlined />}
+            onClick={() => {
+              dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
             }}
           />
         </Tooltip>

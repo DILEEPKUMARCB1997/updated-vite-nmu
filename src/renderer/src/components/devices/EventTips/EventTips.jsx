@@ -1,13 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { Alert } from 'antd'
+import { Alert, Modal } from 'antd'
 import React from 'react'
 import { UIControlSelector, removeBatchOperateEvent } from '../../../features/UIControllSlice'
 import { initResetToDefaultData } from '../../../features/resetToDefaultSlice'
 import { discoverySelector } from '../../../features/discoverySlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
+import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
+import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 
 const messages = {
-  resetToDefault: 'Reset To Default'
+  resetToDefault: 'Reset To Default',
+  backupRestore: 'Backup and Restore'
 }
 
 const TIPS = '(This feature only for device with SNMP support.)'
@@ -17,15 +21,28 @@ const EventTips = () => {
   const disableOK = useSelector((state) => {
     state.discovery.selected.length === 0
   })
+
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
+  // console.log(batchOperateEvent)
+  // console.log(showBatchOperateTips)
   console.log(messages[batchOperateEvent])
   const { SNMPSelectOnly } = useSelector(discoverySelector)
-  console.log(SNMPSelectOnly)
+  // console.log(SNMPSelectOnly)
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
+      case 'firmwareUpdate':
+        dispatch(initFirmwareUpdateData())
+        console.log(initFirmwareUpdateData())
+        break
       case 'resetToDefault':
         dispatch(initResetToDefaultData())
+        break
+      case 'backupRestore':
+        dispatch(initBackupRestoreData())
+        break
+      case 'syslogSetting':
+        dispatch(initSyslogSettingData())
         break
       default:
         break
@@ -38,25 +55,26 @@ const EventTips = () => {
   }
 
   const handleOKOnKeyPress = (event) => {
-    if (event.which === 13 || event.keyCode === 13) {
+    if (event.key === 13 || event.key === 13) {
       handleOKOnClick()
     }
   }
 
   const handleCancelOnKeyPress = (event) => {
-    if (event.which === 13 || event.keyCode === 13) {
+    if (event.key === 13 || event.key === 13) {
       handleCancelOnClick()
     }
   }
 
   return (
-    <div>
+    <Modal open footer={null}>
       <Alert
         style={{
           position: 'fixed',
           // borderTop: 'none',
           zIndex: 1000,
           left: 'calc(50% - 250px)',
+          top: '150px',
           top: '156px',
           minHeight: '0px',
           width: '500px',
@@ -89,7 +107,7 @@ const EventTips = () => {
                 role="button"
                 tabIndex="0"
                 onClick={handleOKOnClick}
-                onChange={handleOKOnKeyPress}
+                onKeyDown={handleOKOnKeyPress}
               >
                 OK
               </a>{' '}
@@ -98,7 +116,7 @@ const EventTips = () => {
                 role="button"
                 tabIndex="0"
                 onClick={handleCancelOnClick}
-                onChange={handleCancelOnKeyPress}
+                onKeyDown={handleCancelOnKeyPress}
               >
                 Cancel
               </a>
@@ -107,7 +125,7 @@ const EventTips = () => {
           </div>
         }
       />
-    </div>
+    </Modal>
   )
 }
 

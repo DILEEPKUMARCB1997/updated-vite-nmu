@@ -12,6 +12,7 @@ import {
   theme,
   ConfigProvider
 } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import {
   changeMode,
   backupRestoreSelector,
@@ -43,16 +44,19 @@ const columns = [
   {
     title: 'IP Address',
     dataIndex: 'IPAddress',
-    key: 'IPAddress'
+    key: 'IPAddress',
+    sorter: (a, b) => a.IPAddress - b.IPAddress
   },
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status',
-    render: (data) =>
-      data
-        ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
-        : results[2] === ERROR && <span style={{ color: 'red' }} />
+    key: 'status'
+    // render: (element) =>
+    //   element ? (
+    //     <span style={{ color: 'green' }}>SUCCESS</span>
+    //   ) : (
+    //     <span style={{ color: 'red' }}>ERROR</span>
+    //   )
   }
 ]
 
@@ -107,6 +111,7 @@ const DeviceList = () => {
     >
       <Card
         size="small"
+        title=" Devices"
         // style={{ width: '100%', height: '100%' }}
         bordered={false}
         // bodyStyle={{ padding: '5px' }}
@@ -116,10 +121,8 @@ const DeviceList = () => {
           borderRadius: '4px',
           boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
         }}
+        headStyle={{ backgroundColor: token.colorPrimaryBorder }}
       >
-        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
-          Devices
-        </Typography.Title>
         <div
           style={{
             height: '400px'
@@ -157,6 +160,7 @@ const DeviceList = () => {
                   width: '300px',
                   verticalAlign: 'middle'
                 }}
+                percent={20}
               />
             ) : (
               <Button
@@ -219,7 +223,7 @@ const DeviceList = () => {
               ))} */}
             </Table>
           </div>
-          <Alert message={TIPS_TEXT} banner type="info" showIcon style={{ top: '-20px' }} />
+          <Alert message={TIPS_TEXT} banner type="info" showIcon style={{ top: '-30px' }} />
         </div>
       </Card>
     </ConfigProvider>

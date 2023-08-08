@@ -6,7 +6,7 @@ import { discoverySelector } from '../features/discoverySlice'
 import GroupDeviceTable from '../components/devices/GroupDeviceTable'
 import EventTips from '../components/devices/EventTips/EventTips'
 // import EventTips from '../components/devices/EventTips/EventTips'
-// import Snacks from '../components/Snack/Snacks'
+// // import Snacks from '../components/Snack/Snacks'
 
 const DevicePage = () => {
   const { groupView, defaultDeviceArrayData } = useSelector(discoverySelector)

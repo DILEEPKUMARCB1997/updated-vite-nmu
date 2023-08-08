@@ -20,6 +20,7 @@ import { SEND_RP_OPEN_NATIVE_MENU, SEND_RP_SNMP_SCAN_STATUS } from '../../../mai
 import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
+// import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
@@ -75,7 +76,7 @@ const MainLayout = () => {
         dispatch(clearSnmpScanProgress())
       }, 2000)
     } else {
-      dispatch(changeSnmpScanStep(arg.scanSta))
+      dispatch(changeSnmpScanStep(arg.scanStatus))
     }
   }
 
@@ -154,6 +155,7 @@ const MainLayout = () => {
         <Outlet />
       </PageContainer>
       <Dialogs />
+      {/* <Snacks /> */}
     </ProLayout>
   )
 }

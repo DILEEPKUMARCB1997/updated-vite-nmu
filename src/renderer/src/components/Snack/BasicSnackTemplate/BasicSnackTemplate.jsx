@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { Alert, Button, Modal } from 'antd'
 import React, { useEffect } from 'react'
-import message from '../../devices/EventTips/EventTips'
-import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack'
+import message from '../ResetToDefaultSnack/ResetToDefaultSnack'
+import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack/ResetToDefaultSnack'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearDiscoverTableSelect } from '../../../features/discoverySlice'
-import { closeSnack } from '../../../features/snackSlice'
+// import { closeSnack } from '../../../features/snackSlice'
 
 const BasicSnackTemplate = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const BasicSnackTemplate = ({ onClose }) => {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(closeSnack())
+    closeSnack()
   }
 
   const closeSnack = () => {
@@ -29,12 +29,13 @@ const BasicSnackTemplate = ({ onClose }) => {
   }
 
   const handleCancelButtonOnClick = () => {
-    dispatch(closeSnack())
+    closeSnack()
   }
 
-  const handleOKButtonOnClick = () => {
+  const handleOKButtonClick = () => {
     handleOKButtonOnClick()
-    dispatch(closeSnack())
+
+    closeSnack()
   }
 
   return (
@@ -50,15 +51,10 @@ const BasicSnackTemplate = ({ onClose }) => {
         }
         showIcon
         action={[
-          <Button key="cancel" color="secondary" onClick={handleCancelButtonOnClick}>
+          <Button key="cancel" type="primary" onClick={handleCancelButtonOnClick}>
             Cancel
           </Button>,
-          <Button
-            key="OK"
-            color="secondary"
-            disabled={!enableOKButton}
-            onClick={handleOKButtonOnClick}
-          >
+          <Button key="OK" type="primary" disabled={!enableOKButton} onClick={handleOKButtonClick}>
             OK
           </Button>
         ]}

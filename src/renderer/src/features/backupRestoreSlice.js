@@ -11,10 +11,31 @@ import {
   RESPONSE_RP_GET_CONFIG_FILES,
   REQUEST_MP_GET_CONFIG_FILES
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from './dialogSlice'
 
 const WAITING = 0
 const SUCCESS = 1
 const ERROR = 2
+
+export const initBackupRestoreData = () => (dispatch, getState) => {
+  const deviceStatus = {}
+  const { defaultDeviceData, selected } = getState().discovery
+
+  selected.forEach((MACAddress) => {
+    deviceStatus[MACAddress] = {
+      IPAddress: defaultDeviceData[MACAddress].IPAddress,
+      model: defaultDeviceData[MACAddress].model,
+      status: WAITING,
+      restoreFile: '',
+      files: []
+    }
+  })
+
+  dispatch(initDeviceStatus({ deviceStatus }))
+  dispatch(openDialog('backupRestore'))
+  dispatch(requestGetAllFiles())
+}
+
 export const startTask = (callback) => (dispatch, getState) => {
   dispatch(setTaskRunning(true))
   const { mode, deviceStatus } = getState().backupRestore
@@ -126,6 +147,10 @@ const backupRestoreSlice = createSlice({
       const { mode } = action.payload
       return { ...state, mode }
     },
+    initDeviceStatus: (state, action) => {
+      const { deviceStatus } = action.payload
+      return { ...state, deviceStatus }
+    },
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
     },
@@ -187,7 +212,8 @@ export const {
   setAllFiles,
   deviceSelect,
   SET_RESTORE_FILE_INDEX,
-  setFiles
+  setFiles,
+  initDeviceStatus
 } = backupRestoreSlice.actions
 
 export const backupRestoreSelector = (state) => {

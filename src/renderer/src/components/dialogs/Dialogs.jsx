@@ -21,9 +21,11 @@ import BackupRestoreDialog from './BackupRestoreDialog/BackupRestoreDialog'
 import TrapSettingDialog from './TrapSettingDialog/TrapSettingDialog'
 import FWUDialog from '../FWU Dialog/FWUDialog'
 import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
+import WebBrowserDialog from './webBrowswerDialog/WebBrowserDialog'
 import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
 import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDrawer'
 import PortInformationDrawer from '../Drawer/PortInformationDrawer/PortInformationDrawer'
+import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -47,10 +49,12 @@ const Dialog = ({ id, onClose, ...rest }) => {
           resetToDefault: <ResetToDefaultDialog onClose={onClose} />,
           backupRestore: <BackupRestoreDialog onClose={onClose} />,
           trapSetting: <TrapSettingDialog onClose={onClose} />,
+          webBrowser: <WebBrowserDialog onClose={onClose} />,
           syslogSetting: <SyslogSettingDialog onClose={onClose} />,
           transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />,
           advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
-          portInformation: <PortInformationDrawer onClose={onClose} />
+          portInformation: <PortInformationDrawer onClose={onClose} />,
+          singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />
         }[id]
       }
     </div>

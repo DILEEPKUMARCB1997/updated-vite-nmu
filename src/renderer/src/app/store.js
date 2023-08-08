@@ -23,7 +23,10 @@ import trapSettingSlice from '../features/trapSettingSlice'
 import firmwareSlice from '../features/firmwareUpdate'
 // import snmpScanProgressSlice from '../features/snmpScanProgressSlice'
 import syslogSettingSlice from '../features/SyslogSettingSlice'
+// import snackSlice from '../features/snackSlice'
+import singleNetworkSettingSlice from '../features/singleNetworkSettingSlice'
 import snackSlice from '../features/snackSlice'
+import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
 import portInformationSlice from '../features/portInformationSlice'
 
@@ -52,9 +55,14 @@ export const store = configureStore({
     syslogSetting: syslogSettingSlice.reducer,
     backupRestore: backupRestoreSlice.reducer,
     trapSetting: trapSettingSlice.reducer,
+    // snmpScanProgress: snmpScanProgressSlice.reducer,
+    // snack: snackSlice.reducer,
+    singleNetworkSetting: singleNetworkSettingSlice.reducer,
+    // snack: snackSlice.reducer,
     snack: snackSlice.reducer,
     deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
-    portInformation: portInformationSlice.reducer
+    portInformation: portInformationSlice.reducer,
+    openWeb: openWebSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })
