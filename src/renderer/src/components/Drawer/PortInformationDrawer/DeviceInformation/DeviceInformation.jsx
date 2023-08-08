@@ -7,17 +7,17 @@ const DeviceInformation = () => {
   const { useToken } = theme
   const { token } = useToken()
 
-  // const state = useSelector(portInformationSelector)
-  // console.log(state)
+  const state = useSelector(portInformationSelector)
+  console.log(state)
 
-  const modelInfo = {
-    model: 1,
-    IPAddress: 12345,
-    MACAddress: 123,
-    kernel: 'Dileep',
-    ap: 123,
-    power: 'power'
-  }
+  // const modelInfo = {
+  //   model: 1,
+  //   IPAddress: 12345,
+  //   MACAddress: 123,
+  //   kernel: 'Dileep',
+  //   ap: 123,
+  //   power: 'power'
+  // }
 
   const { powerStatusData } = useSelector(portInformationSelector)
   // const { model, IPAddress, MACAddress, kernel, ap } = modelInfo
@@ -32,7 +32,7 @@ const DeviceInformation = () => {
     { label: 'Power', id: 'power' }
   ]
 
-  infoItem.map((item) => console.log(modelInfo[item.id]))
+  infoItem.map((item) => console.log(state.modelInfo[item.id]))
 
   return (
     <Card
@@ -40,7 +40,7 @@ const DeviceInformation = () => {
       size="small"
       bordered={false}
       style={{
-        height: '350px',
+        height: '450px',
         borderRadius: '4px',
         boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
       }}
@@ -50,11 +50,15 @@ const DeviceInformation = () => {
         <div key={item.id} style={{ textAlign: 'center' }}>
           <Typography.Title
             level={5}
-            style={{ backgroundColor: token.colorTextTertiary, color: 'white' }}
+            style={{
+              backgroundColor: token.colorTextTertiary,
+              color: 'white',
+              marginBottom: '0px'
+            }}
           >{`${item.label}`}</Typography.Title>
-          {/* {item.id === 'power' ? (
+          {item.id === 'power' ? (
             <div>
-              {Object.entries(modelInfo).map(([power, status]) => (
+              {Object.entries(state.modelInfo).map(([status]) => (
                 <div key={power}>
                   <Typography key={power}>{`${power}`}</Typography>
                   {status === 1 ? 'Flash On' : 'Flash Off'}
@@ -62,8 +66,8 @@ const DeviceInformation = () => {
               ))}
             </div>
           ) : (
-            <Typography>{`${modelInfo[item.id]}`}</Typography>
-          )} */}
+            <Typography>{`${state.modelInfo[item.id]}`}</Typography>
+          )}
         </div>
       ))}
     </Card>

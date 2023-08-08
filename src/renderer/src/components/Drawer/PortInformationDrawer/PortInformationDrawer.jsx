@@ -83,7 +83,7 @@ const PortInformationDialog = ({ onClose }) => {
       open={drawerVisible}
       width="100%"
       headerStyle={{ backgroundColor: token.colorPrimaryBgHover, paddingBottom: '0px' }}
-      bodyStyle={{ backgroundColor: token.colorBgLayout }}
+      bodyStyle={{ backgroundColor: token.colorBgLayout, padding: '10px' }}
       closable={false}
       maskClosable={false}
       footer={

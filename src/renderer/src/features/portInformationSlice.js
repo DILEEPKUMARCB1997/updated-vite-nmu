@@ -1,16 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_PORT_INFORMATION,
-  REQUEST_MP_GET_POWER_STATUS
+  REQUEST_MP_GET_POWER_STATUS,
+  REQUEST_MP_SET_PORT_LINK_STATUS,
+  RESPONSE_RP_SET_PORT_LINK_STATUS
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from './dialogSlice'
 
 const XAXES_LABELS_NUM = 13
 const XAXES_INTERVAL_NUM = XAXES_LABELS_NUM - 1
+
+export const initPortInfoData = (payload) => (dispatch, getState) => {
+  const { MACAddress } = payload
+
+  const { model, IPAddress, kernel, ap } = getState().discoverys.defaultDeviceData[MACAddress]
+
+  dispatch(setModelInfo({ model, IPAddress, MACAddress, kernel, ap }))
+  dispatch(openPortInfoDrawer(true))
+  dispatch(openDialog('portInformation'))
+  dispatch(startPortStatusPolling())
+}
 
 export const requestGetPortAndPowerStatus = () => (dispatch, getState) => {
   const { MACAddress } = getState().portInformation
   window.electron.ipcRenderer.send(REQUEST_MP_GET_PORT_INFORMATION, { MACAddress })
   window.electron.ipcRenderer.send(REQUEST_MP_GET_POWER_STATUS, { MACAddress })
+}
+
+export const requestSetPortStatus = (portStatus) => (dispatch, getState) => {
+  dispatch(addPortSwitchLoading(portStatus.portName))
+  window.electron.ipcRenderer.once(RESPONSE_RP_SET_PORT_LINK_STATUS, (event, arg) => {
+    //console.log(arg);
+    if (arg.success) {
+      dispatch(setPortEnableStatus(portStatus))
+    }
+    dispatch(removePortSwitchLoading(portStatus.portName))
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SET_PORT_LINK_STATUS, {
+    MACAddress: getState().portInformation.MACAddress,
+    portName: portStatus.portName,
+    linkStatus: portStatus.checked ? 1 : 2
+  })
 }
 
 const portInformationSlice = createSlice({
@@ -21,7 +51,7 @@ const portInformationSlice = createSlice({
     isWaiting: false,
     MACAddress: '',
     isPolling: false,
-    modelInfo: { model: 1, IPAddress: 12345, MACAddress: 123, kernel: 'Dileep', ap: 123 },
+    modelInfo: {},
     portStatusData: {},
     powerStatusData: {},
     trafficBuffer: {},
@@ -35,6 +65,35 @@ const portInformationSlice = createSlice({
     openPortInfoDrawer: (state, { payload }) => {
       console.log(payload)
       return { ...state, drawerVisible: payload }
+    },
+    setModelInfo: (state, { payload }) => {
+      const { MACAddress } = payload
+      return { ...state, modelInfo: payload, MACAddress }
+    },
+    startPortStatusPolling: (state, { payload }) => {
+      return { ...state, isPolling: true }
+    },
+    setPortEnableStatus: (state, { payload }) => {
+      const { portName, checked } = payload
+      return {
+        ...state,
+        portStatusData: {
+          ...state.portStatusData,
+          [portName]: { ...state.portStatusData[portName], enableStatus: checked ? 1 : 2 }
+        }
+      }
+    },
+    removePortSwitchLoading: (state, { payload }) => {
+      return {
+        ...state,
+        switchLoadings: state.switchLoadings.filter((el) => el !== payload)
+      }
+    },
+    addPortSwitchLoading: (state, { payload }) => {
+      return {
+        ...state,
+        switchLoadings: [...state.switchLoadings, payload]
+      }
     },
     updatePortStatusData: (state, { payload }) => {
       let firstRound = true
@@ -167,11 +226,16 @@ const portInformationSlice = createSlice({
 })
 
 export const {
+  setModelInfo,
+  startPortStatusPolling,
   updatePortStatusData,
+  setPortEnableStatus,
   clearPortInfoData,
   waitForPortStatusData,
   updatePowerStatusData,
-  openPortInfoDrawer
+  openPortInfoDrawer,
+  removePortSwitchLoading,
+  addPortSwitchLoading
 } = portInformationSlice.actions
 
 export const portInformationSelector = (state) => {

@@ -1,9 +1,27 @@
 import { Card, Switch, Table, theme } from 'antd'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import {
+  portInformationSelector,
+  requestSetPortStatus
+} from '../../../../features/portInformationSlice'
 
 const PortStatus = () => {
   const { useToken } = theme
   const { token } = useToken()
+
+  const { portStatusData, isWaiting, switchLoadings } = useSelector(portInformationSelector)
+
+  // let arrayData = []
+  // arrayData = Object.entries(portStatusData).forEach(([portName, portStatus]) => {
+  //   arrayData = [
+  //     ...arrayData,
+  //     {
+  //       ...portStatus,
+  //       portName
+  //     }
+  //   ]
+  // })
 
   const columns = [
     {
@@ -100,11 +118,16 @@ const PortStatus = () => {
         <Switch
           loading={switchLoadings.includes(record.portName)}
           checked={record.enableStatus === 1}
-          onChange={func(record.portName)}
+          onChange={handlePortSwitchChange(record.portName)}
         />
       )
     }
   ]
+
+  const handlePortSwitchChange = (portName) => (checked) => {
+    dispatchEvent(requestSetPortStatus({ portName, checked }))
+  }
+
   return (
     <Card
       title="Port Status"
