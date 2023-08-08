@@ -25,6 +25,7 @@ import WebBrowserDialog from './webBrowswerDialog/WebBrowserDialog'
 import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
 import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDrawer'
 import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
+import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -52,7 +53,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           syslogSetting: <SyslogSettingDialog onClose={onClose} />,
           transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />,
           advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
-          singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />
+          singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />,
+          singleBackupConfig: <SingleBackupConfigDialog onClose={onClose} />
         }[id]
       }
     </div>
