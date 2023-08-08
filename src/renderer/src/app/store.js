@@ -25,6 +25,7 @@ import firmwareSlice from '../features/firmwareUpdate'
 import syslogSettingSlice from '../features/SyslogSettingSlice'
 import snackSlice from '../features/snackSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
+import portInformationSlice from '../features/portInformationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -52,7 +53,8 @@ export const store = configureStore({
     backupRestore: backupRestoreSlice.reducer,
     trapSetting: trapSettingSlice.reducer,
     snack: snackSlice.reducer,
-    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer
+    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
+    portInformation: portInformationSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

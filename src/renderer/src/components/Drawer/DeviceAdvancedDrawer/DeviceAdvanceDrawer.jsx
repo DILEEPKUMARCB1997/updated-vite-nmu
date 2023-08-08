@@ -48,18 +48,13 @@ const DeviceAdvanceDrawer = ({ onClose }) => {
   return (
     <Drawer
       open={drawVisible}
-      title={
-        <Typography.Title level={4} style={{ color: token.colorPrimary }}>
-          {' '}
-          Advance Setting
-        </Typography.Title>
-      }
+      title={<Typography.Title level={4}> Advance Setting</Typography.Title>}
       closable={false}
       maskClosable={false}
       onClose={handleCloseDrawer}
       destroyOnClose
       width={400}
-      headerStyle={{ paddingBottom: '0px' }}
+      headerStyle={{ backgroundColor: token.colorPrimaryBgHover, paddingBottom: '0px' }}
       bodyStyle={{ backgroundColor: token.colorBgLayout }}
       footer={
         <div

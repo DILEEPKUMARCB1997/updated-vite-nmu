@@ -23,6 +23,7 @@ import FWUDialog from '../FWU Dialog/FWUDialog'
 import SyslogSettingDialog from './SyslogSettingDialog/SyslogSettingDialog'
 import TransferScheduleMemberDialog from './TransferScheduleMemberDialog/TransferScheduleMemberDialog'
 import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDrawer'
+import PortInformationDrawer from '../Drawer/PortInformationDrawer/PortInformationDrawer'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -48,7 +49,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           trapSetting: <TrapSettingDialog onClose={onClose} />,
           syslogSetting: <SyslogSettingDialog onClose={onClose} />,
           transferScheduleMember: <TransferScheduleMemberDialog onClose={onClose} />,
-          advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />
+          advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
+          portInformation: <PortInformationDrawer onClose={onClose} />
         }[id]
       }
     </div>

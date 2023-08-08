@@ -9,7 +9,8 @@ import {
   CalendarOutlined,
   ClusterOutlined,
   UsergroupAddOutlined,
-  NodeIndexOutlined
+  NodeIndexOutlined,
+  FundOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -22,6 +23,7 @@ import { openDialog } from '../../features/dialogSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+import { openPortInfoDrawer } from '../../features/portInformationSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -125,6 +127,14 @@ const DevicesControl = () => {
             icon={<NodeIndexOutlined />}
             onClick={() => {
               dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Port Information">
+          <Button
+            icon={<FundOutlined />}
+            onClick={() => {
+              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
             }}
           />
         </Tooltip>
