@@ -11,6 +11,7 @@ import {
   ClusterOutlined,
   UsergroupAddOutlined,
   NodeIndexOutlined,
+  FundOutlined,
   SettingOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
@@ -25,6 +26,7 @@ import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UI
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 // import { openSnack } from '../../features/snackSlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
 
 const options = [
@@ -154,7 +156,15 @@ const DevicesControl = () => {
             }}
           />
         </Tooltip>
-        <Tooltip title="Network Setting">
+        <Tooltip title="Port Information">
+          <Button
+            icon={<FundOutlined />}
+            onClick={() => {
+              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Single Network Setting">
           <Button
             icon={<SettingOutlined />}
             onClick={() => {

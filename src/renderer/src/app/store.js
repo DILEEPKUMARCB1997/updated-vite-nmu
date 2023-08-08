@@ -28,6 +28,7 @@ import singleNetworkSettingSlice from '../features/singleNetworkSettingSlice'
 import snackSlice from '../features/snackSlice'
 import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
+import portInformationSlice from '../features/portInformationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -59,8 +60,9 @@ export const store = configureStore({
     singleNetworkSetting: singleNetworkSettingSlice.reducer,
     // snack: snackSlice.reducer,
     snack: snackSlice.reducer,
-    openWeb: openWebSlice.reducer,
-    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer
+    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
+    portInformation: portInformationSlice.reducer,
+    openWeb: openWebSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

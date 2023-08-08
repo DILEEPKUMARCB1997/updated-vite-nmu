@@ -293,7 +293,7 @@ const ConfigureSchedule = () => {
         >
           {isEditMode ? 'Edit Schedule' : 'Create Schedule'}
         </Button>
-        <Button type="primary" onClick={handleScheduleBackupCancelClick}>
+        <Button type="primary" ghost onClick={handleScheduleBackupCancelClick}>
           Cancel
         </Button>
       </div>
