@@ -163,8 +163,7 @@ const MailSetting = () => {
             </Form>
           ) : (
             <Tag
-              style={{ fontSize: '1rem', borderStyle: 'dashed' }}
-              color="#6FBBD6"
+              style={{ fontSize: '1rem', color: 'black', background: token.colorPrimary }}
               onClick={handleAddNewMailButtonOnClick(element.id)}
             >
               <PlusOutlined /> New Mail

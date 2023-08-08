@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select } from 'antd'
+import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
 
@@ -128,15 +128,9 @@ const SyslogConfiguration = () => {
                   message: 'Server IP is required'
                 }
               ]}
-              // help={
-              //   <Typography style={{ color: 'red' }}>
-              //     {serverIP === '' ? 'Server IP is required' : ''}
-              //   </Typography>
-              // }
               style={{ color: token.colorError, width: '230px' }}
             >
               <Input
-                //  status={serverIP === '' ? 'ServerIP is required' : ''}
                 placeholder="  Server IP"
                 value={serverIP}
                 onChange={handleServerInputChange}
@@ -145,18 +139,11 @@ const SyslogConfiguration = () => {
 
             <Form.Item
               colon={false}
-              name="server Port"
-              rules={[
-                {
-                  required: true,
-                  message: 'Server port is required'
-                }
-              ]}
-              // help={
-              //   <Typography style={{ color: 'red' }}>
-              //     {serverPort === '' ? 'Server port is required' : ''}
-              //   </Typography>
-              // }
+              help={
+                <Typography style={{ color: 'red' }}>
+                  {serverPort === '' ? 'Server port is required' : ''}
+                </Typography>
+              }
               style={{ color: token.colorError, width: '230px' }}
             >
               <Input

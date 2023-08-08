@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Card, Input, Popover, Segmented, Tooltip } from 'antd'
+import { Button, Card, Input, Popover, Segmented, Tooltip, App, Modal } from 'antd'
 import {
   SyncOutlined,
   UploadOutlined,
@@ -10,7 +10,9 @@ import {
   CalendarOutlined,
   ClusterOutlined,
   UsergroupAddOutlined,
-  NodeIndexOutlined
+  NodeIndexOutlined,
+  UngroupOutlined,
+  LineHeightOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -20,9 +22,15 @@ import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
 // import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
+import {
+  requestDeviceBeep,
+  requestDeviceReboot,
+  requestOpenTelnet
+} from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+const { confirm } = Modal
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -33,6 +41,7 @@ const DevicesControl = () => {
   const dispatch = useDispatch()
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
+  const { modal } = App.useApp()
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
@@ -43,10 +52,39 @@ const DevicesControl = () => {
       groupName: groupAddInput
     })
   }
-  // const handleResetToDefault = () => {
-  //   dispatch(openDialog('resetToDefault'))
-  // }
+  const handleReboot = async (MACAddress, IPAddress, deviceType) => {
+    const confirmed = await modal.confirm({
+      title: 'Confirm',
+      content: 'This will reboot the device.'
+    })
+    console.log('Confirmed: ', confirmed)
+    dispatch(
+      requestDeviceReboot({
+        MACAddress,
+        IPAddress,
+        deviceType
+      })
+    )
+  }
 
+  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
+    const confirmed = await modal.confirm({
+      title: 'Confirm',
+      content: 'This will let device beep.',
+      style: { marginBottom: '70px' }
+    })
+    console.log('Confirmed: ', confirmed)
+    dispatch(
+      requestDeviceBeep({
+        IPAddress,
+        MACAddress,
+        deviceType
+      })
+    )
+  }
+  // const handleOpenTelnet = (IPAddress) => {
+  //   dispatch(requestOpenTelnet(IPAddress))
+  // }
   const handleButtonClick = (key) => {
     dispatch(removeBatchOperateEvent())
     switch (key) {
@@ -91,12 +129,7 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button
-            icon={<RedoOutlined />}
-            onClick={handleButtonClick}
-            // onClick={() => dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))}
-            // onChange={() => dispatch(setSNMPSelectOnly(true))}
-          />
+          <Button icon={<RedoOutlined />} onClick={handleButtonClick} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
@@ -128,6 +161,18 @@ const DevicesControl = () => {
               dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
             }}
           />
+        </Tooltip>
+        <Tooltip title="Beep">
+          <Button icon={<UngroupOutlined />} onClick={handleBeep}></Button>
+        </Tooltip>
+        <Tooltip title="Reboot">
+          <Button icon={<RedoOutlined />} onClick={handleReboot}></Button>
+        </Tooltip>
+        <Tooltip title="Telnet">
+          <Button
+            icon={<LineHeightOutlined />}
+            //onClick={handleOpenTelnet}
+          ></Button>
         </Tooltip>
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />

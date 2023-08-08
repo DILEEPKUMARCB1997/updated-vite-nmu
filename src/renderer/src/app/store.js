@@ -26,6 +26,7 @@ import syslogSettingSlice from '../features/SyslogSettingSlice'
 import snackSlice from '../features/snackSlice'
 import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
+import deviceBasicOperatorSlice from '../features/deviceBasiceOperatorSlice'
 
 export const store = configureStore({
   reducer: {
@@ -55,7 +56,8 @@ export const store = configureStore({
     // snmpScanProgress: snmpScanProgressSlice.reducer,
     snack: snackSlice.reducer,
     openWeb: openWebSlice.reducer,
-    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer
+    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
+    deviceBasicOperator: deviceBasicOperatorSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })
