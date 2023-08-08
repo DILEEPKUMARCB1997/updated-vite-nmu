@@ -29,6 +29,7 @@ import snackSlice from '../features/snackSlice'
 import openWebSlice from '../features/openWebSlice'
 import deviceAdvanceSettingSlice from '../features/deviceAdvanceSettingSlice'
 import singleBackupRestoreSlice from '../features/singleBackupRestoreSlice'
+import portInformationSlice from '../features/portInformationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -62,7 +63,10 @@ export const store = configureStore({
     snack: snackSlice.reducer,
     openWeb: openWebSlice.reducer,
     deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
-    singleBackupRestore: singleBackupRestoreSlice.reducer
+    singleBackupRestore: singleBackupRestoreSlice.reducer,
+    deviceAdvanceSetting: deviceAdvanceSettingSlice.reducer,
+    portInformation: portInformationSlice.reducer,
+    openWeb: openWebSlice.reducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 })

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Input, Button, Progress, notification, App, Typography } from 'antd'
+import { Input, Button, Progress, notification, App, Typography, theme } from 'antd'
 import {
   singleBackupRestoreSelector,
   requestBackupSelectFolder,
@@ -12,6 +12,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 const BackupRestorePanel = () => {
+  const { useToken } = theme
+  const { token } = useToken()
   const dispatch = useDispatch()
   const { modal } = App.useApp()
   const { backupPath, filename, isBackingUP, restorePath } = useSelector(
@@ -79,7 +81,9 @@ const BackupRestorePanel = () => {
           paddingRight: '0.75em'
         }}
       >
-        <Typography.Title level={4}>Backup</Typography.Title>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
+          Backup
+        </Typography.Title>
         Path:
         <div>
           <Input
@@ -128,7 +132,9 @@ const BackupRestorePanel = () => {
           paddingRight: '0.75em'
         }}
       >
-        <Typography.Title level={4}>Restore</Typography.Title>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
+          Restore
+        </Typography.Title>
         File:
         <div>
           <Input
