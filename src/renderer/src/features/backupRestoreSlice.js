@@ -11,6 +11,7 @@ import {
   RESPONSE_RP_GET_CONFIG_FILES,
   REQUEST_MP_GET_CONFIG_FILES
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from './dialogSlice'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -31,9 +32,10 @@ export const initBackupRestoreData = () => (dispatch, getState) => {
   })
 
   dispatch(initDeviceStatus({ deviceStatus }))
-  //dispatch(openDialog('backupRestore'))
+  dispatch(openDialog('backupRestore'))
   dispatch(requestGetAllFiles())
 }
+
 export const startTask = (callback) => (dispatch, getState) => {
   dispatch(setTaskRunning(true))
   const { mode, deviceStatus } = getState().backupRestore
@@ -210,8 +212,8 @@ export const {
   setAllFiles,
   deviceSelect,
   SET_RESTORE_FILE_INDEX,
-  initDeviceStatus,
-  setFiles
+  setFiles,
+  initDeviceStatus
 } = backupRestoreSlice.actions
 
 export const backupRestoreSelector = (state) => {

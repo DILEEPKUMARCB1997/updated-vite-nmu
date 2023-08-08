@@ -5,11 +5,13 @@ import { UIControlSelector, removeBatchOperateEvent } from '../../../features/UI
 import { initResetToDefaultData } from '../../../features/resetToDefaultSlice'
 import { discoverySelector } from '../../../features/discoverySlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
 import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
 import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 
 const messages = {
-  resetToDefault: 'Reset To Default'
+  resetToDefault: 'Reset To Default',
+  backupRestore: 'Backup and Restore'
 }
 
 const TIPS = '(This feature only for device with SNMP support.)'
@@ -19,10 +21,13 @@ const EventTips = () => {
   const disableOK = useSelector((state) => {
     state.discovery.selected.length === 0
   })
+
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
+  // console.log(batchOperateEvent)
+  // console.log(showBatchOperateTips)
   console.log(messages[batchOperateEvent])
   const { SNMPSelectOnly } = useSelector(discoverySelector)
-  console.log(SNMPSelectOnly)
+  // console.log(SNMPSelectOnly)
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
@@ -32,6 +37,9 @@ const EventTips = () => {
         break
       case 'resetToDefault':
         dispatch(initResetToDefaultData())
+        break
+      case 'backupRestore':
+        dispatch(initBackupRestoreData())
         break
       case 'syslogSetting':
         dispatch(initSyslogSettingData())
@@ -47,13 +55,13 @@ const EventTips = () => {
   }
 
   const handleOKOnKeyPress = (event) => {
-    if (event.which === 13 || event.keyCode === 13) {
+    if (event.key === 13 || event.key === 13) {
       handleOKOnClick()
     }
   }
 
   const handleCancelOnKeyPress = (event) => {
-    if (event.which === 13 || event.keyCode === 13) {
+    if (event.key === 13 || event.key === 13) {
       handleCancelOnClick()
     }
   }
@@ -66,6 +74,7 @@ const EventTips = () => {
           // borderTop: 'none',
           zIndex: 1000,
           left: 'calc(50% - 250px)',
+          top: '150px',
           top: '156px',
           minHeight: '0px',
           width: '500px',
@@ -98,7 +107,7 @@ const EventTips = () => {
                 role="button"
                 tabIndex="0"
                 onClick={handleOKOnClick}
-                onChange={handleOKOnKeyPress}
+                onKeyDown={handleOKOnKeyPress}
               >
                 OK
               </a>{' '}
@@ -107,7 +116,7 @@ const EventTips = () => {
                 role="button"
                 tabIndex="0"
                 onClick={handleCancelOnClick}
-                onChange={handleCancelOnKeyPress}
+                onKeyDown={handleCancelOnKeyPress}
               >
                 Cancel
               </a>

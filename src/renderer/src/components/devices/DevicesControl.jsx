@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Button, Card, Input, Popover, Segmented, Tooltip, App, Modal } from 'antd'
+import { REQUEST_MP_REBOOT_GWD_DEVICE } from '../../../../main/utils/IPCEvents'
 import {
   SyncOutlined,
   UploadOutlined,
@@ -12,7 +13,8 @@ import {
   UsergroupAddOutlined,
   NodeIndexOutlined,
   UngroupOutlined,
-  LineHeightOutlined
+  LineHeightOutlined,
+  SettingOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -20,7 +22,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
-// import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
 import {
   requestDeviceBeep,
@@ -30,7 +31,7 @@ import {
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
-const { confirm } = Modal
+import { openDrawer } from '../../features/singleNetworkSettingSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -52,20 +53,60 @@ const DevicesControl = () => {
       groupName: groupAddInput
     })
   }
+
   const handleReboot = async (MACAddress, IPAddress, deviceType) => {
-    const confirmed = await modal.confirm({
-      title: 'Confirm',
-      content: 'This will reboot the device.'
-    })
-    console.log('Confirmed: ', confirmed)
-    dispatch(
-      requestDeviceReboot({
-        MACAddress,
-        IPAddress,
-        deviceType
+    const confirmed =
+      ((await modal.success({
+        title: 'Success !',
+        type: 'success',
+        content: 'Device reboot success.'
+      })) &&
+        modal.confirm({
+          title: 'Confirm',
+          content: 'This will reboot the device.'
+        })) ||
+      modal.error({
+        title: 'Error',
+        type: 'error',
+        content: 'Device reboot error.'
       })
-    )
+    if (confirmed) {
+      setTimeout(() => {
+        dispatch(
+          requestDeviceReboot({
+            MACAddress,
+            IPAddress,
+            deviceType
+          })
+        )
+      }, 1000)
+    }
   }
+
+  // const handleReboot = async (MACAddress, IPAddress, deviceType) => {
+  //   const confirmed =
+  //     ((await modal.success({
+  //       title: 'Success !',
+  //       type: 'success',
+  //       content: 'Device reboot success.'
+  //     })) &&
+  //       modal.confirm({
+  //         title: 'Confirm',
+  //         content: 'This will reboot the device.'
+  //       })) ||
+  //     modal.error({
+  //       title: 'Error',
+  //       type: 'error',
+  //       content: 'Device reboot error.'
+  //     })
+  //   dispatch(
+  //     requestDeviceReboot({
+  //       MACAddress,
+  //       IPAddress,
+  //       deviceType
+  //     })
+  //   )
+  // }
 
   const handleBeep = async (IPAddress, MACAddress, deviceType) => {
     const confirmed = await modal.confirm({
@@ -85,16 +126,7 @@ const DevicesControl = () => {
   // const handleOpenTelnet = (IPAddress) => {
   //   dispatch(requestOpenTelnet(IPAddress))
   // }
-  const handleButtonClick = (key) => {
-    dispatch(removeBatchOperateEvent())
-    switch (key) {
-      case 'resetToDefault':
-        dispatch(setBatchOperateEvent('resetToDefault'))
 
-        dispatch(setSNMPSelectOnly(true))
-        break
-    }
-  }
   const content = (
     <Flexbox gap={5}>
       <Input
@@ -129,7 +161,7 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={handleButtonClick} />
+          <Button icon={<RedoOutlined />} onClick={() => dispatch(openDialog('resetToDefault'))} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
@@ -163,15 +195,23 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Beep">
-          <Button icon={<UngroupOutlined />} onClick={handleBeep}></Button>
+          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
         <Tooltip title="Reboot">
-          <Button icon={<RedoOutlined />} onClick={handleReboot}></Button>
+          <Button icon={<RedoOutlined />} onClick={handleReboot} />
         </Tooltip>
         <Tooltip title="Telnet">
           <Button
             icon={<LineHeightOutlined />}
             //onClick={handleOpenTelnet}
+          />
+        </Tooltip>
+        <Tooltip title="Network Setting">
+          <Button
+            icon={<SettingOutlined />}
+            onClick={() => {
+              dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+            }}
           ></Button>
         </Tooltip>
         <div style={{ flexGrow: 1 }}></div>

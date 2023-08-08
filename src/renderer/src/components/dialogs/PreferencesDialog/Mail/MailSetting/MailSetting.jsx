@@ -98,8 +98,8 @@ const MailSetting = () => {
           ]}
         >
           <Input
-            bordered={false}
-            style={{ width: '200px', borderBottom: '1px solid black' }}
+            //  bordered={false}
+            style={{ width: '200px' }}
             value={username}
             onChange={handleUsernameInputOnChange}
             placeholder={USERNAME_INPUT_LABLE}
@@ -107,8 +107,8 @@ const MailSetting = () => {
         </Form.Item>
         <Form.Item name="password">
           <Input.Password
-            bordered={false}
-            style={{ width: '200px', borderBottom: '1px solid black' }}
+            //  bordered={false}
+            style={{ width: '200px' }}
             value={password}
             onChange={handlePasswordInputOnChange}
             placeholder={PASSWORD_INPUT_LABLE}
