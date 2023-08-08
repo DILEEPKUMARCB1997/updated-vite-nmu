@@ -4,7 +4,7 @@
 // // /* eslint-disable no-unused-vars */
 // // // /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import { Modal, Menu, Layout, App, Spin, theme } from 'antd'
+import { Modal, Menu, Layout, App, Spin, theme, Typography } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import {
   preferenceSelector,
@@ -262,6 +262,71 @@ const PreferencesDialog = ({ onClose }) => {
         </Layout>
       </Layout>
     </Modal>
+
+    // <Modal
+    //   open
+    //   // title={
+    //   //   <Typography.Title style={{ color: token.colorPrimary }} level={2}>
+    //   //     <SettingOutlined /> - Preference
+    //   //   </Typography.Title>
+    //   // }
+    //   onCancel={onClose}
+    //   footer={null}
+    //   width="100%"
+    //   style={{
+    //     top: '5px'
+    //   }}
+    // >
+    //   <Layout style={{ height: '89vh' }}>
+    //     <Header
+    //       style={{
+    //         fontSize: 28,
+    //         backgroundColor: 'white',
+    //         marginTop: '-20px',
+    //         color: token.colorPrimary,
+    //         left: '30px',
+
+    //         fontWeight: 'bold'
+    //       }}
+    //       onClick={handleCancelButtonClick}
+    //     >
+    //       <SettingOutlined /> - Preference
+    //     </Header>
+    //     <Layout style={{ height: '100vh' }}>
+    //       <Sider
+    //         style={{
+    //           // display: 'flex',
+    //           // flexDirection: 'row',
+    //           // alignItems: 'center',
+    //           // justifyContent: 'left',
+    //           backgroundColor: 'white'
+    //         }}
+    //       >
+    //         <Menu
+    //           mode="inline"
+    //           // selectedKeys={[selectedIndex]}
+    //           style={{
+    //             fontSize: '16px',
+    //             position: 'relative'
+    //           }}
+    //           onClick={handleMenuItemClick}
+    //           items={items}
+    //         ></Menu>
+    //       </Sider>
+    //       <Content
+    //         style={{
+    //           padding: 24,
+    //           // margin: '24px 16px 24px',
+    //           minHeight: 280,
+    //           background: colorBgContainer,
+    //           overflow: 'auto'
+    //         }}
+    //       >
+    //         {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
+    //       </Content>
+    //     </Layout>
+    //   </Layout>
+    // </Modal>
   )
 }
 

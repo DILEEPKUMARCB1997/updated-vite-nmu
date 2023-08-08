@@ -36,7 +36,7 @@ const DeviceDefaultSetting = (props) => {
         style={{
           marginBottom: '15px',
           marginTop: '15px',
-          fontSize: '1.5rem',
+          fontSize: '20px',
           color: token.colorPrimary
         }}
       >

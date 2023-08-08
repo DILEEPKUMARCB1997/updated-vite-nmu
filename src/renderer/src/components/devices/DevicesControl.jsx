@@ -11,8 +11,9 @@ import {
   ClusterOutlined,
   UsergroupAddOutlined,
   NodeIndexOutlined,
-  FundOutlined,
-  SettingOutlined
+  SettingOutlined,
+  BackwardOutlined,
+  FundOutlined
 } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -169,6 +170,14 @@ const DevicesControl = () => {
             icon={<SettingOutlined />}
             onClick={() => {
               dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Backup and Restore">
+          <Button
+            icon={<BackwardOutlined />}
+            onClick={() => {
+              dispatch(openDialog('singleBackupConfig'))
             }}
           />
         </Tooltip>
