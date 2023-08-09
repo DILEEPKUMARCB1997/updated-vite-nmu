@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Menu } from 'antd'
+import { Button, Menu, Modal } from 'antd'
 import {
   UndoOutlined,
   ShareAltOutlined,
@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import { openDialog } from '../../features/dialogSlice'
 //import { openDialog } from '../../../features/dialogSlice'
 import { requestOpenWebData } from '../../features/openWebSlice'
+import { render } from 'react-dom'
 ///const shell = require('electron').shell
 //import { shell } from 'electron'
 //import WebBrowserDialog from '../dialogs/webBrowswerDialog/WebBrowserDialog'
@@ -75,7 +76,14 @@ const RowContextMenu = () => {
               {
                 label: 'Open on Os Browser',
                 key: 'Openon Os',
-                icon: <SelectOutlined />
+                icon: <SelectOutlined />,
+                render: (data) =>
+                  data ? (
+                    <Button onClick={openOnOSbrowsers} />
+                  ) : (
+                    <Button status="error" className="cutomBadge" />
+                  )
+
                 // onTitleClick={handleOpenWeb}
               },
               { label: 'Open on NMU', key: 'Open on NMU' }
@@ -124,3 +132,26 @@ const RowContextMenu = () => {
 }
 
 export default RowContextMenu
+
+export const openOnOSbrowsers = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+  return (
+    <div>
+      <Button onClick={showModal}></Button>
+      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </div>
+  )
+}
