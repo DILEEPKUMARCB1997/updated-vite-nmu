@@ -14,10 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const networkSettingTips =
   'Please make sure device username password setting and SNMP community is correct.'
-const SNMPonlyInputItem = [
-  { id: 'dns1', label: 'Preferred DNS server', valid: 'validDNS1' },
-  { id: 'dns2', label: 'Alternate DNS server', valid: 'validDNS2' }
-]
+
 let enableApply
 const SingleNetworkSettingDrawer = (props) => {
   const { useToken } = theme
@@ -106,8 +103,8 @@ const SingleNetworkSettingDrawer = (props) => {
             </Button>
             <Button
               type="primary"
-              // disabled={!enableApply}
               onClick={handleApplyButtonOnClick}
+              // disabled={!enableApply}
             >
               Apply
             </Button>
@@ -149,8 +146,8 @@ const SingleNetworkSettingDrawer = (props) => {
               onChange={handleNetworkAddressInputOnChange('gateway', validGateway)}
             />
           </Form.Item>
-          {/* {isSNMPmode && ( */}
-          {/* <> */}
+          {/* {isSNMPmode && (
+            <> */}
           <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validDNS1}
@@ -167,8 +164,8 @@ const SingleNetworkSettingDrawer = (props) => {
               onChange={handleNetworkAddressInputOnChange('dns2', validDNS2)}
             />
           </Form.Item>
-          {/* </> */}
-          {/* )} */}
+          {/* </>
+          )} */}
 
           <Form.Item label="Hostname" colon={false} style={{ margin: '2px' }}>
             <Input value={hostname} onChange={handleHostnameInputOnChange} />
