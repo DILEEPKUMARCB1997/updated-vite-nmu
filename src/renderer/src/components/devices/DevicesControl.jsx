@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Button, Card, Input, Popover, Segmented, Tooltip } from 'antd'
+import { Button, Card, Input, Popover, Segmented, Tooltip, App, Modal } from 'antd'
+import { REQUEST_MP_REBOOT_GWD_DEVICE } from '../../../../main/utils/IPCEvents'
 import {
   SyncOutlined,
   UploadOutlined,
@@ -11,6 +12,8 @@ import {
   ClusterOutlined,
   UsergroupAddOutlined,
   NodeIndexOutlined,
+  UngroupOutlined,
+  LineHeightOutlined,
   SettingOutlined,
   BackwardOutlined,
   FundOutlined
@@ -21,11 +24,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
 import { initScheduleBackup } from '../../features/scheduleBackupSlice.js'
 import { REQUEST_MP_SET_THE_GROUP_DATA } from '../../../../main/utils/IPCEvents'
-// import { openSnack } from '../../features/snackSlice'
 import { openDialog } from '../../features/dialogSlice'
+import {
+  requestDeviceBeep,
+  requestDeviceReboot,
+  requestOpenTelnet
+} from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
-// import { openSnack } from '../../features/snackSlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
@@ -39,6 +45,7 @@ const DevicesControl = () => {
   const dispatch = useDispatch()
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
+  const { modal } = App.useApp()
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
@@ -49,41 +56,55 @@ const DevicesControl = () => {
       groupName: groupAddInput
     })
   }
-  // const handleResetToDefault = () => {
-  //   dispatch(openDialog('resetToDefault'))
-  // }
 
-  const handleResetButtonClick = () => {
-    dispatch(removeBatchOperateEvent())
-    dispatch(setBatchOperateEvent('resetToDefault'))
-    // dispatch(openSnack('resetToDefault'))
-    dispatch(setSNMPSelectOnly(true))
+  const handleReboot = async (MACAddress, IPAddress, deviceType) => {
+    const confirmed =
+      ((await modal.success({
+        title: 'Success !',
+        type: 'success',
+        content: 'Device reboot success.'
+      })) &&
+        modal.confirm({
+          title: 'Confirm',
+          content: 'This will reboot the device.'
+        })) ||
+      modal.error({
+        title: 'Error',
+        type: 'error',
+        content: 'Device reboot error.'
+      })
+    if (confirmed) {
+      setTimeout(() => {
+        dispatch(
+          requestDeviceReboot({
+            MACAddress,
+            IPAddress,
+            deviceType
+          })
+        )
+      }, 1000)
+    }
   }
 
-  // const handleBackButtonClick = () => {
-  //   dispatch(removeBatchOperateEvent())
-  //   dispatch(setBatchOperateEvent('backupRestore'))
-  //   // dispatch(openSnack('backupRestore'))
-  //   dispatch(setSNMPSelectOnly(true))
+  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
+    const confirmed = await modal.confirm({
+      title: 'Confirm',
+      content: 'This will let device beep.',
+      style: { marginBottom: '70px' }
+    })
+    console.log('Confirmed: ', confirmed)
+    dispatch(
+      requestDeviceBeep({
+        IPAddress,
+        MACAddress,
+        deviceType
+      })
+    )
+  }
+  // const handleOpenTelnet = (IPAddress) => {
+  //   dispatch(requestOpenTelnet(IPAddress))
   // }
-  // const handleButtonClick = (key) => () => {
-  //   dispatch(removeBatchOperateEvent())
-  //   switch (key) {
-  //     case 'resetToDefault':
-  //       dispatch(setBatchOperateEvent('resetToDefault'))
 
-  //       dispatch(setSNMPSelectOnly(true))
-  //       break
-  //     case 'backupRestore':
-  //       dispatch(setBatchOperateEvent('backupRestore'))
-
-  //       dispatch(setSNMPSelectOnly(true))
-  //       break
-
-  //     default:
-  //       break
-  //   }
-  // }
   const content = (
     <Flexbox gap={5}>
       <Input
@@ -118,13 +139,7 @@ const DevicesControl = () => {
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button
-            icon={<RedoOutlined />}
-            onClick={() => dispatch(openDialog('resetToDefault'))}
-            // onClick={handleResetButtonClick}
-            // onClick={() => dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))}
-            // onChange={() => dispatch(setSNMPSelectOnly(true))}
-          />
+          <Button icon={<RedoOutlined />} onClick={() => dispatch(openDialog('resetToDefault'))} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
@@ -157,6 +172,19 @@ const DevicesControl = () => {
             }}
           />
         </Tooltip>
+        <Tooltip title="Beep">
+          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
+        </Tooltip>
+        <Tooltip title="Reboot">
+          <Button icon={<RedoOutlined />} onClick={handleReboot} />
+        </Tooltip>
+        <Tooltip title="Telnet">
+          <Button
+            icon={<LineHeightOutlined />}
+            //onClick={handleOpenTelnet}
+          />
+        </Tooltip>
+
         <Tooltip title="Port Information">
           <Button
             icon={<FundOutlined />}
@@ -171,7 +199,7 @@ const DevicesControl = () => {
             onClick={() => {
               dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
             }}
-          />
+          ></Button>
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button

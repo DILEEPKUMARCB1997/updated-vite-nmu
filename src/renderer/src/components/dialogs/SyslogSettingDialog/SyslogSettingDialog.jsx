@@ -34,11 +34,11 @@ const syslogSettingDialog = ({ onClose }) => {
         title={
           <Typography.Title level={4}>
             {' '}
-            <CalendarOutlined />- SyslogConfiguration
+            <CalendarOutlined />- Syslog Server Setting
           </Typography.Title>
         }
         open
-        style={{ top: 20 }}
+        style={{ top: 20, borderBottom: '50px' }}
         onCancel={handleCancelButtonOnClick}
         footer={null}
         maskClosable={false}
