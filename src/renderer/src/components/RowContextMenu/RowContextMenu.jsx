@@ -4,7 +4,7 @@ import {
   UndoOutlined,
   ShareAltOutlined,
   FontSizeOutlined,
-  SoundOutlined,
+  UngroupOutlined,
   // ExportOutlined,
   SelectOutlined,
   GlobalOutlined,
@@ -89,7 +89,7 @@ const RowContextMenu = () => {
           {
             label: 'Beep',
             key: 'beep',
-            icon: <SoundOutlined />
+            icon: <UngroupOutlined />
           },
           {
             label: 'Reboot',

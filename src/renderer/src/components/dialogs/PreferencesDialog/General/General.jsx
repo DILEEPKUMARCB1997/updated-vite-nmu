@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Select, Divider, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -11,7 +11,7 @@ import {
 
 const { Option } = Select
 
-const General = (props) => {
+const General = () => {
   const { NICData } = useSelector(generalSelector)
   const { niList } = NICData
   console.log(niList)
@@ -21,10 +21,7 @@ const General = (props) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    return () => {
-      dispatch(clearGeneralData())
-    }
-    // dispatch(setNICActiveIndex())
+    dispatch(clearGeneralData())
   }, [])
 
   let NICSelectWidth = 400
@@ -37,7 +34,8 @@ const General = (props) => {
   // })
 
   const handleNICSelectOnChange = (value) => {
-    dispatch(setNICActiveIndex(value))
+    console.log(value)
+    dispatch(setNICActiveIndex())
   }
 
   return (
@@ -55,13 +53,17 @@ const General = (props) => {
         Network Interface Card
       </Divider>
       <Select
+        labelInValue={false}
+        defaultValue={{
+          value: 'default-0.0.0.0',
+          label: 'default-0.0.0.0'
+        }}
         style={{
           width: `${NICSelectWidth}px`,
           minWidth: '400px',
           marginTop: '10px',
           marginBottom: '10px'
         }}
-        //value="default"
         dropdownStyle={{ zIndex: '1301' }}
         onChange={handleNICSelectOnChange}
       >

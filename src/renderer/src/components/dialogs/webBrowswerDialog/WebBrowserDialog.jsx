@@ -123,7 +123,7 @@ import {
   CloseCircleOutlined
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-// import { shell } from 'electron'
+//import { shell } from 'electron'
 const WebBrowserDialog = ({ onClose }) => {
   const { IPAddress } = useSelector(openWebSelector)
   const [url, setUrl] = useState('https://www.google.com')
@@ -177,7 +177,7 @@ const WebBrowserDialog = ({ onClose }) => {
   // }, [url])
 
   const handleOpenInBrowserButtonClick = () => {
-    // shell.openExternal('https://www.npmjs.com/package/react-diff-viewer')
+    window.electron.shell.openExternal('https://www.npmjs.com/package/react-diff-viewer')
     //const mainWindow = new BrowserWindow({
     // width: 800,
     // height: 600,
@@ -195,28 +195,31 @@ const WebBrowserDialog = ({ onClose }) => {
         ///={styles.webBrowserDialogbd}
       >
         <Menu style={{ background: ' #f2f2f2' }}>
-          <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
-            <Button icon={<ArrowLeftOutlined />} onClick={handleGoBackButtonClick}></Button>
-          </Tooltip>
-          <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
-            <Button icon={<ArrowRightOutlined />} onClick={handleGoForwardButtonClick}></Button>
-          </Tooltip>
-          <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
-            <Button icon={<SyncOutlined />} onClick={handleReloadButtonClick}></Button>
-          </Tooltip>
-          <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
-            <Button icon={<ExportOutlined />} onClick={handleOpenInBrowserButtonClick}></Button>
-          </Tooltip>
-          <Typography> {`https://${IPAddress}`}</Typography>
-          <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
           <webview
+            onClick={handleOpenInBrowserButtonClick}
             ref={(ref) => {
               webRef.webview = ref
             }}
             src={url}
             style={{ width: '100%', height: '100%' }}
             //className={styles.webview}
-          />
+          >
+            {' '}
+            <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
+              <Button icon={<ArrowLeftOutlined />} onClick={handleGoBackButtonClick}></Button>
+            </Tooltip>
+            <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
+              <Button icon={<ArrowRightOutlined />} onClick={handleGoForwardButtonClick}></Button>
+            </Tooltip>
+            <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
+              <Button icon={<SyncOutlined />} onClick={handleReloadButtonClick}></Button>
+            </Tooltip>
+            <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
+              <Button icon={<ExportOutlined />} onClick={handleOpenInBrowserButtonClick}></Button>
+            </Tooltip>
+            <Typography> {`https://${IPAddress}`}</Typography>
+            <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
+          </webview>
         </Menu>
       </Modal>
     </div>

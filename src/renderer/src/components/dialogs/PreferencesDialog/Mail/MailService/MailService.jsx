@@ -19,8 +19,7 @@ const USER_DEFINITION_RADIO_LABLE = 'User Definition'
 const USER_DEFINITION_PORT_INPUT_LABLE = 'Port'
 const USER_DEFINITION_HOST_INPUT_LABLE = 'Host'
 const { Option } = Select
-const MailService = (props) => {
-  // const { serviceListSelectWidth } = props
+const MailService = () => {
   const { mailData, preService, validsData } = useSelector(mailSelector)
   const { isHostValid, isPortValid } = validsData
   const { isOpen, host, port, service, serviceList } = mailData
@@ -102,7 +101,6 @@ const MailService = (props) => {
           </span>
         </Radio>
         <Select
-          //defaultValue="Gmail"
           style={{
             width: `${serviceListSelectWidth}px`,
             marginLeft: '20px',
@@ -153,8 +151,6 @@ const MailService = (props) => {
                 colon={false}
                 style={{ marginTop: '30px', borderBottom: '1px dotted black' }}
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
-                // validateStatus={isHostValid ? 'success' : 'error'}
-                // help={!isHostValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
@@ -175,8 +171,6 @@ const MailService = (props) => {
                 style={{ borderBottom: '1px dotted black' }}
                 colon={false}
                 label={USER_DEFINITION_PORT_INPUT_LABLE}
-                // validateStatus={isPortValid ? 'success' : 'error'}
-                // help={!isPortValid ? '' : 'please enter valid port'}
               >
                 <InputNumber
                   controls={false}
