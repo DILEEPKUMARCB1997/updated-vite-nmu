@@ -48,7 +48,7 @@ const ScheduleBackupDialog = ({ onClose }) => {
       okButtonProps={{ style: { display: 'none' } }}
       cancelButtonProps={{ style: { display: 'none' } }}
       bodyStyle={{
-        height: 'calc(100vh - 150px)',
+        height: 'calc(100vh -150px)',
         overflow: 'auto',
         margin: 0,
         paddingTop: 10,

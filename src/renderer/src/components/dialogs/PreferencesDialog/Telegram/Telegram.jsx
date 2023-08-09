@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { Card, Col, Row, theme } from 'antd'
 import React from 'react'
 import TokenSetting from './Components/TokenSetting'
 import TestingBot from './Components/TestingBot'
 import TelegramForm from './Components/TelegramForm'
 import TelegramUserList from './Components/TelegramUserList'
+import './Telegram.css'
 
 const Telegram = () => {
   const { useToken } = theme

@@ -41,7 +41,6 @@ function ConfigComparission() {
             <div
               style={{
                 padding: '10px',
-
                 textAlign: 'center',
                 marginTop: '-30px',
                 marginBottom: '20px',
