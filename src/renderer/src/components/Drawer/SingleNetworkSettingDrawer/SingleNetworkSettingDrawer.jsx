@@ -14,10 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const networkSettingTips =
   'Please make sure device username password setting and SNMP community is correct.'
-const SNMPonlyInputItem = [
-  { id: 'dns1', label: 'Preferred DNS server', valid: 'validDNS1' },
-  { id: 'dns2', label: 'Alternate DNS server', valid: 'validDNS2' }
-]
+
 let enableApply
 const SingleNetworkSettingDrawer = (props) => {
   const { useToken } = theme
@@ -104,7 +101,11 @@ const SingleNetworkSettingDrawer = (props) => {
             <Button style={{ marginRight: '10px' }} onClick={handleCloseDrawer}>
               Cancel
             </Button>
-            <Button type="primary" onClick={handleApplyButtonOnClick} disabled={!enableApply}>
+            <Button
+              type="primary"
+              onClick={handleApplyButtonOnClick}
+              // disabled={!enableApply}
+            >
               Apply
             </Button>
           </div>

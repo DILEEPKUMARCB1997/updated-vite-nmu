@@ -202,74 +202,8 @@ const PreferencesDialog = ({ onClose }) => {
   }
 
   return (
-    <Modal
-      open
-      onCancel={onClose}
-      footer={null}
-      width="100%"
-      style={{
-        top: '5px'
-      }}
-    >
-      <Layout style={{ height: '89vh' }}>
-        <Header
-          style={{
-            fontSize: 35,
-            backgroundColor: token.colorPrimaryBorder,
-            height: '80px',
-            color: '#fff',
-            fontWeight: 'bold'
-          }}
-          onClick={handleCancelButtonClick}
-        >
-          <SettingOutlined /> Preference
-        </Header>
-
-        <Layout style={{ height: '100vh' }}>
-          <Sider
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'left'
-            }}
-          >
-            <Menu
-              theme="dark"
-              mode="inline"
-              // selectedKeys={[selectedIndex]}
-              style={{
-                fontSize: '16px',
-                color: 'white',
-                position: 'relative'
-                // top: '-10px'
-              }}
-              onClick={handleMenuItemClick}
-              items={items}
-            ></Menu>
-          </Sider>
-          <Content
-            style={{
-              padding: 24,
-              // margin: '24px 16px 24px',
-              minHeight: 280,
-              background: colorBgContainer,
-              overflow: 'auto'
-            }}
-          >
-            {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
-          </Content>
-        </Layout>
-      </Layout>
-    </Modal>
-
     // <Modal
     //   open
-    //   // title={
-    //   //   <Typography.Title style={{ color: token.colorPrimary }} level={2}>
-    //   //     <SettingOutlined /> - Preference
-    //   //   </Typography.Title>
-    //   // }
     //   onCancel={onClose}
     //   footer={null}
     //   width="100%"
@@ -280,34 +214,35 @@ const PreferencesDialog = ({ onClose }) => {
     //   <Layout style={{ height: '89vh' }}>
     //     <Header
     //       style={{
-    //         fontSize: 28,
-    //         backgroundColor: 'white',
-    //         marginTop: '-20px',
-    //         color: token.colorPrimary,
-    //         left: '30px',
-
+    //         fontSize: 35,
+    //         backgroundColor: token.colorPrimaryBorder,
+    //         height: '80px',
+    //         color: '#fff',
     //         fontWeight: 'bold'
     //       }}
     //       onClick={handleCancelButtonClick}
     //     >
-    //       <SettingOutlined /> - Preference
+    //       <SettingOutlined /> Preference
     //     </Header>
+
     //     <Layout style={{ height: '100vh' }}>
     //       <Sider
     //         style={{
-    //           // display: 'flex',
-    //           // flexDirection: 'row',
-    //           // alignItems: 'center',
-    //           // justifyContent: 'left',
-    //           backgroundColor: 'white'
+    //           display: 'flex',
+    //           flexDirection: 'row',
+    //           alignItems: 'center',
+    //           justifyContent: 'left'
     //         }}
     //       >
     //         <Menu
+    //           theme="dark"
     //           mode="inline"
     //           // selectedKeys={[selectedIndex]}
     //           style={{
     //             fontSize: '16px',
+    //             color: 'white',
     //             position: 'relative'
+    //             // top: '-10px'
     //           }}
     //           onClick={handleMenuItemClick}
     //           items={items}
@@ -327,6 +262,78 @@ const PreferencesDialog = ({ onClose }) => {
     //     </Layout>
     //   </Layout>
     // </Modal>
+
+    <Modal
+      open
+      // title={
+      //   <Typography.Title style={{ color: token.colorPrimary }} level={2}>
+      //     <SettingOutlined /> - Preference
+      //   </Typography.Title>
+      // }
+      onCancel={onClose}
+      footer={null}
+      width="100%"
+      style={{
+        top: '5px'
+      }}
+      // bodyStyle={{ overflow: 'auto' }}
+    >
+      <Layout style={{ height: '89vh' }}>
+        <Header
+          style={{
+            fontSize: 30,
+            backgroundColor: 'white',
+            marginTop: '-20px',
+            color: token.colorPrimary,
+            textAlign: 'left'
+          }}
+          onClick={handleCancelButtonClick}
+        >
+          <SettingOutlined /> - Preference
+        </Header>
+        <Layout style={{ height: '100vh' }}>
+          <Sider
+            style={{
+              // display: 'flex',
+              // flexDirection: 'row',
+              // alignItems: 'center',
+              // justifyContent: 'left',
+              backgroundColor: 'white',
+              paddingTop: '10px'
+              // marginBottom: '50px'
+              // borderRight: 'solid gray',
+              // borderWidth: 'thin'
+            }}
+          >
+            <Menu
+              mode="inline"
+              // selectedKeys={[selectedIndex]}
+              style={{
+                fontSize: '16px',
+                position: 'relative',
+                height: '100%'
+              }}
+              onClick={handleMenuItemClick}
+              items={items}
+            ></Menu>
+          </Sider>
+          <Content
+            style={{
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              paddingRight: '24px',
+              paddingLeft: '24px',
+              // margin: '24px 16px 24px',
+              minHeight: 280,
+              background: colorBgContainer,
+              overflow: 'auto'
+            }}
+          >
+            {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
+          </Content>
+        </Layout>
+      </Layout>
+    </Modal>
   )
 }
 
