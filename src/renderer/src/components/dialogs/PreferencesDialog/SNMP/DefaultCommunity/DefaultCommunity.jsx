@@ -49,6 +49,7 @@ const DefaultCommunity = () => {
           <Select
             style={{ width: '200px', marginLeft: '65px' }}
             defaultValue={version}
+            value={version}
             options={[
               { value: 'V1', label: 'V1' },
               { value: 'V2C', label: 'V2C' }
@@ -62,6 +63,7 @@ const DefaultCommunity = () => {
             status={isReadCommunityValid ? null : 'error'}
             style={{ width: '200px', marginLeft: '45px' }}
             defaultValue={readCommunity}
+            value={readCommunity}
             onChange={handleReadCommuityInputOnChange}
           />
         </Form.Item>
@@ -71,6 +73,7 @@ const DefaultCommunity = () => {
             status={isWriteCommunityValid ? null : 'error'}
             style={{ width: '200px', marginLeft: '40px' }}
             defaultValue={writeCommunity}
+            value={writeCommunity}
             onChange={handleWriteCommuityInputOnChange}
           />
         </Form.Item>
