@@ -206,6 +206,14 @@ const DevicesControl = ({ onClose }) => {
             }}
           />
         </Tooltip>
+        <Tooltip title="Port Information">
+          <Button
+            icon={<FundOutlined />}
+            onClick={() => {
+              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
+            }}
+          />
+        </Tooltip>
         <Tooltip title="Beep">
           <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
@@ -216,14 +224,6 @@ const DevicesControl = ({ onClose }) => {
           <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
         </Tooltip>
 
-        <Tooltip title="Port Information">
-          <Button
-            icon={<FundOutlined />}
-            onClick={() => {
-              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
-            }}
-          />
-        </Tooltip>
         <Tooltip title="Single Network Setting">
           <Button
             icon={<SettingOutlined />}

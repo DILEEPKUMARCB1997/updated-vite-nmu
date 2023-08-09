@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card, Select, theme } from 'antd'
 import React, { useState } from 'react'
 import ReactApexChart from 'react-apexcharts'

@@ -93,12 +93,7 @@ const PortInformationDialog = ({ onClose }) => {
             justifyContent: 'flex-end'
           }}
         >
-          <Button
-            type="primary"
-            ghost
-            style={{ marginRight: '10px' }}
-            onClick={handleCloseButtonClick}
-          >
+          <Button type="primary" style={{ marginRight: '10px' }} onClick={handleCloseButtonClick}>
             Close
           </Button>
         </div>
