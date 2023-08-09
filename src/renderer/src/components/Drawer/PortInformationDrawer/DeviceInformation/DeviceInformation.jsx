@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card, Typography, theme } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
