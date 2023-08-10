@@ -49,7 +49,7 @@ function ConfigComparission() {
             >
               {/* <h3 className="heading">Device Config Comparison</h3> */}
               <Typography.Title
-                level={5}
+                level={4}
                 style={{
                   // backgroundColor: token.colorPrimaryBorder
                   color: token.colorPrimary
