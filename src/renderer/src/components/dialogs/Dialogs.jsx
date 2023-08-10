@@ -56,8 +56,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
           advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
           singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />,
           singleBackupConfig: <SingleBackupConfigDialog onClose={onClose} />,
-          portInformation: <PortInformationDrawer onClose={onClose} />,
-          singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />
+          portInformation: <PortInformationDrawer onClose={onClose} />
         }[id]
       }
     </div>

@@ -16,9 +16,10 @@ import {
   LineHeightOutlined,
   SettingOutlined,
   BackwardOutlined,
-  FundOutlined
+  FundOutlined,
+  ExportOutlined
 } from '@ant-design/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { discoverySelector, requestDiscovery, switchGroupView } from '../../features/discoverySlice'
@@ -41,56 +42,89 @@ const options = [
   { label: 'Group View', value: 'group' }
 ]
 
-const DevicesControl = () => {
+const DevicesControl = ({ onClose }) => {
   const dispatch = useDispatch()
+  const [modal1Open, setModal1Open] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
   const { modal } = App.useApp()
+
+  useEffect(() => {
+    dispatch(requestDeviceBeep())
+    dispatch(requestDeviceReboot())
+  }, [])
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
-
+  const showModal = () => {
+    setVisible(true)
+  }
   const handleGroupAddClick = () => {
     window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
       cmd: 'addGroup',
       groupName: groupAddInput
     })
   }
+  const handleOk = async () => {
+    setLoading(true)
+    // await new Promise((resolve) => setTimeout(resolve, 3000))
 
-  const handleReboot = async (MACAddress, IPAddress, deviceType) => {
-    const confirmed =
-      ((await modal.success({
+    // setLoading(false)
+
+    // setVisible(false)
+    setTimeout(() => {
+      Modal.success({
+        title: 'Success!',
+        content: 'Device reboot success.'
+      })
+    }, 1000)
+
+    console.log(true)
+  }
+
+  const handleCancel = () => {
+    setVisible(false)
+
+    Modal.error({
+      title: 'Error',
+      content: 'Device reboot error'
+    })
+
+    console.log(false)
+  }
+  const handleReboot = (MACAddress, IPAddress, deviceType) => {
+    modal.confirm({
+      title: 'Confirm',
+      content: 'This will reboot the device.'
+    })
+    setTimeout(async () => {
+      const confirmed = await modal.success({
         title: 'Success !',
         type: 'success',
         content: 'Device reboot success.'
-      })) &&
-        modal.confirm({
-          title: 'Confirm',
-          content: 'This will reboot the device.'
-        })) ||
-      modal.error({
-        title: 'Error',
-        type: 'error',
-        content: 'Device reboot error.'
       })
-    if (confirmed) {
-      setTimeout(() => {
-        dispatch(
-          requestDeviceReboot({
-            MACAddress,
-            IPAddress,
-            deviceType
-          })
-        )
-      }, 1000)
-    }
+      console.log(confirmed)
+    }, 3000)
+
+    //   : modal.error({
+    //       title: 'Error',
+    //       content: 'Device Reboot Error'
+    //     })
+    dispatch(
+      requestDeviceReboot({
+        MACAddress,
+        IPAddress,
+        deviceType
+      })
+    )
   }
 
   const handleBeep = async (IPAddress, MACAddress, deviceType) => {
     const confirmed = await modal.confirm({
       title: 'Confirm',
-      content: 'This will let device beep.',
-      style: { marginBottom: '70px' }
+      content: 'This will let device beep.'
     })
     console.log('Confirmed: ', confirmed)
     dispatch(
@@ -101,9 +135,9 @@ const DevicesControl = () => {
       })
     )
   }
-  // const handleOpenTelnet = (IPAddress) => {
-  //   dispatch(requestOpenTelnet(IPAddress))
-  // }
+  const handleOpenTelnet = (IPAddress) => {
+    dispatch(requestOpenTelnet(IPAddress))
+  }
 
   const content = (
     <Flexbox gap={5}>
@@ -184,13 +218,10 @@ const DevicesControl = () => {
           <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
         <Tooltip title="Reboot">
-          <Button icon={<RedoOutlined />} onClick={handleReboot} />
+          <Button icon={<ExportOutlined />} onClick={handleReboot} />
         </Tooltip>
         <Tooltip title="Telnet">
-          <Button
-            icon={<LineHeightOutlined />}
-            //onClick={handleOpenTelnet}
-          />
+          <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
         </Tooltip>
 
         <Tooltip title="Single Network Setting">
