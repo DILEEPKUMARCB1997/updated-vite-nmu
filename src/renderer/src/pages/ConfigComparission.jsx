@@ -49,7 +49,7 @@ function ConfigComparission() {
             >
               {/* <h3 className="heading">Device Config Comparison</h3> */}
               <Typography.Title
-                level={5}
+                level={4}
                 style={{
                   // backgroundColor: token.colorPrimaryBorder
                   color: token.colorPrimary
@@ -65,20 +65,20 @@ function ConfigComparission() {
                   type="file"
                   onChange={(e) => showFile(e)}
                   // style={{
-                  //   color: 'white',
-                  //   display: 'inline-block',
-                  //   border: 'none',
-                  //   padding: '7px 15px',
-                  //   fontWeight: '700',
-                  //   borderRadius: '3px',
-                  //   whiteSpace: 'nowrap',
-                  //   fontSize: '10pt',
+                  //   // color: 'white',
+                  //   // display: 'inline-block',
+                  //   // border: 'none',
+                  //   // padding: '7px 15px',
+                  //   // fontWeight: '700',
+                  //   // borderRadius: '3px',
+                  //   // whiteSpace: 'nowrap',
+                  //   // fontSize: '10pt',
                   //   backgroundColor: token.colorPrimaryBorder
                   // }}
                 />
               </Col>
               <Col span={12}>
-                <input type="file" onChange={(e) => showFile1(e)} className="choose" />
+                <input type="file" onChange={(e) => showFile1(e)} />
               </Col>
               <Row
                 justify="space-around"

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { clearOpenWebData, openWebSelector } from '../../../features/openWebSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Menu, Modal, Tooltip, Typography } from 'antd'
-
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -11,6 +10,7 @@ import {
   CloseCircleOutlined
 } from '@ant-design/icons'
 import { useRef } from 'react'
+//import { shell } from 'electron'
 
 const WebBrowserDialog = ({ onClose }) => {
   const { IPAddress, URL } = useSelector(openWebSelector)
@@ -106,7 +106,6 @@ const WebBrowserDialog = ({ onClose }) => {
             style={{ marginLeft: '10px' }}
           ></Button>
         </Tooltip>
-
         <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
           <Button
             icon={<ExportOutlined />}
