@@ -3,6 +3,9 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { useTheme } from 'antd-style'
 import { ProTable } from '@ant-design/pro-components'
+import RowContextMenu from '../RowContextMenu/RowContextMenu'
+import { openDialog } from '../../features/dialogSlice'
+import { useDispatch } from 'react-redux'
 
 const columns = [
   {
@@ -73,6 +76,7 @@ const columns = [
 ]
 
 const DeviceTable = ({ deviceData = [] }) => {
+  const dispatch = useDispatch()
   const token = useTheme()
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -85,59 +89,67 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   return (
-    <ConfigProvider
-      theme={{
-        inherit: true,
-        components: {
-          Table: {
-            colorFillAlter: token.colorPrimaryBg,
-            fontSize: 14
-          }
-        }
-      }}
-    >
-      <ProTable
-        cardProps={{
-          style: { boxShadow: token?.Card?.boxShadow }
-        }}
-        headerTitle="Device List"
-        columns={columns}
-        dataSource={recordAfterfiltering(deviceData)}
-        rowKey="MACAddress"
-        size="small"
-        pagination={{
-          position: ['bottomCenter'],
-          showQuickJumper: true,
-          size: 'default',
-          total: recordAfterfiltering(deviceData).length,
-          defaultPageSize: 10,
-          pageSizeOptions: [10, 15, 20, 25],
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
-        }}
-        scroll={{
-          x: 1100
-        }}
-        toolbar={{
-          search: {
-            onSearch: (value) => {
-              setInputSearch(value)
+    <div>
+      {' '}
+      <ConfigProvider
+        theme={{
+          inherit: true,
+          components: {
+            Table: {
+              colorFillAlter: token.colorPrimaryBg,
+              fontSize: 14
             }
           }
         }}
-        options={{
-          reload: false,
-          fullScreen: false,
-          density: false,
-          setting: false
-        }}
-        search={false}
-        dateFormatter="string"
-        columnsState={{
-          persistenceKey: 'device-table',
-          persistenceType: 'localStorage'
-        }}
-      />
-    </ConfigProvider>
+      >
+        <ProTable
+          cardProps={{
+            style: { boxShadow: token?.Card?.boxShadow }
+          }}
+          headerTitle="Device List"
+          columns={columns}
+          dataSource={recordAfterfiltering(deviceData)}
+          rowKey="MACAddress"
+          size="small"
+          pagination={{
+            position: ['bottomCenter'],
+            showQuickJumper: true,
+            size: 'default',
+            total: recordAfterfiltering(deviceData).length,
+            defaultPageSize: 10,
+            pageSizeOptions: [10, 15, 20, 25],
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+          }}
+          scroll={{
+            x: 1100
+          }}
+          toolbar={{
+            search: {
+              onSearch: (value) => {
+                setInputSearch(value)
+              }
+            }
+          }}
+          options={{
+            reload: false,
+            fullScreen: false,
+            density: false,
+            setting: false
+          }}
+          search={false}
+          dateFormatter="string"
+          columnsState={{
+            persistenceKey: 'device-table',
+            persistenceType: 'localStorage'
+          }}
+          onRow={(record) => {
+            return {
+              onContextMenu: (event) => {}
+            }
+          }}
+        />
+      </ConfigProvider>
+    </div>
   )
 }
 

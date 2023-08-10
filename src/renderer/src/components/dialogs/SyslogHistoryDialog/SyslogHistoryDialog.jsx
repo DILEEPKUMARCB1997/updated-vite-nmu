@@ -103,9 +103,28 @@ function SyslogHistoryDialog({ onClose }) {
       <Modal
         title="Syslog History"
         open
-        width="80%"
-        footer={null}
         onCancel={handleCloseButtonOnClick}
+        onOk={onClose}
+        closable={true}
+        maskClosable={false}
+        width={1200}
+        style={{ top: 20 }}
+        bodyStyle={{
+          height: 'calc(100vh - 150px)',
+          margin: 0,
+          paddingTop: 10,
+          paddingBottom: '10px'
+        }}
+        okButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
+        cancelButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
       >
         <div>
           <Input

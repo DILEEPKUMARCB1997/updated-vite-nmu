@@ -38,15 +38,15 @@ const TrafficChart = () => {
       {
         name: 'In',
         color: token.colorSuccess,
-        // data: chartData === undefined ? [] : chartData.inBuffer
-        data: [1000, 4100, 3500, 5100, 4900, 6200, 6900, 9100]
+        data: chartData === undefined ? [] : chartData.inBuffer
+        // data: [1000, 4100, 3500, 5100, 4900, 6200, 6900, 9100]
       },
       {
         name: 'Out',
         color: token.colorError,
         size: '5px',
-        // data: chartData === undefined ? [] : chartData.outBuffer
-        data: [9100, 14800, 1000, 1000, 4100, 3500, 5100, 4900]
+        data: chartData === undefined ? [] : chartData.outBuffer
+        // data: [9100, 14800, 1000, 1000, 4100, 3500, 5100, 4900]
       }
     ],
 

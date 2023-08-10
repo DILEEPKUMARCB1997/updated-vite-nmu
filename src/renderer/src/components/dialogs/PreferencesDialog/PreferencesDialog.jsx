@@ -5,7 +5,7 @@
 // // // /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { Modal, Menu, Layout, App, Spin, theme, Typography } from 'antd'
-import { SettingOutlined } from '@ant-design/icons'
+import { BorderBottomOutlined, SettingOutlined } from '@ant-design/icons'
 import {
   preferenceSelector,
   setSelectIndex,
@@ -265,33 +265,36 @@ const PreferencesDialog = ({ onClose }) => {
 
     <Modal
       open
-      // title={
-      //   <Typography.Title style={{ color: token.colorPrimary }} level={2}>
-      //     <SettingOutlined /> - Preference
-      //   </Typography.Title>
-      // }
-      onCancel={onClose}
+      title={
+        <Typography.Title level={3}>
+          <SettingOutlined /> - Preferences
+        </Typography.Title>
+      }
+      onCancel={handleCancelButtonClick}
       footer={null}
       width="100%"
       style={{
-        top: '5px'
+        top: '5px',
+        padding: '0px'
       }}
       // bodyStyle={{ overflow: 'auto' }}
     >
-      <Layout style={{ height: '89vh' }}>
-        <Header
+      <Layout style={{ height: '80vh' }}>
+        {/* <Header
           style={{
-            fontSize: 30,
+            fontSize: 25,
             backgroundColor: 'white',
             marginTop: '-20px',
-            color: token.colorPrimary,
-            textAlign: 'left'
+            paddingLeft: '0px',
+            textAlign: 'left',
+            width: '100%',
+            border: 'solid 5px'
           }}
           onClick={handleCancelButtonClick}
         >
-          <SettingOutlined /> - Preference
-        </Header>
-        <Layout style={{ height: '100vh' }}>
+          <SettingOutlined /> - Preferences
+        </Header> */}
+        <Layout style={{ height: '100vh', margin: '0px', padding: '0px' }}>
           <Sider
             style={{
               // display: 'flex',

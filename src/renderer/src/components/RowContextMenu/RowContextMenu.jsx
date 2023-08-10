@@ -35,10 +35,10 @@ const RowContextMenu = () => {
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (data.id) {
       case 'openOnOSbrowser':
-        // shell.openExternal(`http://${IPAddress}`)
-        // shell.openExternal(
-        //   'https://marketplace.visualstudio.com/items?itemName=lzrnic.javascript-vscode-extension'
-        // )
+        window.electron.shell.openExternal(`http://${IPAddress}`)
+        window.electron.shell.openExternal(
+          'https://marketplace.visualstudio.com/items?itemName=lzrnic.javascript-vscode-extension'
+        )
         break
       case 'openOnApplication':
         return handleOpenWeb(IPAddress, MACAddress)
