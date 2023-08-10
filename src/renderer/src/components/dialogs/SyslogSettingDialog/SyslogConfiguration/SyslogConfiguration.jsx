@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
@@ -16,6 +16,9 @@ const SyslogConfiguration = () => {
 
   const { useToken } = theme
   const { token } = useToken()
+  useEffect(() => {
+    dispatch(startTask())
+  }, [])
   const handleChangeLogToFlash = (name) => (event) => {
     if (event.target.value) {
       setLogToFlash({
