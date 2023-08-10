@@ -7,6 +7,7 @@
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "format": "prettier --write .",
+    "preinstall": "npx npm-force-resolutions",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
@@ -45,6 +46,7 @@
     "node-telegram-bot-api": "^0.61.0",
     "node-unzip-2": "^0.2.8",
     "nodemailer": "^6.9.3",
+    "npm-check-updates": "^16.10.18",
     "path": "^0.12.7",
     "ping": "^0.4.4",
     "react-apexcharts": "^1.4.0",
@@ -79,8 +81,12 @@
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-overlay": "^6.0.9",
     "react-graph-vis": "^1.0.7",
     "vite": "^4.3.9",
-    "webpack": "^5.88.0"
+    "webpack": "^5.88.0",
+    "resolutions": {
+      "react-error-overlay": "6.0.9"
+    }
   }
 }

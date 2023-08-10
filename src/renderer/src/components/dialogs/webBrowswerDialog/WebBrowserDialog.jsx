@@ -1,119 +1,3 @@
-// import React, { useState, useEffect, useRef } from 'react'
-// import { Button, Menu, Modal, Tooltip, Typography } from 'antd'
-// import { clearOpenWebData, openWebSelector, changeNextUrl } from '../../../features/openWebSlice'
-// //import { BrowserWindow } from 'electron'
-// import {
-//   ArrowLeftOutlined,
-//   ArrowRightOutlined,
-//   SyncOutlined,
-//   ExportOutlined,
-//   CloseCircleOutlined
-// } from '@ant-design/icons'
-// import { useSelector } from 'react-redux'
-// //import { shell } from 'electron'
-// const WebBrowserDialog = ({ onClose }) => {
-//   const { IPAddress } = useSelector(openWebSelector)
-//   // const [url, setUrl] = useState('https://www.google.com')
-//   //console.log(setUrl)
-//   const [isLoading, setIsLoading] = useState(true)
-//   console.log(isLoading)
-
-//   const webRef = useRef()
-//   useEffect(() => {
-//     setTimeout(() => {
-//       const webv = document.getElementById('mainwebview')
-//       webv.clearHistory()
-//     }, 20000)
-//   }, [])
-//   useEffect(() => {
-//     const webv = document.getElementById('mainwebview')
-//     console.log(webv)
-//     // webv.addEventListener('did-start-loading', () => {
-//     //   setIsLoading(true)
-//     // })
-//     // webv.addEventListener('did-stop-loading', () => {
-//     //   setIsLoading(false)
-//     // })
-//   }, [])
-//   const handleCloseButtonClick = () => {
-//     onClose()
-//   }
-//   const handleGoBackButtonClick = () => {
-//     const webv = document.getElementById('mainwebview')
-//     if (webv.canGoBack()) {
-//       webv.goBack()
-//     }
-//   }
-//   const handleGoForwardButtonClick = () => {
-//     const webv = document.getElementById('mainwebview')
-//     if (webv.canGoForward()) {
-//       webv.goForward()
-//     }
-//   }
-//   const handleReloadButtonClick = () => {
-//     const webv = document.getElementById('mainwebview')
-//     webv.reload()
-//   }
-//   // useEffect(() => {
-//   //   const webview = new window.WebView()
-//   //   webview.addEventListener('load', () => {
-//   //     console.log('Webview loaded')
-//   //   })
-//   //   webview.loadURL(url)
-//   //   return () => webview.close()
-//   // }, [url])
-
-//   const handleOpenInBrowserButtonClick = () => {
-//     window.electron.shell.openExternal('https://www.npmjs.com/package/react-diff-viewer')
-//     //const mainWindow = new BrowserWindow({
-//     // width: 800,
-//     // height: 600,
-//     // title: 'My Electron App'
-//     // })
-//     //mainWindow.loadURL('https://www.npmjs.com/package/react-diff-viewer')
-//   }
-//   return (
-//     <div>
-//       <Modal
-//         open
-//         title="Web Browser"
-//         footer={null}
-//         onCancel={onClose}
-//         ///={styles.webBrowserDialogbd}
-//       >
-//         <Menu style={{ background: ' #f2f2f2' }}>
-// <webview
-//   onClick={handleOpenInBrowserButtonClick}
-//   ref={(ref) => {
-//     webRef.webview = ref
-//   }}
-//   src={url}
-//   style={{ width: '100%', height: '100%' }}
-//   //className={styles.webview}
-// >
-//             {' '}
-//             <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
-//               <Button icon={<ArrowLeftOutlined />} onClick={handleGoBackButtonClick}></Button>
-//             </Tooltip>
-//             <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
-//               <Button icon={<ArrowRightOutlined />} onClick={handleGoForwardButtonClick}></Button>
-//             </Tooltip>
-//             <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
-//               <Button icon={<SyncOutlined />} onClick={handleReloadButtonClick}></Button>
-//             </Tooltip>
-//             <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
-//               <Button icon={<ExportOutlined />} onClick={handleOpenInBrowserButtonClick}></Button>
-//             </Tooltip>
-//             <Typography> {`https://${IPAddress}`}</Typography>
-//             <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
-//           </webview>
-//         </Menu>
-//       </Modal>
-//     </div>
-//   )
-// }
-// export default WebBrowserDialog
-
 import React, { useEffect } from 'react'
 import { clearOpenWebData, openWebSelector } from '../../../features/openWebSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -156,10 +40,33 @@ const WebBrowserDialog = ({ onClose }) => {
     }
   }
 
-  const handleGoForwardButtonClick = () => {
-    const webv = document.getElementById('mainwebview')
-    if (webv.canGoForward()) {
-      webv.goForward()
+  // const handleGoBackButtonClick = () => {
+  //   // const mainWindow = new BrowserWindow({
+  //   //   width: 800,
+  //   //   height: 600,
+  //   //   webPreferences: {
+  //   //     nodeIntegration: true
+  //   //   }
+  //   // })
+  //   //   const contents = mainWindow.webContents
+
+  //   //   if (direction === 'back') {
+  //   //     contents.goBack()
+  //   //   } else if (direction === 'forward') {
+  //   //     contents.goForward()
+  //   //   }
+  //   // }
+  //   console.log(window.history) // logs array of visited URLs
+
+  //   var backEnabled = window.history && typeof window.history.back === 'function' ? true : false
+
+  //   return backEnabled
+  // }
+
+  const handleGoForwardButtonClick = (mainWindow) => {
+    const contents = mainWindow.webContents
+    if (contents.canGoForward()) {
+      contents.goForward()
     }
   }
 
@@ -169,46 +76,130 @@ const WebBrowserDialog = ({ onClose }) => {
   }
 
   const handleOpenInBrowserButtonClick = () => {
+    // window.electron.shell.openExternal(URL)
     window.electron.shell.openExternal(URL)
   }
 
   return (
-    <Modal open onOk={onClose} onCancel={onClose}>
-      <Menu
-        mode="horizontal"
-        theme="dark"
-        defaultSelectedKeys={['1']}
-        style={{ lineHeight: '64px' }}
-      >
+    <Modal open footer={null} onCancel={onClose} width="100%" bodyStyle={{ height: '50vh' }}>
+      <Menu mode="horizontal" theme="light">
         <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
-          <Button icon={<ArrowLeftOutlined />} onClick={handleGoBackButtonClick}></Button>
+          <Button
+            icon={<ArrowLeftOutlined />}
+            onClick={handleGoBackButtonClick}
+            style={{ marginLeft: '10px' }}
+          ></Button>
         </Tooltip>
 
         <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
-          <Button icon={<ArrowRightOutlined />} onClick={handleGoForwardButtonClick}></Button>
+          <Button
+            icon={<ArrowRightOutlined />}
+            onClick={handleGoForwardButtonClick}
+            style={{ marginLeft: '10px' }}
+          ></Button>
         </Tooltip>
 
         <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
-          <Button icon={<SyncOutlined />} onClick={handleReloadButtonClick}></Button>
+          <Button
+            icon={<SyncOutlined />}
+            onClick={handleReloadButtonClick}
+            style={{ marginLeft: '10px' }}
+          ></Button>
         </Tooltip>
 
         <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
-          <Button icon={<ExportOutlined />} onClick={handleOpenInBrowserButtonClick}></Button>
+          <Button
+            icon={<ExportOutlined />}
+            onClick={handleOpenInBrowserButtonClick}
+            style={{ marginLeft: '10px' }}
+          ></Button>
         </Tooltip>
         <Typography> {`https://${IPAddress}`}</Typography>
         <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
       </Menu>
       <webview
-        onClick={handleOpenInBrowserButtonClick}
         ref={(ref) => {
           webRef.webview = ref
         }}
         src={URL}
         style={{ width: '100%', height: '100%', display: 'inline-flex' }}
-        //className={styles.webview}
       ></webview>
     </Modal>
   )
 }
 
 export default WebBrowserDialog
+/*
+const { app, BrowserWindow } = require('electron')
+
+let mainWindow
+
+
+function createWindow() {
+
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  mainWindow.loadURL('https://www.electronjs.org/')
+
+
+  mainWindow.on('closed', function () {
+    // Dereference the window object
+    mainWindow = null
+  })
+}
+
+app.on('ready', createWindow)
+
+
+app.on('window-all-closed', function () {
+
+  app.quit()
+})
+
+app.on('activate', function () {
+  // Recreate the window if it was closed on macOS
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
+function checkNavigation() {
+
+  const contents = mainWindow.webContents
+
+  console.log('Can go back:', contents.canGoBack())
+  console.log('Can go forward:', contents.canGoForward())
+}
+
+
+function navigate(direction) {
+
+  const contents = mainWindow.webContents
+
+
+  if (direction === 'back') {
+    contents.goBack()
+  } else if (direction === 'forward') {
+    contents.goForward()
+  }
+}
+
+
+setTimeout(checkNavigation, 5000)
+
+setTimeout(() => navigate('back'), 10000)
+
+
+setTimeout(checkNavigation, 15000)
+
+
+setTimeout(() => navigate('forward'), 20000)
+
+
+setTimeout(checkNavigation, 25000)
+*/
