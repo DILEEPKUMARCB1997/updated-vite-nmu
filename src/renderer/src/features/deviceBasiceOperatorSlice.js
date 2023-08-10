@@ -45,36 +45,47 @@ const rebootResultListener = (dispatch) => (event, arg) => {
   }
 }
 
-export const requestDeviceReboot = (param) => (dispatch, getState) => {
-  const { MACAddress } = param
-  const { IPAddress, deviceType } = getState().discovery.defaultDeviceData[MACAddress]
-  if (deviceType === 'snmp' || deviceType === 'all') {
-    window.electron.ipcRenderer.once(
-      RESPONSE_RP_LET_SNMP_DEVICE_REBOOT,
-      rebootResultListener(dispatch)
-    )
-    window.electron.ipcRenderer.send(REQUEST_MP_LET_SNMP_DEVICE_REBOOT, { MACAddress })
-  } else if (deviceType === 'gwd') {
-    window.electron.ipcRenderer.once(RESPONSE_RP_REBOOT_GWD_DEVICE, rebootResultListener(dispatch))
-    window.electron.ipcRenderer.send(REQUEST_MP_REBOOT_GWD_DEVICE, { MACAddress, IPAddress })
+export const requestDeviceReboot =
+  (param = {}) =>
+  (dispatch) => {
+    console.log(param)
+    const { MACAddress, IPAddress, deviceType } = param
+    //const {  } = getState().discovery.defaultDeviceData[MACAddress]
+    if (deviceType === 'snmp' || deviceType === 'all') {
+      window.electron.ipcRenderer.once(
+        RESPONSE_RP_LET_SNMP_DEVICE_REBOOT,
+        rebootResultListener(dispatch)
+      )
+      window.electron.ipcRenderer.send(REQUEST_MP_LET_SNMP_DEVICE_REBOOT, { MACAddress })
+    } else if (deviceType === 'gwd') {
+      window.electron.ipcRenderer.once(
+        RESPONSE_RP_REBOOT_GWD_DEVICE,
+        rebootResultListener(dispatch)
+      )
+      window.electron.ipcRenderer.send(REQUEST_MP_REBOOT_GWD_DEVICE, { MACAddress, IPAddress })
+    }
   }
-}
 
-export const requestDeviceBeep = (param) => () => {
-  const { MACAddress, deviceType, IPAddress } = param
-  if (deviceType === 'snmp' || deviceType === 'all') {
-    window.electron.ipcRenderer.send(REQUEST_MP_LET_SNMP_DEVICE_BEEP, { MACAddress })
-  } else if (deviceType === 'gwd') {
-    window.electron.ipcRenderer.send(REQUEST_MP_LET_GWD_DEVICE_BEEP, {
-      MACAddress,
-      IPAddress
-    })
+export const requestDeviceBeep =
+  (param = {}) =>
+  () => {
+    const { MACAddress, deviceType, IPAddress } = param
+    if (deviceType === 'snmp' || deviceType === 'all') {
+      window.electron.ipcRenderer.send(REQUEST_MP_LET_SNMP_DEVICE_BEEP, { MACAddress })
+    } else if (deviceType === 'gwd') {
+      window.electron.ipcRenderer.send(REQUEST_MP_LET_GWD_DEVICE_BEEP, {
+        MACAddress,
+        IPAddress
+      })
+    }
   }
-}
 
-export const requestOpenTelnet = () => {
-  window.electron.ipcRenderer.send(REQUEST_MP_OPEN_TELNET)
-}
+export const requestOpenTelnet =
+  (param = {}) =>
+  () => {
+    console.log(param)
+    window.electron.ipcRenderer.send(REQUEST_MP_OPEN_TELNET, param)
+  }
 
 const deviceBasicOperatorSlice = createSlice({
   name: 'deviceBasicOperatorSlice',
