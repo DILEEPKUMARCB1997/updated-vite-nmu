@@ -106,7 +106,8 @@ function initialize() {
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
         nodeIntegration: true,
-        webviewTag: true
+        webviewTag: true,
+        contextIsolation: false
       }
     })
 
