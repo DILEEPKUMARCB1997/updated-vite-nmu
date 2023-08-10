@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux'
 import { openDialog } from '../../features/dialogSlice'
 //import { openDialog } from '../../../features/dialogSlice'
 import { requestOpenWebData } from '../../features/openWebSlice'
-import { render } from 'react-dom'
+
 ///const shell = require('electron').shell
 //import { shell } from 'electron'
 //import WebBrowserDialog from '../dialogs/webBrowswerDialog/WebBrowserDialog'

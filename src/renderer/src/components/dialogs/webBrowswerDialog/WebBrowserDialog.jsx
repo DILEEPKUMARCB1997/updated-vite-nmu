@@ -81,7 +81,7 @@ const WebBrowserDialog = ({ onClose }) => {
   }
 
   return (
-    <Modal open footer={null} onCancel={onClose} width="100%" bodyStyle={{ height: '50vh' }}>
+    <Modal open footer={null} onCancel={onClose} width="100%">
       <Menu mode="horizontal" theme="light">
         <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
           <Button
@@ -118,11 +118,12 @@ const WebBrowserDialog = ({ onClose }) => {
         <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
       </Menu>
       <webview
+        id="foo"
         ref={(ref) => {
           webRef.webview = ref
         }}
-        src={URL}
-        style={{ width: '100%', height: '100%', display: 'inline-flex' }}
+        src="https://www.github.com/"
+        style={{ display: 'inline-flex', width: '640px', height: '480px' }}
       ></webview>
     </Modal>
   )
