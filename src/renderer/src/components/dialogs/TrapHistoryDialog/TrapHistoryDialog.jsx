@@ -124,10 +124,32 @@ const TrapHistoryDialog = ({ onClose }) => {
         }
       }}
     >
-      <Modal open onCancel={handleCloseButtonOnClick} footer={null} width="80%">
-        <Typography>
-          <h5>Trap History</h5>
-        </Typography>
+      <Modal
+        open
+        onCancel={handleCloseButtonOnClick}
+        width={1200}
+        title="Trap History"
+        onOk={onClose}
+        closable={true}
+        maskClosable={false}
+        style={{ top: 20 }}
+        bodyStyle={{
+          height: 'calc(100vh - 150px)',
+          margin: 0,
+          paddingTop: 10,
+          paddingBottom: '10px'
+        }}
+        okButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
+        cancelButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
+      >
         <Input
           placeholder="Source IP"
           style={{

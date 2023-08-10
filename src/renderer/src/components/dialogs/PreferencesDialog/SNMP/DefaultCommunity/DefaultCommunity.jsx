@@ -48,11 +48,11 @@ const DefaultCommunity = () => {
         <Form.Item label="SNMP Version" colon={false} style={{ fontWeight: 'bolder' }}>
           <Select
             style={{ width: '200px', marginLeft: '65px' }}
-            defaultValue={version}
+            // defaultValue={version}
             value={version}
             options={[
-              { value: 'V1', label: 'V1' },
-              { value: 'V2C', label: 'V2C' }
+              { value: 'v1', label: 'V1' },
+              { value: 'v2c', label: 'V2C' }
             ]}
             onChange={handleSNMPVersionSelectOnChange}
           />

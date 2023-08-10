@@ -270,7 +270,7 @@ const PreferencesDialog = ({ onClose }) => {
           <SettingOutlined /> - Preferences
         </Typography.Title>
       }
-      onCancel={onClose}
+      onCancel={handleCancelButtonClick}
       footer={null}
       width="100%"
       style={{

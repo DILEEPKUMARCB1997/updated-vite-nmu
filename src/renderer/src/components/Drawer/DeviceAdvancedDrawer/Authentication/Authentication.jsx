@@ -69,10 +69,11 @@ const Authentication = () => {
       <Form layout="vertical">
         <Form.Item label="SNMP Version" colon={false} style={{ fontWeight: 'bold', margin: '5px' }}>
           <Select
-            defaultValue={SNMPVersion}
+            // defaultValue={SNMPVersion}
+            value={SNMPVersion}
             options={[
-              { value: 'V1', label: 'V1' },
-              { value: 'V2C', label: 'V2C' }
+              { value: 'v1', label: 'V1' },
+              { value: 'v2c', label: 'V2C' }
             ]}
             onChange={handleSNMPVersionSelectChange}
           />

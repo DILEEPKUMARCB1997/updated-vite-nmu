@@ -20,8 +20,17 @@ import {
 
 const DeviceList = (props) => {
   const { modal } = App.useApp()
-  const { isRestoreFinish, deviceStatus, selectDevice, isTaskRunning, mode, scheduledBackup } =
-    useSelector(scheduleBackupSelector)
+  const {
+    isRestoreFinish,
+    deviceStatus,
+    selectDevice,
+    isTaskRunning,
+    mode,
+    scheduledBackup,
+    scheduledDeviceArrayData
+  } = useSelector(scheduleBackupSelector)
+
+  console.log(scheduledDeviceArrayData)
 
   const scheduledBackupListId = Object.keys(scheduledBackup)
   console.log(scheduledBackupListId)
@@ -170,7 +179,7 @@ const DeviceList = (props) => {
               </Button>
             </div>
             <div style={{ padding: '10px' }}>
-              <Table columns={columns} />
+              <Table columns={columns} dataSource={scheduledDeviceArrayData[scheduleId]} />
             </div>
           </Panel>
         </Collapse>
