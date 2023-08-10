@@ -126,7 +126,7 @@ import { useSelector } from 'react-redux'
 //import { shell } from 'electron'
 const WebBrowserDialog = ({ onClose }) => {
   const { IPAddress } = useSelector(openWebSelector)
-  const [url, setUrl] = useState('https://www.google.com')
+  const [url, setUrl] = useState('')
   console.log(setUrl)
   const [isLoading, setIsLoading] = useState(true)
   console.log(isLoading)
@@ -192,9 +192,42 @@ const WebBrowserDialog = ({ onClose }) => {
         title="Web Browser"
         footer={null}
         onCancel={onClose}
+        width="100"
+        bodyStyle={{ height: '100%' }}
         ///={styles.webBrowserDialogbd}
       >
-        <Menu style={{ background: ' #f2f2f2' }}>
+        <Menu style={{ background: ' #f2f2f2' }} mode="horizontal" theme="light">
+          {' '}
+          <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
+            <Button
+              style={{ marginLeft: '10px' }}
+              icon={<ArrowLeftOutlined />}
+              onClick={handleGoBackButtonClick}
+            ></Button>
+          </Tooltip>
+          <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
+            <Button
+              style={{ marginLeft: '10px' }}
+              icon={<ArrowRightOutlined />}
+              onClick={handleGoForwardButtonClick}
+            ></Button>
+          </Tooltip>
+          <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
+            <Button
+              style={{ marginLeft: '10px' }}
+              icon={<SyncOutlined />}
+              onClick={handleReloadButtonClick}
+            ></Button>
+          </Tooltip>
+          <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
+            <Button
+              style={{ marginLeft: '10px' }}
+              icon={<ExportOutlined />}
+              onClick={handleOpenInBrowserButtonClick}
+            ></Button>
+          </Tooltip>
+          <Typography> {`https://${IPAddress}`}</Typography>
+          <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
           <webview
             onClick={handleOpenInBrowserButtonClick}
             ref={(ref) => {
@@ -203,23 +236,7 @@ const WebBrowserDialog = ({ onClose }) => {
             src={url}
             style={{ width: '100%', height: '100%' }}
             //className={styles.webview}
-          >
-            {' '}
-            <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
-              <Button icon={<ArrowLeftOutlined />} onClick={handleGoBackButtonClick}></Button>
-            </Tooltip>
-            <Tooltip title={<Typography style={{ color: 'white' }}>Next Page</Typography>}>
-              <Button icon={<ArrowRightOutlined />} onClick={handleGoForwardButtonClick}></Button>
-            </Tooltip>
-            <Tooltip title={<Typography style={{ color: 'white' }}>Refresh</Typography>}>
-              <Button icon={<SyncOutlined />} onClick={handleReloadButtonClick}></Button>
-            </Tooltip>
-            <Tooltip title={<Typography style={{ color: 'white' }}> Open onOs Browser</Typography>}>
-              <Button icon={<ExportOutlined />} onClick={handleOpenInBrowserButtonClick}></Button>
-            </Tooltip>
-            <Typography> {`https://${IPAddress}`}</Typography>
-            <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
-          </webview>
+          ></webview>
         </Menu>
       </Modal>
     </div>
