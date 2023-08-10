@@ -18,8 +18,8 @@ import { useDispatch } from 'react-redux'
 import { openDialog } from '../../features/dialogSlice'
 //import { openDialog } from '../../../features/dialogSlice'
 import { requestOpenWebData } from '../../features/openWebSlice'
-///const shell = require('electron').shell
-//import { shell } from 'electron'
+// /const shell = require('electron').shell
+// import { shell } from 'electron'
 //import WebBrowserDialog from '../dialogs/webBrowswerDialog/WebBrowserDialog'
 
 const RowContextMenu = () => {
@@ -34,10 +34,10 @@ const RowContextMenu = () => {
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (data.id) {
       case 'openOnOSbrowser':
-        // shell.openExternal(`http://${IPAddress}`)
-        // shell.openExternal(
-        //   'https://marketplace.visualstudio.com/items?itemName=lzrnic.javascript-vscode-extension'
-        // )
+        window.electron.shell.openExternal(`http://${IPAddress}`)
+        window.electron.shell.openExternal(
+          'https://marketplace.visualstudio.com/items?itemName=lzrnic.javascript-vscode-extension'
+        )
         break
       case 'openOnApplication':
         return handleOpenWeb(IPAddress, MACAddress)

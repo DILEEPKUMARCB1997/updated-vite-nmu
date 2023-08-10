@@ -12,16 +12,16 @@ const PortStatus = () => {
 
   const { portStatusData, isWaiting, switchLoadings } = useSelector(portInformationSelector)
 
-  // let arrayData = []
-  // arrayData = Object.entries(portStatusData).forEach(([portName, portStatus]) => {
-  //   arrayData = [
-  //     ...arrayData,
-  //     {
-  //       ...portStatus,
-  //       portName
-  //     }
-  //   ]
-  // })
+  let arrayData = []
+  arrayData = Object.entries(portStatusData).forEach(([portName, portStatus]) => {
+    arrayData = [
+      ...arrayData,
+      {
+        ...portStatus,
+        portName
+      }
+    ]
+  })
 
   const columns = [
     {

@@ -87,8 +87,18 @@ const EventHistoryDialog = ({ onClose }) => {
         title="Event History"
         open
         onOk={onClose}
+        closable={true}
+        maskClosable={false}
         onCancel={handleCloseButtonOnClick}
         width={1200}
+        style={{ top: 20 }}
+        bodyStyle={{
+          height: 'calc(100vh -150px)',
+          overflow: 'auto',
+          margin: 0,
+          paddingTop: 10,
+          paddingBottom: '10px'
+        }}
         okButtonProps={{
           style: {
             display: 'none'

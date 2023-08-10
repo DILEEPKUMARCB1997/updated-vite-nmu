@@ -123,7 +123,7 @@ import {
   CloseCircleOutlined
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-//import { shell } from 'electron'
+// import { shell } from 'electron'
 const WebBrowserDialog = ({ onClose }) => {
   const { IPAddress } = useSelector(openWebSelector)
   const [url, setUrl] = useState('https://www.google.com')
