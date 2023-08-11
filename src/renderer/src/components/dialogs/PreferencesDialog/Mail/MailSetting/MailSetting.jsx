@@ -83,94 +83,96 @@ const MailSetting = () => {
       >
         Mail Settings
       </Divider>
-      <Form ref={formRef}>
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              type: 'email',
-              message: EMAIL_NOT_VALID_MSG
-            },
-            {
-              required: true,
-              message: EMAIL_EMPTY_MSG
-            }
-          ]}
-        >
-          <Input
-            //  bordered={false}
-            style={{ width: '200px' }}
-            value={username}
-            onChange={handleUsernameInputOnChange}
-            placeholder={USERNAME_INPUT_LABLE}
-          />
-        </Form.Item>
-        <Form.Item name="password">
-          <Input.Password
-            //  bordered={false}
-            style={{ width: '200px' }}
-            value={password}
-            onChange={handlePasswordInputOnChange}
-            placeholder={PASSWORD_INPUT_LABLE}
-            iconRender={(visible) =>
-              visible ? (
-                <EyeTwoTone onClick={handleShowPasswordOnClick} />
-              ) : (
-                <EyeInvisibleOutlined />
-              )
-            }
-          />
-        </Form.Item>
-      </Form>
-      {mailAccountTagData.map((element) => (
-        <div key={element.id} style={{ marginTop: '10px' }}>
-          <span
-            style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginTop: '10px' }}
-          >{`${element.label}:`}</span>
-          {[element.id].map((tag) => (
-            <Tag
-              color={element.color}
-              key={tag}
-              closable
-              style={{ fontSize: '1rem' }}
-              onClose={handleRemoveTagButtonOnClick(element.id, tag)}
-            >
-              {tag}
-            </Tag>
-          ))}
-          {inputVisible[element.id] ? (
-            <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    type: 'email',
-                    message: EMAIL_NOT_VALID_MSG
-                  },
-                  {
-                    required: true,
-                    message: EMAIL_EMPTY_MSG
-                  }
-                ]}
+      <div style={{ marginLeft: '60px', alignItems: 'center' }}>
+        <Form ref={formRef}>
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                type: 'email',
+                message: EMAIL_NOT_VALID_MSG
+              },
+              {
+                required: true,
+                message: EMAIL_EMPTY_MSG
+              }
+            ]}
+          >
+            <Input
+              //  bordered={false}
+              style={{ width: '200px' }}
+              value={username}
+              onChange={handleUsernameInputOnChange}
+              placeholder={USERNAME_INPUT_LABLE}
+            />
+          </Form.Item>
+          <Form.Item name="password">
+            <Input.Password
+              //  bordered={false}
+              style={{ width: '200px' }}
+              value={password}
+              onChange={handlePasswordInputOnChange}
+              placeholder={PASSWORD_INPUT_LABLE}
+              iconRender={(visible) =>
+                visible ? (
+                  <EyeTwoTone onClick={handleShowPasswordOnClick} />
+                ) : (
+                  <EyeInvisibleOutlined />
+                )
+              }
+            />
+          </Form.Item>
+        </Form>
+        {mailAccountTagData.map((element) => (
+          <div key={element.id} style={{ marginTop: '10px' }}>
+            <span
+              style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginTop: '10px' }}
+            >{`${element.label}:`}</span>
+            {[element.id].map((tag) => (
+              <Tag
+                color={element.color}
+                key={tag}
+                closable
+                style={{ fontSize: '1rem' }}
+                onClose={handleRemoveTagButtonOnClick(element.id, tag)}
               >
-                <Input
-                  autoFocus
-                  type="text"
-                  style={{ width: '200px' }}
-                  onBlur={handleAddNewInputOnBlur(element.id)}
-                />
-              </Form.Item>
-            </Form>
-          ) : (
-            <Tag
-              style={{ fontSize: '1rem', color: 'black', background: token.colorPrimary }}
-              onClick={handleAddNewMailButtonOnClick(element.id)}
-            >
-              <PlusOutlined /> New Mail
-            </Tag>
-          )}
-        </div>
-      ))}
+                {tag}
+              </Tag>
+            ))}
+            {inputVisible[element.id] ? (
+              <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      type: 'email',
+                      message: EMAIL_NOT_VALID_MSG
+                    },
+                    {
+                      required: true,
+                      message: EMAIL_EMPTY_MSG
+                    }
+                  ]}
+                >
+                  <Input
+                    autoFocus
+                    type="text"
+                    style={{ width: '200px' }}
+                    onBlur={handleAddNewInputOnBlur(element.id)}
+                  />
+                </Form.Item>
+              </Form>
+            ) : (
+              <Tag
+                style={{ fontSize: '1rem', color: 'black', background: token.colorPrimary }}
+                onClick={handleAddNewMailButtonOnClick(element.id)}
+              >
+                <PlusOutlined /> New Mail
+              </Tag>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

@@ -89,20 +89,18 @@ const Syslog = () => {
       }}
     >
       <Button
-        variant="outlined"
         type="primary"
         ghost
+        style={{ margin: '0px 0px 15px 0px' }}
         onClick={handleHistoryButtonOnClick}
-        style={{ marginBottom: '15px', marginLeft: '10px' }}
       >
         History
       </Button>
       <Button
-        variant="outlined"
         type="primary"
         ghost
+        style={{ marginLeft: '10px', marginBottom: '15px' }}
         onClick={handleClearButtonOnClick}
-        style={{ marginBottom: '15px', marginLeft: '10px' }}
       >
         Clear
       </Button>
@@ -111,6 +109,7 @@ const Syslog = () => {
         type="warning"
         showIcon
       />
+
       <Table
         loading={tableLoading}
         bordered

@@ -10,11 +10,9 @@ import { requestCustomGraphData, requestGraphData } from '../components/dashboar
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
-  dispatch(openDialog('customGraphTable'))
 }
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
-  dispatch(openDialog('syslogGraphTable'))
 }
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
@@ -63,7 +61,6 @@ const dashboardSlice = createSlice({
     },
     customGraphData: {
       label: [],
-      data: [],
       InformationData: [],
       CriticalData: [],
       WarningData: [],

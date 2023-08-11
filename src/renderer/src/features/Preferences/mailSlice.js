@@ -96,8 +96,9 @@ const mailSlice = createSlice({
         ...getStateOfSetValue(state, { service })
       }
     },
-    setMailHost: (state, action) => {
-      const host = action.payload
+
+    setMailHost: (state, { payload }) => {
+      const host = payload
       const isHostValid =
         valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
       return {
@@ -106,6 +107,16 @@ const mailSlice = createSlice({
         ...getStateOfFormatValid(state, { isHostValid })
       }
     },
+    // setMailHost: (state, { payload }) => {
+    //   const host = payload
+    //   const isHostValid =
+    //     valueFormat.service.HOST_DOMAIN.test(host) || valueFormat.service.HOST_IPADDRESS.test(host)
+    //   return {
+    //     ...state,
+    //     ...getStateOfSetValue(state, { host }),
+    //     ...getStateOfFormatValid(state, { isHostValid })
+    //   }
+    // },
 
     setMailPort: (state, action) => {
       const port = action.payload
@@ -216,14 +227,4 @@ const converMailArrayDataToString = (arrayData) => {
     }
   })
   return tempString
-}
-const mail = (state) => {
-  console.log(state)
-  let serviceListSelectWidth = 80
-  state.mail.mailData.serviceList.forEach((element) => {
-    const minWidth = element.length * 12
-    if (minWidth > serviceListSelectWidth) {
-      serviceListSelectWidth = minWidth
-    }
-  })
 }

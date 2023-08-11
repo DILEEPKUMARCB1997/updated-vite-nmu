@@ -121,7 +121,7 @@ const SyslogConfiguration = () => {
               ]}
             ></Select>
           </Form.Item>
-          <Form style={{ paddingTop: '20px' }}>
+          <Form>
             <Form.Item
               colon={false}
               name="Server Ip"
@@ -131,13 +131,13 @@ const SyslogConfiguration = () => {
                   message: 'Server IP is required'
                 }
               ]}
-              style={{ color: token.colorError, width: '230px' }}
+              style={{
+                color: token.colorError,
+                width: '230px',
+                paddingTop: '10px'
+              }}
             >
-              <Input
-                placeholder="  Server IP"
-                value={serverIP}
-                onChange={handleServerInputChange}
-              />
+              <Input placeholder="Server IP" value={serverIP} onChange={handleServerInputChange} />
             </Form.Item>
 
             <Form.Item
@@ -147,7 +147,7 @@ const SyslogConfiguration = () => {
                   {serverPort === '' ? 'Server port is required' : ''}
                 </Typography>
               }
-              style={{ color: token.colorError, width: '230px' }}
+              style={{ color: token.colorError, width: '230px', paddingTop: '10px' }}
             >
               <Input
                 value={serverPort}

@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react'
-import { clearOpenWebData, openWebSelector } from '../../../features/openWebSlice'
+import {
+  clearOpenWebData,
+  openWebSelector,
+  requestOpenWebData
+} from '../../../features/openWebSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Menu, Modal, Tooltip, Typography } from 'antd'
 import {
@@ -19,11 +23,27 @@ const WebBrowserDialog = ({ onClose }) => {
   const webRef = useRef()
 
   useEffect(() => {
+    dispatch(requestOpenWebData())
     setTimeout(() => {
-      //props.changeNextURL();
-      const webv = document.getElementById('mainwebview')
-      webv.clearHistory()
-    }, 20000)
+      const webContentsInstance = webRef.current?.getWebContents()
+      if (webContentsInstance && !webContentsInstance.isLoading()) {
+        webContentsInstance.session
+          .clearStorageData({
+            origin: 'https://www.examplewebsite.com',
+            storages: ['cookies']
+          })
+          .then(() => console.log('Cleared session data'))
+          .catch((error) => console.error(`Failed clearing session data ${error}`))
+
+        webContentsInstance.clearHistory().finally(() => console.log('history cleared'))
+      } else {
+        alert('Please wait until webpage has finished loading.')
+      }
+
+      // //props.changeNextURL();
+      // const webv = document.getElementById('mainwebview')
+      // webv.clearHistory()
+    }, 2000)
     return () => {
       dispatch(clearOpenWebData())
     }
@@ -34,9 +54,11 @@ const WebBrowserDialog = ({ onClose }) => {
   }
 
   const handleGoBackButtonClick = () => {
-    const webv = document.getElementById('mainwebview')
-    if (webv.canGoBack()) {
-      webv.goBack()
+    const webContentsInstance = webRef.current?.getWebContents()
+    if (webContentsInstance.canGoBack()) {
+      webContentsInstance.goBack().finally(() => {
+        console.log('goBack button working')
+      })
     }
   }
 
@@ -81,7 +103,7 @@ const WebBrowserDialog = ({ onClose }) => {
   }
 
   return (
-    <Modal open footer={null} onCancel={onClose} width="100%">
+    <Modal open footer={null} onCancel={onClose} width="100%" maskClosable={false}>
       <Menu mode="horizontal" theme="light">
         <Tooltip title={<Typography style={{ color: 'white' }}>previous Page</Typography>}>
           <Button
@@ -117,11 +139,11 @@ const WebBrowserDialog = ({ onClose }) => {
         <Button icon={<CloseCircleOutlined />} onClick={handleCloseButtonClick}></Button>
       </Menu>
       <webview
-        id="foo"
+        id="mainWebview"
         ref={(ref) => {
           webRef.webview = ref
         }}
-        src="https://www.github.com/"
+        src={URL}
         style={{ display: 'inline-flex', width: '640px', height: '480px' }}
       ></webview>
     </Modal>
