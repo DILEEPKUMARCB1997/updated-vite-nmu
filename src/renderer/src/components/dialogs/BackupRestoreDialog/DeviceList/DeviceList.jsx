@@ -12,7 +12,7 @@ import {
   theme,
   ConfigProvider
 } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+
 import {
   changeMode,
   backupRestoreSelector,
@@ -197,31 +197,7 @@ const DeviceList = () => {
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
               }}
-            >
-              {/* {Object.entries(deviceStatus).map(([MACAddress, element]) => (
-                <Table.Summary.Row
-                  // {MACAddress === selectDevice && <span style={{backgroundColor:"#26c6da"}}/>}
-                  key={MACAddress}
-                  onClick={handleDeviceListItemOnClick(MACAddress)}
-                >
-                  {MACAddress === selectDevice && <span style={{ backgroundColor: '#26c6da' }} />}
-                  <Typography.Text style={{ borderBottom: '1px solid ', padding: '12px 8px' }}>
-                    {element.modal}
-                  </Typography.Text>
-                  <Typography.Text style={{ borderBottom: '1px solid ', padding: '12px 8px' }}>
-                    {MACAddress}
-                  </Typography.Text>
-                  <Typography.Text style={{ borderBottom: '1px solid ', padding: '12px 8px' }}>
-                    {element.IPAddress}
-                  </Typography.Text>
-                  <Typography.Text style={{ borderBottom: '1px solid ', padding: '12px 8px' }}>
-                    {element.status === SUCCESS && <span style={{ color: 'green' }}>SUCCESS</span>}
-                    {element.status === ERROR && <span style={{ color: 'red' }}>ERROR</span>}
-                    {results[element.status]}
-                  </Typography.Text>
-                </Table.Summary.Row>
-              ))} */}
-            </Table>
+            ></Table>
           </div>
           <Alert message={TIPS_TEXT} banner type="info" showIcon style={{ top: '-30px' }} />
         </div>

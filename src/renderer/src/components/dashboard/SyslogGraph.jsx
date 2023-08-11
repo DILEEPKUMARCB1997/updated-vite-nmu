@@ -26,7 +26,7 @@ const SyslogGraph = (props) => {
     series: [
       {
         name: 'Syslog Message Count',
-        data: [2.3, 3.1, 4.0, 3.8, 4.0, 3.6, 3.2]
+        data: []
       }
     ],
     options: {
@@ -87,13 +87,9 @@ const SyslogGraph = (props) => {
       },
       yaxis: {
         title: {
-          text: 'syslog count'
-        },
-
-        labels: {
-          show: true,
-          formatter: function (val) {
-            return val
+          text: 'syslog count',
+          lines: {
+            show: true
           }
         }
       }
