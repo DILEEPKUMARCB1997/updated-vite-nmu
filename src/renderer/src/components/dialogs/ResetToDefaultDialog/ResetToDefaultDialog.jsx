@@ -12,10 +12,10 @@ import './ResetToDefaultDialog.css'
 const WAITING = 0
 const RUNNING = 1
 
-const SUCCESS = 1
-const ERROR = 2
+// const SUCCESS = 1
+// const ERROR = 2
 
-const results = ['WAITING', 'SUCCESS', 'ERROR']
+// const results = ['WAITING', 'SUCCESS', 'ERROR']
 
 const columns = [
   {
@@ -58,24 +58,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { token } = useToken()
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
   console.log(resetToDefaultStatus)
-  // const resetToDefaultStatus = [1, 2, 3, 4, 5]
-  // const data = Object.entries(resetToDefaultStatus).map(([MACAddress, element]) => (
 
-  // ))
-  // const [inputData, setInputData] = useState('')
-  // const data = (row) => {
-  //   // return dataSource.filter((row) => {
-
-  //   let rec = Object.entries(resetToDefaultStatus).map((element) => {
-  //     return row[element.dataIndex].toString().includes(inputData)
-  //   })
-  //   return rec.includes(true)
-  //   // })
-  // }
-
-  // useEffect(() => {
-  //   setInputData()
-  // }, [])
   const dataSource = []
   useEffect(() => {
     dataSource.push(resetToDefaultStatus)
