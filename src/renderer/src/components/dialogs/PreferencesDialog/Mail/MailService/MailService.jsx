@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
-import { Select, Switch, Radio, theme, Form, Divider, InputNumber, Typography } from 'antd'
+import { Select, Switch, Radio, theme, Form, Divider, InputNumber, Typography, Input } from 'antd'
 import {
   mailSelector,
   setMailHost,
@@ -41,8 +41,9 @@ const MailService = () => {
     dispatch(setMailOpen())
   }
 
-  const handleHostInputOnChange = (value) => {
-    setMailHost(value)
+  const handleHostInputOnChange = (event) => {
+    console.log(event)
+    dispatch(setMailHost(event.target.value))
   }
 
   const handlePortInputOnChange = (value) => {
@@ -79,109 +80,94 @@ const MailService = () => {
       >
         {TITLE}
       </Divider>
-      <Switch
-        checked={isOpen}
-        onChange={handleMailOpenSwitchOnChange}
-        color="primary"
-        style={{ marginRight: '10px' }}
-      />
-      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}>
-        {ENABLE_SWITCH_LABLE}
-      </span>
-      <div>
-        <Radio
-          style={{ marginTop: '20px', marginRight: '0px' }}
-          checked={!isServiceOther}
-          onChange={handleServiceListRadioOnChange}
-        >
-          <span
-            style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}
+      <div style={{ marginLeft: '60px', alignItems: 'center' }}>
+        <Switch
+          checked={isOpen}
+          onChange={handleMailOpenSwitchOnChange}
+          color="primary"
+          style={{ marginRight: '10px' }}
+        />
+        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}>
+          {ENABLE_SWITCH_LABLE}
+        </span>
+        <div>
+          <Radio
+            style={{ marginTop: '20px', marginRight: '0px' }}
+            checked={!isServiceOther}
+            onChange={handleServiceListRadioOnChange}
           >
-            {MAIL_SERVICE_LIST_RADIO_LABLE}
-          </span>
-        </Radio>
-        <Select
-          style={{
-            width: `${serviceListSelectWidth}px`,
-            marginLeft: '20px',
-            minWidth: '120px'
-          }}
-          disabled={isServiceOther}
-          value={isServiceOther ? 'Other' : service}
-          onChange={handleServiceSelectOnChange}
-        >
-          {' '}
-          {serviceList.map((serviceItem) => (
-            <Option key={serviceItem} value={serviceItem}>
-              {serviceItem}
-            </Option>
-          ))}
-        </Select>
-        <br />
-        <Radio
-          style={{ marginTop: '20px' }}
-          value="Other"
-          checked={isServiceOther}
-          onChange={handleUserDefinitionRadioOnChange}
-        >
-          {' '}
-          <span
+            <span
+              style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}
+            >
+              {MAIL_SERVICE_LIST_RADIO_LABLE}
+            </span>
+          </Radio>
+          <Select
             style={{
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              color: 'black'
+              width: `${serviceListSelectWidth}px`,
+              marginLeft: '20px',
+              minWidth: '120px'
             }}
+            disabled={isServiceOther}
+            value={isServiceOther ? 'Other' : service}
+            onChange={handleServiceSelectOnChange}
           >
-            {USER_DEFINITION_RADIO_LABLE}
-          </span>
-        </Radio>
+            {' '}
+            {serviceList.map((serviceItem) => (
+              <Option key={serviceItem} value={serviceItem}>
+                {serviceItem}
+              </Option>
+            ))}
+          </Select>
+          <br />
+          <Radio
+            style={{ marginTop: '20px' }}
+            value="Other"
+            checked={isServiceOther}
+            onChange={handleUserDefinitionRadioOnChange}
+          >
+            {' '}
+            <span
+              style={{
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                color: 'black'
+              }}
+            >
+              {USER_DEFINITION_RADIO_LABLE}
+            </span>
+          </Radio>
 
-        <br />
-        <div style={{ marginLeft: '15px', display: 'inline-grid' }}>
-          {isServiceOther && (
+          <br />
+          <div style={{ display: 'inline-grid' }}>
             <Form ref={formRef}>
               <Form.Item
-                name="host"
-                rules={[
-                  {
-                    required: true,
-                    message: 'host is required'
-                  }
-                ]}
                 colon={false}
-                style={{ marginTop: '30px', borderBottom: '1px dotted black' }}
+                style={{ marginTop: '30px' }}
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
               >
-                <InputNumber
-                  controls={false}
-                  bordered={false}
-                  value={host}
+                <Input
+                  //type="number"
+                  status={isServiceOther && isHostValid ? null : 'error'}
+                  // placeholder="  Server IP"
+                  defaultValue={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
                 />
               </Form.Item>
-              <Form.Item
-                name="port"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Server port is required'
-                  }
-                ]}
-                style={{ borderBottom: '1px dotted black' }}
-                colon={false}
-                label={USER_DEFINITION_PORT_INPUT_LABLE}
-              >
+
+              <Form.Item colon={false} label={USER_DEFINITION_PORT_INPUT_LABLE}>
                 <InputNumber
                   controls={false}
-                  bordered={false}
+                  style={{ width: '200px' }}
+                  status={isServiceOther && isPortValid ? null : 'error'}
                   value={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
                 />
               </Form.Item>
             </Form>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -189,3 +175,17 @@ const MailService = () => {
 }
 
 export default MailService
+
+// <Form.Item
+//   colon={false}
+// style={{ marginTop: '30px' }}
+// label={USER_DEFINITION_HOST_INPUT_LABLE}
+// >
+//   <InputNumber
+//     status={isServiceOther && isHostValid ? null : 'error'}
+//     controls={false}
+//     value={host}
+//     onChange={handleHostInputOnChange}
+//     disabled={!isServiceOther}
+//   />
+// </Form.Item>
