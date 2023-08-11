@@ -44,27 +44,49 @@ const DeviceDefaultSetting = (props) => {
       </Divider>
 
       <div style={{ marginLeft: '60px', alignItems: 'center' }}>
-        <Form.Item colon={false} style={{ fontWeight: 'bold' }}>
-          <Input
-            // bordered={false}
-            status={isDefaultUsernameValid ? null : 'error'}
-            style={{ width: '200px', fontSize: '15px' }}
-            placeholder="Default Username"
-            onChange={handleDefaultUsernameInputOnChange}
-            defaultValue={defaultUsername}
-          />
-        </Form.Item>
-        <Form.Item colon={false} style={{ fontWeight: 'bold' }}>
-          <Input.Password
-            // bordered={false}
-            status={isDefaultPasswordValid ? null : 'error'}
-            style={{ width: '200px', fontSize: '15px' }}
-            defaultValue={defaultPassword}
-            placeholder="Default Password"
-            onChange={handleDefaultPasswordInputOnChange}
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-          />
-        </Form.Item>
+        <Form>
+          <Form.Item
+            name="defaultUsername"
+            colon={false}
+            style={{ fontWeight: 'bold' }}
+            rules={[
+              {
+                required: true,
+                message: 'Default Username'
+              }
+            ]}
+          >
+            <Input
+              // bordered={false}
+              status={isDefaultUsernameValid ? null : 'error'}
+              style={{ width: '200px', fontSize: '15px' }}
+              placeholder="Default Username"
+              onChange={handleDefaultUsernameInputOnChange}
+              defaultValue={defaultUsername}
+            />
+          </Form.Item>
+          <Form.Item
+            name="defaultPassword"
+            colon={false}
+            style={{ fontWeight: 'bold' }}
+            rules={[
+              {
+                required: true,
+                message: 'Default Password'
+              }
+            ]}
+          >
+            <Input.Password
+              // bordered={false}
+              status={isDefaultPasswordValid ? null : 'error'}
+              style={{ width: '200px', fontSize: '15px' }}
+              defaultValue={defaultPassword}
+              placeholder="Default Password"
+              onChange={handleDefaultPasswordInputOnChange}
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
+          </Form.Item>
+        </Form>
       </div>
     </div>
   )

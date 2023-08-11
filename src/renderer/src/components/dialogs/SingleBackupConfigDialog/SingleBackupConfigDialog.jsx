@@ -37,7 +37,10 @@ const SingleBackupConfigDialog = ({ onClose }) => {
       <Modal
         open
         title={
-          <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+          <Typography.Title
+            level={4}
+            // style={{ color: token.colorPrimary }}
+          >
             {' '}
             <CloudUploadOutlined /> {`${MACAddress} - Backup and Restore`}
           </Typography.Title>

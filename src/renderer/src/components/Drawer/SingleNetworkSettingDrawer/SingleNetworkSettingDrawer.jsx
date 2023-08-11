@@ -79,7 +79,10 @@ const SingleNetworkSettingDrawer = (props) => {
       <Drawer
         open={drawerVisible}
         title={
-          <Typography.Title level={4} style={{ color: token.colorPrimary }}>
+          <Typography.Title
+            level={4}
+            // style={{ color: token.colorPrimary }}
+          >
             {' '}
             Network Setting
           </Typography.Title>
@@ -89,7 +92,7 @@ const SingleNetworkSettingDrawer = (props) => {
         onClose={handleCloseDrawer}
         destroyOnClose
         width={400}
-        headerStyle={{ paddingBottom: '0px' }}
+        headerStyle={{ backgroundColor: token.colorPrimaryBgHover, paddingBottom: '0px' }}
         bodyStyle={{ backgroundColor: token.colorBgLayout }}
         footer={
           <div

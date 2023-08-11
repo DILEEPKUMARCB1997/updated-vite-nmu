@@ -4,8 +4,8 @@
 // // /* eslint-disable no-unused-vars */
 // // // /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import { Modal, Menu, Layout, App, Spin, theme, Typography } from 'antd'
-import { BorderBottomOutlined, SettingOutlined } from '@ant-design/icons'
+import { Modal, Menu, Layout, App, Spin, theme, Typography, Card } from 'antd'
+import { BorderBottomOutlined, CarFilled, SettingOutlined } from '@ant-design/icons'
 import {
   preferenceSelector,
   setSelectIndex,
@@ -284,6 +284,7 @@ const PreferencesDialog = ({ onClose }) => {
           style={{
             fontSize: 25,
             backgroundColor: 'white',
+
             marginTop: '-20px',
             paddingLeft: '0px',
             textAlign: 'left',
@@ -320,19 +321,20 @@ const PreferencesDialog = ({ onClose }) => {
               items={items}
             ></Menu>
           </Sider>
+
           <Content
             style={{
-              paddingTop: '10px',
-              paddingBottom: '10px',
-              paddingRight: '24px',
-              paddingLeft: '24px',
+              paddingTop: '15px',
+              paddingBottom: '15px',
+              paddingRight: '15px',
+              paddingLeft: '15px',
               // margin: '24px 16px 24px',
-              minHeight: 280,
-              background: colorBgContainer,
-              overflow: 'auto'
+              minHeight: 280
             }}
           >
-            {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
+            <Card style={{ height: '100%', overflow: 'auto' }}>
+              {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
+            </Card>
           </Content>
         </Layout>
       </Layout>

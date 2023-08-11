@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { ConfigProvider, Card, Typography, Table, theme } from 'antd'
-// import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+
 import { trapSettingSelector } from '../../../../features/trapSettingSlice'
 import { useSelector } from 'react-redux'
 

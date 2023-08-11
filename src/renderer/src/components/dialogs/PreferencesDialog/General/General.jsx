@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Select, Divider, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -11,21 +11,25 @@ import {
 
 const { Option } = Select
 
-const General = () => {
+const General = ({ activeNIC }) => {
+  //console.log(activeNIC)
   const { NICData } = useSelector(generalSelector)
   const { niList } = NICData
   console.log(niList)
-  console.log(NICData)
+  //console.log(activeIndex)
+
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(clearGeneralData())
+    return () => {
+      dispatch(clearGeneralData())
+    }
   }, [])
 
   let NICSelectWidth = 400
-  // niList.forEach((element) => {
+  // NICData.niList.forEach((element) => {
   //   console.log(element)
   //   const minWidth = element.name.length * 12
   //   if (minWidth > NICSelectWidth) {
@@ -35,7 +39,7 @@ const General = () => {
 
   const handleNICSelectOnChange = (value) => {
     console.log(value)
-    dispatch(setNICActiveIndex())
+    dispatch(setNICActiveIndex(value))
   }
 
   return (
@@ -52,29 +56,28 @@ const General = () => {
       >
         Network Interface Card
       </Divider>
-      <Select
-        labelInValue={false}
-        defaultValue={{
-          value: 'default-0.0.0.0',
-          label: 'default-0.0.0.0'
-        }}
-        style={{
-          width: `${NICSelectWidth}px`,
-          minWidth: '400px',
-          marginTop: '10px',
-          marginBottom: '10px'
-        }}
-        dropdownStyle={{ zIndex: '1301' }}
-        onChange={handleNICSelectOnChange}
-      >
-        {niList &&
-          niList.map((NICInfo, index) => (
-            <Option key={NICInfo.name} value={index}>
-              {`${NICInfo.name} - ${NICInfo.IPAddress}`}
-            </Option>
-          ))}
-      </Select>
-      <Divider />
+      <div style={{ marginLeft: '60px', alignItems: 'center' }}>
+        <Select
+          value={activeNIC}
+          defaultValue="default-0.0.0.0"
+          style={{
+            width: `${NICSelectWidth}px`,
+            minWidth: '400px',
+            marginTop: '10px',
+            marginBottom: '10px'
+          }}
+          dropdownStyle={{ zIndex: '1301' }}
+          onChange={handleNICSelectOnChange}
+        >
+          {niList &&
+            niList.map((NICInfo, index) => (
+              <Option key={NICInfo.name} value={index}>
+                {`${NICInfo.name} - ${NICInfo.IPAddress}`}
+              </Option>
+            ))}
+        </Select>
+        <Divider />
+      </div>
     </div>
   )
 }

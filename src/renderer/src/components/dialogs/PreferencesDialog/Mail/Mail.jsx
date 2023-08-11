@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import MailService from './MailService/MailService'
+
 import MailSetting from './MailSetting/MailSetting'
 import { clearMailData } from '../../../../features/Preferences/mailSlice'
 import { Divider } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import MailService from './MailService/MailService'
 
 const Mail = () => {
   const dispatch = useDispatch()
