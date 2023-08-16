@@ -24,11 +24,12 @@ import {
 import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
-import { updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
+import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
 // import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
+  const { openBeepDialog } = useSelector(eventLogSelector)
   const isAppPreferencesDialogOpen = dialogs.includes('perferences')
   // console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
@@ -87,10 +88,10 @@ const MainLayout = () => {
   }
 
   const eventLogUpdateListener = (event, arg) => {
-    // if (!this.props.openBeepDialog && arg.type === 'custom') {
-    //   dispatch(updateBeepSoundStart())
-    //   dispatch(openDialog('buzzer'))
-    // }
+    if (!openBeepDialog && arg.type === 'custom') {
+      dispatch(updateBeepSoundStart())
+      dispatch(openDialog('buzzer'))
+    }
     dispatch(updateEventLog())
   }
 

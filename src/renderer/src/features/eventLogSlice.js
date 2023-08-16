@@ -228,7 +228,8 @@ export const {
   clearSyslogData,
   updateLogData,
   updateCustomEventDaily,
-  updateBeepSoundStart
+  updateBeepSoundStart,
+  updateBeepSoundStop
 } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {
