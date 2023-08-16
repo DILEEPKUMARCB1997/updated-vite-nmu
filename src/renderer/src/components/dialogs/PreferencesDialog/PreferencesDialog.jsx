@@ -32,7 +32,7 @@ import {
 import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
 import { requestGetMail, requestSetMail } from '../../../features/Preferences/mailSlice'
 
-const { Header, Sider, Content } = Layout
+const { Sider, Content } = Layout
 
 const items = [
   {
@@ -274,8 +274,9 @@ const PreferencesDialog = ({ onClose }) => {
       footer={null}
       width="100%"
       style={{
-        top: '5px',
-        padding: '0px'
+        top: '20px',
+        padding: '5px 5px 5px 5px'
+        // padding: '0px'
       }}
       // bodyStyle={{ overflow: 'auto' }}
     >
@@ -332,7 +333,7 @@ const PreferencesDialog = ({ onClose }) => {
               minHeight: 280
             }}
           >
-            <Card style={{ height: '100%', overflow: 'auto' }}>
+            <Card bordered={false} style={{ height: '100%', overflow: 'auto' }}>
               {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
             </Card>
           </Content>
