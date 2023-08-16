@@ -12,15 +12,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
 const FWUButton = (props) => {
   const { handleDialogOnClose } = props
-  // FWUButton.propTypes = {
-  //   handleDialogOnClose: PropTypes.func.isRequired
-  // }
-
   const dispatch = useDispatch()
   const { status, filePath } = useSelector(firmwareSelector)
   console.log(filePath)
-  //const { disableStart } = filePath
-  const dialogRef = useRef()
+  const { disableStart } = filePath === ''
+  console.log(disableStart)
+  //const dialogRef = useRef()
 
   const handleStartButtonClick = () => {
     dispatch(requestStartFirmwareUpdate())
@@ -54,8 +51,8 @@ const FWUButton = (props) => {
                 Cancel
               </Button>
               <Button
-                disabled
-                //  disabled={disableStart}
+                //  disabled
+                disabled={disableStart}
                 variant="contained"
                 type="primary"
                 onClick={handleStartButtonClick}

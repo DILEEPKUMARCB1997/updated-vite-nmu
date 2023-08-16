@@ -106,22 +106,36 @@ const dashboardSlice = createSlice({
         }
       }
     },
-
-    updateCustomGraph: (state, action) => {
-      const { payload } = action
+    updateCustomGraph: (state, { payload }) => {
+      const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
+        payload
       return {
         ...state,
         customGraphData: {
-          label: payload.label,
-          data: payload.data,
-          tableData: payload.tableResult,
-          lastUpdated: payload.lastUpdated,
-          informationData: payload.InformationData,
-          criticalData: payload.CriticalData,
-          warningData: payload.WarningData
+          label: label,
+          informationData: InformationData,
+          criticalData: CriticalData,
+          tableData: tableResult,
+          warningData: WarningData,
+          lastUpdated: lastUpdated
         }
       }
     },
+    // updateCustomGraph: (state, action) => {
+    //   const { payload } = action
+    //   return {
+    //     ...state,
+    //     customGraphData: {
+    //       label: payload.label,
+    //       data: payload.data,
+    //       tableData: payload.tableResult,
+    //       lastUpdated: payload.lastUpdated,
+    //       informationData: payload.InformationData,
+    //       criticalData: payload.CriticalData,
+    //       warningData: payload.WarningData
+    //     }
+    //   }
+    // },
 
     updateSyslogTableData: (state, { payload }) => {
       //  const { payload } = action

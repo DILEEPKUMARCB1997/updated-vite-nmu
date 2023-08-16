@@ -29,23 +29,27 @@ const EventLog = () => {
         data: []
       }
     ],
-
     options: {
       chart: {
-        type: 'bar',
         height: 320,
+        type: 'bar',
+        // stacked: true,
         toolbar: {
           show: false
         },
         offsetY: -20,
         offsetX: -5
       },
+
       legend: {
         show: true,
         showForSingleSeries: true,
         position: 'top',
         horizontalAlign: 'center',
         offsetY: 20
+      },
+      fill: {
+        type: 'solid'
       },
       plotOptions: {
         bar: {
@@ -57,21 +61,28 @@ const EventLog = () => {
         }
       },
       dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 2
+        enabled: false,
+        formatter: function (val) {
+          return val + '%'
+        }
       },
 
-      grid: {
-        show: true
-      },
       xaxis: {
-        type: 'category',
         categories: customGraphData.label,
+        position: 'bottom',
         labels: {
           rotate: -45,
           rotateAlways: true
+        },
+        fill: {
+          type: 'solid',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
         }
       },
       yaxis: {
@@ -79,20 +90,6 @@ const EventLog = () => {
           lines: {
             show: true
           }
-        }
-      },
-      fill: {
-        type: 'solid',
-
-        gradient: {
-          shade: 'lights',
-          type: 'horizontal',
-          shadeIntensity: 1,
-          gradientToColors: undefined,
-          inverseColors: false,
-          opacityFrom: 0.85,
-          opacityTo: 0.85,
-          stops: [50, 0, 100]
         }
       }
     }
@@ -110,7 +107,6 @@ const EventLog = () => {
   }, [])
 
   useEffect(() => {
-    // dispatch(requestHistoryData(customGraphData))
     if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
       setEventLogData((prev) => ({
         ...prev,
