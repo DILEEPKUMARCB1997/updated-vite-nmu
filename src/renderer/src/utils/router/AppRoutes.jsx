@@ -12,8 +12,11 @@ import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
 import TopologyPage from '../../pages/TopologyPage'
 import RowContextMenu from '../../components/RowContextMenu/RowContextMenu'
+import { openDialog } from '../../features/dialogSlice'
+import { useDispatch } from 'react-redux'
 
 const AppRoutes = () => {
+  const dispatch = useDispatch()
   let element = useRoutes([
     {
       path: '/',

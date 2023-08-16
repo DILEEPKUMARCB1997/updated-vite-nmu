@@ -1,11 +1,5 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
-// eslint-disable-next-line no-unused-vars
-//import TabPane from 'antd/es/tabs/TabPane'
-
 import React, { useEffect } from 'react'
-
 import Event from '../components/eventlog/Event'
 import { useDispatch } from 'react-redux'
 import {
@@ -14,10 +8,6 @@ import {
   clearTrapData,
   clearSyslogData
 } from '../features/eventLogSlice'
-// import SNMPTrap from '../components/eventlog/SNMPTrap'
-//import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog
-// var clearLogTimeOut
-// import TrapHistoryDialog from '../components/dialogs/TrapHistoryDialog/TrapHistoryDialog'
 import SNMPTrap from '../components/eventlog/SNMPTrap'
 import Syslog from '../components/eventlog/Syslog'
 

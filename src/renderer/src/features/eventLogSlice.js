@@ -7,6 +7,27 @@ import {
 // import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 //import { openDialog } from './dialogSlice'
 
+export const updateEventLog = (payload) => (dispatch) => {
+  const { type, data } = payload
+  switch (type) {
+    case 'trap':
+      dispatch(updateTrap(data))
+      break
+    case 'syslog':
+      dispatch(updateSyslog(data))
+      break
+    case 'event':
+      dispatch(updateEvent(data))
+      break
+    case 'custom':
+      dispatch(updateCustomEvent(data))
+      dispatch(initEventDailyData({ types: 'custom' }))
+      break
+    default:
+      break
+  }
+}
+
 export const initEventLogHistoryData = (payload) => (dispatch) => {
   const { type } = payload
   switch (type) {
@@ -22,7 +43,6 @@ export const initEventLogHistoryData = (payload) => (dispatch) => {
           le: ''
         })
       )
-
       break
     case 'syslog':
       dispatch(
@@ -51,6 +71,10 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'syslog':
         dispatch(updateSyslogHistory(data))
         break
+      case 'custom':
+        dispatch(updateCustomEvent(data))
+        dispatch(initEventDailyData({ types: 'custom' }))
+        break
       default:
         break
     }
@@ -76,6 +100,12 @@ const eventLogSlice = createSlice({
     openBeepDialog: false
   },
   reducers: {
+    updateBeepSoundStart: (state) => {
+      return { ...state, beepSoundStart: true, openBeepDialog: true }
+    },
+    updateBeepSoundStop: (state) => {
+      return { ...state, beepSoundStart: false, openBeepDialog: false }
+    },
     updateCustomHistory: (state, action) => {
       const { payload } = action
       return { ...state, customEventHistoryData: payload }
@@ -140,14 +170,36 @@ const eventLogSlice = createSlice({
   clearSyslogData: (state, { payload }) => {
     return { ...state, syslogData: payload }
   },
+  updateEvent: (state, { payload }) => {
+    const filteredEventData = filterByDate([...state.eventData])
+    filteredEventData.push(payload)
+    return { ...state, eventData: filteredEventData }
+  },
+  updateTrap: (state, { payload }) => {
+    const filteredTrapData = filterByDate([...state.trapData])
+    filteredTrapData.push(payload)
+    return { ...state, eventData: filteredTrapData }
+  },
 
   updateSyslog: (state, { payload }) => {
     const filteredSyslogData = filterByDate([...state.syslogData])
-    // const { payload } = action;
     filteredSyslogData.push(payload)
     return { ...state, syslogData: filteredSyslogData }
   },
-
+  updateCustomEvent: (state) => {
+    const filteredCustomEventData = filterByDate([...state.cusromEventData])
+    const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
+    let EventList = [...state.customEventListData]
+    const { payload } = action
+    filteredCustomEventData.push(payload)
+    filteredCustomEventDailyData.push(payload)
+    EventList.push(payload)
+    let sortedEventList = customEventSortFilter([...EventList])
+    return {
+      ...state,
+      customEventData: filteredCustomEventData
+    }
+  },
   updateTrapHistory: (state, { action }) => {
     const { payload } = action
     return { ...state, trapHistoryData: payload }
@@ -162,18 +214,22 @@ const eventLogSlice = createSlice({
 })
 
 export const {
-  updateCustomHistory,
-  updateCustomEventDaily,
-  updateEventHistory,
-  clearSyslogData,
-  updateTrapHistory,
+  updateTrap,
   updateSyslog,
-  updateSyslogHistory,
   updateEvent,
-  updateLogData,
+  updateCustomEvent,
+  updateEventHistory,
+  updateTrapHistory,
+  updateSyslogHistory,
+  updateCustomHistory,
+  clearHistoryData,
   clearEventData,
   clearTrapData,
-  clearHistoryData
+  clearSyslogData,
+  updateLogData,
+  updateCustomEventDaily,
+  updateBeepSoundStart,
+  updateBeepSoundStop
 } = eventLogSlice.actions
 
 export const eventLogSelector = (state) => {

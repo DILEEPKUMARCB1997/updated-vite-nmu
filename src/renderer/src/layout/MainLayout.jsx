@@ -16,14 +16,20 @@ import { nextInitRenderStep, requestAppInitialData } from '../features/UIControl
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
 import { closeDialog, dialogSelector, openDialog } from '../features/dialogSlice.js'
-import { SEND_RP_OPEN_NATIVE_MENU, SEND_RP_SNMP_SCAN_STATUS } from '../../../main/utils/IPCEvents'
+import {
+  SEND_RP_EVENT_LOG_UPDATE,
+  SEND_RP_OPEN_NATIVE_MENU,
+  SEND_RP_SNMP_SCAN_STATUS
+} from '../../../main/utils/IPCEvents'
 import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
+import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
 // import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
+  const { openBeepDialog } = useSelector(eventLogSelector)
   const isAppPreferencesDialogOpen = dialogs.includes('perferences')
   // console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
@@ -48,6 +54,7 @@ const MainLayout = () => {
       nextInitRenderStep()
     }, 2200)
     window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
+    window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
     return () => {
       window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     }
@@ -78,6 +85,14 @@ const MainLayout = () => {
     } else {
       dispatch(changeSnmpScanStep(arg.scanStatus))
     }
+  }
+
+  const eventLogUpdateListener = (event, arg) => {
+    if (!openBeepDialog && arg.type === 'custom') {
+      dispatch(updateBeepSoundStart())
+      dispatch(openDialog('buzzer'))
+    }
+    dispatch(updateEventLog())
   }
 
   const handleMenuClick = (e) => {
