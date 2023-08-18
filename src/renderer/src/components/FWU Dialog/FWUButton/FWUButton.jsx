@@ -10,17 +10,10 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
-const FWUButton = (props) => {
-  const { handleDialogOnClose } = props
-  // FWUButton.propTypes = {
-  //   handleDialogOnClose: PropTypes.func.isRequired
-  // }
-
+const FWUButton = ({ handleDialogOnClose }) => {
   const dispatch = useDispatch()
   const { status, filePath } = useSelector(firmwareSelector)
   console.log(filePath)
-  //const { disableStart } = filePath
-  const dialogRef = useRef()
 
   const handleStartButtonClick = () => {
     dispatch(requestStartFirmwareUpdate())
@@ -44,33 +37,21 @@ const FWUButton = (props) => {
         {
           wait: (
             <div>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  handleCancelButtonClick()
-                }}
-                style={{ marginRight: '5px' }}
-              >
+              <Button onClick={handleCancelButtonClick} style={{ marginRight: '5px' }}>
                 Cancel
               </Button>
-              <Button
-                disabled
-                //  disabled={disableStart}
-                variant="contained"
-                type="primary"
-                onClick={handleStartButtonClick}
-              >
+              <Button disabled={filePath === ''} type="primary" onClick={handleStartButtonClick}>
                 Start
               </Button>
             </div>
           ),
           start: (
-            <Button variant="contained" type="secondary" onClick={handleStopButtonClick}>
+            <Button type="secondary" onClick={handleStopButtonClick}>
               Stop
             </Button>
           ),
           done: (
-            <Button variant="contained" type="primary" onClick={handleFinishButtonClick}>
+            <Button type="primary" onClick={handleFinishButtonClick}>
               Finish
             </Button>
           )

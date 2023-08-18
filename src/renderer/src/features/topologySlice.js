@@ -128,6 +128,19 @@ const topologySlice = createSlice({
     changeTopologyEvent: (state, action) => {
       return { ...state, event: action.payload }
     },
+    setTopologyCurrentGroup: (state, action) => {
+      return {
+        ...state,
+        currentGroup: action.payload,
+        selectNodes: [],
+        selectEdges: [],
+        nodesData: {},
+        edgesData: {},
+        virtualNodeData: {},
+        nodesIds: [],
+        devicelistSelect: ''
+      }
+    },
     addNewVirtualNode: (state, action) => {
       const { x, y } = action.payload
       let nodeName
@@ -299,112 +312,6 @@ const topologySlice = createSlice({
         nodesIds: Object.keys(nodesData)
       }
     },
-    addNewVirtualNode: (state, action) => {
-      const { x, y } = action.payload
-      let nodeName
-      const virtualNodeList = Object.keys(state.virtualNodeData)
-      for (let i = 0; i <= virtualNodeList.length; i += 1) {
-        if (!virtualNodeList.includes(`virtual${i}`)) {
-          nodeName = `virtual${i}`
-          break
-        }
-      }
-      return {
-        ...state,
-        virtualNodeData: {
-          ...state.virtualNodeData,
-          [nodeName]: {
-            status: 'virtual',
-            x,
-            y
-          }
-        },
-        newNodeTemp: nodeName
-      }
-    },
-    addNewNode: (state, action) => {
-      const { MACAddress, x, y, groupIds } = action.payload
-      const { changeGroupMemberData } = state
-      if (state.currentGroup === 'all') {
-        const index = changeGroupMemberData.removeDevice.indexOf(MACAddress)
-        if (index !== -1) {
-          changeGroupMemberData.removeDevice.splice(index, 1)
-        } else {
-          changeGroupMemberData.addDevice[MACAddress] = groupIds
-        }
-      }
-      return {
-        ...state,
-        nodesData: {
-          ...state.nodesData,
-          [MACAddress]: {
-            IPAddress: '',
-            MACAddress,
-            model: '',
-            hostname: '',
-            status: 'offline',
-            x,
-            y
-          }
-        },
-        newNodeTemp: MACAddress,
-        nodesIds: [...state.nodesIds, MACAddress],
-        changeGroupMemberData
-      }
-    },
-    addNewEdge: (state, action) => {
-      const { fromId, toId, fromPort, toPort } = action.payload
-      let newNodes = {}
-      let key
-      const isFromVirtual = fromId.startsWith('virtual')
-      const isToVirtual = toId.startsWith('virtual')
-
-      if (isFromVirtual && isToVirtual) {
-        key = `${fromId}_${toId}`
-        newNodes = {
-          leftPort: '',
-          rightPort: '',
-          status: 'notExist'
-        }
-      } else if (isFromVirtual) {
-        key = `${toId}_${fromId}`
-        newNodes = {
-          leftPort: `port${toPort}`,
-          rightPort: '',
-          status: 'notExist'
-        }
-      } else if (isToVirtual) {
-        key = `${fromId}_${toId}`
-        newNodes = {
-          leftPort: `port${fromPort}`,
-          rightPort: '',
-          status: 'notExist'
-        }
-      } else if (toId > fromId) {
-        key = `${fromId}_${toId}_port${fromPort}_port${toPort}`
-        newNodes = {
-          leftPort: `port${fromPort}`,
-          rightPort: `port${toPort}`,
-          status: 'notExist'
-        }
-      } else {
-        key = `${toId}_${fromId}_port${toPort}_port${fromPort}`
-        newNodes = {
-          leftPort: `port${toPort}`,
-          rightPort: `port${fromPort}`,
-          status: 'notExist'
-        }
-      }
-      return {
-        ...state,
-        edgesData: {
-          ...state.edgesData,
-          [key]: {
-            ...newNodes
-          }
-        }
-      }
-    },
     setDeviceListSelect: (state, { payload }) => {
       const { MACAddress } = payload
       return { ...state, devicelistSelect: MACAddress }
@@ -437,6 +344,7 @@ const topologySlice = createSlice({
 
 export const {
   changeTopologyEvent,
+  setTopologyCurrentGroup,
   switchEditMode,
   setTopologyViewSettings,
   clearTopologyLayout,

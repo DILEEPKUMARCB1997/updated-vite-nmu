@@ -12,32 +12,23 @@ import {
 } from '../features/topologySlice'
 import { useDispatch } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 
 const TopologyPage = () => {
   const dispatch = useDispatch()
   let graphRef = useRef()
   let modalRef = useRef()
-  // var modal
-  // var graph
 
-  // TopologyPage.propTypes = {
-  //   networkDisableEditMode: PropTypes.object.isRequired,
-  //   networkAddNodeMode: PropTypes.object.isRequired,
-  //   networkAddEdgeMode: PropTypes.object.isRequired,
-  //   networkExportImage: PropTypes.object.isRequired,
-  //   networkFitViewPoint: PropTypes.object.isRequired
-  // }
+  useEffect(() => {
+    window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+    dispatch(clearTopologyData())
+    dispatch(requestSwitchPolling(false))
+    window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+  }, [])
 
-  // useEffect(() => {
-  //   window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-  //   dispatch(clearTopologyData())
-  //   dispatch(requestSwitchPolling(false))
-  //   window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-  // }, [])
-
-  // const topologyDataListener = (event, arg) => {
-  //   dispatch(setTopologyData(arg))
-  // }
+  const topologyDataListener = (event, arg) => {
+    dispatch(setTopologyData(arg))
+  }
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
     graphRef.current.networkDisableEditMode()
@@ -57,73 +48,57 @@ const TopologyPage = () => {
   const handleExportImage = () => {
     graphRef.current.networkExportImage()
   }
-  const handleFitViewPoint = () => {
+  const handleFitViewPoin = () => {
     graphRef.current.networkFitViewPoint()
   }
   const getNodePosition = (position) => {
-    modal.openModal(position)
+    // modal.openModal(position)
     modalRef.current.openModal(position)
   }
   const getEdgeLinkNode = (nodes) => {
-    modal.openModal(nodes)
+    // modal.openModal(nodes)
     modalRef.current.openModal(nodes)
   }
+
   return (
-    <div
-      style={{
-        // position: 'absolute',
-        // width: '100%',
-        padding: '20px 10px 10px 10px'
-      }}
-    >
+    <div>
+      <TopologyButtons />
       <Card
+        bodyStyle={{ boxSizing: 'border-box', width: '100%', padding: '15px', minWidth: '761px' }}
         bordered={false}
-        size="small"
-        style={{
-          height: 550
-        }}
-        bodyStyle={{
-          padding: '5px'
-        }}
+        title="Device Topology"
       >
-        {/* <SplitterLayout>
-          <div>
-            <TopologyNavContainer handleSelectNode={handleSelectNode} />
-          </div> */}
-        <div
-          style={{
-            height: '140px',
-            boxSizing: 'border-box',
-            position: 'relative',
-            padding: '15px 10px 15px 15px',
-            minWidth: '761px'
-          }}
-        >
+        <div style={{ boxSizing: 'border-box', padding: '15px 10px 15px 15px', minWidth: '761px' }}>
           <TopologyToolbar
             handleExportImage={handleExportImage}
-            handleFitViewPoint={handleFitViewPoint}
+            handleFitViewPoin={handleFitViewPoin}
             handleAddNode={handleAddNode}
             handleAddEdge={handleAddEdge}
+            // handleSearchNode={handleSearchNode}
             handleDisableEdit={handleDisableEdit}
             handleSaveLayout={handleSaveLayout}
+            // handleChangeShowLabelItem={handleChangeShowLabelItem}
           />
+
+          {/* <Card> */}
           <TopologyGraph
             onRef={(ref) => {
-              ref = { graphRef }
+              graphRef = ref
+              console.log(graphRef)
             }}
             getNodePosition={getNodePosition}
             getEdgeLinkNode={getEdgeLinkNode}
           />
-          {/* <TopologyAddModal
+          <TopologyAddModal
             onRef={(ref) => {
-              modal.current = ref
+              modalRef = ref
             }}
             handleDisableEdit={handleDisableEdit}
-            handleSaveLayout={handleSaveLayout}
-          /> */}
+          />
         </div>
       </Card>
     </div>
   )
 }
+
 export default TopologyPage
