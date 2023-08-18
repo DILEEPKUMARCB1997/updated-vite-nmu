@@ -3,13 +3,18 @@
 import React, { useState, useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
-import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
+import {
+  dashboardSelector,
+  requestHistoryData
+  // showCustomTableData
+} from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
 const EventLog = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   console.log(customGraphData)
+  //const { tableData } = customGraphData
   const dispatch = useDispatch()
   const [eventLogData, setEventLogData] = useState({
     series: [
@@ -68,11 +73,17 @@ const EventLog = () => {
       },
 
       xaxis: {
-        categories: customGraphData.label,
+        // type: 'datetime',
+        categories:
+          // customGraphData.label,
+          ['08/11', '08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
         position: 'bottom',
         labels: {
           rotate: -45,
           rotateAlways: true
+        },
+        lines: {
+          show: false
         },
         fill: {
           type: 'solid',
@@ -86,9 +97,14 @@ const EventLog = () => {
         }
       },
       yaxis: {
-        title: {
-          lines: {
-            show: true
+        // min: 0,
+        // max: 1,
+        lines: {
+          show: true
+        },
+        labels: {
+          formatter: (val) => {
+            return val / 1
           }
         }
       }

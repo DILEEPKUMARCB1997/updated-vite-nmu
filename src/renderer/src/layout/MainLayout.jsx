@@ -16,14 +16,22 @@ import { nextInitRenderStep, requestAppInitialData } from '../features/UIControl
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
 import { closeDialog, dialogSelector, openDialog } from '../features/dialogSlice.js'
-import { SEND_RP_OPEN_NATIVE_MENU, SEND_RP_SNMP_SCAN_STATUS } from '../../../main/utils/IPCEvents'
+import {
+  SEND_RP_EVENT_LOG_UPDATE,
+  SEND_RP_OPEN_NATIVE_MENU,
+  SEND_RP_SNMP_SCAN_STATUS
+} from '../../../main/utils/IPCEvents'
 import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
+import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+
 // import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
+  const { openBeepDialog } = useSelector(eventLogSelector)
   const isAppPreferencesDialogOpen = dialogs.includes('perferences')
   // console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
@@ -48,6 +56,7 @@ const MainLayout = () => {
       nextInitRenderStep()
     }, 2200)
     window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
+    window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
     return () => {
       window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     }
@@ -80,6 +89,14 @@ const MainLayout = () => {
     }
   }
 
+  const eventLogUpdateListener = (event, arg) => {
+    if (!openBeepDialog && arg.type === 'custom') {
+      dispatch(updateBeepSoundStart())
+      dispatch(openDialog('buzzer'))
+    }
+    dispatch(updateEventLog())
+  }
+
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
       dispatch(clearUsersData())
@@ -91,72 +108,75 @@ const MainLayout = () => {
   const loggedinUser = localStorage.getItem('username') ? localStorage.getItem('username') : 'admin'
 
   return (
-    <ProLayout
-      {..._DefaultProps}
-      siderWidth={220}
-      layout="mix"
-      fixSiderbar
-      fixedHeader
-      hasSiderMenu={true}
-      siderMenuType="sub"
-      menu={{
-        collapsedShowGroupTitle: false
-      }}
-      location={{
-        pathname
-      }}
-      logo={<img src={atopLogo} alt="Atop Technologies" />}
-      title="Atop Technologies"
-      avatarProps={{
-        src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-        size: 'default',
-        title: loggedinUser,
-        render: (props, dom) => {
-          return (
-            <Dropdown
-              trigger={['click']}
-              placement="bottom"
-              arrow
-              menu={{
-                items: [
-                  {
-                    key: 'logout',
-                    icon: <LogoutOutlined />,
-                    label: 'Logout'
-                  }
-                ],
-                onClick: handleMenuClick
-              }}
-            >
-              {dom}
-            </Dropdown>
-          )
-        }
-      }}
-      actionsRender={(props) => [<ThemeController />]}
-      menuItemRender={(item, dom) => <Link to={item.path || '/'}>{dom}</Link>}
-      token={{
-        sider: {
-          colorMenuBackground: token.colorBgContainer,
-          colorBgMenuItemSelected: mode === 'dark' ? token.colorPrimary : token.colorPrimaryBg,
-          colorTextMenuSelected: mode === 'dark' ? token.colorText : token.colorPrimary
-        },
-        pageContainer: {
-          paddingBlockPageContainerContent: 16,
-          paddingInlinePageContainerContent: 16
-        }
-      }}
-    >
-      <PageContainer
-        header={{
-          title: ''
+    <div>
+      <ProLayout
+        {..._DefaultProps}
+        siderWidth={220}
+        layout="mix"
+        fixSiderbar
+        fixedHeader
+        hasSiderMenu={true}
+        siderMenuType="sub"
+        menu={{
+          collapsedShowGroupTitle: false
+        }}
+        location={{
+          pathname
+        }}
+        logo={<img src={atopLogo} alt="Atop Technologies" />}
+        title="Atop Technologies"
+        avatarProps={{
+          src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+          size: 'default',
+          title: loggedinUser,
+          render: (props, dom) => {
+            return (
+              <Dropdown
+                trigger={['click']}
+                placement="bottom"
+                arrow
+                menu={{
+                  items: [
+                    {
+                      key: 'logout',
+                      icon: <LogoutOutlined />,
+                      label: 'Logout'
+                    }
+                  ],
+                  onClick: handleMenuClick
+                }}
+              >
+                {dom}
+              </Dropdown>
+            )
+          }
+        }}
+        actionsRender={(props) => [<ThemeController />]}
+        menuItemRender={(item, dom) => <Link to={item.path || '/'}>{dom}</Link>}
+        token={{
+          sider: {
+            colorMenuBackground: token.colorBgContainer,
+            colorBgMenuItemSelected: mode === 'dark' ? token.colorPrimary : token.colorPrimaryBg,
+            colorTextMenuSelected: mode === 'dark' ? token.colorText : token.colorPrimary
+          },
+          pageContainer: {
+            paddingBlockPageContainerContent: 16,
+            paddingInlinePageContainerContent: 16
+          }
         }}
       >
-        <Outlet />
-      </PageContainer>
-      <Dialogs />
-      {/* <Snacks /> */}
-    </ProLayout>
+        <PageContainer
+          header={{
+            title: ''
+          }}
+        >
+          <Outlet />
+        </PageContainer>
+        <Dialogs />
+
+        {/* <Snacks /> */}
+      </ProLayout>
+    </div>
   )
 }
 

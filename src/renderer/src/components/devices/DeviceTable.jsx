@@ -3,8 +3,6 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { useTheme } from 'antd-style'
 import { ProTable } from '@ant-design/pro-components'
-import RowContextMenu from '../RowContextMenu/RowContextMenu'
-import { openDialog } from '../../features/dialogSlice'
 import { useDispatch } from 'react-redux'
 
 const columns = [
@@ -76,7 +74,6 @@ const columns = [
 ]
 
 const DeviceTable = ({ deviceData = [] }) => {
-  const dispatch = useDispatch()
   const token = useTheme()
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {

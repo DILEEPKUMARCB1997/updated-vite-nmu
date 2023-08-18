@@ -128,6 +128,19 @@ const topologySlice = createSlice({
     changeTopologyEvent: (state, action) => {
       return { ...state, event: action.payload }
     },
+    setTopologyCurrentGroup: (state, action) => {
+      return {
+        ...state,
+        currentGroup: action.payload,
+        selectNodes: [],
+        selectEdges: [],
+        nodesData: {},
+        edgesData: {},
+        virtualNodeData: {},
+        nodesIds: [],
+        devicelistSelect: ''
+      }
+    },
     addNewVirtualNode: (state, action) => {
       const { x, y } = action.payload
       let nodeName
@@ -331,6 +344,7 @@ const topologySlice = createSlice({
 
 export const {
   changeTopologyEvent,
+  setTopologyCurrentGroup,
   switchEditMode,
   setTopologyViewSettings,
   clearTopologyLayout,

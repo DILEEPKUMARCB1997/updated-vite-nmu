@@ -12,6 +12,7 @@ import {
 } from '../features/topologySlice'
 import { useDispatch } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 
 const TopologyPage = () => {
   const dispatch = useDispatch()
@@ -60,41 +61,43 @@ const TopologyPage = () => {
   }
 
   return (
-    <Card
-      bodyStyle={{ boxSizing: 'border-box', width: '100%', padding: '15px', minWidth: '761px' }}
-      bordered={false}
-      title="Device Topology"
-    >
-      <div style={{ boxSizing: 'border-box', padding: '15px 10px 15px 15px', minWidth: '761px' }}>
-        <TopologyToolbar
-          handleExportImage={handleExportImage}
-          handleFitViewPoin={handleFitViewPoin}
-          handleAddNode={handleAddNode}
-          handleAddEdge={handleAddEdge}
-          // handleSearchNode={handleSearchNode}
-          handleDisableEdit={handleDisableEdit}
-          handleSaveLayout={handleSaveLayout}
-          // handleChangeShowLabelItem={handleChangeShowLabelItem}
-        />
+    <div>
+      <TopologyButtons />
+      <Card
+        bodyStyle={{ boxSizing: 'border-box', width: '100%', padding: '15px', minWidth: '761px' }}
+        bordered={false}
+        title="Device Topology"
+      >
+        <div style={{ boxSizing: 'border-box', padding: '15px 10px 15px 15px', minWidth: '761px' }}>
+          <TopologyToolbar
+            handleExportImage={handleExportImage}
+            handleFitViewPoin={handleFitViewPoin}
+            handleAddNode={handleAddNode}
+            handleAddEdge={handleAddEdge}
+            // handleSearchNode={handleSearchNode}
+            handleDisableEdit={handleDisableEdit}
+            handleSaveLayout={handleSaveLayout}
+            // handleChangeShowLabelItem={handleChangeShowLabelItem}
+          />
 
-        {/* <Card> */}
-        <TopologyGraph
-          onRef={(ref) => {
-            graphRef = ref
-            console.log(graphRef)
-          }}
-          getNodePosition={getNodePosition}
-          getEdgeLinkNode={getEdgeLinkNode}
-        />
-        {/* </Card> */}
-        <TopologyAddModal
-          onRef={(ref) => {
-            modalRef = ref
-          }}
-          handleDisableEdit={handleDisableEdit}
-        />
-      </div>
-    </Card>
+          {/* <Card> */}
+          <TopologyGraph
+            onRef={(ref) => {
+              graphRef = ref
+              console.log(graphRef)
+            }}
+            getNodePosition={getNodePosition}
+            getEdgeLinkNode={getEdgeLinkNode}
+          />
+          <TopologyAddModal
+            onRef={(ref) => {
+              modalRef = ref
+            }}
+            handleDisableEdit={handleDisableEdit}
+          />
+        </div>
+      </Card>
+    </div>
   )
 }
 
