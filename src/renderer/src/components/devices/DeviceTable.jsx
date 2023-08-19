@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Badge, ConfigProvider } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'

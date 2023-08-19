@@ -27,6 +27,7 @@ import DeviceAdvanceDrawer from '../Drawer/DeviceAdvancedDrawer/DeviceAdvanceDra
 import PortInformationDrawer from '../Drawer/PortInformationDrawer/PortInformationDrawer'
 import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
+import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -56,7 +57,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           advanceSetting: <DeviceAdvanceDrawer onClose={onClose} />,
           singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />,
           singleBackupConfig: <SingleBackupConfigDialog onClose={onClose} />,
-          portInformation: <PortInformationDrawer onClose={onClose} />
+          portInformation: <PortInformationDrawer onClose={onClose} />,
+          buzzer: <BuzzerDialog onClose={onClose} />
         }[id]
       }
     </div>

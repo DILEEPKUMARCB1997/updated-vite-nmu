@@ -238,7 +238,7 @@ const TopologyToolbar = (props) => {
             float: 'right',
             lineHeight: '10px',
             position: 'relative',
-            // top: '-50px',
+            // // top: '-50px',
             left: '50px',
 
             marginLeft: '5px',
@@ -269,12 +269,12 @@ const TopologyToolbar = (props) => {
       <div
         style={{
           width: '100%',
-          height: '48px',
-          padding: '20px',
-          left: '10px',
-          position: 'absolute',
-          top: '50px',
-          marginTop: '25px'
+          height: '48px'
+          // padding: '20px',
+          // left: '10px',
+          // position: 'absolute'
+          // top: '50px',
+          // marginTop: '25px'
         }}
       >
         {editMode

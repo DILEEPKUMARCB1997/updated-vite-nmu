@@ -17,7 +17,8 @@ import {
   SettingOutlined,
   BackwardOutlined,
   FundOutlined,
-  ExportOutlined
+  ExportOutlined,
+  AudioOutlined
 } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { Flexbox } from 'react-layout-kit'
@@ -237,6 +238,14 @@ const DevicesControl = ({ onClose }) => {
             icon={<BackwardOutlined />}
             onClick={() => {
               dispatch(openDialog('singleBackupConfig'))
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="Buzzer">
+          <Button
+            icon={<AudioOutlined />}
+            onClick={() => {
+              dispatch(openDialog('buzzer'))
             }}
           />
         </Tooltip>
