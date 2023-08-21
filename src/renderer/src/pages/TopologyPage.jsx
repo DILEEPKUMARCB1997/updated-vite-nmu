@@ -19,7 +19,7 @@ import {
   requestSwitchPolling,
   topologySelector
 } from '../features/topologySlice'
-// import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 // import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
