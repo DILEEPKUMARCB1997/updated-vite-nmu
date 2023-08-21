@@ -160,6 +160,7 @@ const TopologyPage = (props) => {
 
   return (
     <div>
+      <TopologyButtons />
       {/* <TopologyButtons /> */}
       <Card
         bodyStyle={{
