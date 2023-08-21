@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
 import React, { useEffect } from 'react'
 import Event from '../components/eventlog/Event'

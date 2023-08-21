@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { theme } from 'antd'
-// import './ConfigComarission.css'
+import './ConfigComarission.css'
 
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Row, Col, Card, Typography } from 'antd'
@@ -39,46 +39,52 @@ function ConfigComparission() {
         <Col span={24}>
           <Card bordered={false} className="elevation">
             <div
-              style={{
-                padding: '10px',
-                textAlign: 'center',
-                marginTop: '-30px',
-                marginBottom: '20px',
-                float: 'left'
-              }}
+              className="card_Header_left"
+              style={{ background: token.colorPrimary, marginBottom: '0px' }}
             >
-              {/* <h3 className="heading">Device Config Comparison</h3> */}
-              <Typography.Title
-                level={4}
-                style={{
-                  // backgroundColor: token.colorPrimaryBorder
-                  color: token.colorPrimary
-                }}
-                //  headStyle={{ backgroundColor: token.colorPrimaryBorder }}
-              >
-                Device Config Comparison
-              </Typography.Title>
+              <h3 className="heading">Device Config Comparison</h3>
             </div>
             <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '20px' }}>
               <Col span={12}>
                 <input
                   type="file"
+                  // style={{
+                  //   color: 'white',
+                  //   display: 'inline-block',
+                  //   color: token.colorPrimary,
+                  //   border: 'none',
+                  //   padding: '7px 15px',
+                  //   fontWeight: '700',
+                  //   borderRadius: '3px',
+                  //   whiteSpace: 'nowrap',
+                  //   cursor: 'pointer',
+                  //   fontSize: '10pt'
+                  // }}
                   onChange={(e) => showFile(e)}
+                />
+              </Col>
+              <Col span={12}>
+                <input
+                  type="file"
+                  onChange={(e) => showFile1(e)}
                   // style={{
                   //   // color: 'white',
-                  //   // display: 'inline-block',
+                  //   // display: '-ms-flexbox',
+                  //   // color: token.colorPrimary,
                   //   // border: 'none',
                   //   // padding: '7px 15px',
                   //   // fontWeight: '700',
                   //   // borderRadius: '3px',
                   //   // whiteSpace: 'nowrap',
-                  //   // fontSize: '10pt',
-                  //   backgroundColor: token.colorPrimaryBorder
+                  //   // cursor: 'pointer',
+                  //   // fontSize: '10pt'
+                  //   border: '2px solid #6c5ce7',
+                  //   padding: '0.2em 0.4em',
+                  //   borderRadius: '0.2em',
+                  //   backgroundColor: token.colorPrimary,
+                  //   transition: '1s'
                   // }}
                 />
-              </Col>
-              <Col span={12}>
-                <input type="file" onChange={(e) => showFile1(e)} />
               </Col>
               <Row
                 justify="space-around"
