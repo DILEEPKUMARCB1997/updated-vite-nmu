@@ -3,13 +3,18 @@
 import React, { useState, useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
-import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
+import {
+  dashboardSelector,
+  requestHistoryData
+  // showCustomTableData
+} from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
 const EventLog = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   console.log(customGraphData)
+  //const { tableData } = customGraphData
   const dispatch = useDispatch()
   const [eventLogData, setEventLogData] = useState({
     series: [
@@ -29,23 +34,27 @@ const EventLog = () => {
         data: []
       }
     ],
-
     options: {
       chart: {
-        type: 'bar',
         height: 320,
+        type: 'bar',
+        // stacked: true,
         toolbar: {
           show: false
         },
         offsetY: -20,
         offsetX: -5
       },
+
       legend: {
         show: true,
         showForSingleSeries: true,
         position: 'top',
         horizontalAlign: 'center',
         offsetY: 20
+      },
+      fill: {
+        type: 'solid'
       },
       plotOptions: {
         bar: {
@@ -57,42 +66,46 @@ const EventLog = () => {
         }
       },
       dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 2
+        enabled: false,
+        formatter: function (val) {
+          return val + '%'
+        }
       },
 
-      grid: {
-        show: true
-      },
       xaxis: {
-        type: 'category',
-        categories: customGraphData.label,
+        // type: 'datetime',
+        categories:
+          // customGraphData.label,
+          ['08/11', '08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
+        position: 'bottom',
         labels: {
           rotate: -45,
           rotateAlways: true
-        }
-      },
-      yaxis: {
-        title: {
-          lines: {
-            show: true
+        },
+        lines: {
+          show: false
+        },
+        fill: {
+          type: 'solid',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
           }
         }
       },
-      fill: {
-        type: 'solid',
-
-        gradient: {
-          shade: 'lights',
-          type: 'horizontal',
-          shadeIntensity: 1,
-          gradientToColors: undefined,
-          inverseColors: false,
-          opacityFrom: 0.85,
-          opacityTo: 0.85,
-          stops: [50, 0, 100]
+      yaxis: {
+        // min: 0,
+        // max: 1,
+        lines: {
+          show: true
+        },
+        labels: {
+          formatter: (val) => {
+            return val / 1
+          }
         }
       }
     }
@@ -110,7 +123,6 @@ const EventLog = () => {
   }, [])
 
   useEffect(() => {
-    // dispatch(requestHistoryData(customGraphData))
     if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
       setEventLogData((prev) => ({
         ...prev,

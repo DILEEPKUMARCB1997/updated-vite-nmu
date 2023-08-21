@@ -16,7 +16,11 @@ import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
-import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
+import {
+  requireSetNICData,
+  requestGetNICData,
+  generalSelector
+} from '../../../features/Preferences/generalSlice'
 
 import { useDispatch, useSelector } from 'react-redux'
 import Advanced from './Advanced/Advanced'
@@ -32,7 +36,7 @@ import {
 import { getTelegramToken } from '../../../features/Preferences/telegramSlice'
 import { requestGetMail, requestSetMail } from '../../../features/Preferences/mailSlice'
 
-const { Header, Sider, Content } = Layout
+const { Sider, Content } = Layout
 
 const items = [
   {
@@ -70,6 +74,8 @@ const PreferencesDialog = ({ onClose }) => {
   const { token } = useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
   console.log(selectedPage)
+  // const { NICData } = useSelector(generalSelector)
+  // const { activeNIC } = NICData
 
   const dispatch = useDispatch()
   const { notification, modal } = App.useApp()
@@ -274,8 +280,9 @@ const PreferencesDialog = ({ onClose }) => {
       footer={null}
       width="100%"
       style={{
-        top: '5px',
-        padding: '0px'
+        top: '20px',
+        padding: '5px 5px 5px 5px'
+        // padding: '0px'
       }}
       // bodyStyle={{ overflow: 'auto' }}
     >
@@ -324,15 +331,15 @@ const PreferencesDialog = ({ onClose }) => {
 
           <Content
             style={{
-              paddingTop: '15px',
-              paddingBottom: '15px',
+              paddingTop: '20px',
+              paddingBottom: '20px',
               paddingRight: '15px',
               paddingLeft: '15px',
               // margin: '24px 16px 24px',
               minHeight: 280
             }}
           >
-            <Card style={{ height: '100%', overflow: 'auto' }}>
+            <Card bordered={false} style={{ height: '100%', overflow: 'auto' }}>
               {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
             </Card>
           </Content>

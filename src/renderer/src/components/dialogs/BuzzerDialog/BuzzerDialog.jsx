@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BellOutlined } from '@ant-design/icons'
 import { Modal, Typography } from 'antd'
 import React from 'react'

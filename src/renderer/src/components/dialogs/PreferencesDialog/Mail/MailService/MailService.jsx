@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState } from 'react'
-import { Select, Switch, Radio, theme, Form, Divider, InputNumber, Typography, Input } from 'antd'
+import { Select, Switch, Radio, theme, Form, Divider, InputNumber, Input } from 'antd'
 import {
   mailSelector,
   setMailHost,
@@ -147,9 +147,8 @@ const MailService = () => {
                 label={USER_DEFINITION_HOST_INPUT_LABLE}
               >
                 <Input
-                  //type="number"
                   status={isServiceOther && isHostValid ? null : 'error'}
-                  // placeholder="  Server IP"
+                  value={host}
                   defaultValue={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
@@ -162,6 +161,7 @@ const MailService = () => {
                   style={{ width: '200px' }}
                   status={isServiceOther && isPortValid ? null : 'error'}
                   value={port}
+                  defaultValue={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
                 />

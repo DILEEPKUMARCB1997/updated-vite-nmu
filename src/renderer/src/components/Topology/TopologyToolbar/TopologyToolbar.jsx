@@ -150,6 +150,7 @@ const TopologyToolbar = (props) => {
           <Button
             type="primary"
             ghost
+            danger
             style={{ marginRight: '8px' }}
             onClick={handleEditCancelButtonOnClick}
           >
@@ -163,6 +164,7 @@ const TopologyToolbar = (props) => {
         <Button
           type="primary"
           ghost
+          danger
           style={{ marginRight: '8px' }}
           onClick={handleCancelButtonOnClick}
         >
@@ -170,7 +172,9 @@ const TopologyToolbar = (props) => {
           Cancel
         </Button>
         <Divider type="vertical" />
-        <Typography variant="subtitle1">{tipsWord}</Typography>
+        <Typography.Text style={{ verticalAlign: 'middle', display: '-webkit-inline-flex' }}>
+          {tipsWord}
+        </Typography.Text>
       </div>
     )
   }
@@ -182,7 +186,7 @@ const TopologyToolbar = (props) => {
 
           position: 'absolute',
           top: '5px',
-          left: '-5px',
+          left: '10px',
           padding: '20px',
           marginTop: '35px'
         }}
@@ -210,14 +214,14 @@ const TopologyToolbar = (props) => {
             style={{ fontSize: '16px', marginRight: '5px' }}
             onChange={handleCheckBoxGroupOnChange('showHostname')}
           >
-            show Hostname
+            Show Hostname
           </Checkbox>
 
           <Checkbox
             style={{ fontSize: '16px', marginRight: '5px' }}
             onChange={handleCheckBoxGroupOnChange('showLinkText')}
           >
-            show Link Text
+            Show Link Text
           </Checkbox>
           <Tooltip title={PHYSICS_TIPS_TEXT} mouseEnterDelay={0.3}>
             <Checkbox
@@ -230,22 +234,23 @@ const TopologyToolbar = (props) => {
         </Form.Item>
 
         <div
-        // style={{
-        //   float: 'right',
-        //   lineHeight: '10px',
-        //   position: 'relative',
-        //   top: '-50px',
-        //   left: '400px'
+          style={{
+            float: 'right',
+            lineHeight: '10px',
+            position: 'relative',
+            // // top: '-50px',
+            left: '50px',
 
-        // position: 'relative',
-        // top: '-50px',
-        // left: '580px'
-
-        //   // // marginLeft: '5px',
-        //   // paddingLeft: '20px'
-        // }}
+            marginLeft: '5px',
+            paddingLeft: '20px'
+          }}
         >
-          <Button type="primary" ghost onClick={handleExportImageButtonOnClick}>
+          <Button
+            type="primary"
+            ghost
+            onClick={handleExportImageButtonOnClick}
+            style={{ margin: '5px' }}
+          >
             {isImageExporting ? (
               <Progress type="circle" size={24} style={{ marginRight: '2px' }} />
             ) : (
@@ -265,11 +270,12 @@ const TopologyToolbar = (props) => {
         style={{
           width: '100%',
           height: '48px',
-          padding: '20px',
-          left: '-5px',
-          position: 'absolute',
-          top: '50px',
-          marginTop: '25px'
+          paddingTop: '20px'
+          // padding: '20px',
+          // left: '100px'
+          // position: 'absolute'
+          // top: '50px',
+          // marginTop: '25px'
         }}
       >
         {editMode

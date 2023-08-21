@@ -28,6 +28,7 @@ import PortInformationDrawer from '../Drawer/PortInformationDrawer/PortInformati
 import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
 import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
+import Beep from './BeepDialog/BeepDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -58,7 +59,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           singleNetworkSetting: <SingleNetworkSettingDrawer onClose={onClose} />,
           singleBackupConfig: <SingleBackupConfigDialog onClose={onClose} />,
           portInformation: <PortInformationDrawer onClose={onClose} />,
-          buzzer: <BuzzerDialog onClose={onClose} />
+          buzzer: <BuzzerDialog onClose={onClose} />,
+          beep: <Beep onClose={onClose} />
         }[id]
       }
     </div>

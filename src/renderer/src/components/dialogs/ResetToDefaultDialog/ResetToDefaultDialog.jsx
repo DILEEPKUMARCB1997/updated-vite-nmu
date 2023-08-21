@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Modal, Typography, Table, Button, Progress, theme, ConfigProvider } from 'antd'
 import { RedoOutlined } from '@ant-design/icons'
@@ -143,7 +144,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
               ))} */}
             </Table>
           </div>
-          {taskStatus === RUNNING && <Progress />}
+          {taskStatus === RUNNING && <Progress percent={20} size="small" />}
           <div>
             {taskStatus === WAITING && (
               <Button
