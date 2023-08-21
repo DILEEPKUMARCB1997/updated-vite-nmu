@@ -33,6 +33,7 @@
     "dayjs": "^1.11.7",
     "debug": "^4.3.4",
     "dom-to-image": "^2.6.0",
+    "dom-to-image-more": "^3.1.6",
     "electron-edge-js": "^23.0.0",
     "embla-carousel-react": "^7.1.0",
     "file-saver": "^2.0.5",

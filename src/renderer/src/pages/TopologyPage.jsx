@@ -3,10 +3,11 @@
 import React, { useRef, useEffect } from 'react'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
-import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
+// import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import { Card, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
+// import domtoimage from 'dom-to-image-more'
 import { saveAs } from 'file-saver'
 import {
   changeTopologyEvent,
@@ -16,7 +17,7 @@ import {
   requestSwitchPolling,
   topologySelector
 } from '../features/topologySlice'
-import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+// import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 
@@ -29,7 +30,7 @@ let fitViewPointOption = {
 }
 const TopologyPage = (props) => {
   const dispatch = useDispatch()
-  let graphRef = useRef()
+  let graph = useRef()
   let modalRef = useRef()
   const { currentGroup } = useSelector(topologySelector)
   // var modal
@@ -47,22 +48,23 @@ const TopologyPage = (props) => {
   }
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
-    graphRef.current.networkDisableEditMode()
+    // graphRef.current.networkDisableEditMode()
+    graph.networkDisableEditMode()
   }
   const handleAddNode = () => {
     dispatch(changeTopologyEvent('addNode'))
     // graphRef.current.networkAddNodeMode()
-    props.networkAddNodeMode()
+    graph.networkAddNodeMode()
   }
 
   const handleAddEdge = () => {
     dispatch(changeTopologyEvent('addEdge'))
     // graphRef.current.networkAddEdgeMode()
-    props.networkAddEdgeMode()
+    graph.networkAddEdgeMode()
   }
   const handleSaveLayout = () => {
     // graphRef.current.networkAddEdgeMode()
-    props.networkAddEdgeMode()
+    graph.networkAddEdgeMode()
   }
   let networkCanvas
   const networkExportImage = (props) => {
@@ -107,7 +109,7 @@ const TopologyPage = (props) => {
   }
   const handleFitViewPoin = () => {
     // graphRef.current.networkFitViewPoint()
-    props.networkFitViewPoint()
+    graph.networkFitViewPoint()
   }
   const getNodePosition = (position) => {
     // modal.openModal(position)
@@ -156,19 +158,19 @@ const TopologyPage = (props) => {
           {/* <Card> */}
           <TopologyGraph
             onRef={(ref) => {
-              graphRef = ref
-              console.log(graphRef)
+              graph = ref
+              console.log(graph)
             }}
             getNodePosition={getNodePosition}
             getEdgeLinkNode={getEdgeLinkNode}
           />
           {/* </Card> */}
-          <TopologyAddModal
+          {/* <TopologyAddModal
             onRef={(ref) => {
               modalRef = ref
             }}
             handleDisableEdit={handleDisableEdit}
-          />
+          /> */}
         </div>
       </Card>
     </div>

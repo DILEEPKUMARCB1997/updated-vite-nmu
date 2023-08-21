@@ -364,7 +364,7 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
     <Modal
       destroyOnClose
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-      //open
+      open
       onOk={handleModalOKButtonClick}
       onCancel={handleModalCancelButtonClick}
       okButtonProps={{ disabled: disableOKButton }}
