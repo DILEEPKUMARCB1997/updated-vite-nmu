@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
 import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
-import { Card } from 'antd'
+import { Card, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
@@ -16,6 +16,7 @@ import {
   requestSwitchPolling,
   topologySelector
 } from '../features/topologySlice'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 
@@ -34,39 +35,34 @@ const TopologyPage = (props) => {
   // var modal
   // var graph
 
-  // TopologyPage.propTypes = {
-  //   networkDisableEditMode: PropTypes.object.isRequired,
-  //   networkAddNodeMode: PropTypes.object.isRequired,
-  //   networkAddEdgeMode: PropTypes.object.isRequired,
-  //   networkExportImage: PropTypes.object.isRequired,
-  //   networkFitViewPoint: PropTypes.object.isRequired
-  // }
+  useEffect(() => {
+    window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+    dispatch(clearTopologyData())
+    dispatch(requestSwitchPolling(false))
+    window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+  }, [])
 
-  // useEffect(() => {
-  //   window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-  //   dispatch(clearTopologyData())
-  //   dispatch(requestSwitchPolling(false))
-  //   window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
-  // }, [])
-
-  // const topologyDataListener = (event, arg) => {
-  //   dispatch(setTopologyData(arg))
-  // }
+  const topologyDataListener = (event, arg) => {
+    dispatch(setTopologyData(arg))
+  }
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
     graphRef.current.networkDisableEditMode()
   }
   const handleAddNode = () => {
     dispatch(changeTopologyEvent('addNode'))
-    graphRef.current.networkAddNodeMode()
+    // graphRef.current.networkAddNodeMode()
+    props.networkAddNodeMode()
   }
 
   const handleAddEdge = () => {
     dispatch(changeTopologyEvent('addEdge'))
-    graphRef.current.networkAddEdgeMode()
+    // graphRef.current.networkAddEdgeMode()
+    props.networkAddEdgeMode()
   }
   const handleSaveLayout = () => {
-    graphRef.current.networkAddEdgeMode()
+    // graphRef.current.networkAddEdgeMode()
+    props.networkAddEdgeMode()
   }
   let networkCanvas
   const networkExportImage = (props) => {
@@ -110,7 +106,8 @@ const TopologyPage = (props) => {
     networkExportImage()
   }
   const handleFitViewPoin = () => {
-    graphRef.current.networkFitViewPoint()
+    // graphRef.current.networkFitViewPoint()
+    props.networkFitViewPoint()
   }
   const getNodePosition = (position) => {
     // modal.openModal(position)
@@ -123,6 +120,7 @@ const TopologyPage = (props) => {
 
   return (
     <div>
+      {/* <TopologyButtons /> */}
       <Card
         bodyStyle={{
           boxSizing: 'border-box',
@@ -133,8 +131,8 @@ const TopologyPage = (props) => {
         }}
         // style={{ height: 'calc(100vh - 105px)' }}
         bordered={false}
-        title="Device Topology"
       >
+        <Typography.Title level={4}>Device Topology</Typography.Title>
         <div
           style={{
             boxSizing: 'border-box',
@@ -165,12 +163,12 @@ const TopologyPage = (props) => {
             getEdgeLinkNode={getEdgeLinkNode}
           />
           {/* </Card> */}
-          {/* <TopologyAddModal
-                onRef={(ref) => {
-                  modalRef = ref
-                }}
-                handleDisableEdit={handleDisableEdit}
-              /> */}
+          <TopologyAddModal
+            onRef={(ref) => {
+              modalRef = ref
+            }}
+            handleDisableEdit={handleDisableEdit}
+          />
         </div>
       </Card>
     </div>

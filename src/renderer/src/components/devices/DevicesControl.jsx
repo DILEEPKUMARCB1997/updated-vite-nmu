@@ -45,9 +45,6 @@ const options = [
 
 const DevicesControl = ({ onClose }) => {
   const dispatch = useDispatch()
-  const [modal1Open, setModal1Open] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
   const { modal } = App.useApp()
@@ -59,42 +56,14 @@ const DevicesControl = ({ onClose }) => {
   const handleSwitchTableView = (value) => {
     dispatch(switchGroupView(value))
   }
-  const showModal = () => {
-    setVisible(true)
-  }
+
   const handleGroupAddClick = () => {
     window.electron.ipcRenderer.send(REQUEST_MP_SET_THE_GROUP_DATA, {
       cmd: 'addGroup',
       groupName: groupAddInput
     })
   }
-  const handleOk = async () => {
-    setLoading(true)
-    // await new Promise((resolve) => setTimeout(resolve, 3000))
 
-    // setLoading(false)
-
-    // setVisible(false)
-    setTimeout(() => {
-      Modal.success({
-        title: 'Success!',
-        content: 'Device reboot success.'
-      })
-    }, 1000)
-
-    console.log(true)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
-
-    Modal.error({
-      title: 'Error',
-      content: 'Device reboot error'
-    })
-
-    console.log(false)
-  }
   const handleReboot = (MACAddress, IPAddress, deviceType) => {
     modal.confirm({
       title: 'Confirm',
@@ -219,7 +188,7 @@ const DevicesControl = ({ onClose }) => {
           <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
         <Tooltip title="Reboot">
-          <Button icon={<ExportOutlined />} onClick={handleReboot} />
+          <Button icon={<RedoOutlined />} onClick={handleReboot} />
         </Tooltip>
         <Tooltip title="Telnet">
           <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />

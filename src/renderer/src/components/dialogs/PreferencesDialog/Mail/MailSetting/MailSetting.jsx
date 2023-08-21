@@ -101,6 +101,7 @@ const MailSetting = () => {
             <Input
               //  bordered={false}
               style={{ width: '200px' }}
+              value={username}
               defaultValue={username}
               onChange={handleUsernameInputOnChange}
               placeholder={USERNAME_INPUT_LABLE}
@@ -110,6 +111,7 @@ const MailSetting = () => {
             <Input.Password
               //  bordered={false}
               style={{ width: '200px' }}
+              value={password}
               defaultValue={password}
               onChange={handlePasswordInputOnChange}
               placeholder={PASSWORD_INPUT_LABLE}

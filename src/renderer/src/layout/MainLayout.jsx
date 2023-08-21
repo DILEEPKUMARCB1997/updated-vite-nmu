@@ -25,6 +25,8 @@ import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
+import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+
 // import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
@@ -106,72 +108,75 @@ const MainLayout = () => {
   const loggedinUser = localStorage.getItem('username') ? localStorage.getItem('username') : 'admin'
 
   return (
-    <ProLayout
-      {..._DefaultProps}
-      siderWidth={220}
-      layout="mix"
-      fixSiderbar
-      fixedHeader
-      hasSiderMenu={true}
-      siderMenuType="sub"
-      menu={{
-        collapsedShowGroupTitle: false
-      }}
-      location={{
-        pathname
-      }}
-      logo={<img src={atopLogo} alt="Atop Technologies" />}
-      title="Atop Technologies"
-      avatarProps={{
-        src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-        size: 'default',
-        title: loggedinUser,
-        render: (props, dom) => {
-          return (
-            <Dropdown
-              trigger={['click']}
-              placement="bottom"
-              arrow
-              menu={{
-                items: [
-                  {
-                    key: 'logout',
-                    icon: <LogoutOutlined />,
-                    label: 'Logout'
-                  }
-                ],
-                onClick: handleMenuClick
-              }}
-            >
-              {dom}
-            </Dropdown>
-          )
-        }
-      }}
-      actionsRender={(props) => [<ThemeController />]}
-      menuItemRender={(item, dom) => <Link to={item.path || '/'}>{dom}</Link>}
-      token={{
-        sider: {
-          colorMenuBackground: token.colorBgContainer,
-          colorBgMenuItemSelected: mode === 'dark' ? token.colorPrimary : token.colorPrimaryBg,
-          colorTextMenuSelected: mode === 'dark' ? token.colorText : token.colorPrimary
-        },
-        pageContainer: {
-          paddingBlockPageContainerContent: 16,
-          paddingInlinePageContainerContent: 16
-        }
-      }}
-    >
-      <PageContainer
-        header={{
-          title: ''
+    <div>
+      <ProLayout
+        {..._DefaultProps}
+        siderWidth={220}
+        layout="mix"
+        fixSiderbar
+        fixedHeader
+        hasSiderMenu={true}
+        siderMenuType="sub"
+        menu={{
+          collapsedShowGroupTitle: false
+        }}
+        location={{
+          pathname
+        }}
+        logo={<img src={atopLogo} alt="Atop Technologies" />}
+        title="Atop Technologies"
+        avatarProps={{
+          src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+          size: 'default',
+          title: loggedinUser,
+          render: (props, dom) => {
+            return (
+              <Dropdown
+                trigger={['click']}
+                placement="bottom"
+                arrow
+                menu={{
+                  items: [
+                    {
+                      key: 'logout',
+                      icon: <LogoutOutlined />,
+                      label: 'Logout'
+                    }
+                  ],
+                  onClick: handleMenuClick
+                }}
+              >
+                {dom}
+              </Dropdown>
+            )
+          }
+        }}
+        actionsRender={(props) => [<ThemeController />]}
+        menuItemRender={(item, dom) => <Link to={item.path || '/'}>{dom}</Link>}
+        token={{
+          sider: {
+            colorMenuBackground: token.colorBgContainer,
+            colorBgMenuItemSelected: mode === 'dark' ? token.colorPrimary : token.colorPrimaryBg,
+            colorTextMenuSelected: mode === 'dark' ? token.colorText : token.colorPrimary
+          },
+          pageContainer: {
+            paddingBlockPageContainerContent: 16,
+            paddingInlinePageContainerContent: 16
+          }
         }}
       >
-        <Outlet />
-      </PageContainer>
-      <Dialogs />
-      {/* <Snacks /> */}
-    </ProLayout>
+        <PageContainer
+          header={{
+            title: ''
+          }}
+        >
+          <Outlet />
+        </PageContainer>
+        <Dialogs />
+
+        {/* <Snacks /> */}
+      </ProLayout>
+    </div>
   )
 }
 

@@ -11,12 +11,10 @@ import {
 
 const { Option } = Select
 
-const General = ({ activeNIC }) => {
-  //console.log(activeNIC)
+const General = () => {
   const { NICData } = useSelector(generalSelector)
-  const { niList } = NICData
+  const { niList, activeNIC } = NICData
   console.log(niList)
-  //console.log(activeIndex)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -26,17 +24,15 @@ const General = ({ activeNIC }) => {
     return () => {
       dispatch(clearGeneralData())
     }
-  }, [])
+  }, [clearGeneralData])
 
   let NICSelectWidth = 400
-  // NICData.niList.forEach((element) => {
-  //   console.log(element)
+  // niList.forEach((element) => {
   //   const minWidth = element.name.length * 12
   //   if (minWidth > NICSelectWidth) {
   //     NICSelectWidth = minWidth
   //   }
   // })
-
   const handleNICSelectOnChange = (value) => {
     console.log(value)
     dispatch(setNICActiveIndex(value))
@@ -59,7 +55,8 @@ const General = ({ activeNIC }) => {
       <div style={{ marginLeft: '60px', alignItems: 'center' }}>
         <Select
           value={activeNIC}
-          defaultValue="default-0.0.0.0"
+          defaultValue={0}
+          // defaultActiveFirstOption={1}
           style={{
             width: `${NICSelectWidth}px`,
             minWidth: '400px',

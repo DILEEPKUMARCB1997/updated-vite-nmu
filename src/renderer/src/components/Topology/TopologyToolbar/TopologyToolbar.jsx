@@ -269,9 +269,10 @@ const TopologyToolbar = (props) => {
       <div
         style={{
           width: '100%',
-          height: '48px'
+          height: '48px',
+          paddingTop: '20px'
           // padding: '20px',
-          // left: '10px',
+          // left: '100px'
           // position: 'absolute'
           // top: '50px',
           // marginTop: '25px'

@@ -10,9 +10,10 @@ import Code from '../Code/Code'
 import FWUTableRow from './FWUTableTab/FWUTableRow'
 
 const FWUTable = ({ MACAddress, IPAddress, model }) => {
-  const { deviceData } = useSelector(firmwareSelector)
+  const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
   console.log(deviceData)
-
+  const { uploadProgress } = deviceRealTimeData
+  console.log(uploadProgress)
   const rowData = ['model', 'IPAddress', 'MACAddress']
   const columns = [
     rowData.map((row) => ({ title: row, dataIndex: row, key: row })),
@@ -34,7 +35,7 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     {
       title: ' Progress',
       key: 'Progress',
-      render: () => <Progress percent={70} />
+      render: () => <Progress type="line" size="default" value={uploadProgress} status="active" />
     },
     {
       title: 'Status',

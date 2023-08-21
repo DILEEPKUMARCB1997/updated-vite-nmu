@@ -16,7 +16,11 @@ import {
   requestSetAdvancedData,
   requestGetAdvancedData
 } from '../../../features/Preferences/advancedSlice'
-import { requireSetNICData, requestGetNICData } from '../../../features/Preferences/generalSlice'
+import {
+  requireSetNICData,
+  requestGetNICData,
+  generalSelector
+} from '../../../features/Preferences/generalSlice'
 
 import { useDispatch, useSelector } from 'react-redux'
 import Advanced from './Advanced/Advanced'
@@ -70,6 +74,8 @@ const PreferencesDialog = ({ onClose }) => {
   const { token } = useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
   console.log(selectedPage)
+  // const { NICData } = useSelector(generalSelector)
+  // const { activeNIC } = NICData
 
   const dispatch = useDispatch()
   const { notification, modal } = App.useApp()
@@ -325,8 +331,8 @@ const PreferencesDialog = ({ onClose }) => {
 
           <Content
             style={{
-              paddingTop: '15px',
-              paddingBottom: '15px',
+              paddingTop: '20px',
+              paddingBottom: '20px',
               paddingRight: '15px',
               paddingLeft: '15px',
               // margin: '24px 16px 24px',
