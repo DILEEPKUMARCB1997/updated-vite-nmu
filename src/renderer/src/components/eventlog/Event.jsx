@@ -115,6 +115,7 @@ function Event() {
           columns={columns}
           dataSource={eventData}
           loading={tableLoading}
+          // bordered
           pagination={{
             // showQuickJumper: true,
             // showSizeChanger: true,
@@ -123,6 +124,7 @@ function Event() {
             pageSizeOptions: [10, 15, 20, 25],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
+          // scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
         />
         {/* </Card> */}
       </div>
