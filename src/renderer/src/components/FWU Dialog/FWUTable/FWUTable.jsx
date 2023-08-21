@@ -39,8 +39,8 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     },
     {
       title: 'Status',
-      key: 'status',
-      render: () => <Code MACAddress={MACAddress} />
+      key: 'status'
+      //  render: () => <Code code="MAC Address" />
     }
   ]
 
@@ -61,12 +61,19 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     >
       <Table columns={columns} dataSource={data} pagination={false}>
         <FWUTableTab />
-        {Object.entries(deviceData).map(([key, value]) => (
-          <FWUTableRow key={key} MACAddress={key} IPAddress={value.IPAddress} model={value.model} />
-        ))}
+        <FWUTableRow />
       </Table>
     </ConfigProvider>
   )
 }
 
 export default FWUTable
+
+// {Object.entries(deviceData).map(([key, value]) => (
+//   <FWUTableRow
+//     key={MACAddress}
+//     MACAddress={key}
+//     IPAddress={value.IPAddress}
+//     model={value.model}
+//   />
+// ))}

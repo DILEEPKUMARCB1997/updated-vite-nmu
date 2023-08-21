@@ -1,20 +1,28 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/topology/TopologyToolbar/TopologyToolbar'
 import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import { Card } from 'antd'
-
 import {
   changeTopologyEvent,
   setTopologyData,
   clearTopologyData,
-  requestSwitchPolling
+  requestSwitchPolling,
+  topologySelector
 } from '../features/topologySlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 
 const TopologyPage = () => {
+  const { event, nodesData } = useSelector(topologySelector)
+  const [state, setState] = useState({
+    open: true,
+    addNodePosition: {},
+    addEdgeNodes: { from: '', to: '' },
+    addNodeMax: { from: 1, to: 1 }
+  })
+  console.log(state)
   const dispatch = useDispatch()
   let graphRef = useRef()
   let modalRef = useRef()
@@ -29,6 +37,36 @@ const TopologyPage = () => {
   const topologyDataListener = (event, arg) => {
     dispatch(setTopologyData(arg))
   }
+  const openModal = (data) => {
+    //console.log(props);
+    if (event === 'addNode') {
+      setState({
+        open: true,
+        addNodePosition: data
+      })
+    } else {
+      setState({
+        open: true,
+        addEdgeNodes: data,
+        addNodeMax: {
+          from: data.from.startsWith('virtual') ? 1 : findPortMaxLength(data.from),
+          to: data.to.startsWith('virtual') ? 1 : findPortMaxLength(data.to)
+        }
+      })
+    }
+  }
+
+  const findPortMaxLength = (modeln) => {
+    let Model = nodesData[modeln].model.toString('utf8')
+    let MaxValue = 1
+    if (Model.indexOf('-') > -1) {
+      MaxValue = parseInt(Model.substring(Model.indexOf('-') - 2, Model.indexOf('-')))
+    } else {
+      MaxValue = parseInt(Model.substring(Model.length - 2, Model.length))
+    }
+    return MaxValue.toString() === 'NaN' ? 28 : MaxValue
+  }
+
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
     graphRef.current.networkDisableEditMode()
@@ -53,11 +91,12 @@ const TopologyPage = () => {
   }
   const getNodePosition = (position) => {
     // modal.openModal(position)
-    modalRef.current.openModal(position)
+    openModal(position)
   }
   const getEdgeLinkNode = (nodes) => {
+    console.log(nodes)
     // modal.openModal(nodes)
-    modalRef.current.openModal(nodes)
+    openModal(nodes)
   }
 
   return (
