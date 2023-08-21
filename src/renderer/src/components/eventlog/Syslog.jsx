@@ -91,46 +91,90 @@ function Syslog() {
         }
       }}
     >
-      <div
-        style={{
-          boxSizing: 'border-box',
-          position: 'relative',
-          height: '100%',
-          width: '100%',
-          minWidth: '761px',
-          paddingTop: '0px'
-        }}
+      <Button
+        type="primary"
+        ghost
+        style={{ margin: '0px 0px 15px 0px' }}
+        onClick={handleHistoryButtonOnClick}
       >
-        <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
-          History
-        </Button>
-        <Button
-          type="primary"
-          ghost
-          onClick={handleClearButtonOnClick}
-          style={{ marginBottom: '15px', marginLeft: '10px' }}
-        >
-          Clear
-        </Button>
-        <Alert
-          message="Here you can check today's log data, please check history for past data."
-          type="warning"
-          showIcon
-        />
-        <Table
-          columns={columns}
-          dataSource={syslogData}
-          loading={tableLoading}
-          pagination={{
-            size: 'default',
-            defaultPageSize: 10,
-            pageSizeOptions: [10, 15, 20, 25],
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
-          }}
-        />
-      </div>
+        History
+      </Button>
+      <Button
+        type="primary"
+        ghost
+        style={{ marginLeft: '10px', marginBottom: '15px' }}
+        onClick={handleClearButtonOnClick}
+      >
+        Clear
+      </Button>
+      <Alert
+        message="Here can check today log data, please check history for past data."
+        type="warning"
+        showIcon
+      />
+      <Table
+        loading={tableLoading}
+        bordered
+        columns={columns}
+        dataSource={syslogData}
+        pagination={{ pageSize: 25 }}
+        scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
+      />
     </ConfigProvider>
   )
 }
 
 export default Syslog
+
+//   <ConfigProvider
+//     theme={{
+//       inherit: true,
+//       components: {
+//         Table: {
+//           colorFillAlter: token.colorPrimaryBg,
+//           fontSize: 14
+//         }
+//       }
+//     }}
+//   >
+//     <div
+//       style={{
+//         boxSizing: 'border-box',
+//         position: 'relative',
+//         height: '100%',
+//         width: '100%',
+//         minWidth: '761px',
+//         paddingTop: '0px'
+//       }}
+//     >
+//       <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
+//         History
+//       </Button>
+//       <Button
+//         type="primary"
+//         ghost
+//         onClick={handleClearButtonOnClick}
+//         style={{ marginBottom: '15px', marginLeft: '10px' }}
+//       >
+//         Clear
+//       </Button>
+//       <Alert
+//         message="Here you can check today's log data, please check history for past data."
+//         type="warning"
+//         showIcon
+//       />
+//       <Table
+//         columns={columns}
+//         dataSource={syslogData}
+//         loading={tableLoading}
+//         pagination={{
+//           size: 'default',
+//           defaultPageSize: 10,
+//           pageSizeOptions: [10, 15, 20, 25],
+//           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+//         }}
+//         // scroll={{ y: 'calc(100vh - 365px)' }}
+//       />
+//     </div>
+//   </ConfigProvider>
+// )
