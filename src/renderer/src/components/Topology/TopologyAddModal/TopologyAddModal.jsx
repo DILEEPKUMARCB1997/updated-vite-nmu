@@ -362,7 +362,7 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
   const isToVirtual = addEdgeNodes.to.startsWith('virtual')
   return (
     <Modal
-      destroyOnClose
+      // destroyOnClose
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
       open
       onOk={handleModalOKButtonClick}
