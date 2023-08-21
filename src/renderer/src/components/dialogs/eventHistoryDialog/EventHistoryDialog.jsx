@@ -90,10 +90,11 @@ const EventHistoryDialog = ({ onClose }) => {
         closable={true}
         maskClosable={false}
         onCancel={handleCloseButtonOnClick}
-        width={1200}
+        // width={1200}
+        width="90%"
         style={{ top: 20 }}
         bodyStyle={{
-          height: 'calc(100vh - 150px)',
+          // height: 'calc(100vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
@@ -142,7 +143,7 @@ const EventHistoryDialog = ({ onClose }) => {
             pageSizeOptions: [25, 50, 75, 100],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
-          scroll={{ y: 'calc(80vh - 165px)' }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
         />
       </Modal>
     </ConfigProvider>
