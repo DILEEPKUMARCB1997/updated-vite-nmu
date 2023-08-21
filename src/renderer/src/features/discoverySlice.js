@@ -3,8 +3,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import { openDialog } from './dialogSlice'
 import {
   REQUEST_MP_DISCOVERY_ALL_DEVICES,
+  RESPONSE_RP_CHECK_SNMP,
   RESPONSE_RP_DISCOVERY_ALL_DEVICES
 } from '../../../main/utils/IPCEvents'
+import { showCheckSNMPModal } from './UIControllSlice'
+
+export const requestCheckSNMP = (param, callback) => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_CHECK_SNMP, (event, arg) => {
+    dispatch(showCheckSNMPModal(false))
+    callback(arg.success)
+  })
+}
 
 export const requestDiscovery = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {

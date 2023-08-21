@@ -4,7 +4,7 @@ import { theme } from 'antd'
 // import './ConfigComarission.css'
 
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import { Row, Col, Card, Typography } from 'antd'
+import { Row, Col, Card } from 'antd'
 
 function ConfigComparission() {
   const { useToken } = theme
@@ -34,37 +34,15 @@ function ConfigComparission() {
     reader.readAsText(e.target.files[0])
   }
   return (
-    <div className="container">
-      <Row justify="space-around" gutter={[24]} align="middle">
-        <Col span={24}>
-          <Card bordered={false} className="elevation">
-            <div
-              style={{
-                padding: '10px',
-                textAlign: 'center',
-                marginTop: '-30px',
-                marginBottom: '20px',
-                float: 'left'
-              }}
-            >
-              {/* <h3 className="heading">Device Config Comparison</h3> */}
-              <Typography.Title
-                level={4}
-                style={{
-                  // backgroundColor: token.colorPrimaryBorder
-                  color: token.colorPrimary
-                }}
-                //  headStyle={{ backgroundColor: token.colorPrimaryBorder }}
-              >
-                Device Config Comparison
-              </Typography.Title>
-            </div>
-            <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '20px' }}>
-              <Col span={12}>
-                <input
-                  type="file"
-                  onChange={(e) => showFile(e)}
-                  // style={{
+    <div>
+      <Card bordered={false} title="Device Config Comparison" className="elevation">
+        <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '0px' }}>
+          <Col span={12}>
+            <input
+              type="file"
+              onChange={(e) => showFile(e)}
+              style={
+                {
                   //   // color: 'white',
                   //   // display: 'inline-block',
                   //   // border: 'none',
@@ -73,36 +51,35 @@ function ConfigComparission() {
                   //   // borderRadius: '3px',
                   //   // whiteSpace: 'nowrap',
                   //   // fontSize: '10pt',
-                  //   backgroundColor: token.colorPrimaryBorder
-                  // }}
-                />
-              </Col>
-              <Col span={12}>
-                <input type="file" onChange={(e) => showFile1(e)} />
-              </Col>
-              <Row
-                justify="space-around"
-                gutter={[24]}
-                align="middle"
-                style={{
-                  marginTop: '20px',
-                  overflowY: 'scroll',
-                  maxHeight: '410px'
-                }}
-              >
-                <Col span={24}>
-                  <ReactDiffViewer
-                    oldValue={asdf}
-                    newValue={asdf1}
-                    compareMethod={DiffMethod.WORDS}
-                    splitView={true}
-                  />
-                </Col>
-              </Row>
-            </Row>
-          </Card>
-        </Col>
-      </Row>
+                  // color: token.colorPrimaryBorder
+                }
+              }
+            />
+          </Col>
+          <Col span={12}>
+            <input type="file" onChange={(e) => showFile1(e)} />
+          </Col>
+          <Row
+            justify="space-around"
+            gutter={[24]}
+            align="middle"
+            style={{
+              marginTop: '20px',
+              overflowY: 'scroll',
+              maxHeight: '410px'
+            }}
+          >
+            <Col span={24}>
+              <ReactDiffViewer
+                oldValue={asdf}
+                newValue={asdf1}
+                compareMethod={DiffMethod.WORDS}
+                splitView={true}
+              />
+            </Col>
+          </Row>
+        </Row>
+      </Card>
     </div>
   )
 }

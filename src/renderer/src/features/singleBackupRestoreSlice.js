@@ -7,8 +7,20 @@ import {
   RESPONSE_RP_SINGLE_RESTORE_SELECT_FILE,
   REQUEST_MP_SINGLE_RESTORE_SELECT_FILE,
   RESPONSE_RP_SINGLE_RESTORE_CONFIG,
-  REQUEST_MP_SINGLE_RESTORE_CONFIG
+  REQUEST_MP_SINGLE_RESTORE_CONFIG,
+  RESPONSE_RP_SINGLE_BACKUP_RESTORE_DATA,
+  REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA
 } from '../../../main/utils/IPCEvents'
+
+export const requestGetBackupRestoreData = (payload) => (dispatch) => {
+  const { MACAddress } = payload
+  window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_BACKUP_RESTORE_DATA, (event, arg) => {
+    const { backupPath } = arg.data
+    dispatch(initBackupRestoreData({ MACAddress, backupPath }))
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA, { MACAddress })
+  dispatch('singleBackupConfig')
+}
 
 export const requestBackupSelectFolder = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_BACKUP_SELECT_FOLDER, (event, arg) => {
@@ -58,6 +70,10 @@ export const singleBackupRestoreSlice = createSlice({
     restorePath: ''
   },
   reducers: {
+    initBackupRestoreData: (state, { payload }) => {
+      const { MACAddress, backupPath } = payload
+      return { ...state, MACAddress, backupPath }
+    },
     clearData: (state) => {
       return {
         ...state,
@@ -85,8 +101,14 @@ export const singleBackupRestoreSlice = createSlice({
   }
 })
 
-export const { clearData, setBackupPath, setBackupFilename, changeBackupStatus, setRestorePath } =
-  singleBackupRestoreSlice.actions
+export const {
+  initBackupRestoreData,
+  clearData,
+  setBackupPath,
+  setBackupFilename,
+  changeBackupStatus,
+  setRestorePath
+} = singleBackupRestoreSlice.actions
 export const singleBackupRestoreSelector = (state) => {
   const { isBackingUP, MACAddress, backupPath, filename, restorePath } = state.singleBackupRestore
   return { isBackingUP, MACAddress, backupPath, filename, restorePath }
