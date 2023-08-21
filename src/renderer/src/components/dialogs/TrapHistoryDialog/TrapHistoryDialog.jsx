@@ -127,17 +127,18 @@ const TrapHistoryDialog = ({ onClose }) => {
       <Modal
         open
         onCancel={handleCloseButtonOnClick}
-        width={1200}
+        width="90%"
         title="Trap History"
         onOk={onClose}
         closable={true}
         maskClosable={false}
         style={{ top: 20 }}
         bodyStyle={{
-          height: 'calc(100vh - 150px)',
+          // height: 'calc(70vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
+          // maxHeight: '98%'
         }}
         okButtonProps={{
           style: {
