@@ -24,6 +24,7 @@ import { discoverySelector } from '../../../features/discoverySlice'
 import { openDevicesMenu } from '../../../features/UIControllSlice'
 import { notification } from 'antd'
 import { datePad } from '../../comman/tools'
+
 // import PropTypes from 'prop-types'
 
 let roundnessList = {}
@@ -235,6 +236,16 @@ const TopologyGraph = (props) => {
         console.error(error)
         return dispatch(setImageExporting(false))
       })
+    // domtoimage
+    //   .toBlob(networkCanvas)
+    //   .then((blob) => {
+    //     saveAs(blob, `${fileName}.png`)
+    //     return dispatch(setImageExporting(false))
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //     return dispatch(setImageExporting(false))
+    //   })
   }
 
   const options = {

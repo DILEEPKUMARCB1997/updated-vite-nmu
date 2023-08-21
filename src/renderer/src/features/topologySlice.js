@@ -312,6 +312,7 @@ const topologySlice = createSlice({
         nodesIds: Object.keys(nodesData)
       }
     },
+
     setDeviceListSelect: (state, { payload }) => {
       const { MACAddress } = payload
       return { ...state, devicelistSelect: MACAddress }
@@ -320,8 +321,8 @@ const topologySlice = createSlice({
       const { nodes, edges } = payload
       return { ...state, selectEdges: edges, selectNodes: nodes }
     },
-    setImageExporting: (state, { payload }) => {
-      return { ...state, currentGroup: payload }
+    setImageExporting: (state, action) => {
+      return { ...state, isImageExporting: action.payload }
     },
     clearNewNodeTemp: (state) => {
       return { ...state, newNodeTemp: '' }
