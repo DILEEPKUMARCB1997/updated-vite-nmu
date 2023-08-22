@@ -438,6 +438,9 @@ const EventLog = (props) => {
 
       xaxis: {
         categories: customGraphData.label,
+        // type: 'datetime',
+        //    categories: customGraphData.label,
+        // ['08/11', '08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
         position: 'bottom',
         labels: {
           rotate: -45,
