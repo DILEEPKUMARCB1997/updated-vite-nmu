@@ -171,7 +171,7 @@ const SyslogGraph = (props) => {
           series={GraphData.series}
           type="bar"
           height={210}
-          width={400}
+          // width={400}
           // onClick={onSyslogGraphClick}
         />
       </div>
