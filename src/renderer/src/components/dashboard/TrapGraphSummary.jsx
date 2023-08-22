@@ -147,7 +147,7 @@ const TrapGraphSummary = () => {
           series={snmpTrapMsgData.series}
           type="bar"
           height={210}
-          width={400}
+          // width={400}
         />
       </div>
     </>

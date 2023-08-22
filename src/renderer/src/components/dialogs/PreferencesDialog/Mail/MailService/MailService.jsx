@@ -46,8 +46,8 @@ const MailService = () => {
     dispatch(setMailHost(event.target.value))
   }
 
-  const handlePortInputOnChange = (value) => {
-    dispatch(setMailPort(value))
+  const handlePortInputOnChange = (event) => {
+    dispatch(setMailPort(event.target.value))
   }
 
   const handleServiceListRadioOnChange = () => {
@@ -149,19 +149,19 @@ const MailService = () => {
                 <Input
                   status={isServiceOther && isHostValid ? null : 'error'}
                   value={host}
-                  defaultValue={host}
+                  // defaultValue={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
                 />
               </Form.Item>
 
               <Form.Item colon={false} label={USER_DEFINITION_PORT_INPUT_LABLE}>
-                <InputNumber
-                  controls={false}
+                <Input
+                  // controls={false}
                   style={{ width: '200px' }}
                   status={isServiceOther && isPortValid ? null : 'error'}
                   value={port}
-                  defaultValue={port}
+                  // // defaultValue={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
                 />
