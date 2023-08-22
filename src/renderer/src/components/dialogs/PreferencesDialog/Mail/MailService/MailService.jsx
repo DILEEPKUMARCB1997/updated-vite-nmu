@@ -148,7 +148,7 @@ const MailService = () => {
               >
                 <Input
                   status={isServiceOther && isHostValid ? null : 'error'}
-                  value={host}
+                  // value={host}
                   defaultValue={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
@@ -160,7 +160,7 @@ const MailService = () => {
                   controls={false}
                   style={{ width: '200px' }}
                   status={isServiceOther && isPortValid ? null : 'error'}
-                  value={port}
+                  // value={port}
                   defaultValue={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
