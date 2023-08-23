@@ -13,8 +13,9 @@ const { Option } = Select
 
 const General = () => {
   const { NICData } = useSelector(generalSelector)
-  const { niList, activeNIC } = NICData
+  const { niList, activeIndex } = NICData
   console.log(niList)
+  console.log(activeIndex)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -22,17 +23,17 @@ const General = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clearGeneralData())
+      clearGeneralData()
     }
   }, [clearGeneralData])
 
   let NICSelectWidth = 400
-  // niList.forEach((element) => {
-  //   const minWidth = element.name.length * 12
-  //   if (minWidth > NICSelectWidth) {
-  //     NICSelectWidth = minWidth
-  //   }
-  // })
+  niList.forEach((element) => {
+    const minWidth = element.name.length * 12
+    if (minWidth > NICSelectWidth) {
+      NICSelectWidth = minWidth
+    }
+  })
   const handleNICSelectOnChange = (value) => {
     console.log(value)
     dispatch(setNICActiveIndex(value))
@@ -54,9 +55,7 @@ const General = () => {
       </Divider>
       <div style={{ marginLeft: '60px', alignItems: 'center' }}>
         <Select
-          value={activeNIC}
-          defaultValue={0}
-          // defaultActiveFirstOption={1}
+          value={activeIndex}
           style={{
             width: `${NICSelectWidth}px`,
             minWidth: '400px',
