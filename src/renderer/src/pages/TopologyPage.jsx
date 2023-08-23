@@ -6,7 +6,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
 // import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
-import { Card, Typography } from 'antd'
+import { Card, Col, Row, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
 // import domtoimage from 'dom-to-image-more'
@@ -165,58 +165,63 @@ const TopologyPage = (props) => {
 
   return (
     <div>
-      <TopologyButtons />
-      {/* <TopologyButtons /> */}
-      <Card
-        bodyStyle={{
-          boxSizing: 'border-box',
-          width: '100%',
-          padding: '15px',
-          minWidth: '761px',
-          minHeight: '520px'
-        }}
-        // style={{ height: 'calc(100vh - 105px)' }}
-        bordered={false}
-      >
-        <Typography.Title level={4}>Device Topology</Typography.Title>
-        <div
-          style={{
-            boxSizing: 'border-box',
-            padding: '15px 10px 15px 15px',
-            marginTop: '20px',
-            minWidth: '761px'
-            // height: 'calc(100vh - 105px)'
-          }}
-        >
-          <TopologyToolbar
-            handleExportImage={handleExportImage}
-            handleFitViewPoin={handleFitViewPoin}
-            handleAddNode={handleAddNode}
-            handleAddEdge={handleAddEdge}
-            // handleSearchNode={handleSearchNode}
-            handleDisableEdit={handleDisableEdit}
-            handleSaveLayout={handleSaveLayout}
-            // handleChangeShowLabelItem={handleChangeShowLabelItem}
-          />
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <TopologyButtons />
+        </Col>
 
-          {/* <Card> */}
-          <TopologyGraph
-            onRef={(ref) => {
-              graph = ref
-              console.log(graph)
+        {/* <TopologyButtons /> */}
+        <Card
+          bodyStyle={{
+            boxSizing: 'border-box',
+            width: '100%',
+            padding: '15px',
+            minWidth: '761px',
+            minHeight: '520px'
+          }}
+          // style={{ height: 'calc(100vh - 105px)' }}
+          bordered={false}
+        >
+          <Typography.Title level={4}>Device Topology</Typography.Title>
+          <div
+            style={{
+              boxSizing: 'border-box',
+              padding: '15px 10px 15px 15px',
+              marginTop: '20px',
+              minWidth: '761px'
+              // height: 'calc(100vh - 105px)'
             }}
-            getNodePosition={getNodePosition}
-            getEdgeLinkNode={getEdgeLinkNode}
-          />
-          {/* </Card> */}
-          {/* <TopologyAddModal
+          >
+            <TopologyToolbar
+              handleExportImage={handleExportImage}
+              handleFitViewPoin={handleFitViewPoin}
+              handleAddNode={handleAddNode}
+              handleAddEdge={handleAddEdge}
+              // handleSearchNode={handleSearchNode}
+              handleDisableEdit={handleDisableEdit}
+              handleSaveLayout={handleSaveLayout}
+              // handleChangeShowLabelItem={handleChangeShowLabelItem}
+            />
+
+            {/* <Card> */}
+            <TopologyGraph
+              onRef={(ref) => {
+                graph = ref
+                console.log(graph)
+              }}
+              getNodePosition={getNodePosition}
+              getEdgeLinkNode={getEdgeLinkNode}
+            />
+            {/* </Card> */}
+            {/* <TopologyAddModal
             onRef={(ref) => {
               modalRef = ref
             }}
             handleDisableEdit={handleDisableEdit}
           /> */}
-        </div>
-      </Card>
+          </div>
+        </Card>
+      </Row>
     </div>
   )
 }

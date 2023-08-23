@@ -23,7 +23,7 @@ const General = () => {
 
   useEffect(() => {
     return () => {
-      clearGeneralData()
+      dispatch(clearGeneralData())
     }
   }, [clearGeneralData])
 
@@ -65,12 +65,11 @@ const General = () => {
           dropdownStyle={{ zIndex: '1301' }}
           onChange={handleNICSelectOnChange}
         >
-          {niList &&
-            niList.map((NICInfo, index) => (
-              <Option key={NICInfo.name} value={index}>
-                {`${NICInfo.name} - ${NICInfo.IPAddress}`}
-              </Option>
-            ))}
+          {niList.map((NICInfo, index) => (
+            <Option key={NICInfo.name} value={index}>
+              {`${NICInfo.name} - ${NICInfo.IPAddress}`}
+            </Option>
+          ))}
         </Select>
         <Divider />
       </div>
