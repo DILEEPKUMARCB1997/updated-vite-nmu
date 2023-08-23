@@ -11,22 +11,22 @@ import {
   requestHistoryData,
   showSyslogTableData
 } from '../../features/dashboardSlice'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
-function getRandomInt(min = 1, max = 9) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-const SyslogGraph = (props) => {
+// function getRandomInt(min = 1, max = 9) {
+//   return Math.floor(Math.random() * (max - min + 1)) + min
+// }
+const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   console.log(syslogGraphData)
 
-  const [GraphData, setGraphData] = useState({
+  const [graphData, setGraphData] = useState({
     series: [
       {
         name: 'Syslog Message Count',
-        data: []
+        data: syslogGraphData.data
       }
     ],
     options: {
@@ -65,6 +65,9 @@ const SyslogGraph = (props) => {
         formatter: function (val) {
           return val + '%'
         }
+      },
+      grid: {
+        show: true
       },
 
       xaxis: {
@@ -112,7 +115,7 @@ const SyslogGraph = (props) => {
   }
 
   useEffect(() => {
-    setGraphData(GraphData)
+    setGraphData(graphData)
     setTimeout(() => {
       dispatch(
         requestHistoryData({
@@ -122,7 +125,7 @@ const SyslogGraph = (props) => {
           le: ''
         })
       )
-    }, 3000)
+    }, 1500)
   }, [])
 
   useEffect(() => {
@@ -154,26 +157,13 @@ const SyslogGraph = (props) => {
           // fontSize: '15px'
         }}
       >
-        <div>
-          <i>{syslogGraphData.lastUpdated}</i>
-        </div>
-        <Button
-          style={{ padding: '5px' }}
-          onClick={handleRefreshGraph}
-          title="Refresh"
-          icon={<SyncOutlined />}
-        />
+        <i>{syslogGraphData.lastUpdated}</i>
+        <Tooltip title="Refresh">
+          <Button onClick={handleRefreshGraph} icon={<SyncOutlined />} />
+        </Tooltip>
       </div>
       <div>
-        <Chart
-          // data={GraphData.data === null ? {} : GraphData.data}
-          options={GraphData.options}
-          series={GraphData.series}
-          type="bar"
-          height={210}
-          // width={400}
-          // onClick={onSyslogGraphClick}
-        />
+        <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
       </div>
     </>
   )
