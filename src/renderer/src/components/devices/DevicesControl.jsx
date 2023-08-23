@@ -185,7 +185,12 @@ const DevicesControl = ({ onClose }) => {
           />
         </Tooltip>
         <Tooltip title="Beep">
-          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
+          <Button
+            icon={<UngroupOutlined />}
+            onClick={() => {
+              dispatch(openDialog('beep'))
+            }}
+          />
         </Tooltip>
         <Tooltip title="Reboot">
           <Button icon={<RedoOutlined />} onClick={handleReboot} />
