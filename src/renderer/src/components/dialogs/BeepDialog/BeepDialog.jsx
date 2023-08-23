@@ -41,7 +41,7 @@ const Beep = ({ onClose }) => {
       afterOpenChange={handleBeep}
     >
       <Typography>
-        <Typography.Title level={4}>This will let device beep.</Typography.Title>
+        <Typography.Title level={5}>This will let device beep.</Typography.Title>
       </Typography>
     </Modal>
   )

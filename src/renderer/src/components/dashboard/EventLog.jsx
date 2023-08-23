@@ -1,21 +1,20 @@
-// /* eslint-disable no-unused-vars */
-// // /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
-import ReactApexChart from 'react-apexcharts'
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react'
+import Chart from 'react-apexcharts'
+
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  dashboardSelector,
-  requestHistoryData
-  // showCustomTableData
-} from '../../features/dashboardSlice'
-import { Button, Tooltip } from 'antd'
+import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
+import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
+// function getRandomInt(min = 1, max = 9) {
+//   return Math.floor(Math.random() * (max - min + 1)) + min
+// }
 const EventLog = () => {
+  const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
   console.log(customGraphData)
-  //const { tableData } = customGraphData
-  const dispatch = useDispatch()
+
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -38,7 +37,6 @@ const EventLog = () => {
       chart: {
         height: 320,
         type: 'bar',
-        // stacked: true,
         toolbar: {
           show: false
         },
@@ -73,16 +71,11 @@ const EventLog = () => {
       },
 
       xaxis: {
-        // type: 'datetime',
         categories: customGraphData.label,
-        // ['08/11', '08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
         position: 'bottom',
         labels: {
           rotate: -45,
           rotateAlways: true
-        },
-        lines: {
-          show: false
         },
         fill: {
           type: 'solid',
@@ -96,28 +89,37 @@ const EventLog = () => {
         }
       },
       yaxis: {
-        // min: 0,
-        // max: 1,
-        lines: {
-          show: true
-        },
-        labels: {
-          formatter: (val) => {
-            return val / 1
+        title: {
+          lines: {
+            show: true
           }
         }
       }
     }
   })
 
-  useEffect(() => {
-    setTimeout(() => {
+  const handleRefreshGraph = () => {
+    dispatch(
       requestHistoryData({
         type: 'custom',
         sourceIP: '',
         ge: '',
         le: ''
       })
+    )
+  }
+
+  useEffect(() => {
+    setEventLogData(eventLogData)
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'custom',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
     }, 3000)
   }, [])
 
@@ -140,19 +142,8 @@ const EventLog = () => {
     }
   }, [customGraphData])
 
-  const handleRefreshGraph = () => {
-    dispatch(
-      requestHistoryData({
-        type: 'custom',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
-  }
-
   return (
-    <div>
+    <>
       <div
         style={{
           padding: '0px 5px',
@@ -160,18 +151,26 @@ const EventLog = () => {
           justifyContent: 'space-between'
         }}
       >
-        <i>{customGraphData.lastUpdated}</i>
-        <Tooltip title="Refresh">
-          <Button icon={<SyncOutlined onClick={handleRefreshGraph} />} />
-        </Tooltip>
+        <div>
+          <i>{customGraphData.lastUpdated}</i>
+        </div>
+        <Button
+          style={{ padding: '5px' }}
+          onClick={handleRefreshGraph}
+          title="Refresh"
+          icon={<SyncOutlined />}
+        />
       </div>
-      <ReactApexChart
-        options={eventLogData.options}
-        series={eventLogData.series}
-        type="bar"
-        height={210}
-      />
-    </div>
+      <div>
+        <Chart
+          options={eventLogData.options}
+          series={eventLogData.series}
+          type="bar"
+          height={210}
+        />
+      </div>
+    </>
   )
 }
+
 export default EventLog
