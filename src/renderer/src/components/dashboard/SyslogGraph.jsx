@@ -14,10 +14,10 @@ import {
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
-function getRandomInt(min = 1, max = 9) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-const SyslogGraph = (props) => {
+// function getRandomInt(min = 1, max = 9) {
+//   return Math.floor(Math.random() * (max - min + 1)) + min
+// }
+const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   console.log(syslogGraphData)
@@ -26,7 +26,7 @@ const SyslogGraph = (props) => {
     series: [
       {
         name: 'Syslog Message Count',
-        data: []
+        data: syslogGraphData.data
       }
     ],
     options: {
@@ -65,6 +65,9 @@ const SyslogGraph = (props) => {
         formatter: function (val) {
           return val + '%'
         }
+      },
+      grid: {
+        show: true
       },
 
       xaxis: {

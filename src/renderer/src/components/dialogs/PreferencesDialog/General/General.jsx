@@ -23,17 +23,17 @@ const General = () => {
 
   useEffect(() => {
     return () => {
-      clearGeneralData()
+      dispatch(clearGeneralData())
     }
   }, [clearGeneralData])
 
   let NICSelectWidth = 400
-  niList.forEach((element) => {
-    const minWidth = element.name.length * 12
-    if (minWidth > NICSelectWidth) {
-      NICSelectWidth = minWidth
-    }
-  })
+  // niList.forEach((element) => {
+  //   const minWidth = element.name.length * 12
+  //   if (minWidth > NICSelectWidth) {
+  //     NICSelectWidth = minWidth
+  //   }
+  // })
   const handleNICSelectOnChange = (value) => {
     console.log(value)
     dispatch(setNICActiveIndex(value))
