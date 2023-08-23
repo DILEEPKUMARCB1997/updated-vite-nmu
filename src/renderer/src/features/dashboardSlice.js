@@ -25,16 +25,17 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateTrapGraph(resultTrap))
         break
       }
+      case 'syslog': {
+        const resultSyslog = requestGraphData(data)
+        dispatch(updateSyslogGraph(resultSyslog))
+        break
+      }
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
         dispatch(updateCustomGraph(resultCustom))
         break
       }
-      case 'syslog': {
-        const resultSyslog = requestGraphData(data)
-        dispatch(updateSyslog(resultSyslog))
-        break
-      }
+
       default:
         break
     }
@@ -94,15 +95,15 @@ const dashboardSlice = createSlice({
       }
     },
 
-    updateSyslog: (state, action) => {
-      const { payload } = action
+    updateSyslogGraph: (state, { payload }) => {
+      const { label, data, tableResult, lastUpdated } = payload
       return {
         ...state,
         syslogGraphData: {
-          label: payload.label,
-          data: payload.data,
-          tableData: payload.tableResult,
-          lastUpdated: payload.lastUpdated
+          label: label,
+          data: data,
+          tableData: tableResult,
+          lastUpdated: lastUpdated
         }
       }
     },
@@ -166,7 +167,7 @@ const dashboardSlice = createSlice({
 export const {
   initDiskUses,
   updateTrapGraph,
-  updateSyslog,
+  updateSyslogGraph,
   updateSyslogTableData,
   openDialog,
   updateCustomTableData,

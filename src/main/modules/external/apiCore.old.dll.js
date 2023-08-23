@@ -1,414 +1,414 @@
 /* apiCore Module */
 
-import edge from 'electron-edge-js';
+import edge from 'electron-edge-js'
 
 // const dllPath = process.env.NODE_ENV === 'development'
 //   ? process.cwd() + '/resources/apiCore.dll'
 //   : path.resolve(app.getAppPath(), '../../') + '/resources/apiCore.dll';
 
-const dllPath = './resources/apiCore.dll';
+const dllPath = './resources/apiCore.dll'
 
 const tmpMethod = {
   // Parser packet
   getModelInfo: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetModelInfo',
+    methodName: 'GetModelInfo'
   }),
   // Parser ack packet
   getAckModelInfo: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetAckModelInfo',
+    methodName: 'GetAckModelInfo'
   }),
   // Get invite packet
   getInvitePacket: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetInvitePacket',
+    methodName: 'GetInvitePacket'
   }),
   // Get network setting packet
   getConfigPacket: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetConfigPacket',
+    methodName: 'GetConfigPacket'
   }),
   // Get reboot packet
   getRebootPacket: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetRebootPacket',
+    methodName: 'GetRebootPacket'
   }),
   // Get Beep packet
   getBeepPacket: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetBeepPacket',
+    methodName: 'GetBeepPacket'
   }),
   // Get Download request
   getDownloadRequest: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.MonitoringProtocol',
-    methodName: 'GetDownloadRequest',
+    methodName: 'GetDownloadRequest'
   }),
   // checksum
   calculateChecksum: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.Authentication',
-    methodName: 'CalculateChecksum',
-  }),
-};
+    methodName: 'CalculateChecksum'
+  })
+}
 
 const tmpDb = {
   // database exists
   tableExists: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.SqlExtensions',
-    methodName: 'TableExists',
+    methodName: 'TableExists'
   }),
   // database exists
   isDbExists: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.SqlExtensions',
-    methodName: 'IsDbExists',
+    methodName: 'IsDbExists'
   }),
   // group management
   getGroupData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'GetGroupData',
+    methodName: 'GetGroupData'
   }),
   addGroup: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'AddGroup',
+    methodName: 'AddGroup'
   }),
   // Schedule management
   getScheduleData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.ScheduleBackupManagement',
-    methodName: 'GetScheduledData',
+    methodName: 'GetScheduledData'
   }),
   // Users Data
   getUsersData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.UserDetailsManagement',
-    methodName: 'GetAllUsers',
+    methodName: 'GetAllUsers'
   }),
 
   // Registered event Data
   getAllRegisteredEventData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'GetAllRegisteredEventData',
+    methodName: 'GetAllRegisteredEventData'
   }),
 
   // enable/disable Registered event Data
   enableRegisteredEventData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'enableRegisteredEventData',
+    methodName: 'enableRegisteredEventData'
   }),
 
   addScheduleBackup: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.ScheduleBackupManagement',
-    methodName: 'AddScheduleBackup',
+    methodName: 'AddScheduleBackup'
   }),
   addScheduleDevice: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.ScheduleBackupManagement',
-    methodName: 'AddRemoveDevice',
+    methodName: 'AddRemoveDevice'
   }),
   deleteSchedule: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.ScheduleBackupManagement',
-    methodName: 'DeleteSchedule',
+    methodName: 'DeleteSchedule'
   }),
   updateScheduleDeviceStatus: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.ScheduleBackupManagement',
-    methodName: 'UpdateDeviceScheduleStatus',
+    methodName: 'UpdateDeviceScheduleStatus'
   }),
   renameGroup: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'RenameGroup',
+    methodName: 'RenameGroup'
   }),
   deleteGroup: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'DeleteGroup',
+    methodName: 'DeleteGroup'
   }),
   updateDevice: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'updateDevice',
+    methodName: 'updateDevice'
   }),
   addRemoveDevice: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupManagement',
-    methodName: 'AddRemoveDevice',
+    methodName: 'AddRemoveDevice'
   }),
   // netwrok interface management
   getIFace: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.IFaceManagement',
-    methodName: 'GetIFace',
+    methodName: 'GetIFace'
   }),
   getCurrentIFace: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.IFaceManagement',
-    methodName: 'GetCurrentNetworkInterface',
+    methodName: 'GetCurrentNetworkInterface'
   }),
   getLoginDetails: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.UserDetailsManagement',
-    methodName: 'GetLoginDetail',
+    methodName: 'GetLoginDetail'
   }),
 
   // save register event data
   insertRegisterEvent: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'InsertRegisterEvent',
+    methodName: 'InsertRegisterEvent'
   }),
 
   // Delete register event
   DeleteRegisterEvent: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'DeleteRegisteredEventData',
+    methodName: 'DeleteRegisteredEventData'
   }),
 
   // update register event Notification
   UpdateRegisteredEventNotification: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'UpdateRegisteredEventNotification',
+    methodName: 'UpdateRegisteredEventNotification'
   }),
 
   // update register event Notification
   UpdateRegisteredNotificationType: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.RegisterEventManagement',
-    methodName: 'UpdateRegisteredNotificationType',
+    methodName: 'UpdateRegisteredNotificationType'
   }),
 
   // save users data
   SaveUserData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.UserDetailsManagement',
-    methodName: 'SaveUserData',
+    methodName: 'SaveUserData'
   }),
   // delete users data
   DeleteUser: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.UserDetailsManagement',
-    methodName: 'DeleteUser',
+    methodName: 'DeleteUser'
   }),
   setIFace: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.IFaceManagement',
-    methodName: 'SetNetworkInterface',
+    methodName: 'SetNetworkInterface'
   }),
   // mail settings
   getMailSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.MailManagement',
-    methodName: 'GetMailSettings',
+    methodName: 'GetMailSettings'
   }),
   setMailSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.MailManagement',
-    methodName: 'SetMailSettings',
+    methodName: 'SetMailSettings'
   }),
   // Notification settings
   GetGlobalNotificationSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.NotificationsManagement',
-    methodName: 'GetGlobalNotificationSettings',
+    methodName: 'GetGlobalNotificationSettings'
   }),
   SaveGlobalNotification: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.NotificationsManagement',
-    methodName: 'saveGlobalNotification',
+    methodName: 'saveGlobalNotification'
   }),
   // Group sort list settings
   GetGroupSortList: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupListSortManagement',
-    methodName: 'GetGroupSortList',
+    methodName: 'GetGroupSortList'
   }),
   saveGroupSortList: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.GroupListSortManagement',
-    methodName: 'saveGroupSortList',
+    methodName: 'saveGroupSortList'
   }),
 
   // telegram settings
   GetTelegramToken: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TelegramManagemant',
-    methodName: 'GetTelegramToken',
+    methodName: 'GetTelegramToken'
   }),
   saveTelegramToken: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TelegramManagemant',
-    methodName: 'saveTelegramToken',
+    methodName: 'saveTelegramToken'
   }),
   // telegram user settings
   saveTelegramUser: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TelegramManagemant',
-    methodName: 'saveTelegramUser',
+    methodName: 'saveTelegramUser'
   }),
   getAllTelegramUser: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TelegramManagemant',
-    methodName: 'getAllTelegramUser',
+    methodName: 'getAllTelegramUser'
   }),
   deleteTelegramUser: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TelegramManagemant',
-    methodName: 'deleteTelegramUser',
+    methodName: 'deleteTelegramUser'
   }),
   // IP range settings
   setIPRange: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.IPRangeManagement',
-    methodName: 'SetIPRange',
+    methodName: 'SetIPRange'
   }),
   getIPRange: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.IPRangeManagement',
-    methodName: 'GetIPRange',
+    methodName: 'GetIPRange'
   }),
   // SNMP settings
   setSnmpSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.SnmpManagement',
-    methodName: 'SetSnmpSettings',
+    methodName: 'SetSnmpSettings'
   }),
   getSnmpSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.SnmpManagement',
-    methodName: 'GetSnmpSettings',
+    methodName: 'GetSnmpSettings'
   }),
   //Device scan management
   getIsFixedIp: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceScanManagement',
-    methodName: 'GetIsFixedIp',
+    methodName: 'GetIsFixedIp'
   }),
   getAllDeviceScan: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceScanManagement',
-    methodName: 'GetAllDeviceScan',
+    methodName: 'GetAllDeviceScan'
   }),
   getDeviceScanByMAC: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceScanManagement',
-    methodName: 'GetDeviceScanByMAC',
+    methodName: 'GetDeviceScanByMAC'
   }),
   // Advanced settings
   getSNMPInitialData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.SnmpManagement',
-    methodName: 'GetSNMPInitialData',
+    methodName: 'GetSNMPInitialData'
   }),
   setAdvancedSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.AdvancedManagement',
-    methodName: 'SetAdvancedSettings',
+    methodName: 'SetAdvancedSettings'
   }),
   getAdvancedSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.AdvancedManagement',
-    methodName: 'GetAdvancedSettings',
+    methodName: 'GetAdvancedSettings'
   }), // DeviceCommunity
   getDeviceCommunity: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceCommunityManagement',
-    methodName: 'GetDeviceCommunity',
+    methodName: 'GetDeviceCommunity'
   }),
   getDeviceCommSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceCommunityManagement',
-    methodName: 'GetDeviceCommSettings',
+    methodName: 'GetDeviceCommSettings'
   }),
   setDeviceCommSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceCommunityManagement',
-    methodName: 'SetDeviceCommSettings',
+    methodName: 'SetDeviceCommSettings'
   }), // DeviceAuthentication
   getDeviceAuthSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceAuthManagement',
-    methodName: 'GetDeviceAuthSettings',
+    methodName: 'GetDeviceAuthSettings'
   }),
   setDeviceAuthSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.DeviceAuthManagement',
-    methodName: 'SetDeviceAuthSettings',
+    methodName: 'SetDeviceAuthSettings'
   }), // Event log
   updateEvent: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'UpdateEvent',
+    methodName: 'UpdateEvent'
   }),
   updateTrap: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'UpdateTrap',
+    methodName: 'UpdateTrap'
   }),
   // update custom event logging
   UpdateCustomEventLog: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.CustomEventManagement',
-    methodName: 'UpdateCustomEventLog',
+    methodName: 'UpdateCustomEventLog'
   }),
   getEventData: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'GetEventData',
+    methodName: 'GetEventData'
   }),
   updateSyslog: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'UpdateSyslog',
+    methodName: 'UpdateSyslog'
   }),
   getLastEventLogByMACAddress: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'GetLastEventLogByMACAddress',
+    methodName: 'GetLastEventLogByMACAddress'
   }),
   getEventLogByType: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.EventLogManagement',
-    methodName: 'GetEventLogByType',
+    methodName: 'GetEventLogByType'
   }),
   getDeviceAlarmSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.AlarmManagement',
-    methodName: 'GetDeviceAlarmSettings',
+    methodName: 'GetDeviceAlarmSettings'
   }),
   setDeviceAlarmSettings: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.AlarmManagement',
-    methodName: 'SetDeviceAlarmSettings',
+    methodName: 'SetDeviceAlarmSettings'
   }),
   updateTopologyLayout: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TopologyManagement',
-    methodName: 'UpdateTopologyLayout',
+    methodName: 'UpdateTopologyLayout'
   }),
   getUserLayouts: edge.func({
     assemblyFile: dllPath,
     typeName: 'apiCore.DBService.TopologyManagement',
-    methodName: 'GetUserLayouts',
-  }),
-};
+    methodName: 'GetUserLayouts'
+  })
+}
 
-export const method = tmpMethod;
-export const db = tmpDb;
+export const method = tmpMethod
+export const db = tmpDb
