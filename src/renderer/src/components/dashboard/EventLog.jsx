@@ -71,20 +71,22 @@ const EventLog = () => {
       },
 
       xaxis: {
+        type: 'category',
         categories: customGraphData.label,
         position: 'bottom',
         labels: {
           rotate: -45,
           rotateAlways: true
         },
+
         fill: {
           type: 'solid',
           gradient: {
             colorFrom: '#D8E3F0',
             colorTo: '#BED1E6',
-            stops: [0, 100],
             opacityFrom: 0.4,
             opacityTo: 0.5
+            // stops: [50, 0, 100]
           }
         }
       },
