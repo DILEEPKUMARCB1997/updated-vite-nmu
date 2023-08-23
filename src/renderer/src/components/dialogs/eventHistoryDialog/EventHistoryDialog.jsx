@@ -90,8 +90,7 @@ const EventHistoryDialog = ({ onClose }) => {
         closable={true}
         maskClosable={false}
         onCancel={handleCloseButtonOnClick}
-        // width={1200}
-        width="90%"
+        width={1200}
         style={{ top: 20 }}
         bodyStyle={{
           // height: 'calc(100vh - 150px)',

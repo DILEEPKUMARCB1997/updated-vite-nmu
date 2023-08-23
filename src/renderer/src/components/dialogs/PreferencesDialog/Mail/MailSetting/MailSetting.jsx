@@ -2,7 +2,6 @@
 import React, { useState, useRef } from 'react'
 import { Input, Form, Tag, Divider, theme } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons'
-
 import {
   addMailAccount,
   mailSelector,

@@ -47,11 +47,12 @@ const MailService = () => {
   }
 
   const handlePortInputOnChange = (event) => {
+    console.log(event)
     dispatch(setMailPort(event.target.value))
   }
 
   const handleServiceListRadioOnChange = () => {
-    setMailService(preService)
+    dispatch(setMailService(preService))
     setIsServiceOther(false)
   }
 
@@ -61,7 +62,7 @@ const MailService = () => {
   }
 
   const handleUserDefinitionRadioOnChange = () => {
-    setMailService('Other')
+    dispatch(setMailService('Other'))
     console.log('other')
     setIsServiceOther(true)
   }
@@ -149,7 +150,6 @@ const MailService = () => {
                 <Input
                   status={isServiceOther && isHostValid ? null : 'error'}
                   value={host}
-                  // defaultValue={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
                 />
@@ -157,11 +157,10 @@ const MailService = () => {
 
               <Form.Item colon={false} label={USER_DEFINITION_PORT_INPUT_LABLE}>
                 <Input
-                  // controls={false}
+                  controls={false}
                   style={{ width: '200px' }}
                   status={isServiceOther && isPortValid ? null : 'error'}
                   value={port}
-                  // // defaultValue={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
                 />
@@ -175,17 +174,3 @@ const MailService = () => {
 }
 
 export default MailService
-
-// <Form.Item
-//   colon={false}
-// style={{ marginTop: '30px' }}
-// label={USER_DEFINITION_HOST_INPUT_LABLE}
-// >
-//   <InputNumber
-//     status={isServiceOther && isHostValid ? null : 'error'}
-//     controls={false}
-//     value={host}
-//     onChange={handleHostInputOnChange}
-//     disabled={!isServiceOther}
-//   />
-// </Form.Item>
