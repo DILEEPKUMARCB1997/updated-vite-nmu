@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
 import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
 import { openDialog } from '../../../features/dialogSlice'
+import { useDispatch } from 'react-redux'
 const FWUSnack = ({ onClose }) => {
+  const dispatch = useDispatch()
   const handleOKButtonOnClick = () => {
     initFirmwareUpdateData()
-    openDialog('FWU')
+    dispatch(openDialog('FWU'))
   }
   return (
     <div>
