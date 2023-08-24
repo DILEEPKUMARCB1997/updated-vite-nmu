@@ -149,26 +149,26 @@ const SingleNetworkSettingDrawer = (props) => {
               onChange={handleNetworkAddressInputOnChange('gateway', validGateway)}
             />
           </Form.Item>
-          {/* {isSNMPmode && (
-            <> */}
-          <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
-            <Input
-              status={!validDNS1}
-              disabled={isDHCP}
-              value={dns1}
-              onChange={handleNetworkAddressInputOnChange('dns1', validDNS1)}
-            />
-          </Form.Item>
-          <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '2px' }}>
-            <Input
-              status={!validDNS2}
-              disabled={isDHCP}
-              value={dns2}
-              onChange={handleNetworkAddressInputOnChange('dns2', validDNS2)}
-            />
-          </Form.Item>
-          {/* </>
-          )} */}
+          {isSNMPmode && (
+            <>
+              <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
+                <Input
+                  status={!validDNS1}
+                  disabled={isDHCP}
+                  value={dns1}
+                  onChange={handleNetworkAddressInputOnChange('dns1', validDNS1)}
+                />
+              </Form.Item>
+              <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '2px' }}>
+                <Input
+                  status={!validDNS2}
+                  disabled={isDHCP}
+                  value={dns2}
+                  onChange={handleNetworkAddressInputOnChange('dns2', validDNS2)}
+                />
+              </Form.Item>
+            </>
+          )}
 
           <Form.Item label="Hostname" colon={false} style={{ margin: '2px' }}>
             <Input value={hostname} onChange={handleHostnameInputOnChange} />

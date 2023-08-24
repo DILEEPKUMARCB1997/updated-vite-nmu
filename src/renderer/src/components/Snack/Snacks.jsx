@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openSnack, closeSnack, snackSelector } from '../../features/snackSlice'
 import BackupRestoreSnack from './BackupRestoreSnack/BackupRestoreSnack'
 import ResetToDefaultSnack from './ResetToDefaultSnack/ResetToDefaultSnack'
+import FWUSnack from './FWUSnack/FWUSnack'
+import SyslogSettingSnack from './syslogSettingSnack/SyslogSettingSnack'
 
 const Snack = ({ id, onClose, ...rest }) => {
   return (
@@ -11,7 +13,9 @@ const Snack = ({ id, onClose, ...rest }) => {
       {
         {
           resetToDefault: <ResetToDefaultSnack onClose={onClose} />,
-          backupRestore: <BackupRestoreSnack onClose={onClose} />
+          backupRestore: <BackupRestoreSnack onClose={onClose} />,
+          FWU: <FWUSnack onClose={onClose} />,
+          syslogSetting: <SyslogSettingSnack onClose={onClose} />
         }[id]
       }
     </div>
@@ -21,7 +25,15 @@ const Snack = ({ id, onClose, ...rest }) => {
 const Snacks = () => {
   const { snacks } = useSelector(snackSelector)
   const dispatch = useDispatch()
-  return snacks.map((id) => <Snack key={id} id={id} onClose={() => dispatch(closeSnack(id))} />)
+  return snacks.map((id) => (
+    <Snack
+      key={id}
+      id={id}
+      onClose={() => {
+        dispatch(closeSnack(id))
+      }}
+    />
+  ))
 }
 
 export default Snacks

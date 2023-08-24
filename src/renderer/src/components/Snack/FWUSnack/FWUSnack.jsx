@@ -1,11 +1,13 @@
 import React from 'react'
 import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
 import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
-import { openDialog } from '../../../features/dialogSlice'
+// import { openDialog } from '../../../features/dialogSlice'
+import { useDispatch } from 'react-redux'
 const FWUSnack = ({ onClose }) => {
+  const dispatch = useDispatch()
   const handleOKButtonOnClick = () => {
-    initFirmwareUpdateData()
-    openDialog('FWU')
+    dispatch(initFirmwareUpdateData())
+    // dispatch(openDialog('FWU'))
   }
   return (
     <div>
