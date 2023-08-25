@@ -37,6 +37,7 @@ import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
+// import { openSnack } from '../../features/snackSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -109,6 +110,25 @@ const DevicesControl = ({ onClose }) => {
     dispatch(requestOpenTelnet(IPAddress))
   }
 
+  const handleResetToDefault = () => {
+    dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
+    dispatch(setSNMPSelectOnly(true))
+  }
+
+  const handleBackupRestore = () => {
+    dispatch(setBatchOperateEvent({ event: 'backupRestore' }))
+    dispatch(setSNMPSelectOnly(true))
+  }
+
+  const handleSyslogSetting = () => {
+    dispatch(setBatchOperateEvent({ event: 'syslogSetting' }))
+    dispatch(setSNMPSelectOnly(true))
+  }
+  const handleTrapSetting = () => {
+    dispatch(setBatchOperateEvent({ event: 'trapSetting' }))
+    dispatch(setSNMPSelectOnly(true))
+  }
+
   const content = (
     <Flexbox gap={5}>
       <Input
@@ -131,24 +151,33 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Firmware Update">
           <Button
             icon={<UploadOutlined />}
+            // onClick={() => {
+            //   dispatch(openDialog('FWU'))
+            // }}
             onClick={() => {
-              dispatch(openDialog('FWU'))
+              dispatch(setBatchOperateEvent({ event: 'firmwareUpdate' }))
             }}
           />
         </Tooltip>
         <Tooltip title="Network Settings">
           <Button
             icon={<ShareAltOutlined />}
-            onClick={() => dispatch(openDialog('networkSetting'))}
+            // onClick={() => dispatch(openDialog('networkSetting'))}
+            onClick={() => dispatch(setBatchOperateEvent({ event: 'networkSetting' }))}
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={() => dispatch(openDialog('resetToDefault'))} />
+          <Button
+            icon={<RedoOutlined />}
+            // onClick={() => dispatch(openDialog('resetToDefault'))}
+            onClick={handleResetToDefault}
+          />
         </Tooltip>
         <Tooltip title="Backup and Restore">
           <Button
             icon={<CloudUploadOutlined />}
-            onClick={() => dispatch(openDialog('backupRestore'))}
+            // onClick={() => dispatch(openDialog('backupRestore'))}
+            onClick={handleBackupRestore}
           />
         </Tooltip>
         <Tooltip title="Schedule Backup">
@@ -157,11 +186,12 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Syslog Settings">
           <Button
             icon={<CalendarOutlined />}
-            onClick={() => dispatch(openDialog('syslogSetting'))}
+            // onClick={() => dispatch(openDialog('syslogSetting'))}
+            onClick={handleSyslogSetting}
           />
         </Tooltip>
         <Tooltip title="Trap Settings">
-          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('trapSetting'))} />
+          <Button icon={<ClusterOutlined />} onClick={handleTrapSetting} />
         </Tooltip>
         <Tooltip title="Add New Group">
           <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">

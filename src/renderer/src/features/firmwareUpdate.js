@@ -6,7 +6,9 @@ import {
   REQUEST_MP_STOP_FIRMWARE_UPDATE,
   RESPONSE_RP_STOP_FIRMWARE_UPDATE
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from '../features/dialogSlice'
 import { createSlice } from '@reduxjs/toolkit'
+
 export const codes = {
   none: { type: 'normal', label: 'Waiting' },
   a: { type: 'normal', label: 'Upload Image' },
@@ -47,6 +49,36 @@ export const requestOpenFile = () => (dispatch) => {
   })
   window.electron.ipcRenderer.send(REQUEST_MP_OPEN_FILE_DIALOG)
 }
+export const initFirmwareUpdateData = () => (dispatch, getState) => {
+  const { defaultDeviceData } = getState().discovery
+  const { selected } = getState().discovery
+  let deviceData = {}
+  let deviceRealTimeData = {}
+  selected.forEach((MACAddress) => {
+    deviceData = {
+      ...deviceData,
+      [MACAddress]: {
+        IPAddress: defaultDeviceData[MACAddress].IPAddress,
+        model: defaultDeviceData[MACAddress].model
+      }
+    }
+    deviceRealTimeData = {
+      ...deviceRealTimeData,
+      [MACAddress]: {
+        uploadProgress: 0,
+        code: 'none'
+      }
+    }
+  })
+  dispatch({
+    type: INIT_FIRMWARE_UPDATE_DATA,
+    payload: {
+      deviceData,
+      deviceRealTimeData
+    }
+  })
+  dispatch(openDialog('FWU'))
+}
 const statusStep = ['wait', 'start', 'done']
 const firmwareSlice = createSlice({
   name: 'firmwareSlice',
@@ -66,7 +98,7 @@ const firmwareSlice = createSlice({
         filePath: action.payload
       }
     },
-    initFirmwareUpdateData: (state, action) => {
+    INIT_FIRMWARE_UPDATE_DATA: (state, action) => {
       return {
         ...state,
         deviceRealTimeData: action.payload.deviceRealTimeData,
@@ -110,7 +142,7 @@ export const {
   changeFirmwareUpdateStatus,
   clearFirmwareUpdateData,
   updateFirmwareUpdateData,
-  initFirmwareUpdateData
+  INIT_FIRMWARE_UPDATE_DATA
 } = firmwareSlice.actions
 export const firmwareSelector = (state) => {
   const { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status } =

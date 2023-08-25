@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button, Col, Drawer, Row, Typography, theme } from 'antd'
 import React from 'react'
 import DeviceInformation from './DeviceInformation/DeviceInformation'

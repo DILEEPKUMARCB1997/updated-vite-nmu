@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Alert, Button, Modal } from 'antd'
 import React, { useEffect } from 'react'
-import message from '../ResetToDefaultSnack/ResetToDefaultSnack'
-import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack/ResetToDefaultSnack'
+// import message from '../ResetToDefaultSnack/ResetToDefaultSnack'
+// import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack/ResetToDefaultSnack'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearDiscoverTableSelect } from '../../../features/discoverySlice'
+import { clearDiscoverTableSelect, discoverySelector } from '../../../features/discoverySlice'
 // import { closeSnack } from '../../../features/snackSlice'
 
-const BasicSnackTemplate = ({ onClose }) => {
+const BasicSnackTemplate = ({ onClose, props }) => {
   const dispatch = useDispatch()
-  const enableOKButton = useSelector((state) => state.discovery.selected.length > 0)
+  const { selected } = useSelector(discoverySelector)
+  // const enableOKButton = useSelector((state) => state.discovery.selected.length > 0)
+
   useEffect(() => {
     return () => {
       dispatch(clearDiscoverTableSelect())
@@ -21,7 +24,9 @@ const BasicSnackTemplate = ({ onClose }) => {
     }
     closeSnack()
   }
-
+  const enableOKButton = () => {
+    selected.length > 0
+  }
   const closeSnack = () => {
     dispatch(clearDiscoverTableSelect())
 
@@ -33,7 +38,7 @@ const BasicSnackTemplate = ({ onClose }) => {
   }
 
   const handleOKButtonClick = () => {
-    handleOKButtonOnClick()
+    props.handleOKButtonOnClick()
 
     closeSnack()
   }
@@ -45,8 +50,8 @@ const BasicSnackTemplate = ({ onClose }) => {
         onClose={handleSnackOnClose}
         message={
           <span>
-            {message}
-            <span>{tipsMessage}</span>
+            {props.message}
+            <span>{props.tipsMessage}</span>
           </span>
         }
         showIcon
