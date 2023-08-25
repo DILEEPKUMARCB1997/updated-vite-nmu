@@ -25,3 +25,55 @@ const Snacks = () => {
 }
 
 export default Snacks
+
+// import { Alert } from "antd";
+// const AlertComponent = ({
+//   showBatchOperateTips,
+//   messages,
+//   batchOperateEvent,
+//   disableOK,
+//   handleOKOnClick,
+//   handleOKOnKeyPress,
+//   handleCancelOnClick,
+//   handleCancelOnKeyPress,
+//   SNMPSelectOnly,
+//   TIPS,
+// }) => {
+//   const alertProps = {
+//     className: `${styles.alert} ${
+//       showBatchOperateTips ? "" : styles.hide
+//     }`,
+//     message: messages[batchOperateEvent],
+//     type: "info",
+//     showIcon: true,
+//     description: (
+//       <div>
+//         <div>
+//           Select devices and press{" "}
+//           <a
+//             className={disableOK ? styles.disable : undefined}
+//             role="button"
+//             tabIndex="0"
+//             onClick={handleOKOnClick}
+//             onKeyPress={handleOKOnKeyPress}
+//           >
+//             OK
+//           </a>{" "}
+//           or{" "}
+//           <a
+//             role="button"
+//             tabIndex="0"
+//             onClick={handleCancelOnClick}
+//             onKeyPress={handleCancelOnKeyPress}
+//           >
+//             Cancel
+//           </a>
+//           .
+//         </div>
+//         {SNMPSelectOnly && <div className={styles.tips}>{TIPS}</div>}
+//       </div>
+//     ),
+//   };
+//   return <Alert {...alertProps} />;
+// };
+// export default AlertComponent;
