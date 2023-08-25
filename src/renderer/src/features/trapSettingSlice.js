@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { openDialog } from '../features/dialogSlice'
 import { RESPONSE_RP_TRAP_SETTING, REQUEST_MP_TRAP_SETTING } from '../../../main/utils/IPCEvents'
 
 const WAITING = 0
@@ -18,7 +19,7 @@ export const initTrapSettingData = () => (dispatch, getState) => {
   })
 
   dispatch(initDeviceStatus({ deviceStatus }))
-  // dispatch(openDialog('trapSetting'))
+  dispatch(openDialog('trapSetting'))
 }
 
 export const startTask = (param) => (dispatch, getState) => {

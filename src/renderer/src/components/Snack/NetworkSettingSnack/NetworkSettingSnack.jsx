@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { initNetworkSettingData } from '../../../features/networkSettingSlice'
-import { openDialog } from '../../../features/dialogSlice'
+
+// import { openDialog } from '../../../features/dialogSlice'
 import { useDispatch } from 'react-redux'
 import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
+import initNetworkSettingData from '../../../features/networkSettingSlice'
 
 const NetworkSettingSnack = ({ onClose }) => {
   const dispatch = useDispatch()
 
   const handleOKButtonOnClick = () => {
     dispatch(initNetworkSettingData())
-    dispatch(openDialog('networkSetting'))
+    // dispatch(openDialog('networkSetting'))
   }
 
   return (
