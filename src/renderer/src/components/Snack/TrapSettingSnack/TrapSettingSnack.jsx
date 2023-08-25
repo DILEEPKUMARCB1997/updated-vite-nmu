@@ -2,24 +2,28 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
-import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
-// import { openDialog } from '../../../features/dialogSlice'
+import { initTrapSettingData } from '../../../features/trapSettingSlice'
 import { useDispatch } from 'react-redux'
-const FWUSnack = ({ onClose }) => {
+
+const TrapSettingSnack = ({ onClose }) => {
   const dispatch = useDispatch()
+  const handleSnackOnClose = () => {
+    onClose()
+  }
+
   const handleOKButtonOnClick = () => {
-    dispatch(initFirmwareUpdateData())
-    // dispatch(openDialog('FWU'))
+    dispatch(initTrapSettingData())
   }
   return (
     <div>
       <BasicSnackTemplate
-        message='Please select devices for "Firmware Update" then press "OK"'
+        message='Please select devices for "Trap Setting" then press "OK".'
+        tipsMessage="(Support SNMP only)"
         handleOKButtonOnClick={handleOKButtonOnClick}
-        onClose={onClose}
+        onClose={handleSnackOnClose}
       />
     </div>
   )
 }
 
-export default FWUSnack
+export default TrapSettingSnack

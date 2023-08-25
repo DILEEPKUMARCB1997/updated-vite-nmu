@@ -1,5 +1,5 @@
 .alert {
-  position: fixed;
+  position: absolute;
   border-top: none;
   z-index: 1000;
   left: calc(50% - 250px);
@@ -7,9 +7,9 @@
   min-height: 0px;
   width: 500px;
   margin: 10px 0px;
-   transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
   svg {
-     transition: all 200ms ease-out;
+    transition: all 200ms ease-out;
   }
 }
 

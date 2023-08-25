@@ -6,6 +6,8 @@ import BackupRestoreSnack from './BackupRestoreSnack/BackupRestoreSnack'
 import ResetToDefaultSnack from './ResetToDefaultSnack/ResetToDefaultSnack'
 import FWUSnack from './FWUSnack/FWUSnack'
 import SyslogSettingSnack from './syslogSettingSnack/SyslogSettingSnack'
+import NetworkSettingSnack from './NetworkSettingSnack/NetworkSettingSnack'
+import TrapSettingSnack from './TrapSettingSnack/TrapSettingSnack'
 
 const Snack = ({ id, onClose, ...rest }) => {
   return (
@@ -15,7 +17,9 @@ const Snack = ({ id, onClose, ...rest }) => {
           resetToDefault: <ResetToDefaultSnack onClose={onClose} />,
           backupRestore: <BackupRestoreSnack onClose={onClose} />,
           FWU: <FWUSnack onClose={onClose} />,
-          syslogSetting: <SyslogSettingSnack onClose={onClose} />
+          syslogSetting: <SyslogSettingSnack onClose={onClose} />,
+          networkSetting: <NetworkSettingSnack onClose={onClose} />,
+          trapSetting: <TrapSettingSnack onClose={onClose} />
         }[id]
       }
     </div>

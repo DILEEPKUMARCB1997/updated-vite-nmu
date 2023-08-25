@@ -37,7 +37,7 @@ import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
-import { openSnack } from '../../features/snackSlice'
+// import { openSnack } from '../../features/snackSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -124,6 +124,10 @@ const DevicesControl = ({ onClose }) => {
     dispatch(setBatchOperateEvent({ event: 'syslogSetting' }))
     dispatch(setSNMPSelectOnly(true))
   }
+  const handleTrapSetting = () => {
+    dispatch(setBatchOperateEvent({ event: 'trapSetting' }))
+    dispatch(setSNMPSelectOnly(true))
+  }
 
   const content = (
     <Flexbox gap={5}>
@@ -187,7 +191,7 @@ const DevicesControl = ({ onClose }) => {
           />
         </Tooltip>
         <Tooltip title="Trap Settings">
-          <Button icon={<ClusterOutlined />} onClick={() => dispatch(openDialog('trapSetting'))} />
+          <Button icon={<ClusterOutlined />} onClick={handleTrapSetting} />
         </Tooltip>
         <Tooltip title="Add New Group">
           <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">

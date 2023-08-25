@@ -11,11 +11,11 @@ const DevicePage = () => {
   const { groupView, defaultDeviceArrayData } = useSelector(discoverySelector)
   return (
     <Row gutter={[16, 16]}>
-      <Col span={24}>
-        <div style={{ position: 'absolute', width: '100%', padding: '25px 15px 15px 15px' }}>
-          <EventTips />
-        </div>
-      </Col>
+      {/* <Col span={24}> */}
+      <div style={{ position: 'absolute', width: '100%', padding: '25px 15px 15px 15px' }}>
+        <EventTips />
+      </div>
+      {/* </Col> */}
       <Col span={24}>
         <DevicesControl />
         {/* <EventTips /> */}
