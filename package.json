@@ -64,6 +64,7 @@
     "syslogd": "^1.1.2",
     "telnet-client": "^2.0.8",
     "tftp": "^0.1.2",
+    "use-socketio": "^2.1.0",
     "uuid": "^9.0.0",
     "vis-network": "^9.1.6",
     "zustand": "^4.3.8"

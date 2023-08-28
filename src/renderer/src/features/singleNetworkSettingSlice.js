@@ -145,6 +145,11 @@ const singleNetworkSettingSlice = createSlice({
         validDNS2: false
       }
     },
+
+    initBasicData: (state, action) => {
+      const { isSNMPmode, MACAddress, model } = action.payload
+      return { ...state, isSNMPmode, MACAddress, model }
+    },
     setDHCP: (state, action) => {
       const { isDHCP } = action.payload
       if (isDHCP) {
@@ -186,6 +191,20 @@ const singleNetworkSettingSlice = createSlice({
         [valid]: IPFormat.test(text)
       }
     },
+    initNetworkSetting: (state, action) => {
+      const { IPAddress, netmask, gateway, dns1, dns2 } = action.payload
+
+      return {
+        ...state,
+        ...action.payload,
+        oldIPAddress: IPAddress,
+        validIPAddress: IPFormat.test(IPAddress),
+        validNetmask: IPFormat.test(netmask),
+        validGateway: IPFormat.test(gateway),
+        validDNS1: IPFormat.test(dns1),
+        validDNS2: IPFormat.test(dns2)
+      }
+    },
     setHostname: (state, action) => {
       const { hostname } = action.payload
       return { ...state, hostname }
@@ -199,8 +218,13 @@ export const {
   setDHCP,
   setNetworkAddressData,
   setHostname,
+<<<<<<< HEAD
   initNetworkSetting,
   initBasicData
+=======
+  initBasicData,
+  initNetworkSetting
+>>>>>>> 3d47554cc208e23e0d33d5ed5fc8a2661214ce1f
 } = singleNetworkSettingSlice.actions
 
 export const singleNetworkSettingSelector = (state) => {

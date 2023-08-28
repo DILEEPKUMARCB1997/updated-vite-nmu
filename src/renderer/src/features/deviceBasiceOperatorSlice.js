@@ -80,12 +80,10 @@ export const requestDeviceBeep =
     }
   }
 
-export const requestOpenTelnet =
-  (param = {}) =>
-  () => {
-    console.log(param)
-    window.electron.ipcRenderer.send(REQUEST_MP_OPEN_TELNET, param)
-  }
+export const requestOpenTelnet = (param) => () => {
+  console.log(param)
+  window.electron.ipcRenderer.send(REQUEST_MP_OPEN_TELNET, param)
+}
 
 const deviceBasicOperatorSlice = createSlice({
   name: 'deviceBasicOperatorSlice',

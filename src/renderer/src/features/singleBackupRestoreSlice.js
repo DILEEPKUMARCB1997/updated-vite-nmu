@@ -11,6 +11,8 @@ import {
   RESPONSE_RP_SINGLE_BACKUP_RESTORE_DATA,
   REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA
 } from '../../../main/utils/IPCEvents'
+import { initBackupRestoreData } from './backupRestoreSlice'
+import { openDialog } from './dialogSlice'
 
 export const requestGetBackupRestoreData = (payload) => (dispatch) => {
   const { MACAddress } = payload
@@ -42,6 +44,16 @@ export const requestBackup = (callback) => (dispatch, getState) => {
     filename
   })
 }
+export const requestGetBackupRestoreData = (payload) => (dispatch) => {
+  const { MACAddress } = payload
+  window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_BACKUP_RESTORE_DATA, (event, arg) => {
+    const { backupPath } = arg.data
+    dispatch(initBackupRestoreData({ MACAddress, backupPath }))
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA, { MACAddress })
+  dispatch(openDialog('singleBackupConfig'))
+}
+
 export const requestRestoreSelectFile = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_RESTORE_SELECT_FILE, (event, arg) => {
     const { restorePath } = arg.data

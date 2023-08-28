@@ -8,26 +8,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
 import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
 import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
+import { initNetworkSettingData } from '../../../features/networkSettingSlice'
+import { initTrapSettingData } from '../../../features/trapSettingSlice'
+import './EventTips.css'
 
 const messages = {
+  firmwareUpdate: 'Firmware Update',
   resetToDefault: 'Reset To Default',
-  backupRestore: 'Backup and Restore'
+  backupRestore: 'Backup and Restore',
+  syslogSetting: 'Syslog Server Setting',
+  networkSetting: 'Network Setting',
+  trapSetting: 'Trap Server Setting'
 }
 
 const TIPS = '(This feature only for device with SNMP support.)'
 
 const EventTips = () => {
   const dispatch = useDispatch()
-  const disableOK = useSelector((state) => {
-    state.discovery.selected.length === 0
-  })
+  // const disableOK = useSelector((state) => {
+  //   state.discovery.selected.length === 0
+  // })
 
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
   // console.log(batchOperateEvent)
   // console.log(showBatchOperateTips)
   console.log(messages[batchOperateEvent])
-  const { SNMPSelectOnly } = useSelector(discoverySelector)
+  const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
   // console.log(SNMPSelectOnly)
+  const disableOK = selected.length === 0
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
@@ -43,6 +51,12 @@ const EventTips = () => {
         break
       case 'syslogSetting':
         dispatch(initSyslogSettingData())
+        break
+      case 'networkSetting':
+        dispatch(initNetworkSettingData())
+        break
+      case 'trapSetting':
+        dispatch(initTrapSettingData())
         break
       default:
         break
@@ -65,67 +79,100 @@ const EventTips = () => {
       handleCancelOnClick()
     }
   }
+  const alertProps = {
+    className: `${'alert'} ${showBatchOperateTips ? '' : 'hide'}`,
+    message: messages[batchOperateEvent],
+    type: 'info',
+    showIcon: true,
+    description: (
+      <div>
+        <div>
+          {' '}
+          Select devices and press{' '}
+          <a
+            className={disableOK ? 'disable' : undefined}
+            role="button"
+            tabIndex="0"
+            onClick={handleOKOnClick}
+            onKeyDown={handleOKOnKeyPress}
+          >
+            {' '}
+            OK
+          </a>{' '}
+          or
+          <a
+            role="button"
+            tabIndex="0"
+            onClick={handleCancelOnClick}
+            onKeyDown={handleCancelOnKeyPress}
+          >
+            Cancel
+          </a>
+        </div>
+        {SNMPSelectOnly && <div className="tips">{TIPS}</div>}{' '}
+      </div>
+    )
+  }
 
   return (
-    <Modal open footer={null}>
-      <Alert
-        style={{
-          position: 'fixed',
-          // borderTop: 'none',
-          zIndex: 1000,
-          left: 'calc(50% - 250px)',
-          top: '150px',
-          top: '156px',
-          minHeight: '0px',
-          width: '500px',
-          margin: '10px 0px'
-        }}
-        action={[
-          showBatchOperateTips ? undefined : (
-            <span
-              style={{
-                height: '0px',
-                overflow: 'hidden',
-                paddingTop: '0px',
-                paddingBottom: '0px',
-                borderBottom: 'none'
-              }}
-            />
-          )
-        ]}
-        // className={('alert', showBatchOperateTips ? undefined : 'hide')}
-        // className={classNames('alert', showBatchOperateTips ? undefined : 'hide')}
-        message={messages[batchOperateEvent]}
-        type="info"
-        showIcon
-        description={
-          <div>
-            <div>
-              Select devices and press{' '}
-              <a
-                className={disableOK ? 'disable' : undefined}
-                role="button"
-                tabIndex="0"
-                onClick={handleOKOnClick}
-                onKeyDown={handleOKOnKeyPress}
-              >
-                OK
-              </a>{' '}
-              or{' '}
-              <a
-                role="button"
-                tabIndex="0"
-                onClick={handleCancelOnClick}
-                onKeyDown={handleCancelOnKeyPress}
-              >
-                Cancel
-              </a>
-            </div>
-            {SNMPSelectOnly && <div style={{ color: 'red' }}>{TIPS}</div>}
-          </div>
-        }
-      />
-    </Modal>
+    <Alert {...alertProps} />
+    //   <Alert
+    //     style={{
+    //       position: 'fixed',
+    //       // borderTop: 'none',
+    //       zIndex: 1000,
+    //       left: 'calc(50% - 250px)',
+    //       top: '150px',
+
+    //       minHeight: '0px',
+    //       width: '500px',
+    //       margin: '10px 0px'
+    //     }}
+    //     action={[
+    //       showBatchOperateTips ? undefined : (
+    //         <span
+    //           style={{
+    //             height: '0px',
+    //             overflow: 'hidden',
+    //             paddingTop: '0px',
+    //             paddingBottom: '0px',
+    //             borderBottom: 'none'
+    //           }}
+    //         />
+    //       )
+    //     ]}
+    //     // className={('alert', showBatchOperateTips ? undefined : 'hide')}
+    //     // className={classNames('alert', showBatchOperateTips ? undefined : 'hide')}
+    //     message={messages[batchOperateEvent]}
+    //     type="info"
+    //     showIcon
+    //     description={
+    //       <div>
+    //         <div>
+    //           Select devices and press{' '}
+    //           <a
+    //             className={disableOK ? 'disable' : undefined}
+    //             role="button"
+    //             tabIndex="0"
+    //             onClick={handleOKOnClick}
+    //             onKeyDown={handleOKOnKeyPress}
+    //           >
+    //             OK
+    //           </a>{' '}
+    //           or{' '}
+    //           <a
+    //             role="button"
+    //             tabIndex="0"
+    //             onClick={handleCancelOnClick}
+    //             onKeyDown={handleCancelOnKeyPress}
+    //           >
+    //             Cancel
+    //           </a>
+    //         </div>
+    //         {SNMPSelectOnly && <div style={{ color: 'red' }}>{TIPS}</div>}
+    //       </div>
+    //     }
+    //   />
   )
 }
 

@@ -4,7 +4,8 @@ import { openDialog } from './dialogSlice'
 import {
   REQUEST_MP_DISCOVERY_ALL_DEVICES,
   RESPONSE_RP_CHECK_SNMP,
-  RESPONSE_RP_DISCOVERY_ALL_DEVICES
+  RESPONSE_RP_DISCOVERY_ALL_DEVICES,
+  REQUEST_MP_CHECK_SNMP
 } from '../../../main/utils/IPCEvents'
 import { showCheckSNMPModal } from './UIControllSlice'
 
@@ -23,6 +24,16 @@ export const requestDiscovery = () => (dispatch) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
+}
+
+export const requestCheckSNMP = (param, callback) => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_CHECK_SNMP, (event, arg) => {
+    dispatch(showCheckSNMPModal(false))
+    callback(arg.success)
+  })
+
+  window.electron.ipcRenderer.send(REQUEST_MP_CHECK_SNMP, param)
+  dispatch(showCheckSNMPModal(true))
 }
 
 export const requestDiscoveryAfterLogin = () => (dispatch) => {
@@ -103,6 +114,35 @@ const discoverySlice = createSlice({
         ...state,
         SNMPSelectOnly: action.payload
       }
+    },
+    showCheckSNMPModal: (state, action) => {
+      return { ...state, showCheckSNMPModal: action.payload }
+    },
+    selectDiscoveryTable: (state, action) => {
+      const { isSelect, deviceData } = action.payload
+      const { SNMPSelectOnly } = state
+      if (isSelect) {
+        let selected = []
+
+        deviceData.forEach((element) => {
+          const deviceInfo = state.defaultDeviceData[element]
+          if (
+            deviceInfo.isAUZ &&
+            deviceInfo.online &&
+            !(SNMPSelectOnly && deviceInfo.deviceType === 'gwd')
+          ) {
+            selected = [...selected, element]
+          }
+        })
+        return {
+          ...state,
+          selected: [...state.selected, ...selected]
+        }
+      }
+      return {
+        ...state,
+        selected: state.selected.filter((device) => !deviceData.includes(device))
+      }
     }
   }
 })
@@ -112,7 +152,9 @@ export const {
   switchGroupView,
   showDiscoveryTableCheckBox,
   clearDiscoverTableSelect,
-  setSNMPSelectOnly
+  setSNMPSelectOnly,
+  selectDiscoveryTable,
+  showCheckSNMPModal
 } = discoverySlice.actions
 
 export const discoverySelector = (state) => {

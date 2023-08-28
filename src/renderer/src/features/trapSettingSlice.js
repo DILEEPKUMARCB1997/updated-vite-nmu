@@ -1,9 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { openDialog } from '../features/dialogSlice'
 import { RESPONSE_RP_TRAP_SETTING, REQUEST_MP_TRAP_SETTING } from '../../../main/utils/IPCEvents'
 
 const WAITING = 0
 const SUCCESS = 1
 const ERROR = 2
+
+export const initTrapSettingData = () => (dispatch, getState) => {
+  const deviceStatus = {}
+  const { defaultDeviceData, selected } = getState().discovery
+
+  selected.forEach((MACAddress) => {
+    deviceStatus[MACAddress] = {
+      IPAddress: defaultDeviceData[MACAddress].IPAddress,
+      model: defaultDeviceData[MACAddress].model,
+      status: WAITING
+    }
+  })
+
+  dispatch(initDeviceStatus({ deviceStatus }))
+  dispatch(openDialog('trapSetting'))
+}
+
 export const startTask = (param) => (dispatch, getState) => {
   //console.log(param);
   const { deviceStatus } = getState().trapSetting
@@ -53,14 +71,23 @@ const trapSettingSlice = createSlice({
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
     },
+    initDeviceStatus: (state, action) => {
+      const { deviceStatus } = action.payload
+      return { ...state, deviceStatus }
+    },
     clearData: (state, action) => {
       return { deviceStatus: {}, isTaskRunning: false }
     }
   }
 })
 
-export const { updateAllDeviceStatusError, updateDeviceStatus, setTaskRunning, clearData } =
-  trapSettingSlice.actions
+export const {
+  updateAllDeviceStatusError,
+  updateDeviceStatus,
+  setTaskRunning,
+  clearData,
+  initDeviceStatus
+} = trapSettingSlice.actions
 
 export const trapSettingSelector = (state) => {
   const { deviceStatus, isTaskRunning } = state.trapSetting
