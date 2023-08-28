@@ -11,6 +11,7 @@ import EventLogPage from '../../pages/EventLogPage'
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
 import TopologyPage from '../../pages/TopologyPage'
+import RowContextMenu from '../../components/RowContextMenu/RowContextMenu'
 
 const AppRoutes = () => {
   let element = useRoutes([
@@ -46,6 +47,10 @@ const AppRoutes = () => {
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
+        },
+        {
+          path: 'RowContextMenu',
+          element: <RowContextMenu />
         }
       ]
     },

@@ -35,15 +35,24 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     {
       title: ' Progress',
       key: 'Progress',
-      render: () => <Progress type="line" size="default" value={uploadProgress} status="active" />
+      render: () => (
+        <Progress
+          type="line"
+          size="default"
+          value={uploadProgress}
+          status="active"
+          percent={30}
+          showInfo={false}
+        />
+      )
     },
     {
       title: 'Status',
-      key: 'status'
-      //  render: () => <Code code="MAC Address" />
+      key: 'status',
+      render: () => <Code code="MAC Address" />
     }
   ]
-
+  console.log(Code)
   const data = [{ key: MACAddress, MACAddress, IPAddress, model }]
 
   const token = useTheme()

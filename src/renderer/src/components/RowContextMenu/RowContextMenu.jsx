@@ -1,6 +1,4 @@
-/*
-import React, { useState, useCallback } from 'react'
-import { App, Button, Menu, Modal } from 'antd'
+import React, { useState } from 'react'
 import {
   UndoOutlined,
   ShareAltOutlined,
@@ -13,17 +11,25 @@ import {
   CloudUploadOutlined,
   RiseOutlined
 } from '@ant-design/icons'
-
-import { useDispatch } from 'react-redux'
-import { openDialog } from '../../features/dialogSlice'
-//import { openDialog } from '../../../features/dialogSlice'
-import { requestOpenWebData } from '../../features/openWebSlice'
-import { app } from 'electron'
+import { App, Menu } from 'antd'
+import { initPortInfoData } from '../../features/portInformationSlice'
+import { requestCheckSNMP } from '../../features/discoverySlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { initDeviceAdvanced } from '../../features/deviceAdvanceSettingSlice'
+import { snmpSelector } from '../../features/Preferences/snmpSlice'
+import { initSingleNetworkSetting } from '../../features/singleNetworkSettingSlice'
+import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import {
   requestDeviceBeep,
   requestDeviceReboot,
   requestOpenTelnet
 } from '../../features/deviceBasiceOperatorSlice'
+import { requestOpenWebData } from '../../features/openWebSlice'
+import { openDialog } from '../../features/dialogSlice'
+import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
+import { openDrawer } from '../../features/singleNetworkSettingSlice'
+import { openPortInfoDrawer } from '../../features/portInformationSlice'
+
 const items = [
   {
     label: 'OpenWeb',
@@ -81,62 +87,68 @@ const items = [
 
 const RowContextMenu = () => {
   const dispatch = useDispatch()
-  const [current, setCurrent] = useState('mail')
-  const { modal } = App.useApp
+  const { isPrecheck } = useSelector(snmpSelector)
+  const { modal } = App.useApp()
+  const [type, setType] = useState({
+    IPAddress: {} || '',
+    MACAddress: {} || '',
+    model: {} || '',
+    deviceType: {} || ''
+  })
+  console.log(setType)
 
-  const onClick = (e) => {
-    console.log('click ', e)
-    setCurrent(e.key)
-  }
+  const handleItemClick = (event, data) => {
+    console.log(data)
+    // console.log(settype)
 
-  const handleItemClick = useCallback((_, data) => {
-    const { IPAddress, MACAddress, model, deviceType } = data
+    // const { IPAddress:data.IPAddress, MACAddress, model, deviceType }
     switch (data.id) {
       case 'openOnOSbrowser':
-        window.Electron.shell.openExternal(`http://${IPAddress}`)
+        window.electron.shell.openExternal(`http://${IPAddress}`)
         break
       case 'openOnApplication':
-        return handleOpenWeb(IPAddress, MACAddress)
+        return handleOpenWeb(type.IPAddress, type.MACAddress)
       case 'telnet':
-        if (model === 'Cisco CGS2520') {
+        if (type.model === 'Cisco CGS2520') {
           return null
         }
-        return handleOpenTelnet(IPAddress)
+        return handleOpenTelnet(type.IPAddress)
       case 'beep':
-        if (model === 'Cisco CGS2520') {
+        if (type.model === 'Cisco CGS2520') {
           return null
         }
-        return handleBeep(IPAddress, MACAddress, deviceType)
-      // case 'networkSetting':
-      //   if (model === 'Cisco CGS2520') {
-      //     return null
-      //   }
-      //   return handleNetworkSetting(MACAddress, IPAddress, deviceType, model, deviceType)
+        return handleBeep(type.IPAddress, type.MACAddress, type.deviceType)
+      case 'networkSetting':
+        if (type.model === 'Cisco CGS2520') {
+          return null
+        }
+        return handleNetworkSetting(
+          type.MACAddress,
+          type.IPAddress,
+          type.deviceType,
+          type.model,
+          type.deviceType
+        )
       case 'reboot':
-        if (model === 'Cisco CGS2520') {
-          modal.success({
-            title: 'Success !',
-            type: 'success',
-            content: 'Device reboot success.'
-          })
-        }
-        return handleReboot(MACAddress, IPAddress, deviceType)
-      case 'deviceAdvancedSetting':
-        if (model === 'Cisco CGS2520') {
+        if (type.model === 'Cisco CGS2520') {
           return null
         }
-        break
-      //   return handleDeviceAdvancedSetting(MACAddress, IPAddress, deviceType)
-      // case 'portInformation':
-      //   if (model === 'Cisco CGS2520') {
-      //     return null
-      //   }
-      //   return handlePortInformation(MACAddress, IPAddress, deviceType)
-      // case 'backup':
-      //   if (model === 'Cisco CGS2520') {
-      //     return null
-      //   }
-      //   return handleBackupConfig(MACAddress, IPAddress, deviceType)
+        return handleReboot(type.MACAddress, type.IPAddress, type.deviceType)
+      case 'deviceAdvancedSetting':
+        if (type.model === 'Cisco CGS2520') {
+          return null
+        }
+        return handleDeviceAdvancedSetting(type.MACAddress, type.IPAddress, type.deviceType)
+      case 'portInformation':
+        if (type.model === 'Cisco CGS2520') {
+          return null
+        }
+        return handlePortInformation(type.MACAddress, type.IPAddress, type.deviceType)
+      case 'backup':
+        if (type.model === 'Cisco CGS2520') {
+          return null
+        }
+        return handleBackupConfig(type.MACAddress, type.IPAddress, type.deviceType)
       // case 'managedIp':
       //   if (model === 'Cisco CGS2520') {
       //     return null
@@ -145,38 +157,41 @@ const RowContextMenu = () => {
       default:
         break
     }
-  }, [])
+  }
 
-  // const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
-  //   if (deviceType !== 'gwd') {
-  //     requestGetBackupRestoreData({ MACAddress })
-  //   } else {
-  //     requestCheckSNMP(
-  //       {
-  //         MACAddress,
-  //         IPAddress
-  //       },
-  //       (result) => {
-  //         if (result) {
-  //           requestGetBackupRestoreData({ MACAddress })
-  //         } else {
-  //           showCheckSNMPFailModal()
-  //         }
-  //       }
-  //     )
-  //   }
-  // }
+  const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
+    dispatch(openDialog('singleBackupConfig'))
+    if (deviceType !== 'gwd') {
+      dispatch(requestGetBackupRestoreData({ MACAddress }))
+    } else {
+      requestCheckSNMP(
+        {
+          MACAddress,
+          IPAddress
+        },
+        (result) => {
+          if (result) {
+            dispatch(requestGetBackupRestoreData({ MACAddress }))
+          } else {
+            showCheckSNMPFailModal()
+          }
+        }
+      )
+    }
+  }
 
   const handleOpenTelnet = (IPAddress) => {
     dispatch(requestOpenTelnet(IPAddress))
   }
 
   const handleOpenWeb = (IPAddress, MACAddress) => {
-    requestOpenWebData({
-      IPAddress,
-      MACAddress
-    })
-    openDialog('webBrowser')
+    dispatch(
+      requestOpenWebData({
+        IPAddress,
+        MACAddress
+      })
+    )
+    dispatch(openDialog('webBrowser'))
   }
 
   const handleBeep = (IPAddress, MACAddress, deviceType) => {
@@ -185,13 +200,16 @@ const RowContextMenu = () => {
         title: 'Confirm',
         content: 'This will let device beep.'
       })
+
       .then(
         () => {
-          requestDeviceBeep({
-            IPAddress,
-            MACAddress,
-            deviceType
-          })
+          dispatch(
+            requestDeviceBeep({
+              IPAddress,
+              MACAddress,
+              deviceType
+            })
+          )
           return null
         },
         () => {}
@@ -207,11 +225,13 @@ const RowContextMenu = () => {
       })
       .then(
         () => {
-          requestDeviceReboot({
-            MACAddress,
-            IPAddress,
-            deviceType
-          })
+          dispatch(
+            requestDeviceReboot({
+              MACAddress,
+              IPAddress,
+              deviceType
+            })
+          )
           return null
         },
         () => {}
@@ -219,75 +239,75 @@ const RowContextMenu = () => {
       .catch()
   }
 
-  // const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
-  //   if (deviceType !== 'gwd' || !isPrecheck) {
-  //     initSingleNetworkSetting({ MACAddress })
-  //   } else {
-  //     requestCheckSNMP(
-  //       {
-  //         MACAddress,
-  //         IPAddress
-  //       },
-  //       () => {
-  //         initSingleNetworkSetting({ MACAddress })
-  //       }
-  //     )
-  //   }
-  // }
+  const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
+    dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+    if (deviceType !== 'gwd' || !isPrecheck) {
+      dispatch(initSingleNetworkSetting({ MACAddress }))
+    } else {
+      requestCheckSNMP(
+        {
+          MACAddress,
+          IPAddress
+        },
+        () => {
+          dispatch(initSingleNetworkSetting({ MACAddress }))
+        }
+      )
+    }
+  }
 
-  // const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
-  //   if (deviceType !== 'gwd' || !isPrecheck) {
-  //     initDeviceAdvanced({ MACAddress })
-  //   } else {
-  //     requestCheckSNMP(
-  //       {
-  //         MACAddress,
-  //         IPAddress
-  //       },
-  //       () => {
-  //         initDeviceAdvanced({ MACAddress })
-  //       }
-  //     )
-  //   }
-  // }
+  const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
+    dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
+    if (deviceType !== 'gwd' || !isPrecheck) {
+      initDeviceAdvanced({ MACAddress })
+    } else {
+      requestCheckSNMP(
+        {
+          MACAddress,
+          IPAddress
+        },
+        () => {
+          initDeviceAdvanced({ MACAddress })
+        }
+      )
+    }
+  }
 
-  // const handlePortInformation = (MACAddress, IPAddress, deviceType) => {
-  //   if (deviceType !== 'gwd') {
-  //     initPortInfoData({ MACAddress })
-  //   } else {
-  //     requestCheckSNMP(
-  //       {
-  //         MACAddress,
-  //         IPAddress
-  //       },
-  //       (result) => {
-  //         if (result) {
-  //           initPortInfoData({ MACAddress })
-  //         } else {
-  //           showCheckSNMPFailModal()
-  //         }
-  //       }
-  //     )
-  //   }
-  // }
+  const showCheckSNMPFailModal = () => {
+    modal.error({
+      title: 'Check SNMP feature fail. ',
+      content: 'Please check SNMP of this device is enable.'
+    })
+  }
 
-  // const handleManagementIp = (MACAddress, IPAddress, deviceType) => {
-  //   requestGetManagementIpData({ MACAddress })
-  // }
+  const handlePortInformation = (MACAddress, IPAddress, deviceType) => {
+    dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
+    if (deviceType !== 'gwd') {
+      dispatch(initPortInfoData({ MACAddress }))
+    } else {
+      dispatch(
+        requestCheckSNMP(
+          {
+            MACAddress,
+            IPAddress
+          },
+          (result) => {
+            if (result) {
+              initPortInfoData({ MACAddress })
+            } else {
+              showCheckSNMPFailModal()
+            }
+          }
+        )
+      )
+    }
+  }
 
   return (
     <div>
-      <Menu
-        onClick={onClick}
-        onChange={handleItemClick}
-        items={items}
-        selectedKeys={[current]}
-        mode="vertical"
-        //onOpenChange={handleOpenWeb}
-      ></Menu>
+      <Menu items={items} onClick={handleOpenWeb}></Menu>
     </div>
   )
 }
 
 export default RowContextMenu
-*/
