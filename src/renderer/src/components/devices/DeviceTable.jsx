@@ -4,7 +4,8 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { useTheme } from 'antd-style'
 import { ProTable } from '@ant-design/pro-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectDiscoveryTable, discoverySelector } from '../../features/discoverySlice'
 
 const columns = [
   {
@@ -76,6 +77,60 @@ const columns = [
 
 const DeviceTable = ({ deviceData = [] }) => {
   const token = useTheme()
+  const dispatch = useDispatch()
+  const [tableType, setTableType] = useState('')
+  const [groupId, setGroupId] = useState()
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+  const { defaultDeviceArrayData, groupDeviceArrayData } = useSelector(discoverySelector)
+  const handleSort = (filterArray) => {
+    if (orderBy === '') {
+      return filterArray
+    }
+    const sortArray =
+      order === 'desc'
+        ? filterArray.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+        : filterArray.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
+    return sortArray
+  }
+  const handleFilter = (originArray) => {
+    if (searchValue === '') {
+      return originArray
+    }
+    const filterArray = originArray.filter((device) =>
+      Object.values(device).reduce(
+        (isContain, value) =>
+          isContain || (typeof value === 'string' && value.includes(searchValue)),
+        false
+      )
+    )
+    return filterArray
+  }
+  const convertToMACArray = (sortArray) => {
+    let finalArray = []
+    finalArray.forEach((deviceInfo) => {
+      finalArray = [...finalArray, deviceInfo.MACAddress]
+    })
+    return finalArray
+  }
+  const sourceDeviceArrayData = () => {
+    tableType === 'default'
+      ? defaultDeviceArrayData
+      : groupDeviceArrayData[groupId] !== undefined
+      ? groupDeviceArrayData[groupId]
+      : defaultDeviceArrayData
+    return { sourceDeviceArrayData }
+  }
+  const viewDevicesData = convertToMACArray(handleSort(handleFilter(sourceDeviceArrayData)))
+  const handleCheckBoxChange = (isSelect) => {
+    dispatch(
+      selectDiscoveryTable({
+        isSelect,
+        deviceData: viewDevicesData
+      })
+    )
+  }
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -121,6 +176,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           scroll={{
             x: 1100
           }}
+          onChange={handleCheckBoxChange}
           toolbar={{
             search: {
               onSearch: (value) => {

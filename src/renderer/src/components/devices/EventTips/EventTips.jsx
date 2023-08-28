@@ -99,7 +99,7 @@ const EventTips = () => {
             {' '}
             OK
           </a>{' '}
-          or
+          or{' '}
           <a
             role="button"
             tabIndex="0"

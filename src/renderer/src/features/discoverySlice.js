@@ -94,6 +94,32 @@ const discoverySlice = createSlice({
         ...state,
         SNMPSelectOnly: action.payload
       }
+    },
+    selectDiscoveryTable: (state, action) => {
+      const { isSelect, deviceData } = action.payload
+      const { SNMPSelectOnly } = state
+      if (isSelect) {
+        let selected = []
+
+        deviceData.forEach((element) => {
+          const deviceInfo = state.defaultDeviceData[element]
+          if (
+            deviceInfo.isAUZ &&
+            deviceInfo.online &&
+            !(SNMPSelectOnly && deviceInfo.deviceType === 'gwd')
+          ) {
+            selected = [...selected, element]
+          }
+        })
+        return {
+          ...state,
+          selected: [...state.selected, ...selected]
+        }
+      }
+      return {
+        ...state,
+        selected: state.selected.filter((device) => !deviceData.includes(device))
+      }
     }
   }
 })
@@ -103,7 +129,8 @@ export const {
   switchGroupView,
   showDiscoveryTableCheckBox,
   clearDiscoverTableSelect,
-  setSNMPSelectOnly
+  setSNMPSelectOnly,
+  selectDiscoveryTable
 } = discoverySlice.actions
 
 export const discoverySelector = (state) => {
