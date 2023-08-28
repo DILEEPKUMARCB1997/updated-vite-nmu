@@ -89,66 +89,54 @@ const RowContextMenu = () => {
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
   const { modal } = App.useApp()
-  const [type, setType] = useState({
-    IPAddress: {} || '',
-    MACAddress: {} || '',
-    model: {} || '',
-    deviceType: {} || ''
-  })
-  console.log(setType)
 
-  const handleItemClick = (event, data) => {
+  const handleItemClick = (event, data = {}) => {
     console.log(data)
-    // console.log(settype)
+    console.log(event)
 
-    // const { IPAddress:data.IPAddress, MACAddress, model, deviceType }
-    switch (data.id) {
+    const { IPAddress = '', MACAddress = '', model = '', deviceType = '' } = data
+    console.log(IPAddress)
+    switch (event.id) {
       case 'openOnOSbrowser':
         window.electron.shell.openExternal(`http://${IPAddress}`)
         break
       case 'openOnApplication':
-        return handleOpenWeb(type.IPAddress, type.MACAddress)
+        return handleOpenWeb(IPAddress, MACAddress)
       case 'telnet':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleOpenTelnet(type.IPAddress)
+        return handleOpenTelnet(IPAddress)
       case 'beep':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleBeep(type.IPAddress, type.MACAddress, type.deviceType)
+        return handleBeep(IPAddress, MACAddress, deviceType)
       case 'networkSetting':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleNetworkSetting(
-          type.MACAddress,
-          type.IPAddress,
-          type.deviceType,
-          type.model,
-          type.deviceType
-        )
+        return handleNetworkSetting(MACAddress, IPAddress, deviceType, model, deviceType)
       case 'reboot':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleReboot(type.MACAddress, type.IPAddress, type.deviceType)
+        return handleReboot(MACAddress, IPAddress, deviceType)
       case 'deviceAdvancedSetting':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleDeviceAdvancedSetting(type.MACAddress, type.IPAddress, type.deviceType)
+        return handleDeviceAdvancedSetting(MACAddress, IPAddress, deviceType)
       case 'portInformation':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handlePortInformation(type.MACAddress, type.IPAddress, type.deviceType)
+        return handlePortInformation(MACAddress, IPAddress, deviceType)
       case 'backup':
-        if (type.model === 'Cisco CGS2520') {
+        if (model === 'Cisco CGS2520') {
           return null
         }
-        return handleBackupConfig(type.MACAddress, type.IPAddress, type.deviceType)
+        return handleBackupConfig(MACAddress, IPAddress, deviceType)
       // case 'managedIp':
       //   if (model === 'Cisco CGS2520') {
       //     return null
@@ -305,7 +293,7 @@ const RowContextMenu = () => {
 
   return (
     <div>
-      <Menu items={items} onClick={handleOpenWeb}></Menu>
+      <Menu items={items} onClick={handleItemClick}></Menu>
     </div>
   )
 }
