@@ -83,7 +83,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [order, setOrder] = useState('asc')
   const [orderBy, setOrderBy] = useState('')
   const [searchValue, setSearchValue] = useState('')
-  const { defaultDeviceArrayData, groupDeviceArrayData } = useSelector(discoverySelector)
+  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly } =
+    useSelector(discoverySelector)
   const handleSort = (filterArray) => {
     if (orderBy === '') {
       return filterArray
@@ -131,6 +132,9 @@ const DeviceTable = ({ deviceData = [] }) => {
       })
     )
   }
+  const { isAUZ, deviceType, online } = deviceData
+  const isSupportSNMP = deviceType !== 'gwd'
+  const disableCheckBox = !isAUZ || !online || (!isSupportSNMP && SNMPSelectOnly)
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -198,7 +202,9 @@ const DeviceTable = ({ deviceData = [] }) => {
           }}
           onRow={(record) => {
             return {
-              onContextMenu: (event) => {}
+              onContextMenu: (event) => {
+                console.log(event)
+              }
             }
           }}
         />

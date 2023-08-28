@@ -46,9 +46,11 @@ const UIControlSlice = createSlice({
     openDevicesMenu: (state, { payload }) => {
       return { ...state, manualOpenDeviceMenu: payload }
     },
-    nextInitRenderStep: (state, { payload }) => {
-      const { action } = payload
+    nextInitRenderStep: (state) => {
       return { ...state, initRenderStep: state.initRenderStep + 1 }
+    },
+    showCheckSNMPModal: (state, { payload }) => {
+      return { ...state, showCheckSNMPModal: payload }
     },
     REMOVE_BATCH_OPERATE_EVENT: (state, { payload }) => {
       return { ...state, showBatchOperateTips: false, batchOperateEvent: '' }
@@ -63,6 +65,7 @@ const UIControlSlice = createSlice({
 export const {
   openDevicesMenu,
   nextInitRenderStep,
+  showCheckSNMPModal,
   REMOVE_BATCH_OPERATE_EVENT,
   SET_BATCH_OPERATE_EVENT
 } = UIControlSlice.actions
