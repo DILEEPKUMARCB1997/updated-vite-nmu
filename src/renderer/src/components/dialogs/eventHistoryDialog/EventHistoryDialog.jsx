@@ -93,7 +93,7 @@ const EventHistoryDialog = ({ onClose }) => {
         width={1200}
         style={{ top: 20 }}
         bodyStyle={{
-          // height: 'calc(100vh - 150px)',
+          height: 'calc(100vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'

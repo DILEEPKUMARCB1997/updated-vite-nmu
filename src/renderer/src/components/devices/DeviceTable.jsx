@@ -142,7 +142,9 @@ const DeviceTable = ({ deviceData = [] }) => {
           }}
           onRow={(record) => {
             return {
-              onContextMenu: (event) => {}
+              onContextMenu: (event) => {
+                console.log(event)
+              }
             }
           }}
         />
