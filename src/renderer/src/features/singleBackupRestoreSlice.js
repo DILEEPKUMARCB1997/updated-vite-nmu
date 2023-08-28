@@ -44,15 +44,6 @@ export const requestBackup = (callback) => (dispatch, getState) => {
     filename
   })
 }
-export const requestGetBackupRestoreData = (payload) => (dispatch) => {
-  const { MACAddress } = payload
-  window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_BACKUP_RESTORE_DATA, (event, arg) => {
-    const { backupPath } = arg.data
-    dispatch(initBackupRestoreData({ MACAddress, backupPath }))
-  })
-  window.electron.ipcRenderer.send(REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA, { MACAddress })
-  dispatch(openDialog('singleBackupConfig'))
-}
 
 export const requestRestoreSelectFile = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SINGLE_RESTORE_SELECT_FILE, (event, arg) => {
@@ -113,14 +104,8 @@ export const singleBackupRestoreSlice = createSlice({
   }
 })
 
-export const {
-  initBackupRestoreData,
-  clearData,
-  setBackupPath,
-  setBackupFilename,
-  changeBackupStatus,
-  setRestorePath
-} = singleBackupRestoreSlice.actions
+export const { clearData, setBackupPath, setBackupFilename, changeBackupStatus, setRestorePath } =
+  singleBackupRestoreSlice.actions
 export const singleBackupRestoreSelector = (state) => {
   const { isBackingUP, MACAddress, backupPath, filename, restorePath } = state.singleBackupRestore
   return { isBackingUP, MACAddress, backupPath, filename, restorePath }

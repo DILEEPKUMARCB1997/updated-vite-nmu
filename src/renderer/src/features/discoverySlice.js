@@ -14,6 +14,9 @@ export const requestCheckSNMP = (param, callback) => (dispatch) => {
     dispatch(showCheckSNMPModal(false))
     callback(arg.success)
   })
+
+  window.electron.ipcRenderer.send(REQUEST_MP_CHECK_SNMP, param)
+  dispatch(showCheckSNMPModal(true))
 }
 
 export const requestDiscovery = () => (dispatch) => {
@@ -24,16 +27,6 @@ export const requestDiscovery = () => (dispatch) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
-}
-
-export const requestCheckSNMP = (param, callback) => (dispatch) => {
-  window.electron.ipcRenderer.once(RESPONSE_RP_CHECK_SNMP, (event, arg) => {
-    dispatch(showCheckSNMPModal(false))
-    callback(arg.success)
-  })
-
-  window.electron.ipcRenderer.send(REQUEST_MP_CHECK_SNMP, param)
-  dispatch(showCheckSNMPModal(true))
 }
 
 export const requestDiscoveryAfterLogin = () => (dispatch) => {
@@ -153,8 +146,7 @@ export const {
   showDiscoveryTableCheckBox,
   clearDiscoverTableSelect,
   setSNMPSelectOnly,
-  selectDiscoveryTable,
-  showCheckSNMPModal
+  selectDiscoveryTable
 } = discoverySlice.actions
 
 export const discoverySelector = (state) => {

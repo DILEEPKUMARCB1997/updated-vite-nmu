@@ -218,13 +218,8 @@ export const {
   setDHCP,
   setNetworkAddressData,
   setHostname,
-<<<<<<< HEAD
   initNetworkSetting,
   initBasicData
-=======
-  initBasicData,
-  initNetworkSetting
->>>>>>> 3d47554cc208e23e0d33d5ed5fc8a2661214ce1f
 } = singleNetworkSettingSlice.actions
 
 export const singleNetworkSettingSelector = (state) => {
