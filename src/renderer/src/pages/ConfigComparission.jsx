@@ -4,7 +4,7 @@ import { theme } from 'antd'
 import './ConfigComarission.css'
 
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import { Row, Col, Card, Typography } from 'antd'
+import { Row, Col, Card } from 'antd'
 
 function ConfigComparission() {
   const { useToken } = theme

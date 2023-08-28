@@ -3,20 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { openDialog } from './dialogSlice'
 import {
   REQUEST_MP_DISCOVERY_ALL_DEVICES,
-  RESPONSE_RP_DISCOVERY_ALL_DEVICES,
   RESPONSE_RP_CHECK_SNMP,
+  RESPONSE_RP_DISCOVERY_ALL_DEVICES,
   REQUEST_MP_CHECK_SNMP
 } from '../../../main/utils/IPCEvents'
-
-export const requestDiscovery = () => (dispatch) => {
-  window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
-    console.log(arg)
-    if (arg.isEnableSNMP) {
-      dispatch(openDialog('snmpScanProgress'))
-    }
-  })
-  window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
-}
+import { showCheckSNMPModal } from './UIControllSlice'
 
 export const requestCheckSNMP = (param, callback) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_CHECK_SNMP, (event, arg) => {
@@ -26,6 +17,16 @@ export const requestCheckSNMP = (param, callback) => (dispatch) => {
 
   window.electron.ipcRenderer.send(REQUEST_MP_CHECK_SNMP, param)
   dispatch(showCheckSNMPModal(true))
+}
+
+export const requestDiscovery = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
+    console.log(arg)
+    if (arg.isEnableSNMP) {
+      dispatch(openDialog('snmpScanProgress'))
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_DISCOVERY_ALL_DEVICES)
 }
 
 export const requestDiscoveryAfterLogin = () => (dispatch) => {
@@ -145,8 +146,7 @@ export const {
   showDiscoveryTableCheckBox,
   clearDiscoverTableSelect,
   setSNMPSelectOnly,
-  selectDiscoveryTable,
-  showCheckSNMPModal
+  selectDiscoveryTable
 } = discoverySlice.actions
 
 export const discoverySelector = (state) => {

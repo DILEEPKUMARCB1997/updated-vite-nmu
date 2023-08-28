@@ -93,7 +93,7 @@ const EventHistoryDialog = ({ onClose }) => {
         width={1200}
         style={{ top: 20 }}
         bodyStyle={{
-          // height: 'calc(100vh - 150px)',
+          height: 'calc(100vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
@@ -129,6 +129,7 @@ const EventHistoryDialog = ({ onClose }) => {
 
         <Divider style={{ margin: '10px 0px' }} />
         <Table
+          style={{ height: '50%', tableLayout: 'auto' }}
           loading={tableLoading}
           rowKey="eventId"
           bordered
