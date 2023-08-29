@@ -86,7 +86,6 @@ const EventLog = () => {
             colorTo: '#BED1E6',
             opacityFrom: 0.4,
             opacityTo: 0.5
-            // stops: [50, 0, 100]
           }
         }
       },

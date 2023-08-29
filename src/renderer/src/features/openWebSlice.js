@@ -16,7 +16,7 @@ export const requestOpenWebData =
             type: initOpenWebData,
             payload: {
               IPAddress: param.IPAddress,
-              URL: `http://${arg.data.username}:${arg.data.password}@${param.IPAddress}`
+              URL: `https://${arg.data.username}:${arg.data.password}@${param.IPAddress}`
             }
           })
         }
@@ -37,7 +37,8 @@ export const openWebSlice = createSlice({
     changeNextUrl: (state) => {
       return {
         ...state,
-        URL: `http://${state.IPAddress}`
+        URL: `https://${state.IPAddress}`
+        //`http://${state.IPAddress}`
       }
     },
     clearOpenWebData: () => {

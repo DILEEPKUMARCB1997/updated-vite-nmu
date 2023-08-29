@@ -26,27 +26,17 @@ export const initSingleNetworkSetting = (payload) => (dispatch, getState) => {
 
   if (!isSNMPmode) {
     dispatch(
-      initNetworkSetting({
-        isDHCP,
-        IPAddress,
-        netmask,
-        gateway,
-        hostname,
-        dns1: '',
-        dns2: ''
-      })
+      initNetworkSetting({ isDHCP, IPAddress, netmask, gateway, hostname, dns1: '', dns2: '' })
     )
   } else {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_SNMP_DEVICE_NETWORK_SETTINGS, (event, arg) => {
       dispatch(initNetworkSetting({ ...arg.data }))
     })
-    window.electron.ipcRenderer.send(REQUEST_MP_GET_SNMP_DEVICE_NETWORK_SETTINGS, {
-      MACAddress
-    })
+    window.electron.ipcRenderer.send(REQUEST_MP_GET_SNMP_DEVICE_NETWORK_SETTINGS, { MACAddress })
   }
-
   dispatch(openDrawer(true))
 }
+
 export const requestSetNetworkSetting = (callback) => (dispatch, getState) => {
   const {
     isSNMPmode,
@@ -82,9 +72,9 @@ export const requestSetNetworkSetting = (callback) => (dispatch, getState) => {
 
   window.electron.ipcRenderer.once(`${responseChannel} ${MACAddress}`, (event, arg) => {
     if (arg.success) {
-      callback(true, 'Set network settngs success!')
+      callback(true, 'Set network settings success!')
     } else {
-      callback(true, 'Set network settngs fail!')
+      callback(true, 'Set network settings fail!')
     }
   })
   window.electron.ipcRenderer.send(requestChannel, data)
@@ -115,6 +105,23 @@ const singleNetworkSettingSlice = createSlice({
   reducers: {
     openDrawer: (state, action) => {
       return { ...state, drawerVisible: action.payload }
+    },
+    initBasicData: (state, { payload }) => {
+      const { isSNMPmode, MACAddress, model } = payload
+      return { ...state, isSNMPmode, MACAddress, model }
+    },
+    initNetworkSetting: (state, { payload }) => {
+      const { IPAddress, netmask, gateway, dns1, dns2 } = payload
+      return {
+        ...state,
+        ...payload,
+        oldIPAddress: IPAddress,
+        validIPAddress: IPFormat.test(IPAddress),
+        validNetmask: IPFormat.test(netmask),
+        validGateway: IPFormat.test(gateway),
+        validDNS1: IPFormat.test(dns1),
+        validDNS2: IPFormat.test(dns2)
+      }
     },
     clearData: () => {
       return {
@@ -211,8 +218,8 @@ export const {
   setDHCP,
   setNetworkAddressData,
   setHostname,
-  initBasicData,
-  initNetworkSetting
+  initNetworkSetting,
+  initBasicData
 } = singleNetworkSettingSlice.actions
 
 export const singleNetworkSettingSelector = (state) => {

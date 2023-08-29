@@ -44,7 +44,7 @@ const routes = {
       },
       {
         path: '/RowContextMenu',
-        name: 'RowContextMenu',
+        name: 'Row Context Menu',
         icon: <FileSearchOutlined />
       }
     ]

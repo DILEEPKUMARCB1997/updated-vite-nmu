@@ -49,7 +49,21 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     {
       title: 'Status',
       key: 'status',
-      render: () => <Code code="MAC Address" />
+      valueEnum: {
+        none: { type: 'normal', label: 'Waiting' },
+        a: { type: 'normal', label: 'Upload Image' },
+        c: { type: 'normal', label: 'User Cancel' },
+        S001: { type: 'normal', label: 'Erasing' },
+        S002: { type: 'success', label: 'Update Successful' },
+        E001: { type: 'error', label: 'Upload Fail(E001)' },
+        E007: { type: 'error', label: 'Upload Fail(E007)' },
+        TO: { type: 'error', label: 'Connect Timeout' }
+        // all: { text: 'Basic/SNMP' },
+        // gwd: { text: 'Basic' },
+        // snmp: { text: 'SNMP' },
+        // unknown: { text: 'N/A' }
+      }
+      // render: () => <Code code="MAC Address" />
     }
   ]
   console.log(Code)
