@@ -133,17 +133,17 @@ const DeviceTable = ({ deviceData = [] }) => {
   //     })
   //   )
   // }
-  const { isAUZ, deviceType, online } = deviceData
-  const isSupportSNMP = deviceType !== 'gwd'
-  const disableCheckBox = !isAUZ || !online || (!isSupportSNMP && SNMPSelectOnly)
-  const handleCheckBoxChange = (isSelect, MACAddress) => {
-    dispatch(
-      selectDiscoveryTable({
-        isSelect,
-        deviceData: [MACAddress]
-      })
-    )
-  }
+  // const { isAUZ, deviceType, online } = deviceData
+  // const isSupportSNMP = deviceType !== 'gwd'
+  // const disableCheckBox = !isAUZ || !online || (!isSupportSNMP && SNMPSelectOnly)
+  // const handleCheckBoxChange = (isSelect, MACAddress) => {
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect,
+  //       deviceData: [MACAddress]
+  //     })
+  //   )
+  // }
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -197,8 +197,8 @@ const DeviceTable = ({ deviceData = [] }) => {
             x: 1100
           }}
           rowSelection={showCheckBox}
-          disable={disableCheckBox}
-          onChange={handleCheckBoxChange}
+          // disable={disableCheckBox}
+          // onChange={handleCheckBoxChange}
           // viewDevicesData={viewDevicesData}
           toolbar={{
             search: {
