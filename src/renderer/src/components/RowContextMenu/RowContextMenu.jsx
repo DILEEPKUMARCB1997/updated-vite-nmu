@@ -11,7 +11,7 @@ import {
   UndoOutlined,
   UngroupOutlined
 } from '@ant-design/icons'
-import { ConfigProvider, Menu, App } from 'antd'
+import { ConfigProvider, Menu, App, Modal, theme, Dropdown } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestOpenWebData } from '../../features/openWebSlice'
 import { openDialog } from '../../features/dialogSlice'
@@ -83,7 +83,7 @@ import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreS
 //   }
 // ]
 
-const RowContextMenu = () => {
+const RowContextMenu = ({ position }) => {
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
   const items = [
@@ -145,10 +145,10 @@ const RowContextMenu = () => {
   const BEEP_CONFIRM_MESSAGE = 'This will let device beep.'
   const REBOOT_CONFIRM_MESSAGE = 'This will reboot the device.'
 
-  const handleItemClick = (event, data) => {
-    console.log(data)
+  const handleItemClick = (data) => {
+    console.log(data.key)
     const { IPAddress, MACAddress, model, deviceType } = data
-    switch (data.id) {
+    switch (data.key) {
       case 'openOnOSbrowser':
         window.electron.shell.openExternal(`http://${IPAddress}`)
         break
@@ -157,6 +157,11 @@ const RowContextMenu = () => {
         break
       case 'telnet':
         return handleOpenTelnet(IPAddress)
+      case 'beep':
+        if (model === 'Cisco CGS2520') {
+          return null
+        }
+        return handleBeep(IPAddress, MACAddress, deviceType)
       case 'networkSetting':
         if (model === 'Cisco CGS2520') {
           return null
@@ -288,11 +293,30 @@ const RowContextMenu = () => {
     }
   }
 
-  return (
-    <div>
+  const showCheckSNMPFailModal = () => {
+    Modal.error({
+      title: 'Check SNMP feature fail. ',
+      content: 'Please check SNMP of this device is enable.'
+    })
+  }
+
+  const { token } = theme.useToken()
+  const { showMenu, xPos, yPos } = position
+
+  return showMenu ? (
+    <div
+      style={{
+        position: 'absolute',
+        background: token.colorBgBase,
+        top: yPos + 2 + 'px',
+        left: xPos + 4 + 'px',
+        boxShadow: token.boxShadowCard,
+        zIndex: 30
+      }}
+    >
       <ConfigProvider
         theme={{
-          inherit: true,
+          inherit: false,
           components: {
             Menu: {
               colorActiveBarWidth: 0,
@@ -305,9 +329,8 @@ const RowContextMenu = () => {
       >
         <Menu items={items} mode="inline" onClick={handleItemClick} />
       </ConfigProvider>
-      {/* <Menu items={items} onClick={handleOpenWeb}></Menu> */}
     </div>
-  )
+  ) : null
 }
 
 export default RowContextMenu
