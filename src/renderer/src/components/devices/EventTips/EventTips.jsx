@@ -30,18 +30,17 @@ const EventTips = () => {
   // })
 
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
-  // console.log(batchOperateEvent)
-  // console.log(showBatchOperateTips)
+
   console.log(messages[batchOperateEvent])
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
-  // console.log(SNMPSelectOnly)
+
   const disableOK = selected.length === 0
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
       case 'firmwareUpdate':
         dispatch(initFirmwareUpdateData())
-        console.log(initFirmwareUpdateData())
+        // console.log(initFirmwareUpdateData())
         break
       case 'resetToDefault':
         dispatch(initResetToDefaultData())
@@ -99,7 +98,7 @@ const EventTips = () => {
             {' '}
             OK
           </a>{' '}
-          or
+          or{' '}
           <a
             role="button"
             tabIndex="0"
