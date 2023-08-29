@@ -13,6 +13,7 @@ import {
   RESPONSE_RP_SET_DEVICE_AUTHENTICATION_SETTINGS,
   RESPONSE_RP_SET_DEVICE_COMMUNITY_SETTINGS
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from './dialogSlice'
 
 export const clearDeviceAdvancedData = () => (dispatch) => {
   dispatch(openAdvanceDrawer(false))
@@ -94,6 +95,8 @@ export const initDeviceAdvanced = (param) => (dispatch, getState) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_GET_DEVICE_AUTHENTICATION_SETTINGS, { MACAddress })
+
+  dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
 }
 
 const deviceAdvanceSettingSlice = createSlice({

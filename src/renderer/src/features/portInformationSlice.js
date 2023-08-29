@@ -13,11 +13,10 @@ const XAXES_INTERVAL_NUM = XAXES_LABELS_NUM - 1
 export const initPortInfoData = (payload) => (dispatch, getState) => {
   const { MACAddress } = payload
 
-  const { model, IPAddress, kernel, ap } = getState().discoverys.defaultDeviceData[MACAddress]
+  const { model, IPAddress, kernel, ap } = getState().discovery.defaultDeviceData[MACAddress]
 
   dispatch(setModelInfo({ model, IPAddress, MACAddress, kernel, ap }))
-  dispatch(openPortInfoDrawer(true))
-  dispatch(openDialog('portInformation'))
+  dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
   dispatch(startPortStatusPolling())
 }
 
