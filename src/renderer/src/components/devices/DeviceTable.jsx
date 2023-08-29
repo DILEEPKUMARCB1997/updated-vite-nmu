@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { Badge, ConfigProvider } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { ProTable } from '@ant-design/pro-components'
+import RowContextMenu from '../RowContextMenu/RowContextMenu'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectDiscoveryTable, discoverySelector } from '../../features/discoverySlice'
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
@@ -77,6 +79,9 @@ const columns = [
 ]
 
 const DeviceTable = ({ deviceData = [] }) => {
+  const [xPos, setXPos] = useState(0)
+  const [yPos, setYPos] = useState(0)
+  const [showMenu, setShowMenu] = useState(false)
   const token = useTheme()
   const dispatch = useDispatch()
   // const [tableType, setTableType] = useState('')
@@ -154,12 +159,34 @@ const DeviceTable = ({ deviceData = [] }) => {
     })
   }
 
+  const handleContextMenu = useCallback(
+    (e) => {
+      console.log(e)
+      // e.preventDefault()
+      setXPos(e.pageX - 220)
+      setYPos(e.pageY - 150)
+      setShowMenu(true)
+    },
+    [setXPos, setYPos]
+  )
+
+  const handleClick = useCallback(() => {
+    showMenu && setShowMenu(false)
+  }, [showMenu])
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick)
+    return () => {
+      document.addEventListener('click', handleClick)
+    }
+  })
+
   return (
     <div>
       {' '}
       <ConfigProvider
         theme={{
-          inherit: true,
+          inherit: false,
           components: {
             Table: {
               colorFillAlter: token.colorPrimaryBg,
@@ -219,14 +246,16 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
-          onRow={(record) => {
+          onRow={(record, rowIndex) => {
             return {
               onContextMenu: (event) => {
                 console.log(event)
+                handleContextMenu(event)
               }
             }
           }}
         />
+        <RowContextMenu position={{ showMenu, xPos, yPos }} />
       </ConfigProvider>
     </div>
   )
