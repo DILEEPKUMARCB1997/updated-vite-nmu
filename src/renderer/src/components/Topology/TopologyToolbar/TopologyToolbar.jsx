@@ -561,3 +561,82 @@ export default TopologyToolbar
 // }
 
 // export default TopologyToolbar
+/*
+
+import React, { useState } from "antd";
+import { Select, Button, Divider, CircularProgress, CameraAlt, Pageview, Edit } from "antd";
+const TopologyToolbar = (props) => {
+  const [focusNode, setFocusNode] = useState("");
+  const handleChangeSelectFocusNode = (value) => {
+    setFocusNode(value);
+  };
+  const handleSearchNodeButtonOnClick = () => {
+    // search node
+  };
+  const handleExportImageButtonOnClick = () => {
+    // export image
+  };
+  const handleFitViewPointButtonOnClick = () => {
+    // fit view point
+  };
+  const handleEditModeButtonOnClick = () => {
+    // edit mode
+  };
+  return (
+    <div className={styles.toolbarContainer}>
+      <div className={styles.toolbarTopContainer}>
+        <Select
+          className={styles.viewPointSelect}
+          value={focusNode}
+          onChange={handleChangeSelectFocusNode}
+        >
+          {showIds.map((element) => (
+            <Option key={element} value={element}>
+              {element}
+            </Option>
+          ))}
+        </Select>
+        <Button
+          className={styles.viewPointSearchButton}
+          icon="search"
+          onClick={handleSearchNodeButtonOnClick}
+        >
+          Search
+        </Button>
+        <Divider type="vertical" />
+        <Button
+          variant="outlined"
+          size="small"
+          color="primary"
+          onClick={handleExportImageButtonOnClick}
+        >
+          {isImageExporting ? (
+            <CircularProgress size={24} className={styles.leftIcon} />
+          ) : (
+            <CameraAlt className={styles.leftIcon} />
+          )}
+          Export Image
+        </Button>
+        <Divider type="vertical" />
+        <Button
+          variant="outlined"
+          size="small"
+          color="primary"
+          onClick={handleFitViewPointButtonOnClick}
+        >
+          <Pageview className={styles.leftIcon} />
+          Fit View Point
+        </Button>
+      </div>
+      <div className={styles.toolbarBottomContainer}>
+        {editMode ? (
+          renderEditModeToolbar()
+        ) : (
+           renderNormalModeToolbar()
+        )}
+      </div>
+    </div>
+  );
+};
+export default TopologyToolbar;
+*/

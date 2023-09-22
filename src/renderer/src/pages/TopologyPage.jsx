@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState } from 'react'
 
 import TopologyGraph from '../components/topology/TopologyGraph/TopologyGraph'
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
-// import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
+import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import { Card, Col, Row, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
@@ -24,11 +24,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 // import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 
-const TopologyPage = (props) => {
+const TopologyPage = () => {
   const { event, nodesData, currentGroup } = useSelector(topologySelector)
   const dispatch = useDispatch()
   let graph = useRef()
-  let modalRef = useRef()
+  let modal = useRef()
   // let graphRef = useRef()
   const [state, setState] = useState({
     open: true,
@@ -215,6 +215,12 @@ const TopologyPage = (props) => {
                 getEdgeLinkNode={getEdgeLinkNode}
               />
               {/* </Card> */}
+              <TopologyAddModal
+                onRef={(ref) => {
+                  modal = ref
+                }}
+                handleDisableEdit={handleDisableEdit}
+              />
               {/* <TopologyAddModal
                 onRef={(ref) => {
                   modalRef = ref

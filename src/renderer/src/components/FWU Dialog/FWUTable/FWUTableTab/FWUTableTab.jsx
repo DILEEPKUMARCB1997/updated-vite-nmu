@@ -44,9 +44,7 @@ const FWUTableTab = ({ theme, columnData }) => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        <TableTab
-        //  dir={theme.direction}
-        ></TableTab>
+        <TableTab dir={theme.direction}></TableTab>
       </SwipeableViews>
       <Steps current={current} />
       <div

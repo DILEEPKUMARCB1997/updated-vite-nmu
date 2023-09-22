@@ -70,13 +70,13 @@ export const initFirmwareUpdateData = () => (dispatch, getState) => {
       }
     }
   })
-  dispatch({
-    type: INIT_FIRMWARE_UPDATE_DATA,
-    payload: {
-      deviceData,
-      deviceRealTimeData
-    }
-  })
+  // dispatch({
+  //   type: INIT_FIRMWARE_UPDATE_DATA,
+  //   payload: {
+  //     deviceData,
+  //     deviceRealTimeData
+  //   }
+  // })
   dispatch(openDialog('FWU'))
 }
 const statusStep = ['wait', 'start', 'done']

@@ -4,11 +4,28 @@ import React from 'react'
 import { eventLogSelector } from '../../features/eventLogSlice'
 import { useSelector } from 'react-redux'
 import EventListCard from './EventListCard'
+// let n = 5
+// let string = ''
+// for (let i = 0; i <= n; i++) {
+//   for (let j = 0; j <= i / 2 - 1; j++) {
+//     string = string + '*'
+//   }
+//   string = string + '\n'
+// }
+// console.log(string)
+// function printNos(n) {
+//   if (n > 0) {
+//     printNos(n - 1)
+//     console.log(n + ' ')
+//   }
+//   return
+// }
+
+// printNos(100)
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
   console.log(customEventListData)
-
   return (
     <div>
       {customEventListData.map((item) => (

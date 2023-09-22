@@ -102,6 +102,7 @@ import { ConfigProvider, Card, Typography, Table, theme } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import { syslogSettingSelector } from '../../../../features/SyslogSettingSlice'
 import { useSelector } from 'react-redux'
+//import { data } from 'vis-network'
 
 const SUCCESS = 1
 const ERROR = 2
@@ -111,35 +112,78 @@ const columns = [
     title: 'Modal',
     dataIndex: 'modal',
     key: 'modal',
-    sorter: (a, b) => a.modal - b.modal,
-    render: (element) => {
-      {
-        element.modal
-      }
-    }
+    sorter: (a, b) => a.modal - b.modal
+    // render: (element) => {
+    //   {
+    //     element.modal
+    //   }
+    // }
   },
   {
     title: 'MAC Address',
     dataIndex: 'MACAddress',
     key: 'MACAddress',
-    sorter: (a, b) => a.MACAddress - b.MACAddress,
-    render: (element) => {
-      {
-        element.MACAddress
-      }
-    }
+    sorter: (a, b) => a.MACAddress - b.MACAddress
+    // render: (element) => {
+    //   {
+    //     element.MACAddress
+    //   }
+    // }
   },
   {
     title: 'IP Address',
     dataIndex: 'IPAddress',
     key: 'IPAddress',
-    sorter: (a, b) => a.IPAddress - b.IPAddress,
-    render: (element) => {
-      {
-        element.IPAddress
-      }
-    }
+    sorter: (a, b) => a.IPAddress - b.IPAddress
+    // render: (element) => {
+    //   {
+    //     element.IPAddress
+    //   }
+    // }
   },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (element) =>
+      element ? (
+        <span
+          style={{
+            // backgroundColor:
+            //   element.key === SUCCESS ? 'green' : element.key === ERROR ? 'red' : 'gray',
+            color: 'green',
+            padding: '5px',
+            borderRadius: '5px'
+          }}
+        >
+          SUCCESS
+        </span>
+      ) : <span
+          style={{
+            // backgroundColor:
+            //   element.key === ERROR ? 'red' : element.key === SUCCESS ? 'green' : 'gray',
+            color: 'red',
+            padding: '5px',
+            borderRadius: '5px'
+          }}
+        >
+          ERROR
+        </span> ? (
+        <span
+          style={{
+            // backgroundColor:
+            //   element.key === ERROR ? 'red' : element.key === SUCCESS ? 'green' : 'gray',
+            color: 'blue',
+            padding: '5px',
+            borderRadius: '5px'
+          }}
+        >
+          WAITING
+        </span>
+      ) : null
+  }
+]
+const dataSource = [
   {
     title: 'Status',
     dataIndex: 'status',
@@ -178,7 +222,7 @@ const DeviceList = () => {
 
   const { useToken } = theme
   const { token } = useToken()
-  const dataSource = []
+  // const dataSource = []
   useEffect(() => {
     dataSource.push(deviceStatus)
     console.log(dataSource)
@@ -209,18 +253,15 @@ const DeviceList = () => {
             columns={columns}
             dataSource={dataSource}
             style={{ width: '100%' }}
-            // onClick={handleDeviceListItemOnClick()}
-            // dataSource={data(deviceStatus)}
             pagination={{
               position: ['bottomCenter'],
               showQuickJumper: true,
               size: 'default',
-              // total: data(deviceStatus).length,
               defaultPageSize: 10,
               pageSizeOptions: [10, 15, 20, 25],
               showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
             }}
-          ></Table>
+          />
         </div>
       </div>
     </Card>
