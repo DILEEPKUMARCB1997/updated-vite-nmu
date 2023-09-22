@@ -1,15 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
-
-// function getRandomInt(min = 1, max = 9) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min
-// }
 const EventLog = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)

@@ -1,0 +1,13 @@
+.header-cell {
+  span {
+    color: #ecf0f1;
+  }
+}
+
+.cell {
+  display: none;
+}
+
+.cell-visible {
+  display: table-cell;
+}

@@ -1,20 +1,4 @@
-// import { createSlice } from '@reduxjs/toolkit';
-
-// export const deviceBasicOperatorSlice = createSlice({
-//   name: 'deviceBasicOperatorSlice',
-//   initialState:{
-
-//   },
-//   reducers: {
-//     reducerName: (state, action) => {}
-//   }
-// })
-
-// export const { reducerName } = deviceBasicOperatorSlice.actions;
-
-// export default deviceBasicOperatorSlice.reducer;
 import { createSlice } from '@reduxjs/toolkit'
-//import { ipcRenderer } from 'electron'
 import { openAlertDialog } from './dialogSlice'
 import {
   REQUEST_MP_REBOOT_GWD_DEVICE,
@@ -50,7 +34,6 @@ export const requestDeviceReboot =
   (dispatch) => {
     console.log(param)
     const { MACAddress, IPAddress, deviceType } = param
-    //const {  } = getState().discovery.defaultDeviceData[MACAddress]
     if (deviceType === 'snmp' || deviceType === 'all') {
       window.electron.ipcRenderer.once(
         RESPONSE_RP_LET_SNMP_DEVICE_REBOOT,
@@ -91,9 +74,3 @@ const deviceBasicOperatorSlice = createSlice({
   reducers: {}
 })
 export default deviceBasicOperatorSlice
-// export default (state = initalState, action) => {
-//   switch (action.type) {
-//     default:
-//       return state
-//   }
-// }

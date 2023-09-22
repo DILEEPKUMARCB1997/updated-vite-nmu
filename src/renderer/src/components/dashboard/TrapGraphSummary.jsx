@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
 import {
   dashboardSelector,
-  requestHistoryData,
-  updateTrapGraph
+  requestHistoryData
+  //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
 import { Card } from 'antd'

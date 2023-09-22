@@ -37,6 +37,7 @@ import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
+import Beep from '../dialogs/BeepDialog/BeepDialog'
 // import { openSnack } from '../../features/snackSlice'
 
 const options = [
@@ -70,14 +71,25 @@ const DevicesControl = ({ onClose }) => {
       title: 'Confirm',
       content: 'This will reboot the device.'
     })
-    setTimeout(async () => {
-      const confirmed = await modal.success({
-        title: 'Success !',
-        type: 'success',
-        content: 'Device reboot success.'
-      })
-      console.log(confirmed)
-    }, 3000)
+    if (modal.success) {
+      setTimeout(async () => {
+        const confirmed = await modal.success({
+          title: 'Success !',
+          type: 'success',
+          content: 'Device reboot success.'
+        })
+        console.log(confirmed)
+      }, 3000)
+    } else {
+      setTimeout(async () => {
+        const confirmed = await modal.error({
+          title: 'Error !',
+          type: 'error',
+          content: 'Device reboot error.'
+        })
+        console.log(confirmed)
+      }, 3000)
+    }
 
     //   : modal.error({
     //       title: 'Error',
@@ -215,12 +227,7 @@ const DevicesControl = ({ onClose }) => {
           />
         </Tooltip>
         <Tooltip title="Beep">
-          <Button
-            icon={<UngroupOutlined />}
-            onClick={() => {
-              dispatch(openDialog('beep'))
-            }}
-          />
+          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
         <Tooltip title="Reboot">
           <Button icon={<RedoOutlined />} onClick={handleReboot} />

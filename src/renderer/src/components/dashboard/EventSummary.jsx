@@ -21,6 +21,7 @@ import SummaryCard from './SummaryCard'
 var clearLogTimeOut1
 const EventSummary = () => {
   const { customEventDailyData } = useSelector(eventLogSelector)
+  console.log(customEventDailyData)
 
   const geteventdetails = () => {
     const information = customEventDailyData.filter((x) => x.severity === 'Information').length

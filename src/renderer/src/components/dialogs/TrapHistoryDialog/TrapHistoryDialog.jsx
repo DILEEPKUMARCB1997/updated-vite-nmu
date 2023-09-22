@@ -86,9 +86,7 @@ const TrapHistoryDialog = ({ onClose }) => {
   }, [])
 
   const handleSourceIPInputOnChange = (event) => {
-    setSourceIP({
-      sourceIP: event.target.value
-    })
+    setSourceIP(event.target.value)
   }
 
   const rangePickerChange = (value, dateString) => {

@@ -41,6 +41,7 @@ const columns = [
 ]
 const DeviceList = () => {
   const { isTaskRunning, deviceStatus } = useSelector(trapSettingSelector)
+  console.log(isTaskRunning)
 
   const { useToken } = theme
   const { token } = useToken()

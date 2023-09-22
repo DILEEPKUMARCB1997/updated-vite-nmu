@@ -8,8 +8,8 @@ import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
-  requestHistoryData,
-  showSyslogTableData
+  requestHistoryData
+  //showSyslogTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
