@@ -186,7 +186,7 @@ const DeviceTable = ({ deviceData = [] }) => {
       {' '}
       <ConfigProvider
         theme={{
-          inherit: false,
+          inherit: true,
           components: {
             Table: {
               colorFillAlter: token.colorPrimaryBg,

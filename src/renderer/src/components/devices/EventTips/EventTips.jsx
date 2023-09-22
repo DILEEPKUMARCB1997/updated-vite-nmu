@@ -89,7 +89,7 @@ const EventTips = () => {
           {' '}
           Select devices and press{' '}
           <a
-            className={disableOK ? 'disable' : undefined}
+            // className={disableOK ? 'disable' : undefined}
             role="button"
             tabIndex="0"
             onClick={handleOKOnClick}
