@@ -78,6 +78,7 @@ const EventTips = () => {
       handleCancelOnClick()
     }
   }
+
   const alertProps = {
     className: `${'alert'} ${showBatchOperateTips ? '' : 'hide'}`,
     message: messages[batchOperateEvent],

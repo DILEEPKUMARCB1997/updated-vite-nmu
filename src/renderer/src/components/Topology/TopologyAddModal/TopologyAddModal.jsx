@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Modal, InputNumber, Select, Input, Checkbox } from 'antd'
 import {
@@ -129,11 +130,12 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
   const disableOKButton = event === 'addNode' ? !isAddNodePass : !isAddEdgePass
   const isFromVirtual = addEdgeNodes.from.startsWith('virtual')
   const isToVirtual = addEdgeNodes.to.startsWith('virtual')
+
   return (
     <Modal
       // destroyOnClose
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-      //open
+      // open
       onOk={handleModalOKButtonClick}
       onCancel={handleModalCancelButtonClick}
       okButtonProps={{ disabled: disableOKButton }}

@@ -30,13 +30,17 @@ const columns = [
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status'
-    // render: (element) =>
-    //   element ? (
-    //     <span style={{ color: 'green' }}>SUCCESS</span>
-    //   ) : (
-    //     <span style={{ color: 'red' }}>ERROR</span>
-    //   )
+    key: 'status',
+    render: (element) =>
+      element ? (
+        element ? (
+          <span style={{ color: 'green' }}>SUCCESS</span>
+        ) : (
+          <span style={{ color: 'red' }}>ERROR</span>
+        )
+      ) : (
+        <span>WAITING</span>
+      )
   }
 ]
 const DeviceList = () => {
