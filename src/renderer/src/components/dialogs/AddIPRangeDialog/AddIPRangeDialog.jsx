@@ -41,16 +41,24 @@ const AddIPRangeDialog = ({ onClose }) => {
   }
 
   const handleOkButtonClick = () => {
-    form
-      .validateFields()
-      .then(() => {
-        dispatch(addNewIPRangeData({ startIP, endIP }))
-        form.resetFields()
-        onClose()
+    // form
+    //   .validateFields()
+    //   .then(() => {
+    //     dispatch(addNewIPRangeData({ startIP, endIP }))
+    //     form.resetFields()
+    //     onClose()
+    //   })
+    //   .catch((errorInfo) => {
+    //     console.log('Validation Failed:', errorInfo)
+    //   })
+
+    dispatch(
+      addNewIPRangeData({
+        startIP,
+        endIP
       })
-      .catch((errorInfo) => {
-        console.log('Validation Failed:', errorInfo)
-      })
+    )
+    onClose()
   }
 
   // const validStartIP = IPFormat.test(startIP)

@@ -13,10 +13,10 @@ import './ResetToDefaultDialog.css'
 const WAITING = 0
 const RUNNING = 1
 
-// const SUCCESS = 1
-// const ERROR = 2
+const SUCCESS = 1
+const ERROR = 2
 
-// const results = ['WAITING', 'SUCCESS', 'ERROR']
+const results = ['WAITING', 'SUCCESS', 'ERROR']
 
 const columns = [
   {
@@ -40,17 +40,22 @@ const columns = [
   {
     title: 'Status',
     dataIndex: 'status',
-    key: 'status'
+    key: 'status',
     // render: (data) =>
     //   data
     //     ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
     //     : results[2] === ERROR && <span style={{ color: 'red' }} />
-    // render: (element) =>
-    //   element ? (
-    //     <span style={{ color: 'green' }}>SUCCESS</span>
-    //   ) : (
-    //     <span style={{ color: 'red' }}>ERROR</span>
-    //   )
+    render: (element) => {
+      return element ? (
+        element ? (
+          <span style={{ color: 'green' }}>SUCCESS</span>
+        ) : (
+          <span style={{ color: 'red' }}>ERROR</span>
+        )
+      ) : (
+        <span>WAITING</span>
+      )
+    }
   }
 ]
 

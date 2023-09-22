@@ -1,247 +1,197 @@
 // Definitions by: AlexLin
 
-import async from 'async';
-import {
-  apiCore,
-  snmp,
-  notificationManagement,
-  progressManagement,
-  eventLogManagement,
-} from '..';
+import async from 'async'
+import { apiCore, snmp, notificationManagement, progressManagement, eventLogManagement } from '..'
 
-let newSNMPDeviceQueue = [];
+let newSNMPDeviceQueue = []
 
-let alarmSettingCollection = {};
-let prePortPowerStatus = {};
+let alarmSettingCollection = {}
+let prePortPowerStatus = {}
 
-const POLLING_INTERVA = 5000;
+const POLLING_INTERVA = 5000
 
-const getPreMACList = () => Object.keys(alarmSettingCollection);
-const anyFaultNext = next => {
+const getPreMACList = () => Object.keys(alarmSettingCollection)
+const anyFaultNext = (next) => {
   setTimeout(() => {
-    next();
-  }, POLLING_INTERVA);
-};
+    next()
+  }, POLLING_INTERVA)
+}
 
 const start = () => {
-  progressManagement.default.addProgress('anyFault', 'polling');
+  progressManagement.default.addProgress('anyFault', 'polling')
   async.forever(
-    next => {
+    (next) => {
       try {
         if (!progressManagement.default.isProgressing('SNMP', 'initialize')) {
-          console.log('Any fault check begin.');
-          checkHaveNewDevice(); // check new device first time;
+          console.log('Any fault check begin.')
+          checkHaveNewDevice() // check new device first time;
           if (newSNMPDeviceQueue.length !== 0) {
-            getDBAlarmSettingCollection(); // get new device settings.
+            getDBAlarmSettingCollection() // get new device settings.
           }
-          changeCheckDeviceStatus();
+          changeCheckDeviceStatus()
         }
-        anyFaultNext(next);
+        anyFaultNext(next)
       } catch (exception) {
         // console.log('poaling1');
-        console.error(exception);
-        anyFaultNext(next);
+        console.error(exception)
+        anyFaultNext(next)
       }
     },
-    error => {
-      progressManagement.default.removeProgress('anyFault', 'polling');
+    (error) => {
+      progressManagement.default.removeProgress('anyFault', 'polling')
       // console.log('poaling2');
-      console.error(error);
-    },
-  );
-};
+      console.error(error)
+    }
+  )
+}
 
 const checkHaveNewDevice = () => {
-  const SNMPMACInGroupList = snmp.default.getSNMPMACInGroupList(0);
+  const SNMPMACInGroupList = snmp.default.getSNMPMACInGroupList(0)
   newSNMPDeviceQueue = SNMPMACInGroupList.filter(
-    MACAddress => !getPreMACList().includes(MACAddress),
-  );
-  Object.keys(alarmSettingCollection).forEach(MACAddress => {
+    (MACAddress) => !getPreMACList().includes(MACAddress)
+  )
+  Object.keys(alarmSettingCollection).forEach((MACAddress) => {
     if (!SNMPMACInGroupList.includes(MACAddress)) {
-      delete alarmSettingCollection[MACAddress];
+      delete alarmSettingCollection[MACAddress]
       // delete prePortPowerStatus[MACAddress];
     }
-  });
-};
+  })
+}
 
 const getDBAlarmSettingCollection = () => {
-  console.log(`Any fault new devices: ${newSNMPDeviceQueue}`);
-  newSNMPDeviceQueue.forEach(MACAddress => {
-    const alarmSetting = apiCore.db.getDeviceAlarmSettings(
-      { MACAddress },
-      true,
-    );
-    let portInfo = {};
-    let powerInfo = {};
+  console.log(`Any fault new devices: ${newSNMPDeviceQueue}`)
+  newSNMPDeviceQueue.forEach((MACAddress) => {
+    const alarmSetting = apiCore.db.getDeviceAlarmSettings({ MACAddress }, true)
+    let portInfo = {}
+    let powerInfo = {}
     if (alarmSetting) {
-      alarmSetting.forEach(settings => {
+      alarmSetting.forEach((settings) => {
         if (settings.type === 'port') {
-          portInfo = { ...portInfo, [settings.name]: settings.status };
+          portInfo = { ...portInfo, [settings.name]: settings.status }
         } else if (settings.type === 'power') {
-          powerInfo = { ...powerInfo, [settings.name]: settings.status };
+          powerInfo = { ...powerInfo, [settings.name]: settings.status }
         }
-      });
+      })
 
       alarmSettingCollection = {
         ...alarmSettingCollection,
         [MACAddress]: {
           portInfo,
-          powerInfo,
-        },
-      };
+          powerInfo
+        }
+      }
 
       if (prePortPowerStatus[MACAddress] === undefined) {
-        forceCheckDeviceStatus(MACAddress);
+        forceCheckDeviceStatus(MACAddress)
       }
     } else {
-      newSNMPDeviceQueue.splice(newSNMPDeviceQueue.indexOf(MACAddress), 1);
+      newSNMPDeviceQueue.splice(newSNMPDeviceQueue.indexOf(MACAddress), 1)
     }
-  });
-};
+  })
+}
 
-const forceCheckDeviceStatus = MACAddress => {
-  snmp.default.getPortPowerMIBData(MACAddress, currentPortPowerStatus => {
+const forceCheckDeviceStatus = (MACAddress) => {
+  snmp.default.getPortPowerMIBData(MACAddress, (currentPortPowerStatus) => {
     forceNotificationTrigger(
       true,
       alarmSettingCollection[MACAddress].portInfo,
       currentPortPowerStatus.portInfo,
-      MACAddress,
-    );
+      MACAddress
+    )
     forceNotificationTrigger(
       false,
       alarmSettingCollection[MACAddress].powerInfo,
       currentPortPowerStatus.powerInfo,
-      MACAddress,
-    );
-    savePortPowerStatus(MACAddress, currentPortPowerStatus);
-    newSNMPDeviceQueue.splice(newSNMPDeviceQueue.indexOf(MACAddress), 1);
-  });
-};
+      MACAddress
+    )
+    savePortPowerStatus(MACAddress, currentPortPowerStatus)
+    newSNMPDeviceQueue.splice(newSNMPDeviceQueue.indexOf(MACAddress), 1)
+  })
+}
 
 const changeCheckDeviceStatus = () => {
-  console.log(
-    `Any fault check devices: ${Object.keys(alarmSettingCollection)}`,
-  );
+  console.log(`Any fault check devices: ${Object.keys(alarmSettingCollection)}`)
   Object.entries(alarmSettingCollection).forEach(([MACAddress, settings]) => {
-    const preStatus = prePortPowerStatus[MACAddress];
+    const preStatus = prePortPowerStatus[MACAddress]
     if (preStatus !== undefined) {
-      snmp.default.getPortPowerMIBData(MACAddress, currentPortPowerStatus => {
+      snmp.default.getPortPowerMIBData(MACAddress, (currentPortPowerStatus) => {
         changeNotificationTrigger(
           true,
           settings.portInfo,
           preStatus.portInfo,
           currentPortPowerStatus.portInfo,
-          MACAddress,
-        );
+          MACAddress
+        )
         changeNotificationTrigger(
           false,
           settings.powerInfo,
           preStatus.powerInfo,
           currentPortPowerStatus.powerInfo,
-          MACAddress,
-        );
-        savePortPowerStatus(MACAddress, currentPortPowerStatus);
-      });
+          MACAddress
+        )
+        savePortPowerStatus(MACAddress, currentPortPowerStatus)
+      })
     }
-  });
-};
+  })
+}
 
-const changeNotificationTrigger = (
-  isPort,
-  settings,
-  preStatus,
-  currentStatus,
-  MACAddress,
-) => {
+const changeNotificationTrigger = (isPort, settings, preStatus, currentStatus, MACAddress) => {
   Object.entries(settings).forEach(([name, set]) => {
-    if (
-      set.charAt(0) === '1' &&
-      preStatus[name] === 2 &&
-      currentStatus[name] === 1
-    ) {
-      notificationManagement.default.showAnyFault(
-        isPort,
-        true,
-        name,
-        MACAddress,
-      );
+    if (set.charAt(0) === '1' && preStatus[name] === 2 && currentStatus[name] === 1) {
+      notificationManagement.default.showAnyFault(isPort, true, name, MACAddress)
       eventLogManagement.default.updateEventLog({
         MACAddress,
         type: 'anyFault',
-        msg: `${name} ${isPort ? 'link up' : 'is on'}.`,
-      });
-    } else if (
-      set.charAt(1) === '1' &&
-      preStatus[name] === 1 &&
-      currentStatus[name] === 2
-    ) {
-      notificationManagement.default.showAnyFault(
-        isPort,
-        false,
-        name,
-        MACAddress,
-      );
+        msg: `${name} ${isPort ? 'link up' : 'is on'}.`
+      })
+    } else if (set.charAt(1) === '1' && preStatus[name] === 1 && currentStatus[name] === 2) {
+      notificationManagement.default.showAnyFault(isPort, false, name, MACAddress)
       eventLogManagement.default.updateEventLog({
         MACAddress,
         type: 'anyFault',
-        msg: `${name} ${isPort ? 'link down' : 'is off'}.`,
-      });
+        msg: `${name} ${isPort ? 'link down' : 'is off'}.`
+      })
     }
-  });
-};
+  })
+}
 
-const forceNotificationTrigger = (
-  isPort,
-  settings,
-  currentStatus,
-  MACAddress,
-) => {
+const forceNotificationTrigger = (isPort, settings, currentStatus, MACAddress) => {
   Object.entries(settings).forEach(([name, set]) => {
     if (set.charAt(0) === '1' && currentStatus[name] === 1) {
-      notificationManagement.default.showAnyFault(
-        isPort,
-        true,
-        name,
-        MACAddress,
-      );
+      notificationManagement.default.showAnyFault(isPort, true, name, MACAddress)
       eventLogManagement.default.updateEventLog({
         MACAddress,
         type: 'anyFault',
-        msg: `${name} ${isPort ? 'link up' : 'is on'}.`,
-      });
+        msg: `${name} ${isPort ? 'link up' : 'is on'}.`
+      })
     } else if (set.charAt(1) === '1' && currentStatus[name] === 2) {
-      notificationManagement.default.showAnyFault(
-        isPort,
-        false,
-        name,
-        MACAddress,
-      );
+      notificationManagement.default.showAnyFault(isPort, false, name, MACAddress)
       eventLogManagement.default.updateEventLog({
         MACAddress,
         type: 'anyFault',
-        msg: `${name} ${isPort ? 'link down' : 'is off'}.`,
-      });
+        msg: `${name} ${isPort ? 'link down' : 'is off'}.`
+      })
     }
-  });
-};
+  })
+}
 
 const savePortPowerStatus = (MACAddress, status) => {
   prePortPowerStatus = {
     ...prePortPowerStatus,
-    [MACAddress]: status,
-  };
-};
+    [MACAddress]: status
+  }
+}
 
-export const updateAlarmSettingCollection = newStatus => {
-  const { MACAddress, portInfo, powerInfo } = newStatus;
+export const updateAlarmSettingCollection = (newStatus) => {
+  const { MACAddress, portInfo, powerInfo } = newStatus
   alarmSettingCollection = {
     ...alarmSettingCollection,
     [MACAddress]: {
       portInfo,
-      powerInfo,
-    },
-  };
-  forceCheckDeviceStatus(MACAddress);
-};
+      powerInfo
+    }
+  }
+  forceCheckDeviceStatus(MACAddress)
+}
 
-export default start;
+export default start

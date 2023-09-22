@@ -6,7 +6,7 @@ import { useTheme } from 'antd-style'
 import FWUTableTab from './FWUTableTab/FWUTableTab'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { useSelector } from 'react-redux'
-import Code from '../Code/Code'
+// import Code from '../Code/Code'
 import FWUTableRow from './FWUTableTab/FWUTableRow'
 
 const FWUTable = ({ MACAddress, IPAddress, model }) => {
@@ -14,6 +14,7 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
   console.log(deviceData)
   const { uploadProgress } = deviceRealTimeData
   console.log(uploadProgress)
+
   const rowData = ['model', 'IPAddress', 'MACAddress']
   const columns = [
     rowData.map((row) => ({ title: row, dataIndex: row, key: row })),
@@ -48,11 +49,35 @@ const FWUTable = ({ MACAddress, IPAddress, model }) => {
     },
     {
       title: 'Status',
+      dataIndex: 'status',
       key: 'status',
-      render: () => <Code code="MAC Address" />
+      render: (data, status) => {
+        const statusRenderer = () => {
+          switch (status) {
+            case 'none':
+              return <span>Waiting</span>
+            case 'a':
+              return <span>Upload Image</span>
+            case 'c':
+              return <span>User Cancel</span>
+            case 'S001':
+              return <span>Erasing</span>
+            case 'S002':
+              return <span style={{ color: 'green' }}>Update Successful</span>
+            case 'E001':
+            case 'E007':
+              return <span style={{ color: 'red' }}>Upload Fail</span>
+            case 'TO':
+              return <span style={{ color: 'red' }}>Connect Timeout</span>
+            default:
+              return <span>{status}</span>
+          }
+        }
+        return data ? statusRenderer : null
+      }
     }
   ]
-  console.log(Code)
+  // console.log(Code)
   const data = [{ key: MACAddress, MACAddress, IPAddress, model }]
 
   const token = useTheme()

@@ -37,7 +37,6 @@ import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 import { openPortInfoDrawer } from '../../features/portInformationSlice'
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
-// import { openSnack } from '../../features/snackSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },

@@ -1,22 +1,22 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron'
 
-const windows = {};
+const windows = {}
 
 // set the window id
 function setWindow(params) {
-  windows[params.winName] = params.id;
+  windows[params.winName] = params.id
 }
 // Send to ipcRenderer
 function send(winName, eventName, data) {
   try {
-    const mainWindow = BrowserWindow.fromId(windows[winName]);
-    mainWindow.webContents.send(eventName, data);
+    const mainWindow = BrowserWindow.fromId(windows[winName])
+    mainWindow.webContents.send(eventName, data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 function getWindow(winName) {
-  const mainWindow = BrowserWindow.fromId(windows[winName]);
-  return mainWindow;
+  const mainWindow = BrowserWindow.fromId(windows[winName])
+  return mainWindow
 }
-export default { setWindow, send, getWindow };
+export default { setWindow, send, getWindow }
