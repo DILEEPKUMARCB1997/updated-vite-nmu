@@ -8,7 +8,7 @@ import { Card } from 'antd'
 const SummaryCard = (props) => {
   const { title, hbcolor, bbcolor, bodylabel } = props
   return (
-    <div className="summary">
+    <div>
       <Card
         size="small"
         title={title}

@@ -123,6 +123,7 @@ const snmpSlice = createSlice({
           [key]: value
         }
       })
+      return { ...state, IPRangeData }
     },
     initSnmpData: (state, { payload }) => {
       return { ...state, SNMPData: payload }

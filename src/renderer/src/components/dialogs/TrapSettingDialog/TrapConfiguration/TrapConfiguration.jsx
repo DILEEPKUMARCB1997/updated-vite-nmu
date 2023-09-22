@@ -95,9 +95,17 @@ const TrapConfiguration = () => {
               />
             </Form.Item>
             <Form.Item
-              style={{ width: '230px', paddingTop: '10px' }}
-              validateStatus={trapServerPort === ''}
-              help={trapServerPort === '' ? 'Server port is required' : ''}
+              // style={{ width: '230px', paddingTop: '10px' }}
+              // help=
+
+              // {trapServerPort === '' ? 'Server port is required' : ''}
+              colon={false}
+              help={
+                <Typography style={{ color: 'red' }}>
+                  {trapServerPort === '' ? 'Server port is required' : ''}
+                </Typography>
+              }
+              style={{ color: token.colorError, width: '230px', paddingTop: '10px' }}
             >
               <Input
                 type="number"

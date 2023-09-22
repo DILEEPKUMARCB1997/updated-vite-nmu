@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { theme } from 'antd'
-import './ConfigComarission.css'
+// import './ConfigComarission.css'
 
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Row, Col, Card } from 'antd'
@@ -39,10 +39,11 @@ function ConfigComparission() {
         <Col span={24}>
           <Card bordered={false} className="elevation">
             <div
-              className="card_Header_left"
-              style={{ background: token.colorPrimary, marginBottom: '0px' }}
+              // className="card_Header_left"
+              // style={{ background: token.colorPrimary, marginBottom: '0px' }}
+              style={{ padding: '10px', textAlign: 'left', marginTop: '-20px' }}
             >
-              <h3 className="heading">Device Config Comparison</h3>
+              <h3>Device Config Comparison</h3>
             </div>
             <Row justify="space-around" gutter={[24]} align="middle" style={{ marginTop: '20px' }}>
               <Col span={12}>

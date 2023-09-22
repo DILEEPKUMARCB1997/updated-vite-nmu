@@ -81,7 +81,7 @@ const EventSummary = () => {
   }, [])
 
   return (
-    <div className="cardWrapper">
+    <div>
       <Row gutter={8}>
         <Col span={8}>
           <SummaryCard

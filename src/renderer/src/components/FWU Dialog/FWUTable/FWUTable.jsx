@@ -7,7 +7,6 @@ import { useTheme } from 'antd-style'
 import FWUTableTab from './FWUTableTab/FWUTableTab'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { useSelector } from 'react-redux'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import Code from '../Code/Code'
 import FWUTableRow from './FWUTableTab/FWUTableRow'
 
@@ -27,27 +26,6 @@ const FWUTable = ({ MACAddress, IPAddress, model, statusRender, theme, columnDat
   }
   const { uploadProgress } = deviceRealTimeData
   console.log(uploadProgress)
-  const statusRenderer = (status) => {
-    switch (status) {
-      case 'none':
-        return <span>Waiting</span>
-      case 'a':
-        return <span>Upload Image</span>
-      case 'c':
-        return <span>User Cancel</span>
-      case 'S001':
-        return <span>Erasing</span>
-      case 'S002':
-        return <span style={{ color: 'green' }}>Update Successful</span>
-      case 'E001':
-      case 'E007':
-        return <span style={{ color: 'red' }}>Upload Fail</span>
-      case 'TO':
-        return <span style={{ color: 'red' }}>Connect Timeout</span>
-      default:
-        return <span>{status}</span>
-    }
-  }
   const rowData = ['model', 'IPAddress', 'MACAddress']
   const columns = [
     rowData.map((row) => ({ title: row, dataIndex: row, key: row })),
@@ -82,50 +60,14 @@ const FWUTable = ({ MACAddress, IPAddress, model, statusRender, theme, columnDat
     },
     {
       title: 'Status',
+      dataIndex: 'status',
       key: 'status',
-      render: (data) =>
-        //     const statusRenderer = (status) => {
-        //       if (status === 'none') {
-        //         return <span>Waiting</span>
-        //       } else if (status === 'a') {
-        //         return <span>Upload Image</span>
-        //       } else if (status === 'c') {
-        //         return <span>User Cancel</span>
-        //       } else if (status === 'S001') {
-        //         return <span>Erasing</span>
-        //       } else if (status === 'S002') {
-        //         return <span style={{ color: 'green' }}>Update Successful</span>
-        //       } else if (status === 'E001') {
-        //         return <span style={{ color: 'red' }}>Upload Fail</span>
-        //       } else if (status === 'TO') {
-        //         return <span style={{ color: 'red' }}>Connect Timeout</span>
-        //       } else {
-        //         return <span>{status}</span>
-        //       }
-        //     }
-        //     return data ? statusRenderer : <span>Error</span>
-        //   }
-        // }
-        data ? (
-          <span style={{ color: 'blue' }}>Waiting</span>
-        ) : <span>Upload Image</span> ? (
-          <span>User Cancel</span>
-        ) : <span>Erasing</span> ? (
-          <span style={{ color: 'green' }}>Update Successful</span>
-        ) : <span style={{ color: 'red' }}>Upload Fail</span> ? (
-          <span style={{ color: 'red' }}>Connect Timeout</span>
-        ) : null
+      render: () => <Code code="MAC Address" />
     }
-
-    // render: () => <Code code="MAC Address" />
   ]
+  console.log(Code)
+  const data = [{ key: MACAddress, MACAddress, IPAddress, model }]
 
-  const dataSource = Object.entries(deviceData).map(([key, value]) => ({
-    key,
-    model: value.model,
-    IPAddress: value.IPAddress,
-    MACAddress: key
-  }))
   const token = useTheme()
 
   return (

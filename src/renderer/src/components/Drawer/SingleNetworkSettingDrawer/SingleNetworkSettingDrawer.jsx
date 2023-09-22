@@ -1,6 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { Drawer, theme, Button, Typography, Checkbox, Form, Input, Alert, notification } from 'antd'
+import {
+  Drawer,
+  theme,
+  Button,
+  Typography,
+  Checkbox,
+  Form,
+  Input,
+  Alert,
+  App,
+  notification
+} from 'antd'
+
 import React, { useState } from 'react'
 import {
   clearSingleNetworkSettingData,
@@ -17,6 +29,7 @@ const networkSettingTips =
 
 let enableApply
 const SingleNetworkSettingDrawer = (props) => {
+  const { notification, modal } = App.useApp()
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
@@ -54,6 +67,13 @@ const SingleNetworkSettingDrawer = (props) => {
   const handleApplyButtonOnClick = () => {
     dispatch(
       requestSetNetworkSetting((result, mag) => {
+        // result
+        //   ? notification.success({
+        //       message: mag
+        //     })
+        //   : notification.error({
+        //       message: mag
+        //     })
         const type = result ? 'success' : 'error'
         notification[type]({
           message: mag
