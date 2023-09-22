@@ -47,28 +47,28 @@ const FileList = () => {
               // <Row key={file}></Row>
               <Row key={file}>
                 {mode === 'restore' && (
-                  <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>
-                    <Checkbox
-                      disabled={isTaskRunning || isRestoreFisish}
-                      checked={restoreFile === file}
-                      onChange={handleFileCheckboxOnChange(file)}
-                    ></Checkbox>
-                  </td>
+                  // <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>
+                  <Checkbox
+                    disabled={isTaskRunning || isRestoreFisish}
+                    checked={restoreFile === file}
+                    onChange={handleFileCheckboxOnChange(file)}
+                  ></Checkbox>
+                  // </td>
                 )}
-                <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>{file}</td>
-                <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>
-                  {mode === 'backup' && (
-                    <Button
-                      disabled={isTaskRunning}
-                      type="primary"
-                      size="small"
-                      onClick={handleDeleteFileButtonOnClick(file)}
-                      style={{ float: 'right' }}
-                    >
-                      <CloseOutlined />
-                    </Button>
-                  )}
-                </td>
+                {/* <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>{file}</td>
+                <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}> */}
+                {mode === 'backup' && (
+                  <Button
+                    disabled={isTaskRunning}
+                    type="primary"
+                    size="small"
+                    onClick={handleDeleteFileButtonOnClick(file)}
+                    style={{ float: 'right' }}
+                  >
+                    <CloseOutlined />
+                  </Button>
+                )}
+                {/* </td> */}
               </Row>
             ))}
           </Table>

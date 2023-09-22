@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import CustomInput from './CustomInput'
 import ControlButton from './ControlButton'

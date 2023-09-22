@@ -74,7 +74,7 @@ export const requestSetNetworkSetting = (callback) => (dispatch, getState) => {
     if (arg.success) {
       callback(true, 'Set network settings success!')
     } else {
-      callback(true, 'Set network settings fail!')
+      callback(false, 'Set network settings fail!')
     }
   })
   window.electron.ipcRenderer.send(requestChannel, data)
@@ -146,10 +146,6 @@ const singleNetworkSettingSlice = createSlice({
       }
     },
 
-    initBasicData: (state, action) => {
-      const { isSNMPmode, MACAddress, model } = action.payload
-      return { ...state, isSNMPmode, MACAddress, model }
-    },
     setDHCP: (state, action) => {
       const { isDHCP } = action.payload
       if (isDHCP) {
@@ -191,20 +187,7 @@ const singleNetworkSettingSlice = createSlice({
         [valid]: IPFormat.test(text)
       }
     },
-    initNetworkSetting: (state, action) => {
-      const { IPAddress, netmask, gateway, dns1, dns2 } = action.payload
 
-      return {
-        ...state,
-        ...action.payload,
-        oldIPAddress: IPAddress,
-        validIPAddress: IPFormat.test(IPAddress),
-        validNetmask: IPFormat.test(netmask),
-        validGateway: IPFormat.test(gateway),
-        validDNS1: IPFormat.test(dns1),
-        validDNS2: IPFormat.test(dns2)
-      }
-    },
     setHostname: (state, action) => {
       const { hostname } = action.payload
       return { ...state, hostname }

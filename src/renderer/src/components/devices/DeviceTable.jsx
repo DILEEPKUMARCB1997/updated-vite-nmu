@@ -149,6 +149,15 @@ const DeviceTable = ({ deviceData = [] }) => {
   //     })
   //   )
   // }
+  // const handleCheckBoxChange = (isSelect, MACAddress) => {
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect,
+  //       deviceData: [MACAddress]
+  //     })
+  //   )
+  // }
+
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -180,13 +189,20 @@ const DeviceTable = ({ deviceData = [] }) => {
       document.addEventListener('click', handleClick)
     }
   })
+  // const handleCheckBoxChange = () => {
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect
+  //     })
+  //   )
+  // }
 
   return (
     <div>
       {' '}
       <ConfigProvider
         theme={{
-          inherit: false,
+          inherit: true,
           components: {
             Table: {
               colorFillAlter: token.colorPrimaryBg,
@@ -224,9 +240,10 @@ const DeviceTable = ({ deviceData = [] }) => {
             x: 1100
           }}
           rowSelection={showCheckBox}
-          // disable={disableCheckBox}
+          // // disable={disableCheckBox}
           // onChange={handleCheckBoxChange}
           // viewDevicesData={viewDevicesData}
+
           toolbar={{
             search: {
               onSearch: (value) => {
