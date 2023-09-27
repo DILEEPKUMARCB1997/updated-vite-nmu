@@ -3,6 +3,7 @@ import { Card, Typography, theme } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { portInformationSelector } from '../../../../features/portInformationSlice'
+import { BulbFilled, BulbOutlined } from '@ant-design/icons'
 
 const DeviceInformation = () => {
   const { useToken } = theme
@@ -62,7 +63,7 @@ const DeviceInformation = () => {
               {Object.entries(state.modelInfo).map(([status]) => (
                 <div key={power}>
                   <Typography key={power}>{`${power}`}</Typography>
-                  {status === 1 ? 'Flash On' : 'Flash Off'}
+                  {status === 1 ? <BulbOutlined /> : <BulbFilled />}
                 </div>
               ))}
             </div>

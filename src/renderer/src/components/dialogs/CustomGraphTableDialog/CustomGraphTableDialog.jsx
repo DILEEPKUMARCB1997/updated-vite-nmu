@@ -1,4 +1,3 @@
-/*
 import React, { useState, useEffect } from 'react'
 import { Table, Modal } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
@@ -82,4 +81,3 @@ const CustomGraphTableDialog = ({ onClose }) => {
 }
 
 export default CustomGraphTableDialog
-*/

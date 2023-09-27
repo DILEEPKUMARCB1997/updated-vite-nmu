@@ -90,6 +90,7 @@ export const initDeviceAdvanced = (param) => (dispatch, getState) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_DEVICE_COMMUNITY_SETTINGS, { MACAddress })
 
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_DEVICE_AUTHENTICATION_SETTINGS, (event, arg) => {
+    console.log(arg)
     if (arg.success) {
       dispatch(initAuthenticationData(arg.data))
     }
