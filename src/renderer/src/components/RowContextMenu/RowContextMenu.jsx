@@ -150,27 +150,19 @@ const RowContextMenu = ({ position = {} }) => {
     dispatch(openDialog('webBrowser'))
   }
 
-  const handleBeep = (IPAddress, MACAddress, deviceType) => {
-    modal
-      .confirm({
-        title: 'Confirm',
-        content: 'This will let device beep.'
+  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
+    const confirmed = await modal.confirm({
+      title: 'Confirm',
+      content: 'This will let device beep.'
+    })
+    console.log('Confirmed: ', confirmed)
+    dispatch(
+      requestDeviceBeep({
+        IPAddress,
+        MACAddress,
+        deviceType
       })
-
-      .then(
-        () => {
-          dispatch(
-            requestDeviceBeep({
-              IPAddress,
-              MACAddress,
-              deviceType
-            })
-          )
-          return null
-        },
-        () => {}
-      )
-      .catch()
+    )
   }
 
   const handleReboot = async (MACAddress, IPAddress, deviceType) => {
@@ -180,14 +172,6 @@ const RowContextMenu = ({ position = {} }) => {
     })
     console.log(confirm)
       ? setTimeout(async () => {
-          const confirmed = await modal.success({
-            title: 'Success !',
-            type: 'success',
-            content: 'Device reboot success.'
-          })
-          console.log(confirmed)
-        }, 3000)
-      : setTimeout(async () => {
           const confirmed = await modal.error({
             title: 'Error !',
             type: 'error',
@@ -195,6 +179,22 @@ const RowContextMenu = ({ position = {} }) => {
           })
           console.log(confirmed)
         }, 3000)
+      : setTimeout(async () => {
+          const confirmed = await modal.success({
+            title: 'Success !',
+            type: 'success',
+            content: 'Device reboot success.'
+          })
+          console.log(confirmed)
+        }, 3000)
+    // : setTimeout(async () => {
+    //     const confirmed = await modal.error({
+    //       title: 'Error !',
+    //       type: 'error',
+    //       content: 'Device reboot fails.'
+    //     })
+    //     console.log(confirmed)
+    //   }, 3000)
     dispatch(
       requestDeviceReboot({
         MACAddress,
