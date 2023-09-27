@@ -90,11 +90,12 @@ const MainLayout = () => {
   }
 
   const eventLogUpdateListener = (event, arg) => {
+    console.log(arg)
     if (!openBeepDialog && arg.type === 'custom') {
       dispatch(updateBeepSoundStart())
       dispatch(openDialog('buzzer'))
     }
-    dispatch(updateEventLog())
+    dispatch(updateEventLog(arg))
   }
 
   const handleMenuClick = (e) => {

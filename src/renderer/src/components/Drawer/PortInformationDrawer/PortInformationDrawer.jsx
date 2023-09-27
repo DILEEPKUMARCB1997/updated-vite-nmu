@@ -19,7 +19,7 @@ import {
   RESPONSE_RP_GET_POWER_STATUS
 } from '../../../../../main/utils/IPCEvents'
 
-const PortInformationDialog = ({ onClose }) => {
+const PortInformationDialog = () => {
   const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
@@ -38,17 +38,9 @@ const PortInformationDialog = ({ onClose }) => {
     window.electron.ipcRenderer.on(RESPONSE_RP_GET_POWER_STATUS, powerStatusListener)
     dispatch(requestGetPortAndPowerStatus())
 
-    //   UNSAFE_componentWillReceiveProps(nextProps) {
-    //   if (
-    //     this.props.portStatusData !== nextProps.portStatusData ||
-    //     this.props.trigger !== nextProps.trigger
-    //   ) {
-    //     clearTimeout(this.timeout);
-    //     if (nextProps.isPolling) {
-    //       this.startPoll();
-    //     }
-    //   }
-    // }
+    if (isPolling) {
+      startPoll()
+    }
 
     return () => {
       window.electron.ipcRenderer.removeListener(
