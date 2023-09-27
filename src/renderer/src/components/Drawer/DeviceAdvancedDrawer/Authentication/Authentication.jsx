@@ -44,14 +44,11 @@ const Authentication = () => {
       </Divider>
       <Form layout="vertical">
         <Form.Item label="Username" colon={false} style={{ margin: '5px' }}>
-          <Input
-            defaultValue={username}
-            onChange={handleAuthenticationSettingInputChange('username')}
-          />
+          <Input value={username} onChange={handleAuthenticationSettingInputChange('username')} />
         </Form.Item>
         <Form.Item label="Password" colon={false} style={{ margin: '5px' }}>
           <Input.Password
-            defaultValue={password}
+            value={password}
             onChange={handleAuthenticationSettingInputChange('password')}
           />
         </Form.Item>
@@ -79,15 +76,12 @@ const Authentication = () => {
           />
         </Form.Item>
         <Form.Item colon={false} label="Read Community" style={{ margin: '5px' }}>
-          <Input
-            defaultValue={readCommunity}
-            onChange={handleSnmpSettingInputChange('readCommunity')}
-          />
+          <Input value={readCommunity} onChange={handleSnmpSettingInputChange('readCommunity')} />
         </Form.Item>
         <Form.Item colon={false} label="Write Community" style={{ margin: '5px' }}>
           <Input
             s
-            defaultValue={writeCommunity}
+            value={writeCommunity}
             onChange={handleSnmpSettingInputChange('writeCommunity')}
           />
         </Form.Item>

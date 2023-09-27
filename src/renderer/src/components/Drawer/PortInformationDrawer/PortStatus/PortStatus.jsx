@@ -1,17 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { Card, Switch, Table, theme } from 'antd'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   portInformationSelector,
   requestSetPortStatus
 } from '../../../../features/portInformationSlice'
 
 const PortStatus = () => {
+  const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
 
   const { portStatusData, isWaiting, switchLoadings } = useSelector(portInformationSelector)
+  console.log(portStatusData)
 
   let arrayData = []
   arrayData = Object.entries(portStatusData).forEach(([portName, portStatus]) => {
@@ -24,7 +26,7 @@ const PortStatus = () => {
     ]
   })
 
-  const columns = [
+  const columns = (func, switchLoadings) => [
     {
       title: 'portName',
       dataIndex: 'portName',
@@ -119,14 +121,14 @@ const PortStatus = () => {
         <Switch
           loading={switchLoadings.includes(record.portName)}
           checked={record.enableStatus === 1}
-          onChange={handlePortSwitchChange(record.portName)}
+          onChange={func(record.portName)}
         />
       )
     }
   ]
 
   const handlePortSwitchChange = (portName) => (checked) => {
-    dispatchEvent(requestSetPortStatus({ portName, checked }))
+    dispatch(requestSetPortStatus({ portName, checked }))
   }
 
   return (
@@ -140,7 +142,14 @@ const PortStatus = () => {
       }}
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
     >
-      <Table size="small" columns={columns} scroll={{ x: 2021, y: 406 }} />
+      <Table
+        size="small"
+        loading={isWaiting}
+        rowKey={(record) => record.portName}
+        columns={columns(handlePortSwitchChange, switchLoadings)}
+        scroll={{ x: 2021, y: 406 }}
+        dataSource={arrayData}
+      />
     </Card>
   )
 }
