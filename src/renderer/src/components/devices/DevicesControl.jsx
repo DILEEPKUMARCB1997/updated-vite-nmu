@@ -70,21 +70,21 @@ const DevicesControl = ({ onClose }) => {
       title: 'Confirm',
       content: 'This will reboot the device.'
     })
-    if (modal.success) {
-      setTimeout(async () => {
-        const confirmed = await modal.success({
-          title: 'Success !',
-          type: 'success',
-          content: 'Device reboot success.'
-        })
-        console.log(confirmed)
-      }, 3000)
-    } else {
+    if (!modal.success) {
       setTimeout(async () => {
         const confirmed = await modal.error({
           title: 'Error !',
           type: 'error',
           content: 'Device reboot error.'
+        })
+        console.log(confirmed)
+      }, 3000)
+    } else {
+      setTimeout(async () => {
+        const confirmed = await modal.success({
+          title: 'Success !',
+          type: 'success',
+          content: 'Device reboot success.'
         })
         console.log(confirmed)
       }, 3000)

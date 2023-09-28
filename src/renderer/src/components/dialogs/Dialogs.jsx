@@ -29,6 +29,7 @@ import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/Sin
 import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
 import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
 import Beep from './BeepDialog/BeepDialog'
+import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 
 const Dialog = ({ id, onClose, ...rest }) => {
@@ -62,7 +63,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           portInformation: <PortInformationDrawer onClose={onClose} />,
           buzzer: <BuzzerDialog onClose={onClose} />,
           beep: <Beep onClose={onClose} />,
-          TopologyAddModal: <TopologyAddModal onClose={onClose} />
+          TopologyAddModal: <TopologyAddModal onClose={onClose} />,
+          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />
         }[id]
       }
     </div>
