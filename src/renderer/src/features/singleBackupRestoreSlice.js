@@ -21,7 +21,6 @@ export const requestGetBackupRestoreData = (payload) => (dispatch) => {
     dispatch(initBackupRestoreData({ MACAddress, backupPath }))
   })
   window.electron.ipcRenderer.send(REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA, { MACAddress })
-  dispatch('singleBackupConfig')
 }
 
 export const requestBackupSelectFolder = () => (dispatch) => {

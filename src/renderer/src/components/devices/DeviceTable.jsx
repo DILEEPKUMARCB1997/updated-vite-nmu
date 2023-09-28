@@ -386,6 +386,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
+    dispatch(openDialog('singleBackupConfig'))
     if (deviceType !== 'gwd') {
       dispatch(requestGetBackupRestoreData({ MACAddress }))
     } else {
