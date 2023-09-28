@@ -11,13 +11,13 @@ import {
   CalendarOutlined,
   ClusterOutlined,
   UsergroupAddOutlined,
-  NodeIndexOutlined,
-  UngroupOutlined,
-  LineHeightOutlined,
-  SettingOutlined,
-  BackwardOutlined,
-  FundOutlined,
-  ExportOutlined,
+  // NodeIndexOutlined,
+  // UngroupOutlined,
+  // LineHeightOutlined,
+  // SettingOutlined,
+  // BackwardOutlined,
+  // FundOutlined,
+  // ExportOutlined,
   AudioOutlined
 } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
@@ -34,9 +34,9 @@ import {
 } from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
-import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
-import { openPortInfoDrawer } from '../../features/portInformationSlice'
-import { openDrawer } from '../../features/singleNetworkSettingSlice'
+// import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
+// import { openPortInfoDrawer } from '../../features/portInformationSlice'
+// import { openDrawer } from '../../features/singleNetworkSettingSlice'
 // import { openSnack } from '../../features/snackSlice'
 
 const options = [
@@ -65,61 +65,61 @@ const DevicesControl = ({ onClose }) => {
     })
   }
 
-  const handleReboot = (MACAddress, IPAddress, deviceType) => {
-    modal.confirm({
-      title: 'Confirm',
-      content: 'This will reboot the device.'
-    })
-    if (!modal.success) {
-      setTimeout(async () => {
-        const confirmed = await modal.error({
-          title: 'Error !',
-          type: 'error',
-          content: 'Device reboot error.'
-        })
-        console.log(confirmed)
-      }, 3000)
-    } else {
-      setTimeout(async () => {
-        const confirmed = await modal.success({
-          title: 'Success !',
-          type: 'success',
-          content: 'Device reboot success.'
-        })
-        console.log(confirmed)
-      }, 3000)
-    }
+  // const handleReboot = (MACAddress, IPAddress, deviceType) => {
+  //   modal.confirm({
+  //     title: 'Confirm',
+  //     content: 'This will reboot the device.'
+  //   })
+  //   if (!modal.success) {
+  //     setTimeout(async () => {
+  //       const confirmed = await modal.error({
+  //         title: 'Error !',
+  //         type: 'error',
+  //         content: 'Device reboot error.'
+  //       })
+  //       console.log(confirmed)
+  //     }, 3000)
+  //   } else {
+  //     setTimeout(async () => {
+  //       const confirmed = await modal.success({
+  //         title: 'Success !',
+  //         type: 'success',
+  //         content: 'Device reboot success.'
+  //       })
+  //       console.log(confirmed)
+  //     }, 3000)
+  //   }
 
-    //   : modal.error({
-    //       title: 'Error',
-    //       content: 'Device Reboot Error'
-    //     })
-    dispatch(
-      requestDeviceReboot({
-        MACAddress,
-        IPAddress,
-        deviceType
-      })
-    )
-  }
+  //   //   : modal.error({
+  //   //       title: 'Error',
+  //   //       content: 'Device Reboot Error'
+  //   //     })
+  //   dispatch(
+  //     requestDeviceReboot({
+  //       MACAddress,
+  //       IPAddress,
+  //       deviceType
+  //     })
+  //   )
+  // }
 
-  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
-    const confirmed = await modal.confirm({
-      title: 'Confirm',
-      content: 'This will let device beep.'
-    })
-    console.log('Confirmed: ', confirmed)
-    dispatch(
-      requestDeviceBeep({
-        IPAddress,
-        MACAddress,
-        deviceType
-      })
-    )
-  }
-  const handleOpenTelnet = (IPAddress) => {
-    dispatch(requestOpenTelnet(IPAddress))
-  }
+  // const handleBeep = async (IPAddress, MACAddress, deviceType) => {
+  //   const confirmed = await modal.confirm({
+  //     title: 'Confirm',
+  //     content: 'This will let device beep.'
+  //   })
+  //   console.log('Confirmed: ', confirmed)
+  //   dispatch(
+  //     requestDeviceBeep({
+  //       IPAddress,
+  //       MACAddress,
+  //       deviceType
+  //     })
+  //   )
+  // }
+  // const handleOpenTelnet = (IPAddress) => {
+  //   dispatch(requestOpenTelnet(IPAddress))
+  // }
 
   const handleResetToDefault = () => {
     dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
@@ -209,23 +209,23 @@ const DevicesControl = ({ onClose }) => {
             <Button icon={<UsergroupAddOutlined />} />
           </Popover>
         </Tooltip>
-        <Tooltip title="Advance Setting">
+        {/* <Tooltip title="Advance Setting">
           <Button
             icon={<NodeIndexOutlined />}
             onClick={() => {
               dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
             }}
           />
-        </Tooltip>
-        <Tooltip title="Port Information">
+        </Tooltip> */}
+        {/* <Tooltip title="Port Information">
           <Button
             icon={<FundOutlined />}
             onClick={() => {
               dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
             }}
           />
-        </Tooltip>
-        <Tooltip title="Beep">
+        </Tooltip> */}
+        {/* <Tooltip title="Beep">
           <Button icon={<UngroupOutlined />} onClick={handleBeep} />
         </Tooltip>
         <Tooltip title="Reboot">
@@ -233,24 +233,24 @@ const DevicesControl = ({ onClose }) => {
         </Tooltip>
         <Tooltip title="Telnet">
           <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
-        </Tooltip>
+        </Tooltip> */}
 
-        <Tooltip title="Single Network Setting">
+        {/* <Tooltip title="Single Network Setting">
           <Button
             icon={<SettingOutlined />}
             onClick={() => {
               dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
             }}
           ></Button>
-        </Tooltip>
-        <Tooltip title="Backup and Restore">
+        </Tooltip> */}
+        {/* <Tooltip title="Backup and Restore">
           <Button
             icon={<BackwardOutlined />}
             onClick={() => {
               dispatch(openDialog('singleBackupConfig'))
             }}
           />
-        </Tooltip>
+        </Tooltip> */}
         <Tooltip title="Buzzer">
           <Button
             icon={<AudioOutlined />}

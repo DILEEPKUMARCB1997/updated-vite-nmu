@@ -255,7 +255,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           return null
         }
         return handlePortInformation(MACAddress, IPAddress, deviceType)
-      case 'backupAndRestore':
+      case 'singleBackupConfig':
         if (model === 'Cisco CGS2520') {
           return null
         }
@@ -399,19 +399,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
-    if (deviceType !== 'gwd') {
-      dispatch(requestGetBackupRestoreData({ MACAddress }))
-    } else {
-      dispatch(
-        requestCheckSNMP({ MACAddress, IPAddress }, (result) => {
-          if (result) {
-            dispatch(requestGetBackupRestoreData({ MACAddress }))
-          } else {
-            dispatch(showCheckSNMPFailModal())
-          }
-        })
-      )
-    }
+    dispatch(openDialog('singleBackupConfig'))
   }
   // const handleCheckBoxChange = () => {
   //   dispatch(
