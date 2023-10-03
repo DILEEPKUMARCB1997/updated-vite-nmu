@@ -209,6 +209,7 @@ const DevicesControl = ({ onClose }) => {
             <Button icon={<UsergroupAddOutlined />} />
           </Popover>
         </Tooltip>
+        {/* <Tooltip title="Buzzer">
         {/* <Tooltip title="Advance Setting">
           <Button
             icon={<NodeIndexOutlined />}
@@ -234,7 +235,6 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Telnet">
           <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
         </Tooltip> */}
-
         {/* <Tooltip title="Single Network Setting">
           <Button
             icon={<SettingOutlined />}
@@ -258,7 +258,8 @@ const DevicesControl = ({ onClose }) => {
               dispatch(openDialog('buzzer'))
             }}
           />
-        </Tooltip>
+        </Tooltip>{' '}
+        */}
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>
