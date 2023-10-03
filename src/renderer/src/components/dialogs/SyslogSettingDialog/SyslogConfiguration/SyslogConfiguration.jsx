@@ -19,18 +19,19 @@ const SyslogConfiguration = () => {
   useEffect(() => {
     dispatch(startTask())
   }, [])
+
   const handleChangeLogToFlash = (name) => (event) => {
-    if (event.target.value) {
+    if (event.target.checked) {
       setLogToFlash({
         [name]: 1
       })
     } else {
-      setLogToServer({ [name]: 2 })
+      setLogToFlash({ [name]: 2 })
     }
   }
-  const handleLogLevelChange = (value) => {
-    console.log(value)
-    setLogLevel(value)
+  const handleLogLevelChange = (event) => {
+    console.log(event)
+    setLogLevel(event.target.value)
   }
 
   const handleServerInputChange = (event) => {
