@@ -109,79 +109,9 @@ const DeviceTable = ({ deviceData = [] }) => {
       content: 'Please check SNMP of this device is enable.'
     })
   }
-  // const [tableType, setTableType] = useState('')
-  // const [groupId, setGroupId] = useState()
-  // const [order, setOrder] = useState('asc')
-  // const [orderBy, setOrderBy] = useState('')
-  // const [searchValue, setSearchValue] = useState('')
+
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
     useSelector(discoverySelector)
-  // const handleSort = (filterArray) => {
-  //   if (orderBy === '') {
-  //     return filterArray
-  //   }
-  //   const sortArray =
-  //     order === 'desc'
-  //       ? filterArray.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-  //       : filterArray.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
-  //   return sortArray
-  // }
-  // const handleFilter = (originArray) => {
-  //   if (searchValue === '') {
-  //     return originArray
-  //   }
-  //   const filterArray = originArray.filter((device) =>
-  //     Object.values(device).reduce(
-  //       (isContain, value) =>
-  //         isContain || (typeof value === 'string' && value.includes(searchValue)),
-  //       false
-  //     )
-  //   )
-  //   return filterArray
-  // }
-  // const convertToMACArray = (sortArray) => {
-  //   let finalArray = []
-  //   finalArray.forEach((deviceInfo) => {
-  //     finalArray = [...finalArray, deviceInfo.MACAddress]
-  //   })
-  //   return finalArray
-  // }
-  // const sourceDeviceArrayData = () => {
-  //   tableType === 'default'
-  //     ? defaultDeviceArrayData
-  //     : groupDeviceArrayData[groupId] !== undefined
-  //     ? groupDeviceArrayData[groupId]
-  //     : defaultDeviceArrayData
-  //   return { sourceDeviceArrayData }
-  // }
-  // const viewDevicesData = convertToMACArray(handleSort(handleFilter(sourceDeviceArrayData)))
-  // const handleCheckBoxChange = (isSelect) => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect,
-  //       deviceData: viewDevicesData
-  //     })
-  //   )
-  // }
-  // const { isAUZ, deviceType, online } = deviceData
-  // const isSupportSNMP = deviceType !== 'gwd'
-  // const disableCheckBox = !isAUZ || !online || (!isSupportSNMP && SNMPSelectOnly)
-  // const handleCheckBoxChange = (isSelect, MACAddress) => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect,
-  //       deviceData: [MACAddress]
-  //     })
-  //   )
-  // }
-  // const handleCheckBoxChange = (isSelect, MACAddress) => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect,
-  //       deviceData: [MACAddress]
-  //     })
-  //   )
-  // }
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
