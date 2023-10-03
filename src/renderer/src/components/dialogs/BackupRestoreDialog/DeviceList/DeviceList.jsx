@@ -104,6 +104,13 @@ const DeviceList = () => {
     console.log(dataSource)
   }, [])
 
+  const data = Object.entries(deviceStatus).map(([key, value]) => ({
+    key,
+    MACAddress: key,
+    IPAddress: value.IPAddress,
+    model: value.model
+  }))
+
   return (
     <ConfigProvider
       theme={{
@@ -192,14 +199,14 @@ const DeviceList = () => {
             <Table
               rowKey={deviceStatus.key}
               columns={columns}
-              dataSource={[deviceStatus]}
+              dataSource={data}
               style={{ width: '100%' }}
               onClick={handleDeviceListItemOnClick}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                total: dataSource.length,
+                total: data.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`

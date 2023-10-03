@@ -80,6 +80,13 @@ const ResetToDefaultDialog = ({ onClose }) => {
     dispatch(requestResetToDefault())
   }
 
+  const data = Object.entries(resetToDefaultStatus).map(([key, value]) => ({
+    key,
+    MACAddress: key,
+    IPAddress: value.IPAddress,
+    model: value.model
+  }))
+
   return (
     <div>
       <Modal
@@ -117,12 +124,12 @@ const ResetToDefaultDialog = ({ onClose }) => {
               size="middle"
               // dataSource={data(resetToDefaultStatus)}
               columns={columns}
-              dataSource={[resetToDefaultStatus]}
+              dataSource={data}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                total: dataSource.length,
+                total: data.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
