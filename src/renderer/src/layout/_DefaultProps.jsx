@@ -39,7 +39,7 @@ const routes = {
       },
       {
         path: '/ConfigComparission',
-        name: 'Device Config Comparison',
+        name: 'Device config comparison',
         icon: <FileSearchOutlined />
       }
     ]

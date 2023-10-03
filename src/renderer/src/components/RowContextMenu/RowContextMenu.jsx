@@ -61,7 +61,7 @@ const items = [
   },
   {
     label: 'BackUp and Restore',
-    key: 'backupAndRestore',
+    key: 'singleBackupConfig',
     icon: <CloudUploadOutlined />
   }
 ]
