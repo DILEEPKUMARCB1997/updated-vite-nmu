@@ -209,56 +209,14 @@ const DevicesControl = ({ onClose }) => {
             <Button icon={<UsergroupAddOutlined />} />
           </Popover>
         </Tooltip>
-        <Tooltip title="Advance Setting">
-          <Button
-            icon={<NodeIndexOutlined />}
-            onClick={() => {
-              dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
-            }}
-          />
-        </Tooltip>
-        <Tooltip title="Port Information">
-          <Button
-            icon={<FundOutlined />}
-            onClick={() => {
-              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
-            }}
-          />
-        </Tooltip>
-        <Tooltip title="Beep">
-          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
-        </Tooltip>
-        <Tooltip title="Reboot">
-          <Button icon={<RedoOutlined />} onClick={handleReboot} />
-        </Tooltip>
-        <Tooltip title="Telnet">
-          <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
-        </Tooltip>
-
-        <Tooltip title="Single Network Setting">
-          <Button
-            icon={<SettingOutlined />}
-            onClick={() => {
-              dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
-            }}
-          ></Button>
-        </Tooltip>
-        <Tooltip title="Backup and Restore">
-          <Button
-            icon={<BackwardOutlined />}
-            onClick={() => {
-              dispatch(openDialog('singleBackupConfig'))
-            }}
-          />
-        </Tooltip>
-        <Tooltip title="Buzzer">
+        {/* <Tooltip title="Buzzer">
           <Button
             icon={<AudioOutlined />}
             onClick={() => {
               dispatch(openDialog('buzzer'))
             }}
           />
-        </Tooltip>
+        </Tooltip> */}
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>

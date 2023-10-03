@@ -382,7 +382,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handlePortInformation = (MACAddress, IPAddress, deviceType) => {
-    dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
     if (deviceType !== 'gwd') {
       dispatch(initPortInfoData({ MACAddress }))
     } else {
@@ -399,7 +398,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
-    dispatch(openDialog('singleBackupConfig'))
     if (deviceType !== 'gwd') {
       dispatch(requestGetBackupRestoreData({ MACAddress }))
     } else {
