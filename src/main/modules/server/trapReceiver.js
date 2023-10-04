@@ -492,13 +492,13 @@ const trap = new Receiver(
         enterprise,
         specific,
         generic,
-        upTime,
+        upTime: upTime !== null ? upTime : 0,
         varbinds: JSON.stringify(varbinds),
         msg: `Port ${generic} - ${trapMapping[specific]}`
       }
       eventLogManagement.default.updateEventLog(trapMsg, 'trap')
-      //console.log('Trap received');
-      //console.log(trapMsg);
+      //console.log('Trap received')
+      //console.log(trapMsg)
       // console.log('--------------------------------------');
       // console.log(pkt);
       // console.log('--------------------------------------');

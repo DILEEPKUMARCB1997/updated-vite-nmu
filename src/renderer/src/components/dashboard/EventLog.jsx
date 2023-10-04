@@ -105,19 +105,19 @@ const EventLog = () => {
     )
   }
 
-  useEffect(() => {
-    setEventLogData(eventLogData)
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'custom',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 3000)
-  }, [])
+  // useEffect(() => {
+  //   //setEventLogData(eventLogData)
+  //   setTimeout(() => {
+  //     dispatch(
+  //       requestHistoryData({
+  //         type: 'custom',
+  //         sourceIP: '',
+  //         ge: '',
+  //         le: ''
+  //       })
+  //     )
+  //   }, 3000)
+  // }, [])
 
   // useEffect(() => {
   //   if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
