@@ -115,7 +115,6 @@ const SyslogGraph = () => {
   }
 
   useEffect(() => {
-    setGraphData(graphData)
     setTimeout(() => {
       dispatch(
         requestHistoryData({
