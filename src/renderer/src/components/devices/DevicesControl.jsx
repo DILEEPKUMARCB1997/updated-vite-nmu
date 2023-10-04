@@ -258,8 +258,7 @@ const DevicesControl = ({ onClose }) => {
               dispatch(openDialog('buzzer'))
             }}
           />
-        </Tooltip>{' '}
-        */}
+        </Tooltip>
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>

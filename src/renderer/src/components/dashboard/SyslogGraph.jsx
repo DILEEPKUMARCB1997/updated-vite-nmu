@@ -114,19 +114,19 @@ const SyslogGraph = () => {
     )
   }
 
-  useEffect(() => {
-    setGraphData(graphData)
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'syslog',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1500)
-  }, [])
+  // useEffect(() => {
+  //  // setGraphData(graphData)
+  //   setTimeout(() => {
+  //     dispatch(
+  //       requestHistoryData({
+  //         type: 'syslog',
+  //         sourceIP: '',
+  //         ge: '',
+  //         le: ''
+  //       })
+  //     )
+  //   }, 1500)
+  // }, [])
 
   useEffect(() => {
     if (Array.isArray(syslogGraphData.data) && syslogGraphData.data.length > 0) {
