@@ -184,14 +184,24 @@ const columnData = [
 const FWUTable = () => {
   const { deviceData } = useSelector(firmwareSelector)
   console.log(deviceData)
-  const data = Object.entries(deviceData).map(([key, value]) => ({
-    key,
-    MACAddress: key,
-    IPAddress: value.IPAddress,
-    model: value.model
-  }))
+  // const data = Object.entries(deviceData).map(([key, value]) => ({
+  //   key,
+  //   MACAddress: key,
+  //   IPAddress: value.IPAddress,
+  //   model: value.model
+  // }))
+  const recordAfterfiltering = (dataSource) => {
+    return dataSource.data.filter((row) => {
+      let rec = columnData.map((element) => {
+        return row[element.dataIndex].toString()
+      })
+      return rec.includes(true)
+    })
+  }
 
-  return <Table columns={columnData} dataSource={data} pagination={false} />
+  return (
+    <Table columns={columnData} dataSource={recordAfterfiltering(deviceData)} pagination={false} />
+  )
 }
 
 export default FWUTable

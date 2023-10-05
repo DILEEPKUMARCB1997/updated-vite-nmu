@@ -222,28 +222,6 @@ const DeviceTable = ({ deviceData = [] }) => {
       })
     )
   }
-  // const handleBeep = (IPAddress, MACAddress, deviceType) => {
-  //   modal
-  //     .confirm({
-  //       title: 'Confirm',
-  //       content: 'This will let device beep.'
-  //     })
-
-  //     .then(
-  //       () => {
-  //         dispatch(
-  //           requestDeviceBeep({
-  //             IPAddress,
-  //             MACAddress,
-  //             deviceType
-  //           })
-  //         )
-  //         return null
-  //       },
-  //       () => {}
-  //     )
-  //     .catch()
-  // }
 
   const handleReboot = async (MACAddress, IPAddress, deviceType) => {
     const confirm = await modal.confirm({

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/*
+
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -107,7 +107,6 @@ const EventLog = () => {
   }
 
   useEffect(() => {
-    setEventLogData(eventLogData)
     setTimeout(() => {
       dispatch(
         requestHistoryData({
