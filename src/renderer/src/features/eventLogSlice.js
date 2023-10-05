@@ -9,6 +9,8 @@ import {
 
 export const updateEventLog = (payload) => (dispatch) => {
   const { type, data } = payload
+  console.log(data)
+  console.log(type)
   switch (type) {
     case 'trap':
       dispatch(updateTrap(data))
@@ -28,39 +30,64 @@ export const updateEventLog = (payload) => (dispatch) => {
   }
 }
 
-export const initEventLogHistoryData = (payload) => (dispatch) => {
-  const { type } = payload
-  switch (type) {
-    case 'event':
-      dispatch(updateEventHistory(data))
-      break
-    case 'trap':
-      dispatch(
-        requestHistoryData({
-          type,
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-      break
-    case 'syslog':
-      dispatch(
-        requestHistoryData({
-          type,
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
+export const initEventDailyData = (payload) => (dispatch) => {
+  const { types } = payload
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    const { type, data } = arg
+    switch (type) {
+      case 'custom':
+        dispatch(updateCustomHistory(data))
+        dispatch(updateCustomEventDaily())
+        dispatch(clearHistoryData())
+        break
+      default:
+        break
+    }
+  })
 
-      // dispatch(openDialog('syslogHistory'))
-      break
-  }
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, {
+    type: types,
+    sourceIP: '',
+    ge: '',
+    le: ''
+  })
 }
+
+// export const initEventLogHistoryData = (payload) => (dispatch) => {
+//   const { type } = payload
+//   switch (type) {
+//     case 'event':
+//       dispatch(updateEventHistory(data))
+//       break
+//     case 'trap':
+//       dispatch(
+//         requestHistoryData({
+//           type,
+//           sourceIP: '',
+//           ge: '',
+//           le: ''
+//         })
+//       )
+//       break
+//     case 'syslog':
+//       dispatch(
+//         requestHistoryData({
+//           type,
+//           sourceIP: '',
+//           ge: '',
+//           le: ''
+//         })
+//       )
+
+//       // dispatch(openDialog('syslogHistory'))
+//       break
+//   }
+// }
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
+    console.log(type)
+    console.log(data)
     switch (type) {
       case 'event':
         dispatch(updateEventHistory(data))
@@ -70,6 +97,33 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'syslog':
         dispatch(updateSyslogHistory(data))
+        break
+      case 'custom':
+        dispatch(updateCustomEvent(data))
+        dispatch(initEventDailyData({ types: 'custom' }))
+        break
+      default:
+        break
+    }
+  })
+
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
+
+export const requestInitData = (param) => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    const { type, data } = arg
+    console.log(type)
+    console.log(data)
+    switch (type) {
+      case 'event':
+        dispatch(updateEvent(data))
+        break
+      case 'trap':
+        dispatch(updateTrap(data))
+        break
+      case 'syslog':
+        dispatch(updateSyslog(data))
         break
       case 'custom':
         dispatch(updateCustomEvent(data))
@@ -164,52 +218,39 @@ const eventLogSlice = createSlice({
     updateEventHistory: (state, action) => {
       const { payload } = action
       return { ...state, eventHistoryData: payload }
+    },
+
+    updateEvent: (state, { payload }) => {
+      const filteredEventData = filterByDate([...state.eventData])
+      console.log(filteredEventData)
+      filteredEventData.push(payload)
+      return { ...state, eventData: filteredEventData }
+    },
+    updateTrap: (state, { payload }) => {
+      const filteredTrapData = filterByDate([...state.trapData])
+      filteredTrapData.push(payload)
+      return { ...state, trapData: filteredTrapData }
+    },
+
+    updateSyslog: (state, { payload }) => {
+      const filteredSyslogData = filterByDate([...state.syslogData])
+      filteredSyslogData.push(payload)
+      return { ...state, syslogData: filteredSyslogData }
+    },
+    updateCustomEvent: (state) => {
+      const filteredCustomEventData = filterByDate([...state.customEventData])
+      const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
+      let EventList = [...state.customEventListData]
+      const { payload } = action
+      filteredCustomEventData.push(payload)
+      filteredCustomEventDailyData.push(payload)
+      EventList.push(payload)
+      let sortedEventList = customEventSortFilter([...EventList])
+      return {
+        ...state,
+        customEventData: filteredCustomEventData
+      }
     }
-  },
-
-  clearSyslogData: (state, { payload }) => {
-    return { ...state, syslogData: payload }
-  },
-  updateEvent: (state, { payload }) => {
-    const filteredEventData = filterByDate([...state.eventData])
-    filteredEventData.push(payload)
-    return { ...state, eventData: filteredEventData }
-  },
-  updateTrap: (state, { payload }) => {
-    const filteredTrapData = filterByDate([...state.trapData])
-    filteredTrapData.push(payload)
-    return { ...state, eventData: filteredTrapData }
-  },
-
-  updateSyslog: (state, { payload }) => {
-    const filteredSyslogData = filterByDate([...state.syslogData])
-    filteredSyslogData.push(payload)
-    return { ...state, syslogData: filteredSyslogData }
-  },
-  updateCustomEvent: (state) => {
-    const filteredCustomEventData = filterByDate([...state.cusromEventData])
-    const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
-    let EventList = [...state.customEventListData]
-    const { payload } = action
-    filteredCustomEventData.push(payload)
-    filteredCustomEventDailyData.push(payload)
-    EventList.push(payload)
-    let sortedEventList = customEventSortFilter([...EventList])
-    return {
-      ...state,
-      customEventData: filteredCustomEventData
-    }
-  },
-  updateTrapHistory: (state, { action }) => {
-    const { payload } = action
-    return { ...state, trapHistoryData: payload }
-  },
-
-  updateSyslogHistory: (state, { payload }) => {
-    return { ...state, syslogHistoryData: payload }
-  },
-  clearTrapData: (state, { payload }) => {
-    return { ...state, trapData: [payload] }
   }
 })
 

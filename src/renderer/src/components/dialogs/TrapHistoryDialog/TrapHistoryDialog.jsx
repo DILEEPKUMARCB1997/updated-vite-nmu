@@ -76,6 +76,7 @@ const TrapHistoryDialog = ({ onClose }) => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { trapHistoryData } = useSelector(eventLogSelector)
+  console.log(trapHistoryData)
   const [tableLoading, setTableLoading] = useState(true)
   const [sourceIP, setSourceIP] = useState('')
   const [ge, setGe] = useState('')

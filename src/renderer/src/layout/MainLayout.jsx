@@ -47,13 +47,13 @@ const MainLayout = () => {
     dispatch(requestAppInitialData())
     dispatch(requestDiscoveryAfterLogin())
     setTimeout(() => {
-      nextInitRenderStep()
+      dispatch(nextInitRenderStep())
     }, 800)
     setTimeout(() => {
-      nextInitRenderStep()
+      dispatch(nextInitRenderStep())
     }, 1600)
     setTimeout(() => {
-      nextInitRenderStep()
+      dispatch(nextInitRenderStep())
     }, 2200)
     window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
     window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
