@@ -4,17 +4,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import {
-  REQUEST_MP_GET_EVENT_LOG_HISTORY,
-  RESPONSE_RP_GET_EVENT_LOG_HISTORY
-} from '../../../../main/utils/IPCEvents'
+
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  eventLogSelector,
-  updateCustomEventDaily,
-  updateCustomHistory,
-  clearHistoryData
-} from '../../features/eventLogSlice'
+// import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
+import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
 import { Row, Col, Card } from 'antd'
 import SummaryCard from './SummaryCard'
 
@@ -33,27 +26,8 @@ const EventSummary = () => {
 
   const dispatch = useDispatch()
 
-  useEffect((types) => {
-    //  const {types} = payload;
-    window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-      const { type, data } = arg
-      switch (type) {
-        case 'custom':
-          dispatch(updateCustomHistory(data))
-          dispatch(updateCustomEventDaily())
-          dispatch(clearHistoryData())
-          break
-        default:
-          break
-      }
-    })
-
-    window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, {
-      type: types,
-      sourceIP: '',
-      ge: '',
-      le: ''
-    })
+  useEffect(() => {
+    dispatch(initEventDailyData({ types: 'custom' }))
 
     const now = new Date()
     const night = new Date(
@@ -69,14 +43,16 @@ const EventSummary = () => {
     if (msToMidnight > 0) {
       clearLogTimeOut1 = setTimeout(() => {
         // type: UPDATE_LOG_DATA,
-
-        const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
-        return {
-          ...state,
-
-          customEventDailyData: filterCustomLogDailyData
-        }
+        // const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
+        // return {
+        //   ...state,
+        //   customEventDailyData: filterCustomLogDailyData
+        // }
+        updateLogData()
       }, msToMidnight)
+    }
+    return () => {
+      clearTimeout(clearLogTimeOut1)
     }
   }, [])
 

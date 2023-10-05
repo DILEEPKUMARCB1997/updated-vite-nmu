@@ -36,6 +36,7 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
         dispatch(updateCustomGraph(resultCustom))
+        // console.log(resultCustom)
         break
       }
 

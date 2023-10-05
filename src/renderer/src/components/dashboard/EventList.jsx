@@ -23,12 +23,12 @@ import EventListCard from './EventListCard'
 
 // printNos(100)
 
-const EventList = () => {
+const EventList = (item) => {
   const { customEventListData } = useSelector(eventLogSelector)
   console.log(customEventListData)
   return (
     <div>
-      {customEventListData.map((item) => (
+      {/* {customEventListData.map((item) => (
         <EventListCard
           // style={{ width: 300, height: 600 }}
           key={item.eventId}
@@ -41,7 +41,20 @@ const EventList = () => {
           }
           item={item}
         />
-      ))}
+      ))} */}
+      {customEventListData && (
+        <EventListCard
+          key={item.eventId}
+          ledColor={
+            item.severity === 'Information'
+              ? '#46b300'
+              : item.severity === 'Warning'
+              ? '#F57F17'
+              : '#D50000'
+          }
+          item={item}
+        />
+      )}
     </div>
   )
 }
