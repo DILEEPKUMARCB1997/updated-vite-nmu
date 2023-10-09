@@ -18,7 +18,6 @@ export const requestHistoryData = (param) => (dispatch) => {
   console.log(param)
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
-    console.log(type)
     console.log(data)
     switch (type) {
       case 'event':
@@ -110,9 +109,9 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraph: (state, { payload }) => {
+    updateCustomGraph: (state, action) => {
       const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-        payload
+        action.payload
       return {
         ...state,
         customGraphData: {

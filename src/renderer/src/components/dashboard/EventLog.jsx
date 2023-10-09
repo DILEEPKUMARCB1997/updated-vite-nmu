@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,17 +15,17 @@ const EventLog = () => {
       {
         name: 'Information',
         color: '#46b300',
-        data: []
+        data: customGraphData.InformationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: []
+        data: customGraphData.WarningData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: []
+        data: customGraphData.CriticalData
       }
     ],
     options: {

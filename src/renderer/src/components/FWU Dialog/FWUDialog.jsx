@@ -5,14 +5,12 @@ import { Card, Slider } from 'antd'
 import Modal from 'antd/es/modal/Modal'
 import {
   changeFirmwareUpdateStatus,
-  requestStartFirmwareUpdate,
-  requestStopFirmwareUpdate,
   clearFirmwareUpdateData,
   updateFirmwareUpdateData
 } from '../../features/firmwareUpdate'
 import { SEND_RP_FIRMWARE_UPDATE_PROGRESS } from '../../../../main/utils/IPCEvents'
 import StepView from './StepView/StepView'
-import FWUTable from './FWUTable/FWUTable'
+//import FWUTable from './FWUTable/FWUTable'
 import FWUButton from './FWUButton/FWUButton'
 import { useDispatch } from 'react-redux'
 import OpenFile from './OpenFile/OpenFile'
@@ -24,17 +22,16 @@ const FWUDialog = ({ onClose }) => {
   const handleDialogOnClose = () => {
     onClose()
   }
-
   useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_FIRMWARE_UPDATE_PROGRESS, firmwareUpdateDataListener)
-
     return () => {
-      dispatch(requestStartFirmwareUpdate())
-      dispatch(requestStopFirmwareUpdate())
-      dispatch(clearFirmwareUpdateData())
+      window.electron.ipcRenderer.removeListener(
+        SEND_RP_FIRMWARE_UPDATE_PROGRESS,
+        firmwareUpdateDataListener
+      )
+      clearFirmwareUpdateData()
     }
   }, [])
-
   const firmwareUpdateDataListener = (event, arg) => {
     if (Object.keys(arg).length !== 1) {
       updateFirmwareUpdateData(arg)
@@ -42,6 +39,7 @@ const FWUDialog = ({ onClose }) => {
       changeFirmwareUpdateStatus(2)
     }
   }
+
   const Transition = forwardRef(function Transition(props, ref) {
     return <Slider direction="up" ref={ref} {...props} />
   })

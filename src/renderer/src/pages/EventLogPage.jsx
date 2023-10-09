@@ -49,9 +49,9 @@ function EventLogPage() {
     const msToMidnight = night.getTime() - now.getTime()
     if (msToMidnight > 0) {
       clearLogTimeOut = setTimeout(() => {
-        clearEventData()
-        clearTrapData()
-        clearSyslogData()
+        dispatch(clearEventData())
+        dispatch(clearTrapData())
+        dispatch(clearSyslogData())
       }, msToMidnight)
     }
     return () => {

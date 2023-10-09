@@ -170,38 +170,162 @@
 
 import React from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
-import { Table } from 'antd'
+import { Progress, Table } from 'antd'
 import { useSelector } from 'react-redux'
-
-const columnData = [
-  { title: 'Model', dataIndex: 'model', key: 'model' },
-  { title: 'IP Address', dataIndex: 'IPAddress', key: 'IPAddress' },
-  { title: 'MAC Address', dataIndex: 'MACAddress', key: 'MACAddress' },
-  { title: 'Progress', dataIndex: 'progress', key: 'progress' },
-  { title: 'Status', dataIndex: 'status', key: 'status' }
+const codes = {
+  none: { type: 'normal', label: 'Waiting' },
+  a: { type: 'normal', label: 'Upload Image' },
+  c: { type: 'normal', label: 'User Cancel' },
+  S001: { type: 'normal', label: 'Erasing' },
+  S002: { type: 'success', label: 'Update Successful' },
+  E001: { type: 'error', label: 'Upload Fail(E001)' },
+  E007: { type: 'error', label: 'Upload Fail(E007)' },
+  TO: { type: 'error', label: 'Connect Timeout' }
+}
+let code = [codes.none, codes.a, codes.c, codes.S001, codes.S002, codes.E001, codes.E007, codes.TO]
+//console.log(codes.type)
+const columns = [
+  {
+    title: 'Model',
+    dataIndex: 'model',
+    key: 'model',
+    sorter: (a, b) => (a.model > b.model ? 1 : -1)
+  },
+  {
+    title: 'IP Address',
+    dataIndex: 'IPAddress',
+    key: 'IPAddress',
+    sorter: (a, b) => (a.IPAddress > b.IPAddress ? 1 : -1)
+  },
+  {
+    title: 'MAC Address',
+    dataIndex: 'MACAddress',
+    key: 'MACAddress'
+  },
+  {
+    title: 'Progress',
+    dataIndex: 'progress',
+    key: 'progress',
+    render: (data) => {
+      return <Progress percent={40} status="active" style={{ width: '150px' }} />
+    }
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (text, record) => {
+      const status = code[text]
+      return (
+        <span
+        // style={{
+        //   color: status.type === 'normal' ? 'black' : status.type === 'success' ? 'green' : 'red'
+        // }}
+        >
+          WAITING
+        </span>
+      )
+    }
+  }
 ]
 
 const FWUTable = () => {
-  const { deviceData } = useSelector(firmwareSelector)
+  const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
+  const { uploadProgress } = deviceRealTimeData
   console.log(deviceData)
-  // const data = Object.entries(deviceData).map(([key, value]) => ({
+  const data = []
+  for (let i = 0; i < 3; ++i) {
+    data.push({
+      code
+    })
+  }
+
+  // Object.entries(deviceData).map(([key, value]) => ({
   //   key,
   //   MACAddress: key,
   //   IPAddress: value.IPAddress,
   //   model: value.model
   // }))
-  const recordAfterfiltering = (dataSource) => {
-    return dataSource.data.filter((row) => {
-      let rec = columnData.map((element) => {
-        return row[element.dataIndex].toString()
-      })
-      return rec.includes(true)
-    })
-  }
 
-  return (
-    <Table columns={columnData} dataSource={recordAfterfiltering(deviceData)} pagination={false} />
-  )
+  return <Table columns={columns} dataSource={data} pagination={false} />
 }
 
 export default FWUTable
+
+/*
+import React from 'react'
+import { Progress, Space, Table, Tag } from 'antd'
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (text) => <a>{text}</a>
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age'
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address'
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: (_, { tags }) => (
+      <>
+        {tags.map((tag) => {
+          let color = tag.length > 5 ? 'geekblue' : 'green'
+          if (tag === 'loser') {
+            color = 'volcano'
+          }
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          )
+        })}
+      </>
+    )
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        <Progress percent={50} status="active" />
+      </Space>
+    )
+  }
+]
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer']
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser']
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sydney No. 1 Lake Park',
+    tags: ['cool', 'teacher']
+  }
+]
+const FWUTable = () => <Table columns={columns} dataSource={data} />
+export default FWUTable
+*/

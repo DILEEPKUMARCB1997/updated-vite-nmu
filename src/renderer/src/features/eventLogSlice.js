@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -8,9 +6,10 @@ import {
 // import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
 //import { openDialog } from './dialogSlice'
 
-export const updateEventLog = (payload) => {
+export const updateEventLog = (payload) => (dispatch) => {
   const { type, data } = payload
   console.log(data)
+
   switch (type) {
     case 'trap':
       dispatch(updateTrap(data))
@@ -29,9 +28,24 @@ export const updateEventLog = (payload) => {
       break
   }
 }
+// export const initEventDailyData = (payload) => (dispatch) => {
+//   const { types } = payload
+//   ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+//     const { type, data } = arg
+//     switch (type) {
+//       case 'custom':
+//         dispatch(updateCustomHistory(data))
+//         dispatch(updateCustomEventDaily())
+//         dispatch(clearHistoryData())
+//         break
+//       default:
+//         break
+//     }
+//   })
+
 export const initEventDailyData = (payload) => (dispatch) => {
   const { types } = payload
-  ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     switch (type) {
       case 'custom':
@@ -44,49 +58,50 @@ export const initEventDailyData = (payload) => (dispatch) => {
     }
   })
 
-  ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, {
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, {
     type: types,
     sourceIP: '',
     ge: '',
     le: ''
   })
 }
-export const initEventLogHistoryData = (payload) => (dispatch) => {
-  console.log(payload)
-  const { type } = payload
-  console.log(type)
-  switch (type) {
-    case 'event':
-      dispatch(updateEventHistory(data))
-      break
-    case 'trap':
-      dispatch(
-        requestHistoryData({
-          type,
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-      break
-    case 'syslog':
-      dispatch(
-        requestHistoryData({
-          type,
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
 
-      // dispatch(openDialog('syslogHistory'))
-      break
-  }
-}
+// export const initEventLogHistoryData = (payload) => (dispatch) => {
+//   const { type } = payload
+//   switch (type) {
+//     case 'event':
+//       dispatch(updateEventHistory(data))
+//       break
+//     case 'trap':
+//       dispatch(
+//         requestHistoryData({
+//           type,
+//           sourceIP: '',
+//           ge: '',
+//           le: ''
+//         })
+//       )
+//       break
+//     case 'syslog':
+//       dispatch(
+//         requestHistoryData({
+//           type,
+//           sourceIP: '',
+//           ge: '',
+//           le: ''
+//         })
+//       )
+
+//       // dispatch(openDialog('syslogHistory'))
+//       break
+//   }
+// }
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     console.log(arg)
     const { type, data } = arg
+    console.log(type)
+    console.log(data)
     switch (type) {
       case 'event':
         dispatch(updateEventHistory(data))
@@ -96,6 +111,33 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'syslog':
         dispatch(updateSyslogHistory(data))
+        break
+      case 'custom':
+        dispatch(updateCustomEvent(data))
+        dispatch(initEventDailyData({ types: 'custom' }))
+        break
+      default:
+        break
+    }
+  })
+
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
+
+export const requestInitData = (param) => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    const { type, data } = arg
+    console.log(type)
+    console.log(data)
+    switch (type) {
+      case 'event':
+        dispatch(updateEvent(data))
+        break
+      case 'trap':
+        dispatch(updateTrap(data))
+        break
+      case 'syslog':
+        dispatch(updateSyslog(data))
         break
       case 'custom':
         dispatch(updateCustomEvent(data))
@@ -194,13 +236,14 @@ const eventLogSlice = createSlice({
 
     updateEvent: (state, { payload }) => {
       const filteredEventData = filterByDate([...state.eventData])
+      console.log(filteredEventData)
       filteredEventData.push(payload)
       return { ...state, eventData: filteredEventData }
     },
     updateTrap: (state, { payload }) => {
       const filteredTrapData = filterByDate([...state.trapData])
       filteredTrapData.push(payload)
-      return { ...state, eventData: filteredTrapData }
+      return { ...state, trapData: filteredTrapData }
     },
 
     updateSyslog: (state, { payload }) => {
@@ -208,8 +251,8 @@ const eventLogSlice = createSlice({
       filteredSyslogData.push(payload)
       return { ...state, syslogData: filteredSyslogData }
     },
-    updateCustomEvent: (state) => {
-      const filteredCustomEventData = filterByDate([...state.cusromEventData])
+    updateCustomEvent: (state, action) => {
+      const filteredCustomEventData = filterByDate([...state.customEventData])
       const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
       let EventList = [...state.customEventListData]
       const { payload } = action

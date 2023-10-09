@@ -5,7 +5,12 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, ConfigProvider, Table, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearEventData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
+import {
+  clearEventData,
+  eventLogSelector,
+  requestHistoryData,
+  requestInitData
+} from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
 
 function Event() {
