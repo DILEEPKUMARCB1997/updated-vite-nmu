@@ -9,6 +9,7 @@ import EventTips from '../components/devices/EventTips/EventTips'
 
 const DevicePage = () => {
   const { groupView, defaultDeviceArrayData } = useSelector(discoverySelector)
+
   return (
     <Row gutter={[16, 16]}>
       {/* <Col span={24}> */}

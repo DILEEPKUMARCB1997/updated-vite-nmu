@@ -48,15 +48,6 @@ function Event() {
     { key: 'msg', title: 'Message', dataIndex: 'msg' }
   ]
 
-  // useEffect((param) => {
-  //   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-  //     const { data } = arg
-  //     console.log(arg)
-  //     // dispatch(updateEventHistory(data))
-  //   })
-  //   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
-  // })
-
   useEffect(() => {
     setTableLoading(false)
   }, [])
@@ -78,7 +69,6 @@ function Event() {
   }
 
   return (
-    // <div>Events</div>
     <ConfigProvider
       theme={{
         inherit: true,

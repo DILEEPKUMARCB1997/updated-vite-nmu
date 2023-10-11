@@ -31,7 +31,11 @@ import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
 import Beep from './BeepDialog/BeepDialog'
 import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
+<<<<<<< HEAD
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
+=======
+import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
+>>>>>>> 8a3d8ebcbe780c7e64daa94abf30a1fcaeee7b5c
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -66,7 +70,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           beep: <Beep onClose={onClose} />,
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
           CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
-          trapGraphTable: <TrapGraphTableDialog onClose={onClose} />
+          trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
+          customHistory: <CustomHistoryDialog onClose={onClose} />
         }[id]
       }
     </div>

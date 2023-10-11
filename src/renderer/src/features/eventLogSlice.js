@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { createSlice } from '@reduxjs/toolkit'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
@@ -10,7 +9,7 @@ import {
 export const updateEventLog = (payload) => (dispatch) => {
   const { type, data } = payload
   console.log(data)
-  console.log(type)
+
   switch (type) {
     case 'trap':
       dispatch(updateTrap(data))
@@ -53,38 +52,9 @@ export const initEventDailyData = (payload) => (dispatch) => {
   })
 }
 
-// export const initEventLogHistoryData = (payload) => (dispatch) => {
-//   const { type } = payload
-//   switch (type) {
-//     case 'event':
-//       dispatch(updateEventHistory(data))
-//       break
-//     case 'trap':
-//       dispatch(
-//         requestHistoryData({
-//           type,
-//           sourceIP: '',
-//           ge: '',
-//           le: ''
-//         })
-//       )
-//       break
-//     case 'syslog':
-//       dispatch(
-//         requestHistoryData({
-//           type,
-//           sourceIP: '',
-//           ge: '',
-//           le: ''
-//         })
-//       )
-
-//       // dispatch(openDialog('syslogHistory'))
-//       break
-//   }
-// }
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+    console.log(arg)
     const { type, data } = arg
     console.log(type)
     console.log(data)
@@ -99,8 +69,8 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateSyslogHistory(data))
         break
       case 'custom':
-        dispatch(updateCustomEvent(data))
-        dispatch(initEventDailyData({ types: 'custom' }))
+        dispatch(updateCustomHistory(data))
+        //   dispatch(initEventDailyData({ types: 'custom' }))
         break
       default:
         break
@@ -125,10 +95,11 @@ export const requestInitData = (param) => (dispatch) => {
       case 'syslog':
         dispatch(updateSyslog(data))
         break
-      case 'custom':
-        dispatch(updateCustomEvent(data))
-        dispatch(initEventDailyData({ types: 'custom' }))
-        break
+
+      // case 'custom':
+      //   dispatch(updateCustomEvent(data))
+      //   dispatch(initEventDailyData({ types: 'custom' }))
+      //   break
       default:
         break
     }
@@ -164,7 +135,12 @@ const eventLogSlice = createSlice({
       const { payload } = action
       return { ...state, customEventHistoryData: payload }
     },
-    updateCustomEventDaily: (state) => {
+    clearCustomEvent: (state) => {
+      return { ...state, customEventData: [] }
+    },
+    updateCustomEventDaily: (state, { payload }) => {
+      const { action } = payload
+      console.log(action)
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -237,18 +213,19 @@ const eventLogSlice = createSlice({
       filteredSyslogData.push(payload)
       return { ...state, syslogData: filteredSyslogData }
     },
-    updateCustomEvent: (state) => {
+    updateCustomEvent: (state, action) => {
       const filteredCustomEventData = filterByDate([...state.customEventData])
       const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
       let EventList = [...state.customEventListData]
       const { payload } = action
       filteredCustomEventData.push(payload)
       filteredCustomEventDailyData.push(payload)
-      EventList.push(payload)
+      EventList.push(payload.ledColor)
       let sortedEventList = customEventSortFilter([...EventList])
       return {
         ...state,
-        customEventData: filteredCustomEventData
+        customEventData: filteredCustomEventData,
+        customEventListData: sortedEventList.slice(0, 30)
       }
     }
   }
@@ -270,6 +247,8 @@ export const {
   updateLogData,
   updateCustomEventDaily,
   updateBeepSoundStart,
+  clearCustomEvent,
+  clearCustomEventData,
   updateBeepSoundStop
 } = eventLogSlice.actions
 

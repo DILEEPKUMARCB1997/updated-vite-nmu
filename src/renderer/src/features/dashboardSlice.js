@@ -21,6 +21,7 @@ export const showTrapTableData = (payload) => (dispatch) => {
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
+    console.log(data)
     switch (type) {
       case 'event':
         break
@@ -111,9 +112,9 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraph: (state, { payload }) => {
+    updateCustomGraph: (state, action) => {
       const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-        payload
+        action.payload
       return {
         ...state,
         customGraphData: {
@@ -126,21 +127,6 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    // updateCustomGraph: (state, action) => {
-    //   const { payload } = action
-    //   return {
-    //     ...state,
-    //     customGraphData: {
-    //       label: payload.label,
-    //       data: payload.data,
-    //       tableData: payload.tableResult,
-    //       lastUpdated: payload.lastUpdated,
-    //       informationData: payload.InformationData,
-    //       criticalData: payload.CriticalData,
-    //       warningData: payload.WarningData
-    //     }
-    //   }
-    // },
 
     updateSyslogTableData: (state, { payload }) => {
       //  const { payload } = action
