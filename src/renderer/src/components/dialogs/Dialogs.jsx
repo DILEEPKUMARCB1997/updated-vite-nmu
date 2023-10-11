@@ -31,6 +31,7 @@ import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
 import Beep from './BeepDialog/BeepDialog'
 import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
+import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -64,7 +65,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           buzzer: <BuzzerDialog onClose={onClose} />,
           beep: <Beep onClose={onClose} />,
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
-          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />
+          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
+          trapGraphTable: <TrapGraphTableDialog onClose={onClose} />
         }[id]
       }
     </div>

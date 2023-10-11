@@ -42,7 +42,7 @@ const DeviceAdvanceDrawer = ({ onClose }) => {
         notification[type]({ message: mag })
       })
     )
-    dispatch(handleCloseDrawer())
+    handleCloseDrawer()
   }
 
   return (

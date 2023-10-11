@@ -14,12 +14,13 @@ export const showCustomTableData = (payload) => (dispatch) => {
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
 }
+export const showTrapTableData = (payload) => (dispatch) => {
+  dispatch(updateTrapTableData(payload))
+  dispatch(openDialog('trapGraphTable'))
+}
 export const requestHistoryData = (param) => (dispatch) => {
-  console.log(param)
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
-    console.log(type)
-    console.log(data)
     switch (type) {
       case 'event':
         break
@@ -118,7 +119,7 @@ const dashboardSlice = createSlice({
         customGraphData: {
           label: label,
           informationData: InformationData,
-          criticalData: CriticalData,
+          CriticalData: CriticalData,
           tableData: tableResult,
           warningData: WarningData,
           lastUpdated: lastUpdated
@@ -155,15 +156,19 @@ const dashboardSlice = createSlice({
       }
     },
 
-    openDialog: (state, action) => {
-      if (state.dialogs.includes(action.payload)) {
-        return state
-      }
-      return {
-        ...state,
-        dialogs: [...state.dialogs, action.payload]
-      }
+    updateTrapTableData: (state, { payload }) => {
+      return { ...state, trapTableData: payload }
     }
+
+    // openDialog: (state, action) => {
+    //   if (state.dialogs.includes(action.payload)) {
+    //     return state
+    //   }
+    //   return {
+    //     ...state,
+    //     dialogs: [...state.dialogs, action.payload]
+    //   }
+    // }
   }
 })
 
@@ -172,10 +177,10 @@ export const {
   updateTrapGraph,
   updateSyslogGraph,
   updateSyslogTableData,
+  updateTrapTableData,
   openDialog,
   updateCustomTableData,
-  updateCustomGraph,
-  updateTrapTableData
+  updateCustomGraph
 } = dashboardSlice.actions
 
 export const dashboardSelector = (state) => {

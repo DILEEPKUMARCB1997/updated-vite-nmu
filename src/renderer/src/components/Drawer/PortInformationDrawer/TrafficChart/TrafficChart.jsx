@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { portInformationSelector } from '../../../../features/portInformationSlice'
 
 const TrafficChart = () => {
-  const [selectPort, setSelectPort] = useState('Port1')
+  const [selectPort, setSelectPort] = useState('Port6')
   const { useToken } = theme
   const { token } = useToken()
   const { Option } = Select
@@ -14,6 +14,7 @@ const TrafficChart = () => {
   const { trafficBuffer, labels, portStatusData } = useSelector(portInformationSelector)
 
   const selectItem = Object.keys(portStatusData)
+  console.log(selectItem)
 
   let showLabels = ['', '', '', '', '', '', '', '', '', '', '', '', '']
   const chartData = trafficBuffer[selectPort]

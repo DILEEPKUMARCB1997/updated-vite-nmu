@@ -8,7 +8,6 @@ import { SyncOutlined } from '@ant-design/icons'
 const EventLog = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
-  console.log(customGraphData)
 
   const [eventLogData, setEventLogData] = useState({
     series: [
@@ -105,38 +104,37 @@ const EventLog = () => {
     )
   }
 
-  // useEffect(() => {
-  //   //setEventLogData(eventLogData)
-  //   setTimeout(() => {
-  //     dispatch(
-  //       requestHistoryData({
-  //         type: 'custom',
-  //         sourceIP: '',
-  //         ge: '',
-  //         le: ''
-  //       })
-  //     )
-  //   }, 3000)
-  // }, [])
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'custom',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 3000)
+  }, [])
 
-  // useEffect(() => {
-  //   if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
-  //     setEventLogData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: customGraphData.data
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: customGraphData.label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [customGraphData])
+  useEffect(() => {
+    if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
+      setEventLogData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: customGraphData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: customGraphData.label
+          }
+        }
+      }))
+    }
+  }, [customGraphData])
 
   return (
     <>

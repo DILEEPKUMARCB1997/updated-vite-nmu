@@ -115,7 +115,7 @@ const scheduleBackupSlice = createSlice({
     },
     setFiles: (state, { payload }) => {
       const { files } = payload
-      return { ...state, files }
+      return { ...state, files: files }
     },
     setEditMode: (state, { payload }) => {
       console.log(payload, deviceScheduleList[payload.scheduleId])

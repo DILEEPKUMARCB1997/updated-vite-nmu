@@ -34,6 +34,7 @@ import {
 } from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
+import { userManagementSelector } from '../../features/userManagementSlice'
 // import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
 // import { openPortInfoDrawer } from '../../features/portInformationSlice'
 // import { openDrawer } from '../../features/singleNetworkSettingSlice'
@@ -48,6 +49,8 @@ const DevicesControl = ({ onClose }) => {
   const dispatch = useDispatch()
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
+  const { loggedInUser } = useSelector(userManagementSelector)
+  const { userType } = loggedInUser
   const { modal } = App.useApp()
 
   useEffect(() => {
@@ -64,62 +67,6 @@ const DevicesControl = ({ onClose }) => {
       groupName: groupAddInput
     })
   }
-
-  // const handleReboot = (MACAddress, IPAddress, deviceType) => {
-  //   modal.confirm({
-  //     title: 'Confirm',
-  //     content: 'This will reboot the device.'
-  //   })
-  //   if (!modal.success) {
-  //     setTimeout(async () => {
-  //       const confirmed = await modal.error({
-  //         title: 'Error !',
-  //         type: 'error',
-  //         content: 'Device reboot error.'
-  //       })
-  //       console.log(confirmed)
-  //     }, 3000)
-  //   } else {
-  //     setTimeout(async () => {
-  //       const confirmed = await modal.success({
-  //         title: 'Success !',
-  //         type: 'success',
-  //         content: 'Device reboot success.'
-  //       })
-  //       console.log(confirmed)
-  //     }, 3000)
-  //   }
-
-  //   //   : modal.error({
-  //   //       title: 'Error',
-  //   //       content: 'Device Reboot Error'
-  //   //     })
-  //   dispatch(
-  //     requestDeviceReboot({
-  //       MACAddress,
-  //       IPAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
-
-  // const handleBeep = async (IPAddress, MACAddress, deviceType) => {
-  //   const confirmed = await modal.confirm({
-  //     title: 'Confirm',
-  //     content: 'This will let device beep.'
-  //   })
-  //   console.log('Confirmed: ', confirmed)
-  //   dispatch(
-  //     requestDeviceBeep({
-  //       IPAddress,
-  //       MACAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
-  // const handleOpenTelnet = (IPAddress) => {
-  //   dispatch(requestOpenTelnet(IPAddress))
-  // }
 
   const handleResetToDefault = () => {
     dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
@@ -153,7 +100,7 @@ const DevicesControl = ({ onClose }) => {
     </Flexbox>
   )
 
-  return (
+  return userType !== 'Operator' ? (
     <Card bordered={false} bodyStyle={{ paddingBlock: 8 }}>
       <Flexbox gap={20} direction="horizontal">
         <Tooltip title="Discovery">
@@ -263,7 +210,7 @@ const DevicesControl = ({ onClose }) => {
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>
     </Card>
-  )
+  ) : null
 }
 
 export default DevicesControl

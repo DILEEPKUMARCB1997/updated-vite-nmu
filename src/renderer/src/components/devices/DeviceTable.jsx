@@ -419,13 +419,13 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-  // const handleCheckBoxChange = () => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect
-  //     })
-  //   )
-  // }
+  const handleCheckBoxChange = (isSelect) => {
+    dispatch(
+      selectDiscoveryTable({
+        isSelect
+      })
+    )
+  }
 
   return (
     <div>
@@ -469,7 +469,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           scroll={{
             x: 1100
           }}
-          rowSelection={showCheckBox}
+          rowSelection={handleCheckBoxChange}
           // // disable={disableCheckBox}
           // onChange={handleCheckBoxChange}
           // viewDevicesData={viewDevicesData}

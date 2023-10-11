@@ -220,9 +220,9 @@ const eventLogSlice = createSlice({
       return { ...state, eventHistoryData: payload }
     },
 
-    updateEvent: (state, { payload }) => {
+    updateEvent: (state, action) => {
+      const { payload } = action
       const filteredEventData = filterByDate([...state.eventData])
-      console.log(filteredEventData)
       filteredEventData.push(payload)
       return { ...state, eventData: filteredEventData }
     },

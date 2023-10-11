@@ -25,7 +25,9 @@ import EventListCard from './EventListCard'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
-  console.log(customEventListData)
+  // let customEventListData = [
+  //   { eventId: 1, severity: 'Warning', createAt: '12pm', hostname: 'Dileep' }
+  // ]
   return (
     <div>
       {customEventListData.map((item) => (
@@ -39,7 +41,9 @@ const EventList = () => {
               ? '#F57F17'
               : '#D50000'
           }
-          item={item}
+          createAt={item.createAt}
+          hostname={item.hostname}
+          item={item.item}
         />
       ))}
     </div>
