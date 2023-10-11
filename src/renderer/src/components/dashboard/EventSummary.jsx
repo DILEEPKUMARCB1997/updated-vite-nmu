@@ -3,26 +3,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
-import {
-  REQUEST_MP_GET_EVENT_LOG_HISTORY,
-  RESPONSE_RP_GET_EVENT_LOG_HISTORY
-} from '../../../../main/utils/IPCEvents'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  eventLogSelector,
-  updateCustomEventDaily,
-  updateCustomHistory,
-  clearHistoryData
-} from '../../features/eventLogSlice'
-import { Row, Col, Card } from 'antd'
-import SummaryCard from './SummaryCard'
 
+import React, { useEffect } from 'react'
+import { Row, Col } from 'antd'
+import SummaryCard from './SummaryCard'
+import { initEventDailyData, updateLogData, eventLogSelector } from '../../features/eventLogSlice'
+import { useSelector } from 'react-redux'
 var clearLogTimeOut1
 const EventSummary = () => {
   const { customEventDailyData } = useSelector(eventLogSelector)
   console.log(customEventDailyData)
-
   const geteventdetails = () => {
     const information = customEventDailyData.filter((x) => x.severity === 'Information').length
     const critical = customEventDailyData.filter((x) => x.severity === 'Critical').length
@@ -30,31 +20,8 @@ const EventSummary = () => {
 
     return { information, critical, warning }
   }
-
-  const dispatch = useDispatch()
-
-  useEffect((types) => {
-    //  const {types} = payload;
-    window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-      const { type, data } = arg
-      switch (type) {
-        case 'custom':
-          dispatch(updateCustomHistory(data))
-          dispatch(updateCustomEventDaily())
-          dispatch(clearHistoryData())
-          break
-        default:
-          break
-      }
-    })
-
-    window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, {
-      type: types,
-      sourceIP: '',
-      ge: '',
-      le: ''
-    })
-
+  useEffect(() => {
+    initEventDailyData({ types: 'custom' })
     const now = new Date()
     const night = new Date(
       now.getFullYear(),
@@ -65,23 +32,19 @@ const EventSummary = () => {
       0 // ...at 00:00:00 hours
     )
     const msToMidnight = night.getTime() - now.getTime()
-
     if (msToMidnight > 0) {
-      clearLogTimeOut1 = setTimeout(() => {
-        // type: UPDATE_LOG_DATA,
-
-        const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
-        return {
-          ...state,
-
-          customEventDailyData: filterCustomLogDailyData
-        }
+      setTimeout(() => {
+        updateLogData()
       }, msToMidnight)
     }
+    return () => {
+      clearTimeout(clearLogTimeOut1)
+    }
   }, [])
-
   return (
-    <div>
+    <div
+    //className={styles.cardWrapper}
+    >
       <Row gutter={8}>
         <Col span={8}>
           <SummaryCard
@@ -111,5 +74,4 @@ const EventSummary = () => {
     </div>
   )
 }
-
 export default EventSummary

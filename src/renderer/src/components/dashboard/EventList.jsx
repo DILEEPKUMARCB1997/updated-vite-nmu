@@ -1,36 +1,19 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
+
 import React from 'react'
 import { eventLogSelector } from '../../features/eventLogSlice'
-import { useSelector } from 'react-redux'
 import EventListCard from './EventListCard'
-// let n = 5
-// let string = ''
-// for (let i = 0; i <= n; i++) {
-//   for (let j = 0; j <= i / 2 - 1; j++) {
-//     string = string + '*'
-//   }
-//   string = string + '\n'
-// }
-// console.log(string)
-// function printNos(n) {
-//   if (n > 0) {
-//     printNos(n - 1)
-//     console.log(n + ' ')
-//   }
-//   return
-// }
-
-// printNos(100)
+import { useSelector } from 'react-redux'
 
 const EventList = () => {
-  const { customEventListData } = useSelector(eventLogSelector)
-  console.log(customEventListData)
+  const { customEventHistoryData } = useSelector(eventLogSelector)
+  console.log(customEventHistoryData)
+
   return (
-    <div>
-      {customEventListData.map((item) => (
+    <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
+      {customEventHistoryData.map((item) => (
         <EventListCard
-          // style={{ width: 300, height: 600 }}
           key={item.eventId}
           ledColor={
             item.severity === 'Information'

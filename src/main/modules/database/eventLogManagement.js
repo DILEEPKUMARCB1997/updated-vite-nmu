@@ -8,11 +8,13 @@ import {
 import telegramManagement from './telegramManagement'
 
 function updateEventLog(data, type = 'event') {
+  console.log(data)
   try {
     let result
     switch (type) {
       case 'event':
         result = apiCore.db.updateEvent(data, true)
+
         break
       case 'trap':
         result = apiCore.db.updateTrap(data, true)
@@ -20,9 +22,9 @@ function updateEventLog(data, type = 'event') {
       case 'syslog':
         result = apiCore.db.updateSyslog(data, true)
         break
-      case 'custom':
-        result = apiCore.db.UpdateCustomEventLog(data, true)
-        break
+      // case 'custom':
+      //   result = apiCore.db.UpdateCustomEventLog(data, true)
+      //   break
       default:
         break
     }

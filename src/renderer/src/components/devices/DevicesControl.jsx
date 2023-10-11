@@ -11,13 +11,6 @@ import {
   CalendarOutlined,
   ClusterOutlined,
   UsergroupAddOutlined,
-  // NodeIndexOutlined,
-  // UngroupOutlined,
-  // LineHeightOutlined,
-  // SettingOutlined,
-  // BackwardOutlined,
-  // FundOutlined,
-  // ExportOutlined,
   AudioOutlined
 } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
@@ -34,10 +27,6 @@ import {
 } from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
-// import { openAdvanceDrawer } from '../../features/deviceAdvanceSettingSlice'
-// import { openPortInfoDrawer } from '../../features/portInformationSlice'
-// import { openDrawer } from '../../features/singleNetworkSettingSlice'
-// import { openSnack } from '../../features/snackSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -64,62 +53,6 @@ const DevicesControl = ({ onClose }) => {
       groupName: groupAddInput
     })
   }
-
-  // const handleReboot = (MACAddress, IPAddress, deviceType) => {
-  //   modal.confirm({
-  //     title: 'Confirm',
-  //     content: 'This will reboot the device.'
-  //   })
-  //   if (!modal.success) {
-  //     setTimeout(async () => {
-  //       const confirmed = await modal.error({
-  //         title: 'Error !',
-  //         type: 'error',
-  //         content: 'Device reboot error.'
-  //       })
-  //       console.log(confirmed)
-  //     }, 3000)
-  //   } else {
-  //     setTimeout(async () => {
-  //       const confirmed = await modal.success({
-  //         title: 'Success !',
-  //         type: 'success',
-  //         content: 'Device reboot success.'
-  //       })
-  //       console.log(confirmed)
-  //     }, 3000)
-  //   }
-
-  //   //   : modal.error({
-  //   //       title: 'Error',
-  //   //       content: 'Device Reboot Error'
-  //   //     })
-  //   dispatch(
-  //     requestDeviceReboot({
-  //       MACAddress,
-  //       IPAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
-
-  // const handleBeep = async (IPAddress, MACAddress, deviceType) => {
-  //   const confirmed = await modal.confirm({
-  //     title: 'Confirm',
-  //     content: 'This will let device beep.'
-  //   })
-  //   console.log('Confirmed: ', confirmed)
-  //   dispatch(
-  //     requestDeviceBeep({
-  //       IPAddress,
-  //       MACAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
-  // const handleOpenTelnet = (IPAddress) => {
-  //   dispatch(requestOpenTelnet(IPAddress))
-  // }
 
   const handleResetToDefault = () => {
     dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
@@ -162,9 +95,6 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Firmware Update">
           <Button
             icon={<UploadOutlined />}
-            // onClick={() => {
-            //   dispatch(openDialog('FWU'))
-            // }}
             onClick={() => {
               dispatch(setBatchOperateEvent({ event: 'firmwareUpdate' }))
             }}
@@ -173,33 +103,20 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Network Settings">
           <Button
             icon={<ShareAltOutlined />}
-            // onClick={() => dispatch(openDialog('networkSetting'))}
             onClick={() => dispatch(setBatchOperateEvent({ event: 'networkSetting' }))}
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
-          <Button
-            icon={<RedoOutlined />}
-            // onClick={() => dispatch(openDialog('resetToDefault'))}
-            onClick={handleResetToDefault}
-          />
+          <Button icon={<RedoOutlined />} onClick={handleResetToDefault} />
         </Tooltip>
         <Tooltip title="Backup and Restore">
-          <Button
-            icon={<CloudUploadOutlined />}
-            // onClick={() => dispatch(openDialog('backupRestore'))}
-            onClick={handleBackupRestore}
-          />
+          <Button icon={<CloudUploadOutlined />} onClick={handleBackupRestore} />
         </Tooltip>
         <Tooltip title="Schedule Backup">
           <Button icon={<ClockCircleOutlined />} onClick={() => dispatch(initScheduleBackup())} />
         </Tooltip>
         <Tooltip title="Syslog Settings">
-          <Button
-            icon={<CalendarOutlined />}
-            // onClick={() => dispatch(openDialog('syslogSetting'))}
-            onClick={handleSyslogSetting}
-          />
+          <Button icon={<CalendarOutlined />} onClick={handleSyslogSetting} />
         </Tooltip>
         <Tooltip title="Trap Settings">
           <Button icon={<ClusterOutlined />} onClick={handleTrapSetting} />
@@ -209,48 +126,6 @@ const DevicesControl = ({ onClose }) => {
             <Button icon={<UsergroupAddOutlined />} />
           </Popover>
         </Tooltip>
-        {/* <Tooltip title="Buzzer">
-        {/* <Tooltip title="Advance Setting">
-          <Button
-            icon={<NodeIndexOutlined />}
-            onClick={() => {
-              dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
-            }}
-          />
-        </Tooltip> */}
-        {/* <Tooltip title="Port Information">
-          <Button
-            icon={<FundOutlined />}
-            onClick={() => {
-              dispatch(openPortInfoDrawer(true), dispatch(openDialog('portInformation')))
-            }}
-          />
-        </Tooltip> */}
-        {/* <Tooltip title="Beep">
-          <Button icon={<UngroupOutlined />} onClick={handleBeep} />
-        </Tooltip>
-        <Tooltip title="Reboot">
-          <Button icon={<RedoOutlined />} onClick={handleReboot} />
-        </Tooltip>
-        <Tooltip title="Telnet">
-          <Button icon={<LineHeightOutlined />} onClick={handleOpenTelnet} />
-        </Tooltip> */}
-        {/* <Tooltip title="Single Network Setting">
-          <Button
-            icon={<SettingOutlined />}
-            onClick={() => {
-              dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
-            }}
-          ></Button>
-        </Tooltip> */}
-        {/* <Tooltip title="Backup and Restore">
-          <Button
-            icon={<BackwardOutlined />}
-            onClick={() => {
-              dispatch(openDialog('singleBackupConfig'))
-            }}
-          />
-        </Tooltip> */}
         <Tooltip title="Buzzer">
           <Button
             icon={<AudioOutlined />}
@@ -258,7 +133,7 @@ const DevicesControl = ({ onClose }) => {
               dispatch(openDialog('buzzer'))
             }}
           />
-        </Tooltip>
+        </Tooltip>{' '}
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>
