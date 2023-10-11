@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { App, Badge, ConfigProvider } from 'antd'
+import { App, Badge, ConfigProvider, Checkbox } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
@@ -92,7 +92,7 @@ const columns = [
       )
   }
 ]
-
+let isSelect
 const DeviceTable = ({ deviceData = [] }) => {
   const [xPos, setXPos] = useState(0)
   const [yPos, setYPos] = useState(0)
@@ -114,7 +114,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   // const [order, setOrder] = useState('asc')
   // const [orderBy, setOrderBy] = useState('')
   // const [searchValue, setSearchValue] = useState('')
-  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
+  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
   // const handleSort = (filterArray) => {
   //   if (orderBy === '') {
@@ -470,10 +470,6 @@ const DeviceTable = ({ deviceData = [] }) => {
             x: 1100
           }}
           rowSelection={showCheckBox}
-          // // disable={disableCheckBox}
-          // onChange={handleCheckBoxChange}
-          // viewDevicesData={viewDevicesData}
-
           toolbar={{
             search: {
               onSearch: (value) => {

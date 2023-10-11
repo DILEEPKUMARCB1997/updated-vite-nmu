@@ -3,9 +3,13 @@
 import React from 'react'
 import { Row, Col, Card } from 'antd'
 
+// import './EventListCard.css'
+
 const EventListCard = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
+  console.log(props)
+
   return (
     <div key={eventId}>
       <Card>

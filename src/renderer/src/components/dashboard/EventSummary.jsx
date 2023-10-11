@@ -6,7 +6,6 @@
 import React, { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-// import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
 import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
 import { Row, Col, Card } from 'antd'
 import SummaryCard from './SummaryCard'
@@ -18,10 +17,10 @@ const EventSummary = () => {
 
   const geteventdetails = () => {
     const information = customEventDailyData.filter((x) => x.severity === 'Information').length
-    const critical = customEventDailyData.filter((x) => x.severity === 'Critical').length
     const warning = customEventDailyData.filter((x) => x.severity === 'Warning').length
+    const critical = customEventDailyData.filter((x) => x.severity === 'Critical').length
 
-    return { information, critical, warning }
+    return { information, warning, critical }
   }
 
   const dispatch = useDispatch()
@@ -48,7 +47,7 @@ const EventSummary = () => {
         //   ...state,
         //   customEventDailyData: filterCustomLogDailyData
         // }
-        updateLogData()
+        dispatch(updateLogData())
       }, msToMidnight)
     }
     return () => {

@@ -76,6 +76,7 @@ const TrapHistoryDialog = ({ onClose }) => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { trapHistoryData } = useSelector(eventLogSelector)
+  console.log(trapHistoryData)
   const [tableLoading, setTableLoading] = useState(true)
   const [sourceIP, setSourceIP] = useState('')
   const [ge, setGe] = useState('')
@@ -90,8 +91,8 @@ const TrapHistoryDialog = ({ onClose }) => {
   }
 
   const rangePickerChange = (value, dateString) => {
-    setGe({ ge: dateString[0] })
-    setLe({ le: dateString[1] })
+    setGe(dateString[0])
+    setLe(dateString[1])
   }
 
   const handleRefreshButtonClick = () => {

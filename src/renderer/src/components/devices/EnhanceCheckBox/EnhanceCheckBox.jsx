@@ -13,7 +13,7 @@ const EnhanceCheckBox = (props) => {
   }
   return (
     <div className={`${'cell'} ${showCheckBox ? 'cellVisible' : null}`}>
-      {!props.disable && props.model !== 'Cisco CGS2520' && (
+      {props.disable && props.model !== 'Cisco CGS2520' && (
         <Checkbox
           className={props.parents === 'header' ? 'headerCell ' : null}
           disabled={props.disable}

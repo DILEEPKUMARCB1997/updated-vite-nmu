@@ -1,23 +1,18 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Card, ConfigProvider, Table, theme } from 'antd'
+import { Alert, Button, ConfigProvider, Table, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  clearEventData,
+  clearCustomEventData,
   eventLogSelector,
-  requestHistoryData,
-  requestInitData
+  requestHistoryData
 } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
 
-function Event() {
+function CustomEvent() {
   const { useToken } = theme
   const { token } = useToken()
-  const { eventData } = useSelector(eventLogSelector)
-  console.log(eventData)
+  const { customEventData } = useSelector(eventLogSelector)
+  console.log(customEventData)
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
   const columns = [
@@ -30,9 +25,21 @@ function Event() {
       sorter: (a, b) => new Date(a.createAt) - new Date(b.createAt)
     },
     {
-      key: 'IPAddress',
+      key: 'eventCondition',
+      title: 'Event Condition',
+      dataIndex: 'eventCondition'
+    },
+    {
+      key: 'severity',
+      title: 'Severity',
+      dataIndex: 'severity',
+      sorter: (a, b) => (a.severity > b.severity ? 1 : -1),
+      sortDirections: ['descend', 'ascend']
+    },
+    {
+      key: 'sourceIP',
       title: 'Source IP',
-      dataIndex: 'IPAddress',
+      dataIndex: 'sourceIP',
       width: 150,
       sorter: (a, b) => (a.sourceIP > b.sourceIP ? 1 : -1),
       sortDirections: ['descend', 'ascend']
@@ -46,7 +53,6 @@ function Event() {
     },
     { key: 'msg', title: 'Message', dataIndex: 'msg' }
   ]
-
   // useEffect((param) => {
   //   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
   //     const { data } = arg
@@ -63,17 +69,18 @@ function Event() {
   const handleHistoryButtonOnClick = () => {
     dispatch(
       requestHistoryData({
-        type: 'event',
-        MACAddress: '',
+        type: 'custom',
+        sourceIP: '',
         ge: '',
         le: ''
       })
     )
-    dispatch(openDialog('eventHistory'))
+
+    dispatch(openDialog('customHistory'))
   }
 
   const handleClearButtonOnClick = () => {
-    dispatch(clearEventData())
+    dispatch(clearCustomEventData())
   }
 
   return (
@@ -118,7 +125,7 @@ function Event() {
         />
         <Table
           columns={columns}
-          dataSource={eventData}
+          dataSource={customEventData}
           loading={tableLoading}
           // bordered
           pagination={{
@@ -129,6 +136,12 @@ function Event() {
             pageSizeOptions: [10, 15, 20, 25],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
+          rowClassName={(record) => {
+            if (record.severity === 'Information') return 'table-information'
+            if (record.severity === 'Warning') return 'table-warning'
+            if (record.severity === 'Critical') return 'table-critical'
+            return ''
+          }}
           // scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
         />
         {/* </Card> */}
@@ -137,4 +150,4 @@ function Event() {
   )
 }
 
-export default Event
+export default CustomEvent
