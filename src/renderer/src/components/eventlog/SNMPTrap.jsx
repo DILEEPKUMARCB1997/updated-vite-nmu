@@ -75,9 +75,9 @@ const SNMPTrap = () => {
   console.log(trapData)
   const [tableLoading, setTableLoading] = useState(true)
 
-  useEffect(() => {
-    setTableLoading(false)
-  }, [])
+  // useEffect(() => {
+  //   setTableLoading(false)
+  // }, [])
 
   const handleHistoryButtonOnClick = () => {
     dispatch(

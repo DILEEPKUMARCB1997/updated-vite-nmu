@@ -37,7 +37,7 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
         dispatch(updateCustomGraph(resultCustom))
-        console.log(resultCustom)
+
         break
       }
 
@@ -114,17 +114,18 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomGraph: (state, action) => {
-      const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-        action.payload
+      // const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
+      //   action.payload
+      const { payload } = action
       return {
         ...state,
         customGraphData: {
-          label: label,
-          informationData: InformationData,
-          criticalData: CriticalData,
-          tableData: tableResult,
-          warningData: WarningData,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          informationData: payload.InformationData,
+          criticalData: payload.CriticalData,
+          tableData: payload.tableResult,
+          warningData: payload.WarningData,
+          lastUpdated: payload.lastUpdated
         }
       }
     },

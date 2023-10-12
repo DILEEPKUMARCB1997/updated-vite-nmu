@@ -50,7 +50,7 @@ const EventSummary = () => {
     return () => {
       clearTimeout(clearLogTimeOut1)
     }
-  }, [clearLogTimeOut1])
+  }, [])
   return (
     <div
     //className={styles.cardWrapper}
