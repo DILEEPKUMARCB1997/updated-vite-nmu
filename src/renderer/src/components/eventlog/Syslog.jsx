@@ -58,9 +58,9 @@ function Syslog() {
   console.log(syslogData)
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
-  useEffect(() => {
-    setTableLoading(false)
-  }, [])
+  // useEffect(() => {
+  //   setTableLoading(false)
+  // }, [])
 
   const handleHistoryButtonOnClick = () => {
     dispatch(
