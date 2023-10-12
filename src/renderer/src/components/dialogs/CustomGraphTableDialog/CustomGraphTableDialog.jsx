@@ -49,6 +49,9 @@ const CustomGraphTableDialog = ({ onClose }) => {
   // useEffect(() => {
   //   setTableLoading(tableLoading)
   // }, [tableLoading])
+  useEffect(() => {
+    setTableLoading(false)
+  }, [tableLoading])
 
   const handleCloseButtonOnClick = () => {
     onClose()

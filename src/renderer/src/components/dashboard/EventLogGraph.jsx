@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
-const EventLog = () => {
+const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
   console.log(customGraphData)
@@ -15,17 +15,17 @@ const EventLog = () => {
       {
         name: 'Information',
         color: '#46b300',
-        data: []
+        data: customGraphData.InformationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: []
+        data: customGraphData.WarningData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: []
+        data: customGraphData.CriticalData
       }
     ],
     options: {
@@ -169,4 +169,4 @@ const EventLog = () => {
   )
 }
 
-export default EventLog
+export default EventLogGraph

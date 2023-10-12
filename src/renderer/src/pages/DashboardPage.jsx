@@ -6,7 +6,7 @@ import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 import SyslogGraph from '../components/dashboard/SyslogGraph'
 import EventSummary from '../components/dashboard/EventSummary'
-import EventLog from '../components/dashboard/EventLog'
+import EventLogGraph from '../components/dashboard/EventLogGraph'
 import EventList from '../components/dashboard/EventList'
 
 const DashboardPage = () => {
@@ -70,7 +70,7 @@ const DashboardPage = () => {
               style={{ height: 250 }}
               bodyStyle={{ padding: '5px' }}
             >
-              <EventLog />
+              <EventLogGraph />
             </Card>
           </Col>
           <Col span={24}>

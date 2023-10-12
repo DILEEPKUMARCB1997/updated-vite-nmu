@@ -8,7 +8,7 @@ const StepView = () => {
   const { activeStep } = useSelector(firmwareSelector)
   console.log(activeStep)
   return (
-    <Steps current={1} size="large">
+    <Steps activeStep={activeStep} size="large">
       <Step title="Select a firmware file." />
       <Step title="Firmware updating." />
       <Step title="Finish!" />

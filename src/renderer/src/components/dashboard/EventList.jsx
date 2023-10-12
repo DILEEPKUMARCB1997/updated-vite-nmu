@@ -1,42 +1,19 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
+
 import React from 'react'
 import { eventLogSelector } from '../../features/eventLogSlice'
-import { useSelector } from 'react-redux'
 import EventListCard from './EventListCard'
+import { useSelector } from 'react-redux'
 
 const EventList = () => {
-  const { customEventHistoryData } = useSelector(eventLogSelector)
-  console.log(customEventHistoryData)
-  // let customEventListData = [
-  //   {
-  //     eventId: '1',
-  //     severity: 'Information',
-  //     hostname: 'EHG7512',
-  //     createAt: ''
-  //   }
-  // ]
-  // const data = customEventListData.map((item) => (
-  //   <EventListCard
-  //     // style={{ width: 300, height: 600 }}
-  //     key={item.eventId}
-  //     ledColor={
-  //       item.severity === 'Information'
-  //         ? '#46b300'
-  //         : item.severity === 'Warning'
-  //         ? '#F57F17'
-  //         : '#D50000'
-  //     }
-  //     item={item}
-  //   />
-  // ))
+  const { customEventListData } = useSelector(eventLogSelector)
+  console.log(customEventListData)
 
   return (
-    <div>
-      {/* <EventListCard data={data} item={item} /> */}
-      {customEventHistoryData.map((item) => (
+    <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
+      {customEventListData.map((item) => (
         <EventListCard
-          // style={{ width: 300, height: 600 }}
           key={item.eventId}
           ledColor={
             item.severity === 'Information'

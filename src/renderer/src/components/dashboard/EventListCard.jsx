@@ -1,18 +1,33 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+
 import React from 'react'
 import { Row, Col, Card } from 'antd'
 
 // import './EventListCard.css'
 
 const EventListCard = (props) => {
-  // eslint-disable-next-line no-unused-vars
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
-  console.log(props)
-
+  // console.log(props)
   return (
-    <div key={eventId}>
-      <Card>
+    <div
+      style={{
+        boxSizing: 'border-box',
+        minHeight: '150px',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+      key={eventId}
+    >
+      <Card
+        style={{
+          borderRadius: '0px',
+          padding: '7px',
+          fontWeight: '600',
+          color: '#000000ed',
+          margin: '0px 2px 5px'
+        }}
+      >
         <Row style={{ marginBottom: '5px' }}>
           <Col span={12} style={{ textAlign: 'left' }}>
             {hostname}

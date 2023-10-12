@@ -14,7 +14,6 @@ var clearLogTimeOut1
 const EventSummary = () => {
   const { customEventDailyData } = useSelector(eventLogSelector)
   console.log(customEventDailyData)
-
   const geteventdetails = () => {
     const information = customEventDailyData.filter((x) => x.severity === 'Information').length
     const warning = customEventDailyData.filter((x) => x.severity === 'Warning').length
@@ -27,7 +26,6 @@ const EventSummary = () => {
 
   useEffect(() => {
     dispatch(initEventDailyData({ types: 'custom' }))
-
     const now = new Date()
     const night = new Date(
       now.getFullYear(),
@@ -38,7 +36,6 @@ const EventSummary = () => {
       0 // ...at 00:00:00 hours
     )
     const msToMidnight = night.getTime() - now.getTime()
-
     if (msToMidnight > 0) {
       clearLogTimeOut1 = setTimeout(() => {
         // type: UPDATE_LOG_DATA,
@@ -53,10 +50,11 @@ const EventSummary = () => {
     return () => {
       clearTimeout(clearLogTimeOut1)
     }
-  }, [])
-
+  }, [clearLogTimeOut1])
   return (
-    <div>
+    <div
+    //className={styles.cardWrapper}
+    >
       <Row gutter={8}>
         <Col span={8}>
           <SummaryCard
@@ -86,5 +84,4 @@ const EventSummary = () => {
     </div>
   )
 }
-
 export default EventSummary
