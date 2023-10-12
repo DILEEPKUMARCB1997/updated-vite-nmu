@@ -32,7 +32,7 @@ export const requireSaveDeviceAdvanced = (callback) => (dispatch, getState) => {
     password,
     portInfo,
     powerInfo
-  } = getState().deviceAdvancedSetting
+  } = getState().deviceAdvanceSetting
 
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_DEVICE_COMMUNITY_SETTINGS, (event, arg) => {
     if (!arg.success) {

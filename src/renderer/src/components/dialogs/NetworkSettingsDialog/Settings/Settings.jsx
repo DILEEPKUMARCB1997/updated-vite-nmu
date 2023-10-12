@@ -64,14 +64,14 @@ const Settings = () => {
         <Input
           disabled={status !== 'wait' || isDHCP}
           value={netmask}
-          onChange={handleAddressInputChange('netmask', validNetmask)}
+          onChange={handleAddressInputChange('netmask', 'validNetmask')}
         />
       </Form.Item>
       <Form.Item label="Gateway" colon={false} style={{ margin: '5px' }}>
         <Input
           disabled={status !== 'wait' || isDHCP}
           value={gateway}
-          onChange={handleAddressInputChange('gateway', validGateway)}
+          onChange={handleAddressInputChange('gateway', 'validGateway')}
         />
       </Form.Item>
       <Form.Item label="Hostname" colon={false} style={{ margin: '5px' }}>
@@ -81,14 +81,14 @@ const Settings = () => {
         <Input
           disabled={status !== 'wait' || isDHCP}
           value={dns1}
-          onChange={handleAddressInputChange('dns1', validDNS1)}
+          onChange={handleAddressInputChange('dns1', 'validDNS1')}
         />
       </Form.Item>
       <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '5px' }}>
         <Input
           disabled={status !== 'wait' || isDHCP}
           value={dns2}
-          onChange={handleAddressInputChange('dns2', validDNS2)}
+          onChange={handleAddressInputChange('dns2', 'validDNS2')}
         />
       </Form.Item>
     </Card>

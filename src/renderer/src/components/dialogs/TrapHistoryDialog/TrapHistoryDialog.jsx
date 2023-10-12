@@ -171,7 +171,14 @@ const TrapHistoryDialog = ({ onClose }) => {
           bordered
           columns={columns}
           dataSource={trapHistoryData}
-          pagination={{ pageSize: 25 }}
+          pagination={{
+            // showQuickJumper: true,
+            // showSizeChanger: true,
+            size: 'default',
+            defaultPageSize: 25,
+            pageSizeOptions: [25, 50, 75, 100],
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+          }}
           scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
         />
       </Modal>

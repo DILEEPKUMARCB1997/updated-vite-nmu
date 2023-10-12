@@ -27,7 +27,6 @@ const DeviceSummary = () => {
     offline = total - online
     return { online, total, offline }
   }
-  console.log(getSummaryDetails().total)
 
   return (
     <div>

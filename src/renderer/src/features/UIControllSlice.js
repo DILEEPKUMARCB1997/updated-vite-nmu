@@ -5,8 +5,11 @@ import {
   RESPONSE_RP_GET_APP_INITIAL_DATA
 } from '../../../main/utils/IPCEvents'
 import { setSNMPAppInitialData } from './Preferences/snmpSlice'
-import { showDiscoveryTableCheckBox, clearDiscoverTableSelect } from './discoverySlice'
-import { setSNMPSelectOnly } from './discoverySlice'
+import {
+  setSNMPSelectOnly,
+  showDiscoveryTableCheckBox,
+  clearDiscoverTableSelect
+} from './discoverySlice'
 
 const SNMPOnlyEvents = ['resetToDefault', 'backupRestore', 'syslogSetting', 'trapSetting']
 export const requestAppInitialData = () => (dispatch) => {

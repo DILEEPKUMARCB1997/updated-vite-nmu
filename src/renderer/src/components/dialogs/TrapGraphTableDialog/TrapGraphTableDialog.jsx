@@ -1,15 +1,7 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-import { Modal, Divider, Table, Input, Button, ConfigProvider, theme } from 'antd'
-import React, { useState, useEffect } from 'react'
+import { ConfigProvider, Modal, Table, theme } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  eventLogSelector,
-  requestHistoryData,
-  clearHistoryData
-} from '../../../features/eventLogSlice'
-import CustomRangePicker from '../Common Code/CustomRangePicker'
+import { dashboardSelector } from '../../../features/dashboardSlice'
 
 const columns = [
   {
@@ -37,55 +29,52 @@ const columns = [
     sortDirections: ['descend', 'ascend']
   },
   {
-    key: 'facility',
-    title: 'Facility',
-    dataIndex: 'facility',
-    width: 110,
-    sorter: (a, b) => a.facility - b.facility,
+    key: 'specific',
+    title: 'GT',
+    dataIndex: 'specific',
+    width: 80,
+    sorter: (a, b) => a.specific - b.specific,
     sortDirections: ['descend', 'ascend']
   },
   {
-    key: 'severity',
-    title: 'Severity',
-    dataIndex: 'severity',
-    width: 110,
-    sorter: (a, b) => a.severity - b.severity,
+    key: 'generic',
+    title: 'ST',
+    dataIndex: 'generic',
+    width: 80,
+    sorter: (a, b) => a.generic - b.generic,
     sortDirections: ['descend', 'ascend']
   },
-  { key: 'tag', title: 'Tag', dataIndex: 'tag', width: 100 },
-  { key: 'message', title: 'Message', dataIndex: 'message' }
+  {
+    key: 'version',
+    title: 'Version',
+    dataIndex: 'version',
+    width: 120,
+    sorter: (a, b) => a.version - b.version,
+    sortDirections: ['descend', 'ascend']
+  },
+  {
+    key: 'enterprise',
+    title: 'Enterprise',
+    dataIndex: 'enterprise',
+    width: 180
+  },
+  { key: 'community', title: 'Community', dataIndex: 'community', width: 110 },
+  { key: 'msg', title: 'Description', dataIndex: 'msg', width: 150 }
 ]
 
-function SyslogHistoryDialog({ onClose }) {
+function TrapGraphTableDialog({ onClose }) {
   const { useToken } = theme
   const { token } = useToken()
-  const { syslogHistoryData } = useSelector(eventLogSelector)
-  console.log(syslogHistoryData)
-
   const dispatch = useDispatch()
-  const [sourceIP, setSourceIP] = useState()
-  const [ge, setGe] = useState('')
-  const [le, setLe] = useState('')
   const [tableLoading, setTableLoading] = useState(true)
+  const { trapTableData } = useSelector(dashboardSelector)
 
   useEffect(() => {
     setTableLoading(false)
   }, [])
 
-  const handleSourceIPInputOnChange = (event) => {
-    setSourceIP(event.target.value)
-  }
-  const rangePickerChange = (value, dateString) => {
-    setGe(dateString[0])
-    setLe(dateString[1])
-  }
-
-  const handleRefreshButtonClick = () => {
-    dispatch(requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le }))
-  }
   const handleCloseButtonOnClick = () => {
     onClose()
-    dispatch(clearHistoryData())
   }
 
   return (
@@ -101,18 +90,20 @@ function SyslogHistoryDialog({ onClose }) {
       }}
     >
       <Modal
-        title="Syslog History"
         open
         onCancel={handleCloseButtonOnClick}
+        width="90%"
+        title="Trap Graph Data"
         onOk={onClose}
         closable={true}
         maskClosable={false}
-        width="90%"
         style={{ top: 20 }}
         bodyStyle={{
+          // height: 'calc(70vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
+          // maxHeight: '98%'
         }}
         okButtonProps={{
           style: {
@@ -125,30 +116,12 @@ function SyslogHistoryDialog({ onClose }) {
           }
         }}
       >
-        <div>
-          <Input
-            style={{ width: 150, margin: '0px 10px 0px 10px' }}
-            placeholder="Source IP"
-            onChange={handleSourceIPInputOnChange}
-          />
-          <CustomRangePicker onChange={rangePickerChange} />
-          <Button
-            onClick={handleRefreshButtonClick}
-            type="primary"
-            ghost
-            style={{ marginBottom: '15px', marginLeft: '10px' }}
-          >
-            {' '}
-            Refresh{' '}
-          </Button>
-        </div>
-        <Divider style={{ margin: '10px 0px' }} />
         <Table
           loading={tableLoading}
-          rowKey="syslogId"
+          rowKey="trapId"
           bordered
           columns={columns}
-          dataSource={syslogHistoryData}
+          dataSource={trapTableData}
           pagination={{
             // showQuickJumper: true,
             // showSizeChanger: true,
@@ -164,4 +137,4 @@ function SyslogHistoryDialog({ onClose }) {
   )
 }
 
-export default SyslogHistoryDialog
+export default TrapGraphTableDialog

@@ -12,6 +12,7 @@ import {
   requestInitData
 } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
+import { memo } from 'react'
 
 function Event() {
   const { useToken } = theme
@@ -127,4 +128,4 @@ function Event() {
   )
 }
 
-export default Event
+export default memo(Event)

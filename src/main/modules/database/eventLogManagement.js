@@ -8,7 +8,6 @@ import {
 import telegramManagement from './telegramManagement'
 
 function updateEventLog(data, type = 'event') {
-  console.log(data)
   try {
     let result
     switch (type) {

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Alert, Modal } from 'antd'
+import { Alert, Modal, message } from 'antd'
 import React from 'react'
 import { UIControlSelector, removeBatchOperateEvent } from '../../../features/UIControllSlice'
 import { initResetToDefaultData } from '../../../features/resetToDefaultSlice'
@@ -33,7 +33,7 @@ const EventTips = () => {
 
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
 
-  const disableOK = selected.length === 0
+  var disableOK = selected.length === 0
 
   const handleOKOnClick = () => {
     switch (batchOperateEvent) {
@@ -79,7 +79,7 @@ const EventTips = () => {
   }
 
   const alertProps = {
-    className: `${'alert'} ${showBatchOperateTips ? '' : 'hide'}`,
+    className: `${'alert'} ${showBatchOperateTips ? undefined : 'hide'}`,
     message: messages[batchOperateEvent],
     type: 'info',
     showIcon: true,
@@ -89,7 +89,7 @@ const EventTips = () => {
           {' '}
           Select devices and press{' '}
           <a
-            // className={disableOK ? 'disable' : undefined}
+            className={disableOK ? 'disable' : undefined}
             role="button"
             tabIndex="0"
             onClick={handleOKOnClick}
@@ -113,66 +113,7 @@ const EventTips = () => {
     )
   }
 
-  return (
-    <Alert {...alertProps} />
-    //   <Alert
-    //     style={{
-    //       position: 'fixed',
-    //       // borderTop: 'none',
-    //       zIndex: 1000,
-    //       left: 'calc(50% - 250px)',
-    //       top: '150px',
-
-    //       minHeight: '0px',
-    //       width: '500px',
-    //       margin: '10px 0px'
-    //     }}
-    //     action={[
-    //       showBatchOperateTips ? undefined : (
-    //         <span
-    //           style={{
-    //             height: '0px',
-    //             overflow: 'hidden',
-    //             paddingTop: '0px',
-    //             paddingBottom: '0px',
-    //             borderBottom: 'none'
-    //           }}
-    //         />
-    //       )
-    //     ]}
-    //     // className={('alert', showBatchOperateTips ? undefined : 'hide')}
-    //     // className={classNames('alert', showBatchOperateTips ? undefined : 'hide')}
-    //     message={messages[batchOperateEvent]}
-    //     type="info"
-    //     showIcon
-    //     description={
-    //       <div>
-    //         <div>
-    //           Select devices and press{' '}
-    //           <a
-    //             className={disableOK ? 'disable' : undefined}
-    //             role="button"
-    //             tabIndex="0"
-    //             onClick={handleOKOnClick}
-    //             onKeyDown={handleOKOnKeyPress}
-    //           >
-    //             OK
-    //           </a>{' '}
-    //           or{' '}
-    //           <a
-    //             role="button"
-    //             tabIndex="0"
-    //             onClick={handleCancelOnClick}
-    //             onKeyDown={handleCancelOnKeyPress}
-    //           >
-    //             Cancel
-    //           </a>
-    //         </div>
-    //         {SNMPSelectOnly && <div style={{ color: 'red' }}>{TIPS}</div>}
-    //       </div>
-    //     }
-    //   />
-  )
+  return <Alert {...alertProps} />
 }
 
 export default EventTips

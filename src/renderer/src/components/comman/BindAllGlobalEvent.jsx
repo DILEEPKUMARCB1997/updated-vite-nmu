@@ -8,12 +8,9 @@ import {
   REQUEST_HIDE_SHOW_MENU,
   REQUEST_MP_DISCOVERY_ALL_DEVICES,
   RESPONSE_RP_SET_THE_GROUP_DATA,
-  SEND_RP_ALL_DEVICES_LIST,
-  SEND_RP_SNMP_SCAN_STATUS
+  SEND_RP_ALL_DEVICES_LIST
 } from '../../../../main/utils/IPCEvents'
 import { updateDiscoveryData } from '../../features/discoverySlice'
-import { changeSnmpScanStep, clearSnmpScanProgress } from '../../features/snmpScanProgressSlice'
-import { closeDialog } from '../../features/dialogSlice'
 
 const BindAllGlobalEvent = () => {
   const { mode } = useThemeStore()
