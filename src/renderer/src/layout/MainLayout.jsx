@@ -46,26 +46,27 @@ const MainLayout = () => {
 
   useEffect(() => {
     setPathname(location.pathname || '/')
+  }, [location])
+
+  useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     dispatch(requestAppInitialData())
     dispatch(requestDiscoveryAfterLogin())
-    // setTimeout(() => {
-    //   nextInitRenderStep()
-    // }, 800)
-    // setTimeout(() => {
-    //   nextInitRenderStep()
-    // }, 1600)
-    // setTimeout(() => {
-    //   nextInitRenderStep()
-    // }, 2200)
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 800)
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 1600)
+    setTimeout(() => {
+      nextInitRenderStep()
+    }, 2200)
     window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
     window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
     return () => {
       window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     }
-  }, [location])
-
-  // useEffect(() => {}, [])
+  }, [])
 
   const nativeMenuListener = (event, arg) => {
     console.log(arg)

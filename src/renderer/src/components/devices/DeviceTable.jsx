@@ -332,13 +332,30 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-  const handleCheckBoxChange = (isSelect) => {
-    dispatch(
-      selectDiscoveryTable({
-        isSelect
-      })
-    )
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+
+      dispatch(
+        selectDiscoveryTable({
+          isSelect
+        })
+      )
+    },
+    getCheckboxProps: (record) => ({
+      disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
+    })
   }
+
+  // const handleCheckBoxChange = (isSelect) => {
+  //   console.log(isSelect)
+  //   // dispatch(
+  //   //   selectDiscoveryTable({
+  //   //     isSelect
+  //   //   })
+  //   // )
+  // }
 
   return (
     <div>
@@ -382,7 +399,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           scroll={{
             x: 1100
           }}
-          rowSelection={showCheckBox}
+          // rowSelection={handleCheckBoxChange}
           toolbar={{
             search: {
               onSearch: (value) => {
@@ -402,6 +419,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
+          rowSelection={rowSelection}
           onRow={(record) => {
             return {
               onContextMenu: (event) => {

@@ -116,7 +116,7 @@ const portInformationSlice = createSlice({
           } else {
             firstRound = false
             let interval = upTime - state.upTime
-            if (state.uptime === 0) {
+            if (state.upTime === 0) {
               interval = 300
             }
             const newInData =

@@ -43,7 +43,6 @@ export const requestHistoryData = (param) => (dispatch) => {
         console.log(resultCustom)
         break
       }
-
       default:
         break
     }

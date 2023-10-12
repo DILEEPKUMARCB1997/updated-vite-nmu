@@ -72,18 +72,22 @@ function parser(msg, rinfo) {
   // e.g. <PRI>time hostname tag: info
   //console.log('entering syslog parser');
   msg = msg + ''
-  // console.log('msg = ', msg);
+  console.log('msg = ', msg)
+  console.log('rinfo ', rinfo)
   var tagIndex = msg.indexOf(': ')
   var format = msg.substr(0, tagIndex)
   var priIndex = format.indexOf('>')
   var pri = format.substr(1, priIndex - 1)
-  // console.log('pri = ', pri);
+  // console.log('pri = ', pri)
   pri = parsePRI(pri)
   var lastSpaceIndex = format.lastIndexOf(' ')
   var tag = format.substr(lastSpaceIndex + 1)
+
   var last2SpaceIndex = format.lastIndexOf(' ', lastSpaceIndex - 1) // hostname cannot contain ' '
+
   var upTime = format.substring(last2SpaceIndex + 1, lastSpaceIndex)
   // time is complex because don't know if it has year
+
   var time = format.substring(priIndex + 1, last2SpaceIndex)
   time = new Date(time)
   time.setYear(new Date().getFullYear()) // fix year to now
@@ -126,8 +130,8 @@ Syslogd((info) => {
     message: info.msg
   }
   eventLogManagement.default.updateEventLog(syslogMsg, 'syslog')
-  //console.log('Syslog received:');
-  //console.log(info);
+  // console.log('Syslog received:')
+  // console.log('123', info)
   //console.log('--------------------------------------');
 }).listen(514, (err) => {
   if (err) console.error(err)

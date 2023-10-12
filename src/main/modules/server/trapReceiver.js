@@ -341,6 +341,7 @@ Reader.prototype.readTag = function readTag(tag) {
 function parseTrapPacket(buffer) {
   const pkt = {}
   const reader = new Reader(buffer)
+
   reader.readSequence()
   pkt.version = reader.readInt() // 02 01 00
   pkt.community = reader.readString() // 04 06 70 75 62 6c 69 63

@@ -1843,6 +1843,7 @@ ipcMain.on(REQUEST_MP_GET_PORT_INFORMATION, (event, arg) => {
           const ifHCOutMulticastPkts = results[14].data
           const ifHCOutBroadcastPkts = results[15].data
           const upTime = results[16].data
+
           //console.log(ifHighSpeed);
           for (let i = 0; i < ifIndex.length; i += 1) {
             if (ifIndex[i].value <= 28) {
