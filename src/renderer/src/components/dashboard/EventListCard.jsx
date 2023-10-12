@@ -4,9 +4,11 @@
 import React from 'react'
 import { Row, Col, Card } from 'antd'
 
+// import './EventListCard.css'
+
 const EventListCard = (props) => {
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
-  console.log(props)
+  // console.log(props)
   return (
     <div
       style={{

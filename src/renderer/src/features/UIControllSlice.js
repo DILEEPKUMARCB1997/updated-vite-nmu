@@ -20,7 +20,7 @@ export const requestAppInitialData = () => (dispatch) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_APP_INITIAL_DATA)
 }
 export const setBatchOperateEvent = (payload) => (dispatch) => {
-  dispatch(SET_BATCH_OPERATE_EVENT(payload))
+  dispatch(setBatchOperateEvents(payload))
   dispatch(showDiscoveryTableCheckBox(true))
   if (SNMPOnlyEvents.includes(payload.event)) {
     dispatch(setSNMPSelectOnly(true))
@@ -58,7 +58,7 @@ const UIControlSlice = createSlice({
     REMOVE_BATCH_OPERATE_EVENT: (state, { payload }) => {
       return { ...state, showBatchOperateTips: false, batchOperateEvent: '' }
     },
-    SET_BATCH_OPERATE_EVENT: (state, action) => {
+    setBatchOperateEvents: (state, action) => {
       const { event } = action.payload
       return { ...state, showBatchOperateTips: true, batchOperateEvent: event }
     }
@@ -70,7 +70,7 @@ export const {
   nextInitRenderStep,
   showCheckSNMPModal,
   REMOVE_BATCH_OPERATE_EVENT,
-  SET_BATCH_OPERATE_EVENT
+  setBatchOperateEvents
 } = UIControlSlice.actions
 
 export const UIControlSelector = (state) => {

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { App, Badge, ConfigProvider } from 'antd'
+import { App, Badge, ConfigProvider, Checkbox } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
@@ -92,7 +92,7 @@ const columns = [
       )
   }
 ]
-
+let isSelect
 const DeviceTable = ({ deviceData = [] }) => {
   const [xPos, setXPos] = useState(0)
   const [yPos, setYPos] = useState(0)
@@ -109,6 +109,11 @@ const DeviceTable = ({ deviceData = [] }) => {
       content: 'Please check SNMP of this device is enable.'
     })
   }
+  // const [tableType, setTableType] = useState('')
+  // const [groupId, setGroupId] = useState()
+  // const [order, setOrder] = useState('asc')
+  // const [orderBy, setOrderBy] = useState('')
+  // const [searchValue, setSearchValue] = useState('')
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
     useSelector(discoverySelector)
@@ -377,11 +382,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           scroll={{
             x: 1100
           }}
-          rowSelection={handleCheckBoxChange}
-          // // disable={disableCheckBox}
-          // onChange={handleCheckBoxChange}
-          // viewDevicesData={viewDevicesData}
-
+          rowSelection={showCheckBox}
           toolbar={{
             search: {
               onSearch: (value) => {

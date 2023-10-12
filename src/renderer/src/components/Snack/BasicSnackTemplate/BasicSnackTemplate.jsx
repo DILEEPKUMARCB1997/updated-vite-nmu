@@ -19,9 +19,9 @@ const BasicSnackTemplate = ({ onClose, props }) => {
     }
   })
   const handleSnackOnClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
+    // if (reason === 'clickaway') {
+    //   return
+    // }
     closeSnack()
   }
   const enableOKButton = () => {

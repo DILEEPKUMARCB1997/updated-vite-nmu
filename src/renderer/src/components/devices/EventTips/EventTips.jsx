@@ -31,7 +31,6 @@ const EventTips = () => {
 
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
 
-  console.log(batchOperateEvent)
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
 
   var disableOK = selected.length === 0

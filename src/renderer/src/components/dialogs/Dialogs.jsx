@@ -33,6 +33,7 @@ import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDia
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
 import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
+// import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -69,6 +70,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
           CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
           trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
           customHistory: <CustomHistoryDialog onClose={onClose} />
+          // syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
         }[id]
       }
     </div>

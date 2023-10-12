@@ -65,11 +65,11 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
   console.log(resetToDefaultStatus)
 
-  const dataSource = []
-  useEffect(() => {
-    dataSource.push(resetToDefaultStatus)
-    console.log(dataSource)
-  }, [])
+  // const dataSource = []
+  // useEffect(() => {
+  //   dataSource.push(resetToDefaultStatus)
+  //   console.log(dataSource)
+  // }, [])
   const dispatch = useDispatch()
   const handleCancelButtonOnClick = () => {
     dispatch(clearResetToDefaultData())
@@ -80,12 +80,37 @@ const ResetToDefaultDialog = ({ onClose }) => {
     dispatch(requestResetToDefault())
   }
 
-  const data = Object.entries(resetToDefaultStatus).map(([key, value]) => ({
-    key,
-    MACAddress: key,
-    IPAddress: value.IPAddress,
-    model: value.model
-  }))
+  // const data = Object.entries(resetToDefaultStatus).map(([key, value]) => ({
+  //   key,
+  //   MACAddress: key,
+  //   IPAddress: value.IPAddress,
+  //   model: value.model
+  // }))
+
+  // const [inputData, setInputData] = useState('')
+  // const record = (dataSource = []) => {
+  //   let data = columns.map((element) => {
+  //     return dataSource[element.dataIndex]
+  //   })
+  //   return data.includes(true)
+  // }
+  // const deviceDataList = () => {
+  //   return Object.entries(resetToDefaultStatus).map(([key, value]) => ({
+  //     key,
+  //     MACAddress: key,
+  //     IPAddress: value.IPAddress,
+  //     model: value.model
+  //   }))
+  // }
+  const deviceDataList = [
+    Object.entries(resetToDefaultStatus).map(([key, element]) => ({
+      key,
+      MACAddress: key,
+      IPAddress: element.IPAddress,
+      model: element.model
+    }))
+  ]
+  // const dataSource = [{}]
 
   return (
     <div>
@@ -122,39 +147,21 @@ const ResetToDefaultDialog = ({ onClose }) => {
             <Table
               rowKey={resetToDefaultStatus.key}
               size="middle"
-              // dataSource={data(resetToDefaultStatus)}
+              // dataSource={resetToDefaultStatus}
               columns={columns}
-              dataSource={data}
+              dataSource={deviceDataList}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                total: data.length,
+                total: deviceDataList.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
               }}
               bordered
-            >
-              {/* {Object.entries(resetToDefaultStatus).map(([MACAddress, element]) => (
-                <Table.Summary.Row key={MACAddress}>
-                  <Typography style={{ fontSize: '1rem', fontWeight: '300', padding: '12px, 8px' }}>
-                    {element.modal}
-                  </Typography>
-                  <Typography style={{ fontSize: '1rem', fontWeight: '300', padding: '12px, 8px' }}>
-                    {element.MACAddress}
-                  </Typography>
-                  <Typography style={{ fontSize: '1rem', fontWeight: '300', padding: '12px, 8px' }}>
-                    {element.IPAddress}
-                  </Typography>
-                  <Typography style={{ fontSize: '1rem', fontWeight: '300', padding: '12px, 8px' }}>
-                    {element.status === SUCCESS && <span style={{ color: 'green' }} />}
-                    {element.status === ERROR && <span style={{ color: 'red' }} />}
-                    {results[element.status]}
-                  </Typography>
-                </Table.Summary.Row>
-              ))} */}
-            </Table>
+            ></Table>
+            {/* <Table columns={columns} dataSource={deviceDataList} /> */}
           </div>
           {taskStatus === RUNNING && <Progress percent={20} size="small" />}
           <div>

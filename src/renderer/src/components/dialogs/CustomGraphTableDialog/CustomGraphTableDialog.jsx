@@ -46,6 +46,9 @@ const CustomGraphTableDialog = ({ onClose }) => {
   const { customTableData } = useSelector(dashboardSelector)
   const [tableLoading, setTableLoading] = useState(false)
 
+  // useEffect(() => {
+  //   setTableLoading(tableLoading)
+  // }, [tableLoading])
   useEffect(() => {
     setTableLoading(false)
   }, [tableLoading])
