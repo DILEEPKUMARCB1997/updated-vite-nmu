@@ -49,17 +49,17 @@ const MainLayout = () => {
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     dispatch(requestAppInitialData())
     dispatch(requestDiscoveryAfterLogin())
-    setTimeout(() => {
-      dispatch(nextInitRenderStep())
-    }, 800)
-    setTimeout(() => {
-      dispatch(nextInitRenderStep())
-    }, 1600)
-    setTimeout(() => {
-      dispatch(nextInitRenderStep())
-    }, 2200)
-    window.electron.ipcRenderer.once(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
-    window.electron.ipcRenderer.once(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
+    // setTimeout(() => {
+    //   nextInitRenderStep()
+    // }, 800)
+    // setTimeout(() => {
+    //   nextInitRenderStep()
+    // }, 1600)
+    // setTimeout(() => {
+    //   nextInitRenderStep()
+    // }, 2200)
+    window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
+    window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
     return () => {
       window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     }
@@ -81,6 +81,7 @@ const MainLayout = () => {
   }
 
   const SNMPStatusListener = (event, arg) => {
+    console.log(arg)
     if (arg.scanStatus === 'a') {
       dispatch(changeSnmpScanStep(arg.scanStatus))
       setTimeout(() => {
@@ -99,10 +100,6 @@ const MainLayout = () => {
       dispatch(openDialog('buzzer'))
     }
     dispatch(updateEventLog(arg))
-  }
-
-  const deviceListListener = (event, arg) => {
-    dispatch(updateDiscoveryData(JSON.parse(arg)))
   }
 
   const handleMenuClick = (e) => {

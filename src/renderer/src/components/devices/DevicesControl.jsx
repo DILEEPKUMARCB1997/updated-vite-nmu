@@ -27,6 +27,7 @@ import {
 } from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
+import { userManagementSelector } from '../../features/userManagementSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -88,7 +89,7 @@ const DevicesControl = ({ onClose }) => {
     </Flexbox>
   )
 
-  return userType !== 'Operator' ? (
+  return (
     <Card bordered={false} bodyStyle={{ paddingBlock: 8 }}>
       <Flexbox gap={20} direction="horizontal">
         <Tooltip title="Discovery">
@@ -140,7 +141,7 @@ const DevicesControl = ({ onClose }) => {
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>
     </Card>
-  ) : null
+  )
 }
 
 export default DevicesControl
