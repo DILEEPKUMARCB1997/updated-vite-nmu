@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import Chart from 'react-apexcharts'
+// import Chart from 'react-apexcharts'
+import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
 import { Button } from 'antd'
@@ -15,17 +16,17 @@ const EventLogGraph = () => {
       {
         name: 'Information',
         color: '#46b300',
-        data: customGraphData.InformationData
+        data: customGraphData.informationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: customGraphData.WarningData
+        data: customGraphData.warningData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: customGraphData.CriticalData
+        data: customGraphData.criticalData
       }
     ],
     options: {
@@ -38,7 +39,6 @@ const EventLogGraph = () => {
         offsetY: -20,
         offsetX: -5
       },
-
       legend: {
         show: true,
         showForSingleSeries: true,
@@ -64,7 +64,9 @@ const EventLogGraph = () => {
           return val + '%'
         }
       },
-
+      grid: {
+        show: true
+      },
       xaxis: {
         type: 'category',
         categories: customGraphData.label,
@@ -73,7 +75,6 @@ const EventLogGraph = () => {
           rotate: -45,
           rotateAlways: true
         },
-
         fill: {
           type: 'solid',
           gradient: {
@@ -84,6 +85,7 @@ const EventLogGraph = () => {
           }
         }
       },
+
       yaxis: {
         title: {
           lines: {
@@ -93,7 +95,6 @@ const EventLogGraph = () => {
       }
     }
   })
-
   const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
@@ -158,7 +159,7 @@ const EventLogGraph = () => {
         />
       </div>
       <div>
-        <Chart
+        <ReactApexChart
           options={eventLogData.options}
           series={eventLogData.series}
           type="bar"

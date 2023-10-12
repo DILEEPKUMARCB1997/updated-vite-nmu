@@ -26,7 +26,7 @@ const SyslogGraph = () => {
     series: [
       {
         name: 'Syslog Message Count',
-        data: syslogGraphData.data
+        data: []
       }
     ],
     options: {
