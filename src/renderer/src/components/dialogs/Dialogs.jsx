@@ -32,6 +32,7 @@ import Beep from './BeepDialog/BeepDialog'
 import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
+// import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -67,6 +68,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
           CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
           customHistory: <CustomHistoryDialog onClose={onClose} />
+          // syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
         }[id]
       }
     </div>

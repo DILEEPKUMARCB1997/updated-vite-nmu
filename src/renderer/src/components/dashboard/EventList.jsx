@@ -7,12 +7,12 @@ import EventListCard from './EventListCard'
 import { useSelector } from 'react-redux'
 
 const EventList = () => {
-  const { customEventHistoryData } = useSelector(eventLogSelector)
-  console.log(customEventHistoryData)
+  const { customEventListData } = useSelector(eventLogSelector)
+  console.log(customEventListData)
 
   return (
     <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
-      {customEventHistoryData.map((item) => (
+      {customEventListData.map((item) => (
         <EventListCard
           key={item.eventId}
           ledColor={

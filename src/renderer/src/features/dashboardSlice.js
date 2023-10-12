@@ -6,18 +6,20 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-import { requestCustomGraphData, requestGraphData } from '../components/dashboard/requestGraphData'
+import { requestGraphData, requestCustomGraphData } from '../components/dashboard/requestGraphData'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
 }
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
+  dispatch(openDialog('syslogGraphTable'))
 }
 export const requestHistoryData = (param) => (dispatch) => {
   console.log(param)
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
+    // console.log(type)
     console.log(data)
     switch (type) {
       case 'event':
@@ -35,6 +37,7 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'custom': {
         const resultCustom = requestCustomGraphData(data)
         dispatch(updateCustomGraph(resultCustom))
+        console.log(resultCustom)
         break
       }
 
@@ -74,6 +77,7 @@ const dashboardSlice = createSlice({
     trapTableData: [],
     customTableData: []
   },
+
   reducers: {
     initDiskUses: (state, { payload }) => {
       const { free, size } = payload

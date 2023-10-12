@@ -28,11 +28,11 @@ export const updateEventLog = (payload) => (dispatch) => {
       break
   }
 }
-
 export const initEventDailyData = (payload) => (dispatch) => {
   const { types } = payload
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
+
     switch (type) {
       case 'custom':
         dispatch(updateCustomHistory(data))
@@ -70,6 +70,8 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'custom':
         dispatch(updateCustomHistory(data))
+        // dispatch(updateCustomEvent(data))
+        // dispatch(initEventDailyData({ types: 'custom' }))
         //   dispatch(initEventDailyData({ types: 'custom' }))
         break
       default:
@@ -138,9 +140,9 @@ const eventLogSlice = createSlice({
     clearCustomEvent: (state) => {
       return { ...state, customEventData: [] }
     },
-    updateCustomEventDaily: (state, { payload }) => {
-      const { action } = payload
-      console.log(action)
+    updateCustomEventDaily: (state) => {
+      // const { action } = payload
+      // console.log(action)
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {
@@ -187,7 +189,8 @@ const eventLogSlice = createSlice({
         ...state,
         eventHistoryData: [],
         trapHistoryData: [],
-        syslogHistoryData: []
+        syslogHistoryData: [],
+        customEventHistoryData: []
       }
     },
 
@@ -205,6 +208,7 @@ const eventLogSlice = createSlice({
     updateTrap: (state, { payload }) => {
       const filteredTrapData = filterByDate([...state.trapData])
       filteredTrapData.push(payload)
+
       return { ...state, trapData: filteredTrapData }
     },
 
@@ -213,6 +217,7 @@ const eventLogSlice = createSlice({
       filteredSyslogData.push(payload)
       return { ...state, syslogData: filteredSyslogData }
     },
+
     updateCustomEvent: (state, action) => {
       const filteredCustomEventData = filterByDate([...state.customEventData])
       const filteredCustomEventDailyData = filterByDate([...state.customEventDailyData])
@@ -224,8 +229,8 @@ const eventLogSlice = createSlice({
       let sortedEventList = customEventSortFilter([...EventList])
       return {
         ...state,
-        customEventData: filteredCustomEventData,
-        customEventListData: sortedEventList.slice(0, 30)
+        customEventData: filteredCustomEventData
+        // customEventListData: sortedEventList.slice(0, 30)
       }
     }
   }
@@ -244,11 +249,12 @@ export const {
   clearEventData,
   clearTrapData,
   clearSyslogData,
+  clearCustomEventData,
   updateLogData,
   updateCustomEventDaily,
   updateBeepSoundStart,
   clearCustomEvent,
-  clearCustomEventData,
+
   updateBeepSoundStop
 } = eventLogSlice.actions
 

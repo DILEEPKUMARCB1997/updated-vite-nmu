@@ -1,0 +1,41 @@
+.eventlistcontainer {
+  box-sizing: border-box;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+}
+.firstrow {
+  min-height: 50px;
+  background-color: red;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  align-items: center;
+}
+.secondrow {
+  min-height: 100px;
+  background-color: green;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  align-items: center;
+  position: relative;
+}
+.secondrowinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 75vw;
+  height: 90px;
+}
+.light {
+  background-color: yellow;
+}
+.content {
+  border-radius: 0px !important;
+  padding: 7px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  color: #000000ed !important;
+  margin: 0px 2px 5px;
+}

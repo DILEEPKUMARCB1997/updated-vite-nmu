@@ -7,11 +7,13 @@ import {
   updateLogData,
   clearEventData,
   clearTrapData,
-  clearSyslogData
+  clearSyslogData,
+  clearCustomEventData
 } from '../features/eventLogSlice'
 import SNMPTrap from '../components/eventlog/SNMPTrap'
 import Syslog from '../components/eventlog/Syslog'
-import CustomEvent from '../components/eventlog/CustomEvent/CustomEvent'
+
+// import CustomEvent from '../components/eventlog/CustomEvent'
 
 var clearLogTimeOut
 function EventLogPage() {
@@ -33,12 +35,13 @@ function EventLogPage() {
       key: '3',
       label: `Syslog`,
       children: <Syslog />
-    },
-    {
-      key: '4',
-      label: `custom`,
-      children: <CustomEvent />
     }
+    // {
+    //   key: '4',
+    //   label: `Custom Event`,
+
+    //   children: <CustomEvent />
+    // }
   ]
 
   useEffect(() => {
@@ -58,6 +61,7 @@ function EventLogPage() {
         dispatch(clearEventData())
         dispatch(clearTrapData())
         dispatch(clearSyslogData())
+        // dispatch(clearCustomEventData())
       }, msToMidnight)
     }
     return () => {

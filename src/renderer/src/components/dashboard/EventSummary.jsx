@@ -3,25 +3,29 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-
 import React, { useEffect } from 'react'
-import { Row, Col } from 'antd'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
+import { Row, Col, Card } from 'antd'
 import SummaryCard from './SummaryCard'
-import { initEventDailyData, updateLogData, eventLogSelector } from '../../features/eventLogSlice'
-import { useSelector } from 'react-redux'
+
 var clearLogTimeOut1
 const EventSummary = () => {
   const { customEventDailyData } = useSelector(eventLogSelector)
   console.log(customEventDailyData)
   const geteventdetails = () => {
     const information = customEventDailyData.filter((x) => x.severity === 'Information').length
-    const critical = customEventDailyData.filter((x) => x.severity === 'Critical').length
     const warning = customEventDailyData.filter((x) => x.severity === 'Warning').length
+    const critical = customEventDailyData.filter((x) => x.severity === 'Critical').length
 
-    return { information, critical, warning }
+    return { information, warning, critical }
   }
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    initEventDailyData({ types: 'custom' })
+    dispatch(initEventDailyData({ types: 'custom' }))
     const now = new Date()
     const night = new Date(
       now.getFullYear(),
@@ -33,14 +37,20 @@ const EventSummary = () => {
     )
     const msToMidnight = night.getTime() - now.getTime()
     if (msToMidnight > 0) {
-      setTimeout(() => {
-        updateLogData()
+      clearLogTimeOut1 = setTimeout(() => {
+        // type: UPDATE_LOG_DATA,
+        // const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
+        // return {
+        //   ...state,
+        //   customEventDailyData: filterCustomLogDailyData
+        // }
+        dispatch(updateLogData())
       }, msToMidnight)
     }
     return () => {
       clearTimeout(clearLogTimeOut1)
     }
-  }, [])
+  }, [clearLogTimeOut1])
   return (
     <div
     //className={styles.cardWrapper}

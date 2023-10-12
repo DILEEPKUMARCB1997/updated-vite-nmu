@@ -114,6 +114,18 @@ const SyslogGraph = () => {
     )
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'syslog',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 1500)
+  }, [])
   // useEffect(() => {
   //  // setGraphData(graphData)
   //   setTimeout(() => {

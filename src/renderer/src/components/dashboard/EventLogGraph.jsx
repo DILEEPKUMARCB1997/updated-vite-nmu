@@ -106,6 +106,7 @@ const EventLogGraph = () => {
   }
 
   useEffect(() => {
+    //setEventLogData(eventLogData)
     setTimeout(() => {
       dispatch(
         requestHistoryData({
