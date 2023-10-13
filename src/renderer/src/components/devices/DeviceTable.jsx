@@ -118,6 +118,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
     useSelector(discoverySelector)
 
+  console.log(showCheckBox)
+
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -334,18 +336,31 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-
+    // onChange: (selectedRowKeys, selectedRows, info) => {
+    //   console.log(
+    //     `selectedRowKeys: ${selectedRowKeys}`,
+    //     'selectedRows: ',
+    //     selectedRows,
+    //     'info: ',
+    //     info
+    //   )
+    // },
+    onSelect: (record, selected, selectedRows, nativeEvent) => {
+      console.log(record, selected, selectedRows, nativeEvent)
       dispatch(
         selectDiscoveryTable({
-          isSelect
+          isSelect: selected,
+          deviceData: [record.MACAddress]
         })
       )
     },
-    getCheckboxProps: (record) => ({
-      disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
-    })
+    getCheckboxProps: (record) => (
+      console.log(record),
+      {
+        disabled:
+          !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
+      }
+    )
   }
 
   // const handleCheckBoxChange = (isSelect) => {
@@ -419,13 +434,17 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
-          rowSelection={rowSelection}
-          onRow={(record) => {
+          rowSelection={showCheckBox ? rowSelection : undefined}
+          onRow={(record, rowIndex) => {
+            // console.log(record)
             return {
               onContextMenu: (event) => {
-                console.log(event)
-                setContextRecord(record)
-                handleContextMenu(event)
+                if (!record.isAUZ || !record.online) {
+                  event.preventDefault()
+                } else {
+                  setContextRecord(record)
+                  handleContextMenu(event)
+                }
               }
             }
           }}
