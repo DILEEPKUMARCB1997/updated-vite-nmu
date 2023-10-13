@@ -47,9 +47,9 @@ function Event() {
     { key: 'msg', title: 'Message', dataIndex: 'msg' }
   ]
 
-  // useEffect(() => {
-  //   setTableLoading(false)
-  // }, [])
+  useEffect(() => {
+    setTableLoading(false)
+  }, [])
 
   const handleHistoryButtonOnClick = () => {
     dispatch(
