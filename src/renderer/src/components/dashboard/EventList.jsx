@@ -22,7 +22,9 @@ const EventList = () => {
               ? '#F57F17'
               : '#D50000'
           }
-          item={item}
+          createAt={item.createAt}
+          hostname={item.hostname}
+          item={item.item}
         />
       ))}
     </div>

@@ -13,7 +13,6 @@ const DiskSpaceSummary = () => {
   useEffect(() => {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
       if (arg.success) {
-        console.log(arg)
         const diskUse = arg.data
         dispatch(initDiskUses(diskUse))
       } else {
@@ -22,8 +21,6 @@ const DiskSpaceSummary = () => {
     })
     window.electron.ipcRenderer.send(REQUEST_MP_GET_DISK_USES, {})
   }, [])
-
-  console.log(diskUses)
 
   const options = {
     series: [diskUses.diskUsed],

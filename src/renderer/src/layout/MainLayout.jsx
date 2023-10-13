@@ -17,15 +17,18 @@ import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGro
 import Dialogs from '../components/dialogs/Dialogs'
 import { closeDialog, dialogSelector, openDialog } from '../features/dialogSlice.js'
 import {
+  REQUEST_MP_DISCOVERY_ALL_DEVICES,
+  SEND_RP_ALL_DEVICES_LIST,
   SEND_RP_EVENT_LOG_UPDATE,
   SEND_RP_OPEN_NATIVE_MENU,
   SEND_RP_SNMP_SCAN_STATUS
 } from '../../../main/utils/IPCEvents'
 import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
-import { requestDiscoveryAfterLogin } from '../features/discoverySlice'
+import { requestDiscoveryAfterLogin, updateDiscoveryData } from '../features/discoverySlice'
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
 import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+import Snacks from '../components/Snack/Snacks'
 
 // import Snacks from '../components/Snack/Snacks'
 
@@ -43,26 +46,27 @@ const MainLayout = () => {
 
   useEffect(() => {
     setPathname(location.pathname || '/')
+  }, [location])
+
+  useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     dispatch(requestAppInitialData())
     dispatch(requestDiscoveryAfterLogin())
     setTimeout(() => {
-      dispatch(nextInitRenderStep())
+      nextInitRenderStep()
     }, 800)
     setTimeout(() => {
-      dispatch(nextInitRenderStep())
+      nextInitRenderStep()
     }, 1600)
     setTimeout(() => {
-      dispatch(nextInitRenderStep())
+      nextInitRenderStep()
     }, 2200)
     window.electron.ipcRenderer.on(SEND_RP_SNMP_SCAN_STATUS, SNMPStatusListener)
     window.electron.ipcRenderer.on(SEND_RP_EVENT_LOG_UPDATE, eventLogUpdateListener)
     return () => {
       window.electron.ipcRenderer.removeListener(SEND_RP_OPEN_NATIVE_MENU, nativeMenuListener)
     }
-  }, [location])
-
-  // useEffect(() => {})
+  }, [])
 
   const nativeMenuListener = (event, arg) => {
     console.log(arg)
@@ -78,6 +82,7 @@ const MainLayout = () => {
   }
 
   const SNMPStatusListener = (event, arg) => {
+    console.log(arg)
     if (arg.scanStatus === 'a') {
       dispatch(changeSnmpScanStep(arg.scanStatus))
       setTimeout(() => {

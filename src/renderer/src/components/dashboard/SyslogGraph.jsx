@@ -20,7 +20,6 @@ import { SyncOutlined } from '@ant-design/icons'
 const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
-  console.log(syslogGraphData)
 
   const [graphData, setGraphData] = useState({
     series: [

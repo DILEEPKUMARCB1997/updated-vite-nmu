@@ -27,6 +27,7 @@ import {
 } from '../../features/deviceBasiceOperatorSlice'
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
+import { userManagementSelector } from '../../features/userManagementSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -37,6 +38,8 @@ const DevicesControl = ({ onClose }) => {
   const dispatch = useDispatch()
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
+  const { loggedInUser } = useSelector(userManagementSelector)
+  const { userType } = loggedInUser
   const { modal } = App.useApp()
 
   useEffect(() => {

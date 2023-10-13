@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
 import {
   dashboardSelector,
-  requestHistoryData
+  requestHistoryData,
+  showTrapTableData
   //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
@@ -16,10 +17,9 @@ import { useThemeStore } from '../../utils/themes/useStore'
 const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
-  const { trapGraphData } = useSelector(dashboardSelector)
+  const { trapGraphData, tableData } = useSelector(dashboardSelector)
   const dispatch = useDispatch()
   // const { label, data, tableData, lastUpdated } = trapGraphData
-  console.log(trapGraphData)
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [
       {
@@ -37,7 +37,17 @@ const TrapGraphSummary = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: -5
+        offsetX: -5,
+        events: {
+          // dataPointSelection: (event, chartContext, config) => {
+          //   console.log(chartContext)
+          click: (e, element) => {
+            console.log(element.series.length)
+            // if (element.length > 0) {
+            //   onTrapGraphClick(element[0].index)
+            // }
+          }
+        }
       },
       legend: {
         show: true,
@@ -95,6 +105,11 @@ const TrapGraphSummary = () => {
       }
     }
   })
+
+  const onTrapGraphClick = (barIndex) => {
+    let tableData = tableData[barIndex]
+    dispatch(showTrapTableData(tableData))
+  }
 
   useEffect(() => {
     setTimeout(() => {
