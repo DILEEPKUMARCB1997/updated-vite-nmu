@@ -19,17 +19,19 @@ const BasicSnackTemplate = ({ onClose, props }) => {
     }
   })
   const handleSnackOnClose = (event, reason) => {
-    // if (reason === 'clickaway') {
-    //   return
-    // }
+    if (reason === 'clickaway') {
+      return
+    }
     closeSnack()
   }
-  const enableOKButton = () => {
-    selected.length > 0
-  }
+  // const enableOKButton = () => {
+  //   selected.length > 0
+  // }
+
+  const enableOKButton = selected.length > 0
+
   const closeSnack = () => {
     dispatch(clearDiscoverTableSelect())
-
     onClose()
   }
 
@@ -37,7 +39,7 @@ const BasicSnackTemplate = ({ onClose, props }) => {
     closeSnack()
   }
 
-  const handleOKButtonClick = () => {
+  const handleOKButtonOnClick = () => {
     props.handleOKButtonOnClick()
 
     closeSnack()
@@ -59,7 +61,12 @@ const BasicSnackTemplate = ({ onClose, props }) => {
           <Button key="cancel" type="primary" onClick={handleCancelButtonOnClick}>
             Cancel
           </Button>,
-          <Button key="OK" type="primary" disabled={!enableOKButton} onClick={handleOKButtonClick}>
+          <Button
+            key="OK"
+            type="primary"
+            disabled={!enableOKButton}
+            onClick={handleOKButtonOnClick}
+          >
             OK
           </Button>
         ]}

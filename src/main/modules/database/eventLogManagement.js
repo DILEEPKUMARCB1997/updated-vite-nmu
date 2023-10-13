@@ -22,6 +22,7 @@ function updateEventLog(data, type = 'event') {
         result = apiCore.db.updateSyslog(data, true)
         break
       case 'custom':
+        console.log('custom log data', data)
         result = apiCore.db.UpdateCustomEventLog(data, true)
         break
       default:
@@ -90,7 +91,7 @@ ipcMain.on(REQUEST_MP_GET_EVENT_LOG_HISTORY, (event, arg) => {
         data: result
       })
     }
-    // console.log('result', result);
+    // console.log('result', result)
   } catch (error) {
     console.log(error)
   }
