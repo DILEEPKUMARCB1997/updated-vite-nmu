@@ -123,10 +123,10 @@ const dashboardSlice = createSlice({
         ...state,
         customGraphData: {
           label: payload.label,
-          informationData: payload.InformationData,
-          criticalData: payload.CriticalData,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
           tableData: payload.tableResult,
-          warningData: payload.WarningData,
+          WarningData: payload.WarningData,
           lastUpdated: payload.lastUpdated
         }
       }

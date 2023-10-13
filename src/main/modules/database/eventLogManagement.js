@@ -22,6 +22,7 @@ function updateEventLog(data, type = 'event') {
         result = apiCore.db.updateSyslog(data, true)
         break
       case 'custom':
+        console.log('data', data)
         result = apiCore.db.UpdateCustomEventLog(data, true)
         break
       default:

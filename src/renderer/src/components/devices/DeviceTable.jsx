@@ -115,7 +115,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   // const [orderBy, setOrderBy] = useState('')
   // const [searchValue, setSearchValue] = useState('')
 
-  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
+  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
   const [inputSearch, setInputSearch] = useState('')
@@ -332,14 +332,15 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-
+  const enableOk = selected.length !== 0
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
 
       dispatch(
         selectDiscoveryTable({
-          isSelect
+          isSelect,
+          deviceData
         })
       )
     },
@@ -347,14 +348,27 @@ const DeviceTable = ({ deviceData = [] }) => {
       disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
     })
   }
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+
+  //     dispatch(
+  //       selectDiscoveryTable({
+  //         isSelect
+  //       })
+  //     )
+  //   },
+  //   getCheckboxProps: (record) => ({
+  //     disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
+  //   })
+  // }
 
   // const handleCheckBoxChange = (isSelect) => {
-  //   console.log(isSelect)
-  //   // dispatch(
-  //   //   selectDiscoveryTable({
-  //   //     isSelect
-  //   //   })
-  //   // )
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect
+  //     })
+  //   )
   // }
 
   return (
@@ -419,7 +433,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
-          rowSelection={rowSelection}
+          rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record) => {
             return {
               onContextMenu: (event) => {
