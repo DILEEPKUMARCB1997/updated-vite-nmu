@@ -30,9 +30,9 @@ const TIPS_TEXT =
 const results = ['WAITING', 'SUCCESS', 'ERROR']
 const columns = [
   {
-    title: 'Modal',
-    dataIndex: 'modal',
-    key: 'modal',
+    title: 'Model',
+    dataIndex: 'model',
+    key: 'model',
     sorter: (a, b) => a.modal - b.modal
   },
   {
@@ -98,17 +98,17 @@ const DeviceList = () => {
   // const dataSource = Object.entries(deviceStatus).map(([key, row]) => {
   //   return row[key.dataIndex]
   // })
-  const dataSource = []
-  useEffect(() => {
-    dataSource.push(deviceStatus)
-    console.log(dataSource)
-  }, [])
+  // const dataSource = []
+  // useEffect(() => {
+  //   dataSource.push(deviceStatus)
+  //   console.log(dataSource)
+  // }, [])
 
-  const data = Object.entries(deviceStatus).map(([key, value]) => ({
+  const data = Object.entries(deviceStatus).map(([key, element]) => ({
     key,
     MACAddress: key,
-    IPAddress: value.IPAddress,
-    model: value.model
+    IPAddress: element.IPAddress,
+    model: element.model
   }))
 
   return (
