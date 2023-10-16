@@ -50,17 +50,16 @@ const DeviceList = () => {
   const { useToken } = theme
   const { token } = useToken()
   const dataSource = []
-  useEffect(() => {
-    dataSource.push(deviceStatus)
-    console.log(dataSource)
-  }, [])
 
   const data = Object.entries(deviceStatus).map(([key, value]) => ({
+    value,
     key,
     MACAddress: key,
     IPAddress: value.IPAddress,
-    model: value.model
+    modal: value.model
   }))
+  console.log('trap Data', data)
+
   return (
     <ConfigProvider
       theme={{

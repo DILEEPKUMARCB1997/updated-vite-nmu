@@ -102,14 +102,13 @@ const ResetToDefaultDialog = ({ onClose }) => {
   //     model: value.model
   //   }))
   // }
-  const deviceDataList = [
-    Object.entries(resetToDefaultStatus).map(([key, element]) => ({
-      key,
-      MACAddress: key,
-      IPAddress: element.IPAddress,
-      model: element.model
-    }))
-  ]
+  const deviceDataList = Object.entries(resetToDefaultStatus).map(([key, element]) => ({
+    key,
+    MACAddress: key,
+    IPAddress: element.IPAddress,
+    modal: element.model
+  }))
+
   // const dataSource = [{}]
 
   return (

@@ -108,7 +108,7 @@ const DeviceList = () => {
     key,
     MACAddress: key,
     IPAddress: value.IPAddress,
-    model: value.model
+    modal: value.model
   }))
 
   return (
