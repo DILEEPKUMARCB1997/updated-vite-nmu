@@ -10,9 +10,9 @@ const ERROR = 2
 const results = ['WAITING', 'SUCCESS', 'ERROR']
 const columns = [
   {
-    title: 'Modal',
-    dataIndex: 'modal',
-    key: 'modal',
+    title: 'Model',
+    dataIndex: 'model',
+    key: 'model',
     sorter: (a, b) => a.modal - b.modal
   },
   {
@@ -45,21 +45,23 @@ const columns = [
 ]
 const DeviceList = () => {
   const { isTaskRunning, deviceStatus } = useSelector(trapSettingSelector)
-  console.log(isTaskRunning)
+  // console.log(isTaskRunning)
 
   const { useToken } = theme
   const { token } = useToken()
-  const dataSource = []
+  // const dataSource = []
+  // useEffect(() => {
+  //   dataSource.push(deviceStatus)
+  //   console.log(dataSource)
+  // }, [])
 
-  const data = Object.entries(deviceStatus).map(([key, value]) => ({
-    value,
-    key,
+  const data = Object.entries(deviceStatus).map(([key, element]) => ({
+    // key,
     MACAddress: key,
-    IPAddress: value.IPAddress,
-    modal: value.model
+    IPAddress: element.IPAddress,
+    model: element.model
   }))
-  console.log('trap Data', data)
-
+  console.log(data)
   return (
     <ConfigProvider
       theme={{

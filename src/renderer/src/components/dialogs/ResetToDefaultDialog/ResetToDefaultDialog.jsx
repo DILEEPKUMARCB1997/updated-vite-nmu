@@ -20,9 +20,9 @@ const results = ['WAITING', 'SUCCESS', 'ERROR']
 
 const columns = [
   {
-    title: 'Modal',
-    dataIndex: 'modal',
-    key: 'modal',
+    title: 'Model',
+    dataIndex: 'model',
+    key: 'model',
     sorter: (a, b) => a.modal - b.modal
   },
   {
@@ -102,11 +102,11 @@ const ResetToDefaultDialog = ({ onClose }) => {
   //     model: value.model
   //   }))
   // }
-  const deviceDataList = Object.entries(resetToDefaultStatus).map(([key, element]) => ({
+  const data = Object.entries(resetToDefaultStatus).map(([key, element]) => ({
     key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    modal: element.model
+    model: element.model
   }))
 
   // const dataSource = [{}]
@@ -148,12 +148,12 @@ const ResetToDefaultDialog = ({ onClose }) => {
               size="middle"
               // dataSource={resetToDefaultStatus}
               columns={columns}
-              dataSource={deviceDataList}
+              dataSource={data}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                total: deviceDataList.length,
+                total: data.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
