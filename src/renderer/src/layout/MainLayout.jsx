@@ -82,7 +82,7 @@ const MainLayout = () => {
   }
 
   const SNMPStatusListener = (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (arg.scanStatus === 'a') {
       dispatch(changeSnmpScanStep(arg.scanStatus))
       setTimeout(() => {
@@ -95,7 +95,7 @@ const MainLayout = () => {
   }
 
   const eventLogUpdateListener = (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (!openBeepDialog && arg.type === 'custom') {
       dispatch(updateBeepSoundStart())
       dispatch(openDialog('buzzer'))

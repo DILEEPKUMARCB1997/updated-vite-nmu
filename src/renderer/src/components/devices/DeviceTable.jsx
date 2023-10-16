@@ -118,6 +118,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
+  // console.log(showCheckBox)
+
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
     return dataSource.filter((row) => {
@@ -333,20 +335,32 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
   const enableOk = selected.length !== 0
+  // const isSupportSNMP = deviceType !== 'gwd'
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-
+    // onChange: (selectedRowKeys, selectedRows, info) => {
+    //   console.log(
+    //     `selectedRowKeys: ${selectedRowKeys}`,
+    //     'selectedRows: ',
+    //     selectedRows,
+    //     'info: ',
+    //     info
+    //   )
+    // },
+    onSelect: (record, selected, selectedRows, nativeEvent) => {
+      console.log(record, selected, selectedRows, nativeEvent)
       dispatch(
         selectDiscoveryTable({
-          isSelect,
-          deviceData
+          isSelect: selected,
+          deviceData: [record.MACAddress]
         })
       )
     },
-    getCheckboxProps: (record) => ({
-      disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
-    })
+    getCheckboxProps: (record, deviceType) => (
+      console.log(record),
+      {
+        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+      }
+    )
   }
   // const rowSelection = {
   //   onChange: (selectedRowKeys, selectedRows) => {
@@ -434,12 +448,17 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceType: 'localStorage'
           }}
           rowSelection={showCheckBox ? rowSelection : undefined}
-          onRow={(record) => {
+          // onRow={(record) => {
+          onRow={(record, rowIndex) => {
+            // console.log(record)
             return {
               onContextMenu: (event) => {
-                console.log(event)
-                setContextRecord(record)
-                handleContextMenu(event)
+                if (!record.isAUZ || !record.online) {
+                  event.preventDefault()
+                } else {
+                  setContextRecord(record)
+                  handleContextMenu(event)
+                }
               }
             }
           }}

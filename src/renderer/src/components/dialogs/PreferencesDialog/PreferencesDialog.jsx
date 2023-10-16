@@ -95,8 +95,8 @@ const PreferencesDialog = ({ onClose }) => {
     (state) => !Object.values(state[selectedPage].validsData).includes(false)
   )
 
-  console.log(configChangeFlag)
-  console.log(configValidFlag)
+  // console.log(configChangeFlag)
+  // console.log(configValidFlag)
 
   const handleMenuItemClick = ({ key }) => {
     console.log(key)

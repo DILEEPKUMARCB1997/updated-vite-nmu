@@ -55,9 +55,10 @@ function Syslog() {
   const { useToken } = theme
   const { token } = useToken()
   const { syslogData } = useSelector(eventLogSelector)
-  console.log(syslogData)
+  // console.log(syslogData)
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
+
   useEffect(() => {
     setTableLoading(false)
   }, [])

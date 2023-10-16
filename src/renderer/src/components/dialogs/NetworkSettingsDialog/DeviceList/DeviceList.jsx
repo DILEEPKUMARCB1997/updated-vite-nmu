@@ -58,8 +58,19 @@ const DeviceList = () => {
 
   const dataSource = []
   useEffect(() => {
-    dataSource.push(deviceList)
-    console.log(dataSource)
+    // dataSource.push(deviceList)
+    // console.log(dataSource)
+    Object.entries(deviceList).map(([key, value]) => {
+      console.log(value)
+      let deviceStatus = 'active'
+      if (value.status !== undefined) {
+        if (value.status) {
+          deviceStatus = 'success'
+        } else {
+          deviceStatus = 'exception'
+        }
+      }
+    })
   })
 
   const handleStartAddressInputChange = (e) => {

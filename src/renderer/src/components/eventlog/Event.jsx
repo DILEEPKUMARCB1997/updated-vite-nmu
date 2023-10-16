@@ -18,7 +18,7 @@ function Event() {
   const { useToken } = theme
   const { token } = useToken()
   const { eventData } = useSelector(eventLogSelector)
-  console.log(eventData)
+  // console.log(eventData)
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
   const columns = [
