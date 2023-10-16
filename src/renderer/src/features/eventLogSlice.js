@@ -8,7 +8,7 @@ import {
 
 export const updateEventLog = (payload) => (dispatch) => {
   const { type, data } = payload
-  console.log(data)
+  // console.log(data)
 
   switch (type) {
     case 'trap':
@@ -54,10 +54,10 @@ export const initEventDailyData = (payload) => (dispatch) => {
 
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     const { type, data } = arg
-    console.log(type)
-    console.log(data)
+    // console.log(type)
+    // console.log(data)
     switch (type) {
       case 'event':
         dispatch(updateEventHistory(data))

@@ -9,23 +9,23 @@ import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
-
+  // console.log(customGraphData)
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
         name: 'Information',
         color: '#46b300',
-        data: customGraphData.informationData
+        data: customGraphData.InformationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: customGraphData.warningData
+        data: customGraphData.WarningData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: customGraphData.criticalData
+        data: customGraphData.CriticalData
       }
     ],
     options: {
@@ -84,7 +84,6 @@ const EventLogGraph = () => {
           }
         }
       },
-
       yaxis: {
         title: {
           lines: {

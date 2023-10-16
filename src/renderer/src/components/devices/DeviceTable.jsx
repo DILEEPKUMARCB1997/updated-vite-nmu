@@ -115,10 +115,10 @@ const DeviceTable = ({ deviceData = [] }) => {
   // const [orderBy, setOrderBy] = useState('')
   // const [searchValue, setSearchValue] = useState('')
 
-  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox } =
+  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
-  console.log(showCheckBox)
+  // console.log(showCheckBox)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -334,7 +334,8 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-
+  const enableOk = selected.length !== 0
+  // const isSupportSNMP = deviceType !== 'gwd'
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows, info) => {
     //   console.log(
@@ -354,22 +355,34 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
-    getCheckboxProps: (record) => (
+    getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
-        disabled:
-          !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
+        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
   }
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+
+  //     dispatch(
+  //       selectDiscoveryTable({
+  //         isSelect
+  //       })
+  //     )
+  //   },
+  //   getCheckboxProps: (record) => ({
+  //     disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
+  //   })
+  // }
 
   // const handleCheckBoxChange = (isSelect) => {
-  //   console.log(isSelect)
-  //   // dispatch(
-  //   //   selectDiscoveryTable({
-  //   //     isSelect
-  //   //   })
-  //   // )
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect
+  //     })
+  //   )
   // }
 
   return (
@@ -435,6 +448,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceType: 'localStorage'
           }}
           rowSelection={showCheckBox ? rowSelection : undefined}
+          // onRow={(record) => {
           onRow={(record, rowIndex) => {
             // console.log(record)
             return {

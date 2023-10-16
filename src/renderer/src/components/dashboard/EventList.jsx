@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
-  console.log(customEventListData)
+  // console.log(customEventListData)
 
   return (
     <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
@@ -22,9 +22,7 @@ const EventList = () => {
               ? '#F57F17'
               : '#D50000'
           }
-          createAt={item.createAt}
-          hostname={item.hostname}
-          item={item.item}
+          item={item}
         />
       ))}
     </div>

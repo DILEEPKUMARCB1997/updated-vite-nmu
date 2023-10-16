@@ -34,8 +34,8 @@ const EventTips = () => {
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
 
   var disableOK = selected.length === 0
-  console.log(disableOK)
-  console.log(selected)
+  // console.log(disableOK)
+  // console.log(selected)
 
   const handleOKOnClick = () => {
     console.log(batchOperateEvent)

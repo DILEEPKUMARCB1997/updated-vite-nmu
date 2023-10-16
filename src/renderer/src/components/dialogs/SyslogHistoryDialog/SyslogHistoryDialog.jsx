@@ -60,7 +60,7 @@ function SyslogHistoryDialog({ onClose }) {
   const { useToken } = theme
   const { token } = useToken()
   const { syslogHistoryData } = useSelector(eventLogSelector)
-  console.log(syslogHistoryData)
+  // console.log(syslogHistoryData)
 
   const dispatch = useDispatch()
   const [sourceIP, setSourceIP] = useState()

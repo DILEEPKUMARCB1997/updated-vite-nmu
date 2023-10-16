@@ -23,7 +23,7 @@ export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     // console.log(type)
-    console.log(data)
+    // console.log(data)
     switch (type) {
       case 'event':
         break
@@ -123,10 +123,10 @@ const dashboardSlice = createSlice({
         ...state,
         customGraphData: {
           label: payload.label,
-          informationData: payload.InformationData,
-          criticalData: payload.CriticalData,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
           tableData: payload.tableResult,
-          warningData: payload.WarningData,
+          WarningData: payload.WarningData,
           lastUpdated: payload.lastUpdated
         }
       }
