@@ -40,6 +40,8 @@
     "get-ip-range": "^4.0.1",
     "ini": "^4.1.1",
     "ip": "^1.1.8",
+    "ip-address": "^9.0.5",
+    "ip-regex": "^5.0.0",
     "mv": "^2.1.1",
     "net-snmp": "^3.9.6",
     "node-cron": "^3.0.2",
@@ -48,6 +50,7 @@
     "node-unzip-2": "^0.2.8",
     "nodemailer": "^6.9.3",
     "npm-check-updates": "^16.10.18",
+    "patch-package": "^8.0.0",
     "path": "^0.12.7",
     "ping": "^0.4.4",
     "react-apexcharts": "^1.4.0",
@@ -75,7 +78,7 @@
     "electron": "^23.0.0",
     "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
-    "electron-vite": "^1.0.23",
+    "electron-vite": "^1.0.28",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -85,10 +88,11 @@
     "react-dom": "^18.2.0",
     "react-error-overlay": "^6.0.9",
     "react-graph-vis": "^1.0.7",
-    "vite": "^4.3.9",
-    "webpack": "^5.88.0",
     "resolutions": {
       "react-error-overlay": "6.0.9"
-    }
+    },
+    "vite": "^4.3.9",
+    "vite-plugin-node-polyfills": "^0.15.0",
+    "webpack": "^5.88.0"
   }
 }

@@ -8,37 +8,44 @@ import { useDispatch } from 'react-redux'
 const TrapConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
-  const [trapServerIP, setTrapServerIP] = useState('')
-  // console.log(trapServerIP)
-  const [trapServerPort, setTrapServerPort] = useState(162)
-  // console.log(trapServerPort)
-  const [trapCommString, setTrapCommString] = useState('')
+  // const [trapServerIP, setTrapServerIP] = useState('')
+  // // console.log(trapServerIP)
+  // const [trapServerPort, setTrapServerPort] = useState(162)
+  // // console.log(trapServerPort)
+  // const [trapCommString, setTrapCommString] = useState('')
   // console.log(trapCommString)
+  // const [trapServerIP, setTrapServerIP] = useState('')
+  // console.log(trapServerIP)
+  // const [trapServerPort, setTrapServerPort] = useState(162)
+  // console.log(trapServerPort)
+  // const [trapCommString, setTrapCommString] = useState('')
+  // console.log(trapCommString)
+  const [state, setState] = useState({ trapServerIP: '', trapServerPort: 162, trapCommString: '' })
 
   const { useToken } = theme
   const { token } = useToken()
 
   const handleServerInputChange = (event) => {
-    setTrapServerIP(event.target.value)
+    setState({ ...state, trapServerIP: event.target.value })
   }
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
-        setTrapServerPort(event.target.value)
+        setState({ ...state, trapServerPort: event.target.value })
       }
     } else {
-      setTrapServerPort(event.target.value)
+      setState({ ...state, trapServerPort: event.target.value })
     }
   }
   const handleCommInputChange = (event) => {
-    setTrapCommString(event.target.value)
+    setState({ ...state, trapCommString: event.target.value })
   }
 
   const handleOnStartButton = () => {
     //console.log(this.state);
-    if (ValidateIPaddress(trapServerIP)) {
-      if (trapCommString !== '') {
-        dispatch(startTask({ trapServerIP, trapServerPort, trapCommString }))
+    if (ValidateIPaddress(state.trapServerIP)) {
+      if (state.trapCommString !== '') {
+        dispatch(startTask(state))
       } else {
         notification.error({ message: 'Ivalid trap server comm string' })
       }
@@ -90,7 +97,7 @@ const TrapConfiguration = () => {
               <Input
                 // status={trapServerIP === '' ? 'ServerIP is required' : ''}
                 placeholder=" Trap Server IP"
-                value={trapServerIP}
+                value={state.trapServerIP}
                 onChange={handleServerInputChange}
               />
             </Form.Item>
@@ -102,7 +109,7 @@ const TrapConfiguration = () => {
               colon={false}
               help={
                 <Typography style={{ color: 'red' }}>
-                  {trapServerPort === '' ? 'Server port is required' : ''}
+                  {state.trapServerPort === '' ? 'Server port is required' : ''}
                 </Typography>
               }
               style={{ color: token.colorError, width: '230px', paddingTop: '10px' }}
@@ -111,7 +118,7 @@ const TrapConfiguration = () => {
                 type="number"
                 placeholder="Trap Server Port"
                 style={{ width: '230px' }}
-                value={trapServerPort}
+                value={state.trapServerPort}
                 onChange={handleServerPortChange}
               />
             </Form.Item>
@@ -130,7 +137,7 @@ const TrapConfiguration = () => {
               <Input
                 // status={trapCommString === '' ? 'Trap Comm string is required' : ''}
                 placeholder="Trap Comm String"
-                value={trapCommString}
+                value={state.trapCommString}
                 onChange={handleCommInputChange}
               />
             </Form.Item>
@@ -143,7 +150,7 @@ const TrapConfiguration = () => {
             <Button
               type="primary"
               onClick={handleOnStartButton}
-              disabled={trapServerIP === '' || trapCommString === ''}
+              disabled={state.trapServerIP === '' || state.trapCommString === ''}
             >
               Start
             </Button>

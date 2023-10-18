@@ -20,7 +20,7 @@ export const initNetworkSettingData = () => (dispatch, getState) => {
     const { model, deviceType, IPAddress } = defaultDeviceData[MACAddress]
     deviceList = {
       ...deviceList,
-      [MACAddress]: { model, deviceType, oldIPAddress: IPAddress, IpAddress: '', isValidIP: false }
+      [MACAddress]: { model, deviceType, oldIPAddress: IPAddress, IPAddress: '', isValidIP: false }
     }
   })
   dispatch(initializeNetworkSettingData({ deviceList, deviceNum }))
@@ -79,7 +79,7 @@ export const setSingleDeviceAddress = (payload) => (dispatch, getState) => {
   const { MACAddress, newIPAddress } = payload
   const { isValidIP, IPAddress } = getState().networkSetting.deviceList[MACAddress]
   existIP.splice(existIP.indexOf(ip.toLong(IPAddress)), 1)
-
+  console.log(getState().networkSetting)
   const newIsValidIP = IPFormat.test(newIPAddress) && !existIP.includes(ip.toLong(newIPAddress))
   if (newIsValidIP ^ isValidIP) {
     if (newIsValidIP) {
@@ -101,7 +101,7 @@ export const setSingleDeviceAddress = (payload) => (dispatch, getState) => {
 }
 
 const networkSettingResultListener = (dispatch) => (event, arg) => {
-  //console.log(arg);
+  console.log(arg)
   dispatch(setDeviceSettingStatus({ MACAddress: arg.data.MACAddress, status: arg.success }))
 }
 
@@ -196,10 +196,11 @@ const networkSettingSlice = createSlice({
         },
         completeNum: state.completeNum + 1,
         failNum: status ? state.failNum : state.failNum + 1,
-        stats: statusList[state.completeNum + 1 === state.deviceNum ? 2 : 1]
+        status: statusList[state.completeNum + 1 === state.deviceNum ? 2 : 1]
       }
     },
     setCalculateResultData: (state, { payload }) => {
+      console.log('calculate', payload)
       return {
         ...state,
         deviceList: payload.newDeviceList,
@@ -224,6 +225,7 @@ const networkSettingSlice = createSlice({
       }
     },
     setNetworkSettingAddress: (state, { payload }) => {
+      console.log('payload netmask', payload)
       const { type, validType, value } = payload
       return { ...state, [type]: value, [validType]: IPFormat.test(value) }
     },
@@ -278,6 +280,7 @@ const networkSettingSlice = createSlice({
       return { ...state, startAddress: payload, validStartAddress: IPFormat.test(payload) }
     },
     changeNetworkSettingStatus: (state, { payload }) => {
+      console.log(payload)
       return {
         ...state,
         status: statusList[payload]
