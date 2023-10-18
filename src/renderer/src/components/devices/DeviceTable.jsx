@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { App, Badge, ConfigProvider, Checkbox } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { App, Badge, ConfigProvider, Checkbox, Modal, Spin } from 'antd'
+import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
 import { ProTable } from '@ant-design/pro-components'
@@ -23,6 +23,7 @@ import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreS
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
 import { openPortInfoDrawer, initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
+import { UIControlSelector } from '../../features/UIControllSlice'
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
@@ -101,6 +102,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
+  const { showCheckSNMPModal } = useSelector(UIControlSelector)
   const { modal } = App.useApp()
 
   const showCheckSNMPFailModal = () => {
@@ -468,9 +470,30 @@ const DeviceTable = ({ deviceData = [] }) => {
           record={contextRecord}
           onMenuClick={handleItemClick}
         />
+        <Modal
+          maskClosable={false}
+          bodyStyle={{ fontSize: '25px' }}
+          closable={false}
+          title=""
+          centered
+          footer={null}
+          open={showCheckSNMPModal}
+        >
+          <Spin indicator={antIcon} size="large" />
+          {'Checking SNMP feature...'}
+        </Modal>
       </ConfigProvider>
     </div>
   )
 }
+const antIcon = (
+  <LoadingOutlined
+    style={{
+      fontSize: 30,
+      marginRight: '15px'
+    }}
+    spin
+  />
+)
 
 export default DeviceTable
