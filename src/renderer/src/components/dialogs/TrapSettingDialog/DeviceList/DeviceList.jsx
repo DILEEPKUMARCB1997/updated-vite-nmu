@@ -56,10 +56,11 @@ const DeviceList = () => {
   // }, [])
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
-    // key,
+    key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
   console.log(data)
   return (

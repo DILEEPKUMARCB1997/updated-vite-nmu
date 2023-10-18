@@ -3,7 +3,8 @@ import {
   RESPONSE_RP_RESET_TO_DEFAULT,
   REQUEST_MP_RESET_TO_DEFAULT
 } from '../../../main/utils/IPCEvents'
-import { openDialog } from '../features/dialogSlice'
+// import { openDialog } from '../features/dialogSlice'
+import { openDialog } from './dialogSlice'
 
 const WAITING = 0
 const SUCCESS = 1

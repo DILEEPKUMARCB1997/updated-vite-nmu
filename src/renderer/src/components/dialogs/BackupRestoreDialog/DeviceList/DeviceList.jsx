@@ -5,7 +5,7 @@ import {
   Select,
   Button,
   Progress,
-  notification,
+  App,
   Typography,
   Table,
   Alert,
@@ -61,26 +61,34 @@ const columns = [
       ) : (
         <span>WAITING</span>
       )
+    // element ? (
+    //   <span style={{ color: 'green' }}>SUCCESS</span>
+    // ) : (
+    //   <span style={{ color: 'red' }}>ERROR</span>
+    // )
   }
 ]
 
 const DeviceList = () => {
   const { useToken } = theme
   const { token } = useToken()
+  const { notification } = App.useApp()
   const dispatch = useDispatch()
   const { mode, isTaskRunning, isRestoreFisish, deviceStatus } = useSelector(backupRestoreSelector)
   console.log(deviceStatus)
+
   const handleModeSelectOnChange = (mode) => {
     dispatch(changeMode({ mode }))
   }
+
   const handleStartButtonOnClick = () => {
     dispatch(
       startTask((msg) => {
-        notification.error({
-          message: msg
-        })
+        notification.error({ massage: msg })
       })
     )
+    // dispatch(startTask())
+    // dispatch(startTask())
   }
   const handleDeviceListItemOnClick = (MACAddress) => () => {
     dispatch(deviceSelect({ selectDevice: MACAddress }))
@@ -108,7 +116,8 @@ const DeviceList = () => {
     key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
 
   return (
@@ -170,18 +179,16 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
+                percent={deviceStatus === 'active' ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'
                 }}
-                percent={20}
               />
             ) : (
               <Button
-                disabled={isTaskRunning || isRestoreFisish}
-                variant="outlined"
-                size="small"
                 type="primary"
+                disabled={isTaskRunning || isRestoreFisish}
                 onClick={handleStartButtonOnClick}
               >
                 Start

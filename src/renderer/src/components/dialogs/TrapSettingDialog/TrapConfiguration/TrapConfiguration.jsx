@@ -9,11 +9,11 @@ const TrapConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
   const [trapServerIP, setTrapServerIP] = useState('')
-  console.log(trapServerIP)
+  // console.log(trapServerIP)
   const [trapServerPort, setTrapServerPort] = useState(162)
-  console.log(trapServerPort)
+  // console.log(trapServerPort)
   const [trapCommString, setTrapCommString] = useState('')
-  console.log(trapCommString)
+  // console.log(trapCommString)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -38,7 +38,7 @@ const TrapConfiguration = () => {
     //console.log(this.state);
     if (ValidateIPaddress(trapServerIP)) {
       if (trapCommString !== '') {
-        dispatch(startTask())
+        dispatch(startTask({ trapServerIP, trapServerPort, trapCommString }))
       } else {
         notification.error({ message: 'Ivalid trap server comm string' })
       }

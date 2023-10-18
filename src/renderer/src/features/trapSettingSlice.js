@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { openDialog } from '../features/dialogSlice'
+// import { openDialog } from '../features/dialogSlice'
+import { openDialog } from './dialogSlice'
 import { RESPONSE_RP_TRAP_SETTING, REQUEST_MP_TRAP_SETTING } from '../../../main/utils/IPCEvents'
 
 const WAITING = 0
@@ -33,13 +34,14 @@ export const startTask = (param) => (dispatch, getState) => {
       //callback('There is some problem in syslog setting process.');
       dispatch(updateAllDeviceStatusError())
     } else {
-      const { success } = arg
-      const { MACAddress } = arg.data
-      dispatch(updateDeviceStatus({ MACAddress, success }))
+      // const { success } = arg
+      // const { MACAddress } = arg.data
+      dispatch(updateDeviceStatus({ MACAddress: arg.data.MACAddress, status: arg.success }))
     }
     const { finish } = arg.data
     if (finish) {
       window.electron.ipcRenderer.removeAllListeners(RESPONSE_RP_TRAP_SETTING)
+      // dispatch(setTaskRunning(false))
       dispatch(setTaskRunning(false))
     }
   })
@@ -60,14 +62,24 @@ const trapSettingSlice = createSlice({
       })
       return { ...state, deviceStatus }
     },
-    updateDeviceStatus: (state, action) => {
-      const { MACAddress, success } = action.payload
+    updateDeviceStatus: (state, { payload }) => {
+      const { MACAddress, success } = payload
       const deviceStatus = { ...state.deviceStatus }
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      return { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
+      // return {
+      //   ...state,
+      //   deviceStatus: {
+      //     ...state.deviceStatus,
+      //     [MACAddress]: {
+      //       ...(state.deviceStatus[MACAddress].status = success ? SUCCESS : ERROR)
+      //     }
+      //   }
+      // }
     },
+
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
     },

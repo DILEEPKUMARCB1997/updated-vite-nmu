@@ -106,7 +106,8 @@ const ResetToDefaultDialog = ({ onClose }) => {
     key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
 
   // const dataSource = [{}]
@@ -162,7 +163,9 @@ const ResetToDefaultDialog = ({ onClose }) => {
             ></Table>
             {/* <Table columns={columns} dataSource={deviceDataList} /> */}
           </div>
-          {taskStatus === RUNNING && <Progress percent={20} size="small" />}
+          {taskStatus === RUNNING && (
+            <Progress size="small" percent={taskStatus === 'active' ? 0 : 100} />
+          )}
           <div>
             {taskStatus === WAITING && (
               <Button

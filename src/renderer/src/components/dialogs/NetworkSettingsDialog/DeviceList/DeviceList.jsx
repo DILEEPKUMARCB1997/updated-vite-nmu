@@ -56,22 +56,28 @@ const DeviceList = () => {
     }
   ]
 
-  const dataSource = []
-  useEffect(() => {
-    // dataSource.push(deviceList)
-    // console.log(dataSource)
-    Object.entries(deviceList).map(([key, value]) => {
-      console.log(value)
-      let deviceStatus = 'active'
-      if (value.status !== undefined) {
-        if (value.status) {
-          deviceStatus = 'success'
-        } else {
-          deviceStatus = 'exception'
-        }
-      }
-    })
-  })
+  // const dataSource = []
+  // useEffect(() => {
+  //   // dataSource.push(deviceList)
+  //   // console.log(dataSource)
+  //   Object.entries(deviceList).map(([key, value]) => {
+  //     console.log(value)
+  //     let deviceStatus = 'active'
+  //     if (value.status !== undefined) {
+  //       if (value.status) {
+  //         deviceStatus = 'success'
+  //       } else {
+  //         deviceStatus = 'exception'
+  //       }
+  //     }
+  //   })
+  // })
+  const data = Object.entries(deviceList).map(([key, element]) => ({
+    key,
+    MACAddress: key,
+    IPAddress: element.IPAddress,
+    model: element.model
+  }))
 
   const handleStartAddressInputChange = (e) => {
     dispatch(setStartAddress(e.target.value))
@@ -123,13 +129,13 @@ const DeviceList = () => {
         <Table
           rowKey={deviceList.key}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={data}
           size="small"
           pagination={{
             position: ['bottomRight'],
             showQuickJumper: true,
             size: 'small',
-            total: dataSource.length,
+            total: data.length,
             defaultPageSize: 5,
             pageSizeOptions: [5, 10, 15, 20],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
