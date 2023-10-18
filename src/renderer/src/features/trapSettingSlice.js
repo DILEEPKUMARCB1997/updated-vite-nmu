@@ -26,7 +26,7 @@ export const startTask = (param) => (dispatch, getState) => {
   //console.log(param);
   const { deviceStatus } = getState().trapSetting
   const devices = Object.keys(deviceStatus)
-  //console.log(devices);
+  console.log(devices)
   window.electron.ipcRenderer.on(RESPONSE_RP_TRAP_SETTING, (event, arg) => {
     const { type } = arg
     if (type === 1) {
@@ -66,7 +66,7 @@ const trapSettingSlice = createSlice({
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      return { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
     },
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
@@ -75,7 +75,7 @@ const trapSettingSlice = createSlice({
       const { deviceStatus } = action.payload
       return { ...state, deviceStatus }
     },
-    clearData: (state, action) => {
+    clearData: () => {
       return { deviceStatus: {}, isTaskRunning: false }
     }
   }

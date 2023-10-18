@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   calculateIPAddress,
   networkSettingSelector,
+  setSingleDeviceAddress,
   setStartAddress
 } from '../../../../features/networkSettingSlice'
 
@@ -45,14 +46,36 @@ const DeviceList = () => {
       key: 'IPAddress',
       width: 130,
       align: 'center',
-      action: <Input />
+      render: (text, record) => (
+        console.log('record', record),
+        (
+          <Input
+            value={record.IPAddress}
+            status={!record.isValidIP ? 'error' : null}
+            disabled={status !== 'wait' || isDHCP}
+            onChange={handleIPAddressInputChange(record.key)}
+          />
+        )
+      )
     },
     {
       title: 'Progress',
       dataIndex: 'progress',
       key: 'progress',
       width: 80,
-      align: 'center'
+      align: 'center',
+      render: (text, record) => (
+        console.log('progress record', record),
+        (
+          <Progress
+            type="circle"
+            size={50}
+            strokeWidth={10}
+            status={record.deviceStatus}
+            percent={record.deviceStatus === 'active' ? 0 : 100}
+          />
+        )
+      )
     }
   ]
 
@@ -73,19 +96,40 @@ const DeviceList = () => {
   //   })
   // })
 
-  const data = Object.entries(deviceList).map(([key, value]) => ({
-    key,
-    value
-  }))
+  const data = Object.entries(deviceList).map(([key, value]) => {
+    let deviceStatus = 'active'
+    if (value.status !== undefined) {
+      if (value.status) {
+        deviceStatus = 'success'
+      } else {
+        deviceStatus = 'exception'
+      }
+    }
+    return {
+      key,
+      value,
+      model: value.model,
+      MACAddress: key,
+      deviceStatus,
+      isValidIP: value.isValidIP,
+      IPAddress: value.IPAddress
+    }
+  })
 
   console.log('net data', data)
 
   const handleStartAddressInputChange = (e) => {
+    console.log(e)
     dispatch(setStartAddress(e.target.value))
   }
 
   const handleCalculateButtonClick = () => {
     dispatch(calculateIPAddress())
+  }
+
+  const handleIPAddressInputChange = (MACAddress) => (event) => {
+    console.log(event.target.value)
+    dispatch(setSingleDeviceAddress({ newIPAddress: event.target.value, MACAddress }))
   }
 
   return (
@@ -102,6 +146,7 @@ const DeviceList = () => {
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <Form.Item label="Start Address" colon={false} style={{ margin: '0px', tableLayout: true }}>
           <Input
+            // status={validStartAddress ? null : 'error'}
             value={startAddress}
             disabled={status !== 'wait' || isDHCP}
             onChange={handleStartAddressInputChange}
@@ -130,7 +175,7 @@ const DeviceList = () => {
         <Table
           rowKey={deviceList.key}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={data}
           size="small"
           pagination={{
             position: ['bottomRight'],

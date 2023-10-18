@@ -23,9 +23,21 @@ const Settings = () => {
     validDNS1,
     validDNS2
   } = useSelector(networkSettingSelector)
-  console.log(status)
+  const data = useSelector(networkSettingSelector)
+  console.log('data', data)
+
   const { useToken } = theme
   const { token } = useToken()
+
+  const inputData = [
+    { label: 'Netmask', key: 'netmask', valid: 'validNetmask' },
+    { label: 'Gateway', key: 'gateway', valid: 'validGateway' }
+  ]
+
+  const DNSInputData = [
+    { label: 'Preferred DNS server', key: 'dns1', valid: 'validDNS1' },
+    { label: 'Alternate DNS server', key: 'dns2', valid: 'validDNS2' }
+  ]
 
   const handleDHCPCheckboxCheck = (e) => {
     console.log(e.target.checked)
@@ -33,7 +45,8 @@ const Settings = () => {
   }
 
   const handleAddressInputChange = (key, valid) => (e) => {
-    dispatch(setNetworkSettingAddress({ type: key, ValidType: valid, value: e.target.value }))
+    console.log(key, valid, e.target.value)
+    dispatch(setNetworkSettingAddress({ type: key, validType: valid, value: e.target.value }))
   }
 
   const handleHostnameInputChange = (e) => {
@@ -60,37 +73,51 @@ const Settings = () => {
       >
         DHCP
       </Checkbox>
-      <Form.Item label="Netmask" colon={false} style={{ margin: '5px' }}>
+      {inputData.map(
+        (input) => (
+          console.log('input', input),
+          (
+            <Form.Item key={input.key} label={input.label} colon={false} style={{ margin: '5px' }}>
+              <Input
+                status={data[input.valid] ? null : 'error'}
+                disabled={status !== 'wait' || isDHCP}
+                value={data[input.key]}
+                onChange={handleAddressInputChange(input.key, input.valid)}
+              />
+            </Form.Item>
+          )
+        )
+      )}
+
+      {/* <Form.Item label="Gateway" colon={false} style={{ margin: '5px' }}>
         <Input
-          disabled={status !== 'wait' || isDHCP}
-          value={netmask}
-          onChange={handleAddressInputChange('netmask', 'validNetmask')}
-        />
-      </Form.Item>
-      <Form.Item label="Gateway" colon={false} style={{ margin: '5px' }}>
-        <Input
+          status={!validGateway ? 'error' : null}
           disabled={status !== 'wait' || isDHCP}
           value={gateway}
           onChange={handleAddressInputChange('gateway', 'validGateway')}
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item label="Hostname" colon={false} style={{ margin: '5px' }}>
         <Input disabled={status !== 'wait'} value={hostname} onChange={handleHostnameInputChange} />
       </Form.Item>
-      <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '5px' }}>
+      {DNSInputData.map((input) => (
+        <Form.Item key={input.key} label={input.label} colon={false} style={{ margin: '5px' }}>
+          <Input
+            status={data[input.valid] ? null : 'error'}
+            disabled={status !== 'wait' || isDHCP}
+            value={data[input.key]}
+            onChange={handleAddressInputChange(input.key, input.valid)}
+          />
+        </Form.Item>
+      ))}
+      {/* <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '5px' }}>
         <Input
-          disabled={status !== 'wait' || isDHCP}
-          value={dns1}
-          onChange={handleAddressInputChange('dns1', 'validDNS1')}
-        />
-      </Form.Item>
-      <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '5px' }}>
-        <Input
+          status={validDNS2 ? null : 'error'}
           disabled={status !== 'wait' || isDHCP}
           value={dns2}
           onChange={handleAddressInputChange('dns2', 'validDNS2')}
         />
-      </Form.Item>
+      </Form.Item> */}
     </Card>
   )
 }

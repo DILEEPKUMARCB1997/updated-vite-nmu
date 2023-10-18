@@ -31,21 +31,33 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (element) =>
-      element ? (
-        element ? (
-          <span style={{ color: 'green' }}>SUCCESS</span>
-        ) : (
-          <span style={{ color: 'red' }}>ERROR</span>
-        )
-      ) : (
-        <span>WAITING</span>
+    render: (text, record) => (
+      console.log(record),
+      (
+        <span
+          style={{
+            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+          }}
+        >
+          {results[record.status]}
+        </span>
       )
+    )
+    // render: (element) =>
+    //   element ? (
+    //     element ? (
+    //       <span style={{ color: 'green' }}>SUCCESS</span>
+    //     ) : (
+    //       <span style={{ color: 'red' }}>ERROR</span>
+    //     )
+    //   ) : (
+    //     <span>WAITING</span>
+    //   )
   }
 ]
 const DeviceList = () => {
   const { isTaskRunning, deviceStatus } = useSelector(trapSettingSelector)
-  // console.log(isTaskRunning)
+  console.log(deviceStatus)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -57,9 +69,11 @@ const DeviceList = () => {
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
     // key,
+    element,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
   console.log(data)
   return (
