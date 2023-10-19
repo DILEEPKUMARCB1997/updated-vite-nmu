@@ -99,6 +99,7 @@ const backupResultListener = (callback, dispatch) => (event, arg) => {
     const { MACAddress } = arg.data
     dispatch(updateDeviceStatus({ MACAddress, success }))
   }
+
   const { finish } = arg.data
   if (finish) {
     window.electron.ipcRenderer.removeAllListeners(RESPONSE_RP_BACKUP_CONFIG)
@@ -165,7 +166,7 @@ const backupRestoreSlice = createSlice({
       Object.keys(deviceStatus).forEach((MACAddress) => {
         deviceStatus[MACAddress].status = ERROR
       })
-      return { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
     },
     updateDeviceStatus: (state, action) => {
       const { MACAddress, success } = action.payload
@@ -173,10 +174,10 @@ const backupRestoreSlice = createSlice({
       // console.log(deviceStatus)
       // console.log(MACAddress)
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      return void {
-        ...state,
-        deviceStatus
-      }
+      // return void {
+      //   ...state,
+      //   deviceStatus
+      // }
     },
     setIsRestoreFinish: (state) => {
       return { ...state, isRestoreFisish: true }
@@ -189,7 +190,7 @@ const backupRestoreSlice = createSlice({
         deviceStatus[MACAddress].restoreFile =
           data.length !== 0 ? deviceStatus[MACAddress].files[0] : ''
       })
-      return void { ...state, deviceStatus }
+      // return void { ...state, deviceStatus }
     },
     deviceSelect: (state, action) => {
       const { selectDevice } = action.payload
@@ -199,13 +200,13 @@ const backupRestoreSlice = createSlice({
       const { selectDevice, file } = action.payload
       const deviceStatus = { ...state.deviceStatus }
       deviceStatus[selectDevice].restoreFile = file
-      return { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
     },
     setFiles: (state, action) => {
       const { files, selectDevice } = action.payload
       const deviceStatus = { ...state.deviceStatus }
       deviceStatus[selectDevice].files = [...files]
-      return { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
     }
   }
 })

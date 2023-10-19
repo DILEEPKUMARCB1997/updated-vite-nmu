@@ -51,21 +51,18 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (element) =>
-      element ? (
-        element ? (
-          <span style={{ color: 'green' }}>SUCCESS</span>
-        ) : (
-          <span style={{ color: 'red' }}>ERROR</span>
-        )
-      ) : (
-        <span>WAITING</span>
+    render: (text, record) => (
+      console.log(record),
+      (
+        <span
+          style={{
+            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+          }}
+        >
+          {results[record.status]}
+        </span>
       )
-    // element ? (
-    //   <span style={{ color: 'green' }}>SUCCESS</span>
-    // ) : (
-    //   <span style={{ color: 'red' }}>ERROR</span>
-    // )
+    )
   }
 ]
 
@@ -74,7 +71,8 @@ const DeviceList = () => {
   const { token } = useToken()
   const { notification } = App.useApp()
   const dispatch = useDispatch()
-  const { mode, isTaskRunning, isRestoreFisish, deviceStatus } = useSelector(backupRestoreSelector)
+  const { mode, isTaskRunning, isRestoreFisish, deviceStatus, selectDevice } =
+    useSelector(backupRestoreSelector)
   console.log(deviceStatus)
 
   const handleModeSelectOnChange = (mode) => {
@@ -84,33 +82,13 @@ const DeviceList = () => {
   const handleStartButtonOnClick = () => {
     dispatch(
       startTask((msg) => {
-        notification.error({ massage: msg })
+        notification.error({ message: msg })
       })
     )
-    // dispatch(startTask())
-    // dispatch(startTask())
   }
   const handleDeviceListItemOnClick = (MACAddress) => () => {
     dispatch(deviceSelect({ selectDevice: MACAddress }))
   }
-
-  // const [inputSearch, setInputSearch] = useState('')
-  // const dataAfterfiltering = ({ row }) => {
-  //   // return dataSource.filter((row) => {
-  //   let rec = columns.map((element) => {
-  //     return row[element.dataIndex].toString().includes(inputSearch)
-  //   })
-  //   return rec.includes(true)
-  //   // })
-  // }
-  // const dataSource = Object.entries(deviceStatus).map(([key, row]) => {
-  //   return row[key.dataIndex]
-  // })
-  // const dataSource = []
-  // useEffect(() => {
-  //   dataSource.push(deviceStatus)
-  //   console.log(dataSource)
-  // }, [])
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
     key,
@@ -179,7 +157,7 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
-                percent={deviceStatus === 'active' ? 0 : 100}
+                percent={isTaskRunning === 'active' ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'

@@ -41,21 +41,30 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    // render: (data) =>
-    //   data
-    //     ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
-    //     : results[2] === ERROR && <span style={{ color: 'red' }} />
-    render: (element) => {
-      return element ? (
-        element ? (
-          <span style={{ color: 'green' }}>SUCCESS</span>
-        ) : (
-          <span style={{ color: 'red' }}>ERROR</span>
-        )
-      ) : (
-        <span>WAITING</span>
+    render: (text, record) => (
+      console.log(record),
+      (
+        <span
+          style={{
+            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+          }}
+        >
+          {results[record.status]}
+        </span>
       )
-    }
+    )
+
+    // render: (element) => {
+    //   return element ? (
+    //     element ? (
+    //       <span style={{ color: 'green' }}>SUCCESS</span>
+    //     ) : (
+    //       <span style={{ color: 'red' }}>ERROR</span>
+    //     )
+    //   ) : (
+    //     <span>WAITING</span>
+    //   )
+    // }
   }
 ]
 

@@ -14,9 +14,9 @@ const BackupRestoreDialog = ({ onClose }) => {
   const [didMount, setDidMount] = useState(false)
 
   useEffect(() => {
-    // setTimeout(() => {
-    setDidMount(true)
-    // }, 200)
+    setTimeout(() => {
+      setDidMount(true)
+    }, 200)
   }, [])
 
   const handleCancelButtonOnClick = () => {

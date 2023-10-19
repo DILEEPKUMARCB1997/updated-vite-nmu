@@ -34,9 +34,9 @@ export const startTask = (param) => (dispatch, getState) => {
       //callback('There is some problem in syslog setting process.');
       dispatch(updateAllDeviceStatusError())
     } else {
-      // const { success } = arg
-      // const { MACAddress } = arg.data
-      dispatch(updateDeviceStatus({ MACAddress: arg.data.MACAddress, status: arg.success }))
+      const { success } = arg
+      const { MACAddress } = arg.data
+      dispatch(updateDeviceStatus({ MACAddress, success }))
     }
     const { finish } = arg.data
     if (finish) {

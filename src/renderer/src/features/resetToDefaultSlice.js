@@ -41,10 +41,11 @@ export const initResetToDefaultData = () => (dispatch, getState) => {
       status: WAITING
     }
   })
-  dispatch({
-    type: INIT_RESET_TO_DEFAULT_DATA,
-    payload: { resetToDefaultStatus, waitingDeviceCount: selected.length }
-  })
+  // dispatch({
+  //   type: INIT_RESET_TO_DEFAULT_DATA,
+  //   payload: { resetToDefaultStatus, waitingDeviceCount: selected.length }
+  // })
+  dispatch(initResetDefaultData({ resetToDefaultStatus, waitingDeviceCount: selected.length }))
   dispatch(openDialog('resetToDefault'))
 }
 
@@ -85,7 +86,7 @@ const resetToDefaultSlice = createSlice({
         taskStatus: action.payload
       }
     },
-    INIT_RESET_TO_DEFAULT_DATA: (state, action) => {
+    initResetDefaultData: (state, action) => {
       const { resetToDefaultStatus, waitingDeviceCount } = action.payload
       return {
         ...state,
@@ -99,7 +100,7 @@ export const {
   clearResetToDefaultData,
   updateDevicesResetStatus,
   updateResetTaskStatus,
-  INIT_RESET_TO_DEFAULT_DATA
+  initResetDefaultData
 } = resetToDefaultSlice.actions
 
 export const resetToDefaultSelector = (state) => {
