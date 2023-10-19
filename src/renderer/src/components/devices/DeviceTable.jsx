@@ -155,6 +155,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   })
 
   const handleItemClick = (key, data) => {
+    console.log(key)
     console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {

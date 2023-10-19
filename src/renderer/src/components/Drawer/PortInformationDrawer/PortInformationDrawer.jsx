@@ -6,6 +6,7 @@ import TrafficChart from './TrafficChart/TrafficChart'
 import PortStatus from './PortStatus/PortStatus'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  clearPortInfoData,
   openPortInfoDrawer,
   portInformationSelector,
   requestGetPortAndPowerStatus,
@@ -18,6 +19,7 @@ import {
   RESPONSE_RP_GET_PORT_INFORMATION,
   RESPONSE_RP_GET_POWER_STATUS
 } from '../../../../../main/utils/IPCEvents'
+import { closeDialog } from '../../../features/dialogSlice'
 
 const PortInformationDialog = () => {
   const dispatch = useDispatch()
@@ -25,32 +27,37 @@ const PortInformationDialog = () => {
   const { token } = useToken()
 
   const { trigger, isPolling, portStatusData, drawerVisible } = useSelector(portInformationSelector)
-
+  var timeout
   const startPoll = () => {
-    var timeout = setTimeout(() => {
-      dispatch(requestGetPortAndPowerStatus(), 3000)
-    })
+    timeout = setTimeout(() => {
+      dispatch(requestGetPortAndPowerStatus())
+    }, 3000)
   }
 
   useEffect(() => {
-    setTimeout(() => {}, 200)
+    // setTimeout(() => {}, 200)
     window.electron.ipcRenderer.on(RESPONSE_RP_GET_PORT_INFORMATION, portInformationListener)
     window.electron.ipcRenderer.on(RESPONSE_RP_GET_POWER_STATUS, powerStatusListener)
     dispatch(requestGetPortAndPowerStatus())
-
-    if (isPolling) {
-      startPoll()
-    }
-
     return () => {
       window.electron.ipcRenderer.removeListener(
         RESPONSE_RP_GET_PORT_INFORMATION,
         portInformationListener
       )
       window.electron.ipcRenderer.removeListener(RESPONSE_RP_GET_POWER_STATUS, powerStatusListener)
-      clearTimeout()
+      clearTimeout(timeout)
+      dispatch(clearPortInfoData())
     }
   }, [])
+
+  useEffect(() => {
+    if (portStatusData || trigger) {
+      clearTimeout(timeout)
+      if (isPolling) {
+        startPoll()
+      }
+    }
+  }, [portStatusData, trigger])
 
   const portInformationListener = (event, arg) => {
     if (!arg.success) {
@@ -61,12 +68,14 @@ const PortInformationDialog = () => {
   }
 
   const powerStatusListener = (event, arg) => {
-    dispatch(updatePowerStatusData(arg.data))
+    if (arg.success) {
+      dispatch(updatePowerStatusData(arg.data))
+    }
   }
 
   const handleCloseButtonClick = () => {
     setTimeout(() => {
-      dispatch(openPortInfoDrawer(false))
+      dispatch(openPortInfoDrawer(false), dispatch(closeDialog('portInformation')))
     }, 400)
   }
 

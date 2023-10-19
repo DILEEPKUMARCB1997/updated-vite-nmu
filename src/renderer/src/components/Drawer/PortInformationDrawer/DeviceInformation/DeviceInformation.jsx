@@ -10,16 +10,7 @@ const DeviceInformation = () => {
   const { token } = useToken()
 
   const state = useSelector(portInformationSelector)
-  console.log(state)
-
-  // const modelInfo = {
-  //   model: 1,
-  //   IPAddress: 12345,
-  //   MACAddress: 123,
-  //   kernel: 'Dileep',
-  //   ap: 123,
-  //   power: 'power'
-  // }
+  console.log('state', state)
 
   const { powerStatusData } = useSelector(portInformationSelector)
   // const { model, IPAddress, MACAddress, kernel, ap } = modelInfo
@@ -33,8 +24,6 @@ const DeviceInformation = () => {
     { label: 'AP', id: 'ap' },
     { label: 'Power', id: 'power' }
   ]
-
-  infoItem.map((item) => console.log(state.modelInfo[item.id]))
 
   return (
     <Card
@@ -60,7 +49,7 @@ const DeviceInformation = () => {
           >{`${item.label}`}</Typography.Title>
           {item.id === 'power' ? (
             <div>
-              {Object.entries(state.modelInfo).map(([status]) => (
+              {Object.entries(state.powerStatusData).map(([power, status]) => (
                 <div key={power}>
                   <Typography key={power}>{`${power}`}</Typography>
                   {status === 1 ? <BulbOutlined /> : <BulbFilled />}

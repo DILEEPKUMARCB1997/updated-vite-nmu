@@ -14,7 +14,7 @@ const TrafficChart = () => {
   const { trafficBuffer, labels, portStatusData } = useSelector(portInformationSelector)
 
   const selectItem = Object.keys(portStatusData)
-  console.log(selectItem)
+  // console.log(selectItem)
 
   let showLabels = ['', '', '', '', '', '', '', '', '', '', '', '', '']
   const chartData = trafficBuffer[selectPort]
