@@ -15,6 +15,7 @@ const FileList = () => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { mode, isTaskRunning, isRestoreFisish } = useSelector(backupRestoreSelector)
+
   const handleFileCheckboxOnChange = (file) => () => {
     dispatch(setRestoreFileIndex({ file }))
   }
@@ -44,19 +45,15 @@ const FileList = () => {
         >
           <Table style={{ width: '100%' }}>
             {files.map((file) => (
-              // <Row key={file}></Row>
               <Row key={file}>
                 {mode === 'restore' && (
-                  // <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>
                   <Checkbox
                     disabled={isTaskRunning || isRestoreFisish}
                     checked={restoreFile === file}
                     onChange={handleFileCheckboxOnChange(file)}
                   ></Checkbox>
-                  // </td>
                 )}
-                {/* <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}>{file}</td>
-                <td style={{ borderColor: '1px solid rgba(224, 224, 224, 1)' }}> */}
+
                 {mode === 'backup' && (
                   <Button
                     disabled={isTaskRunning}
@@ -68,7 +65,6 @@ const FileList = () => {
                     <CloseOutlined />
                   </Button>
                 )}
-                {/* </td> */}
               </Row>
             ))}
           </Table>

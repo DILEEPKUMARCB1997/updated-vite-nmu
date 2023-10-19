@@ -41,21 +41,30 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    // render: (data) =>
-    //   data
-    //     ? results[1] === SUCCESS && <span style={{ color: 'green' }} />
-    //     : results[2] === ERROR && <span style={{ color: 'red' }} />
-    render: (element) => {
-      return element ? (
-        element ? (
-          <span style={{ color: 'green' }}>SUCCESS</span>
-        ) : (
-          <span style={{ color: 'red' }}>ERROR</span>
-        )
-      ) : (
-        <span>WAITING</span>
+    render: (text, record) => (
+      console.log(record),
+      (
+        <span
+          style={{
+            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+          }}
+        >
+          {results[record.status]}
+        </span>
       )
-    }
+    )
+
+    // render: (element) => {
+    //   return element ? (
+    //     element ? (
+    //       <span style={{ color: 'green' }}>SUCCESS</span>
+    //     ) : (
+    //       <span style={{ color: 'red' }}>ERROR</span>
+    //     )
+    //   ) : (
+    //     <span>WAITING</span>
+    //   )
+    // }
   }
 ]
 
@@ -106,7 +115,8 @@ const ResetToDefaultDialog = ({ onClose }) => {
     key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
 
   // const dataSource = [{}]
@@ -162,7 +172,9 @@ const ResetToDefaultDialog = ({ onClose }) => {
             ></Table>
             {/* <Table columns={columns} dataSource={deviceDataList} /> */}
           </div>
-          {taskStatus === RUNNING && <Progress percent={20} size="small" />}
+          {taskStatus === RUNNING && (
+            <Progress size="small" percent={taskStatus === 'active' ? 0 : 100} />
+          )}
           <div>
             {taskStatus === WAITING && (
               <Button

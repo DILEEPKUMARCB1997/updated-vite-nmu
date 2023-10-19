@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { openDialog } from '../features/dialogSlice'
+// import { openDialog } from '../features/dialogSlice'
+import { openDialog } from './dialogSlice'
 import { RESPONSE_RP_TRAP_SETTING, REQUEST_MP_TRAP_SETTING } from '../../../main/utils/IPCEvents'
 
 const WAITING = 0
@@ -26,7 +27,7 @@ export const startTask = (param) => (dispatch, getState) => {
   //console.log(param);
   const { deviceStatus } = getState().trapSetting
   const devices = Object.keys(deviceStatus)
-  console.log(devices)
+  //console.log(devices);
   window.electron.ipcRenderer.on(RESPONSE_RP_TRAP_SETTING, (event, arg) => {
     const { type } = arg
     if (type === 1) {
@@ -40,6 +41,7 @@ export const startTask = (param) => (dispatch, getState) => {
     const { finish } = arg.data
     if (finish) {
       window.electron.ipcRenderer.removeAllListeners(RESPONSE_RP_TRAP_SETTING)
+      // dispatch(setTaskRunning(false))
       dispatch(setTaskRunning(false))
     }
   })
@@ -60,14 +62,24 @@ const trapSettingSlice = createSlice({
       })
       return { ...state, deviceStatus }
     },
-    updateDeviceStatus: (state, action) => {
-      const { MACAddress, success } = action.payload
+    updateDeviceStatus: (state, { payload }) => {
+      const { MACAddress, success } = payload
       const deviceStatus = { ...state.deviceStatus }
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
       return void { ...state, deviceStatus }
+      // return {
+      //   ...state,
+      //   deviceStatus: {
+      //     ...state.deviceStatus,
+      //     [MACAddress]: {
+      //       ...(state.deviceStatus[MACAddress].status = success ? SUCCESS : ERROR)
+      //     }
+      //   }
+      // }
     },
+
     setTaskRunning: (state, action) => {
       return { ...state, isTaskRunning: action.payload }
     },
@@ -75,7 +87,7 @@ const trapSettingSlice = createSlice({
       const { deviceStatus } = action.payload
       return { ...state, deviceStatus }
     },
-    clearData: () => {
+    clearData: (state, action) => {
       return { deviceStatus: {}, isTaskRunning: false }
     }
   }
