@@ -43,16 +43,6 @@ const columns = [
         </span>
       )
     )
-    // render: (element) =>
-    //   element ? (
-    //     element ? (
-    //       <span style={{ color: 'green' }}>SUCCESS</span>
-    //     ) : (
-    //       <span style={{ color: 'red' }}>ERROR</span>
-    //     )
-    //   ) : (
-    //     <span>WAITING</span>
-    //   )
   }
 ]
 const DeviceList = () => {
@@ -68,8 +58,7 @@ const DeviceList = () => {
   // }, [])
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
-    // key,
-    element,
+    key,
     MACAddress: key,
     IPAddress: element.IPAddress,
     model: element.model,

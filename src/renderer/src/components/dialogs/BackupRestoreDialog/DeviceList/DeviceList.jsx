@@ -5,7 +5,7 @@ import {
   Select,
   Button,
   Progress,
-  notification,
+  App,
   Typography,
   Table,
   Alert,
@@ -51,34 +51,38 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (element) =>
-      element ? (
-        element ? (
-          <span style={{ color: 'green' }}>SUCCESS</span>
-        ) : (
-          <span style={{ color: 'red' }}>ERROR</span>
-        )
-      ) : (
-        <span>WAITING</span>
+    render: (text, record) => (
+      console.log(record),
+      (
+        <span
+          style={{
+            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+          }}
+        >
+          {results[record.status]}
+        </span>
       )
+    )
   }
 ]
 
 const DeviceList = () => {
   const { useToken } = theme
   const { token } = useToken()
+  const { notification } = App.useApp()
   const dispatch = useDispatch()
-  const { mode, isTaskRunning, isRestoreFisish, deviceStatus } = useSelector(backupRestoreSelector)
+  const { mode, isTaskRunning, isRestoreFisish, deviceStatus, selectDevice } =
+    useSelector(backupRestoreSelector)
   console.log(deviceStatus)
+
   const handleModeSelectOnChange = (mode) => {
     dispatch(changeMode({ mode }))
   }
+
   const handleStartButtonOnClick = () => {
     dispatch(
       startTask((msg) => {
-        notification.error({
-          message: msg
-        })
+        notification.error({ message: msg })
       })
     )
   }
@@ -86,29 +90,12 @@ const DeviceList = () => {
     dispatch(deviceSelect({ selectDevice: MACAddress }))
   }
 
-  // const [inputSearch, setInputSearch] = useState('')
-  // const dataAfterfiltering = ({ row }) => {
-  //   // return dataSource.filter((row) => {
-  //   let rec = columns.map((element) => {
-  //     return row[element.dataIndex].toString().includes(inputSearch)
-  //   })
-  //   return rec.includes(true)
-  //   // })
-  // }
-  // const dataSource = Object.entries(deviceStatus).map(([key, row]) => {
-  //   return row[key.dataIndex]
-  // })
-  // const dataSource = []
-  // useEffect(() => {
-  //   dataSource.push(deviceStatus)
-  //   console.log(dataSource)
-  // }, [])
-
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
     key,
     MACAddress: key,
     IPAddress: element.IPAddress,
-    model: element.model
+    model: element.model,
+    status: element.status
   }))
 
   return (
@@ -170,18 +157,16 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
+                percent={isTaskRunning === 'active' ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'
                 }}
-                percent={20}
               />
             ) : (
               <Button
-                disabled={isTaskRunning || isRestoreFisish}
-                variant="outlined"
-                size="small"
                 type="primary"
+                disabled={isTaskRunning || isRestoreFisish}
                 onClick={handleStartButtonOnClick}
               >
                 Start

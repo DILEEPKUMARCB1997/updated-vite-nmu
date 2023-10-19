@@ -79,7 +79,8 @@ const DeviceList = () => {
     }
   ]
 
-  const dataSource = []
+  // const dataSource = []
+  // const dataSource = []
   // useEffect(() => {
   //   // dataSource.push(deviceList)
   //   // console.log(dataSource)
@@ -95,6 +96,12 @@ const DeviceList = () => {
   //     }
   //   })
   // })
+  // const data = Object.entries(deviceList).map(([key, element]) => ({
+  //   key,
+  //   MACAddress: key,
+  //   IPAddress: element.IPAddress,
+  //   model: element.model
+  // }))
 
   const data = Object.entries(deviceList).map(([key, value]) => {
     let deviceStatus = 'active'
@@ -181,7 +188,7 @@ const DeviceList = () => {
             position: ['bottomRight'],
             showQuickJumper: true,
             size: 'small',
-            total: dataSource.length,
+            total: data.length,
             defaultPageSize: 5,
             pageSizeOptions: [5, 10, 15, 20],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`

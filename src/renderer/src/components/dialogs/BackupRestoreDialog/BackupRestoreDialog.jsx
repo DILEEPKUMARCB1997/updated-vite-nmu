@@ -12,13 +12,15 @@ const BackupRestoreDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
+
   useEffect(() => {
     setTimeout(() => {
-      setDidMount({ didMount: true })
+      setDidMount(true)
     }, 200)
   }, [])
+
   const handleCancelButtonOnClick = () => {
-    setDidMount({ didMount: false })
+    setDidMount(false)
     setTimeout(() => {
       onClose()
     }, 400)

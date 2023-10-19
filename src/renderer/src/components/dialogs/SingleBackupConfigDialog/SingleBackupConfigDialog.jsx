@@ -18,7 +18,7 @@ const SingleBackupConfigDialog = ({ onClose }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     setTimeout(() => {
-      setDidMount({ didMount: true })
+      setDidMount(true)
     }, 200)
     return () => {
       dispatch(clearData())
@@ -26,7 +26,7 @@ const SingleBackupConfigDialog = ({ onClose }) => {
   }, [])
 
   const handleCancelButtonOnClick = () => {
-    setDidMount({ didMount: false })
+    setDidMount(false)
     setTimeout(() => {
       onClose()
     }, 400)

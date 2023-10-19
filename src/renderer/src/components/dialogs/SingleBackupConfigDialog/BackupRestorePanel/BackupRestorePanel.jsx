@@ -19,9 +19,9 @@ const BackupRestorePanel = () => {
   const { backupPath, filename, isBackingUP, restorePath } = useSelector(
     singleBackupRestoreSelector
   )
-  console.log(backupPath)
-  console.log(filename)
-  console.log(restorePath)
+  // console.log(backupPath)
+  // console.log(filename)
+  // console.log(restorePath)
   const disableBackupButton = backupPath === '' || filename === '' || isBackingUP
   const disableRestoreButton = restorePath === ''
   const handleSelectFolderButtonOnClick = () => {
