@@ -24,12 +24,22 @@ const FWUTableTab = () => {
   return (
     <div>
       <div>
-        <Tabs activeKey={step.toString()} onChange={handleStepChange}>
-          <Tabs.TabPane tab="Updating" key="0">
-            <FWUTable />
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Done" key="1"></Tabs.TabPane>
-        </Tabs>
+        <Tabs
+          activeKey={step}
+          defaultActiveKey="0"
+          onChange={handleStepChange}
+          items={[
+            {
+              key: '0',
+              label: 'Updating'
+            },
+            {
+              key: '1',
+              label: 'Done'
+            }
+          ]}
+        />
+        <FWUTable />
       </div>
     </div>
   )

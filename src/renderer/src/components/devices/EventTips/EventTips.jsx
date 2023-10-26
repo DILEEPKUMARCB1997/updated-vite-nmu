@@ -12,6 +12,7 @@ import { initNetworkSettingData } from '../../../features/networkSettingSlice'
 import { initTrapSettingData } from '../../../features/trapSettingSlice'
 import { closeSnack } from '../../../features/snackSlice'
 import './EventTips.css'
+import { closeSnack } from '../../../features/snackSlice'
 
 const messages = {
   firmwareUpdate: 'Firmware Update',
@@ -43,6 +44,7 @@ const EventTips = () => {
     switch (batchOperateEvent) {
       case 'firmwareUpdate':
         dispatch(initFirmwareUpdateData())
+        // dispatch(closeSnack())
         // console.log(initFirmwareUpdateData())
         break
       case 'resetToDefault':

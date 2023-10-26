@@ -28,6 +28,7 @@ import {
 import { removeBatchOperateEvent, setBatchOperateEvent } from '../../features/UIControllSlice'
 import { setSNMPSelectOnly } from '../../features/discoverySlice'
 import { userManagementSelector } from '../../features/userManagementSlice'
+import { closeSnack } from '../../features/snackSlice'
 
 const options = [
   { label: 'Table View', value: 'table' },
@@ -130,8 +131,6 @@ const DevicesControl = ({ onClose }) => {
         break
       case 'backupRestore':
         dispatch(setBatchOperateEvent({ event: 'backupRestore' }))
-        // this.props.openSnack('backupRestore');
-        // this.props.openMainDeviceCheckBox(true);
         dispatch(setSNMPSelectOnly(true))
         break
       case 'scheduleBackup':
