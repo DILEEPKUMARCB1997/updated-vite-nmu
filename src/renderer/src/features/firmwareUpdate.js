@@ -9,16 +9,16 @@ import {
 import { openDialog } from '../features/dialogSlice'
 import { createSlice } from '@reduxjs/toolkit'
 
-export const codes = {
-  none: { type: 'normal', label: 'Waiting' },
-  a: { type: 'normal', label: 'Upload Image' },
-  c: { type: 'normal', label: 'User Cancel' },
-  S001: { type: 'normal', label: 'Erasing' },
-  S002: { type: 'success', label: 'Update Successful' },
-  E001: { type: 'error', label: 'Upload Fail(E001)' },
-  E007: { type: 'error', label: 'Upload Fail(E007)' },
-  TO: { type: 'error', label: 'Connect Timeout' }
-}
+// export const codes = {
+//   none: { type: 'normal', label: 'Waiting' },
+//   a: { type: 'normal', label: 'Upload Image' },
+//   c: { type: 'normal', label: 'User Cancel' },
+//   S001: { type: 'normal', label: 'Erasing' },
+//   S002: { type: 'success', label: 'Update Successful' },
+//   E001: { type: 'error', label: 'Upload Fail(E001)' },
+//   E007: { type: 'error', label: 'Upload Fail(E007)' },
+//   TO: { type: 'error', label: 'Connect Timeout' }
+// }
 export const requestStartFirmwareUpdate = () => (dispatch, getState) => {
   const sendData = getState().firmwareUpdate
   window.electron.ipcRenderer.once(RESPONSE_RP_START_FIRMWARE_UPDATE, (event, arg) => {
@@ -77,7 +77,15 @@ export const initFirmwareUpdateData = () => (dispatch, getState) => {
   //     deviceRealTimeData
   //   }
   // })
+  dispatch(initFirmwareUpdate({ deviceData, deviceRealTimeData }))
   dispatch(openDialog('FWU'))
+}
+const codes = ['E007', 'E001', 'S002', 'c', 'TO']
+export const updateFirmwareUpdateData = (deviceData) => (dispatch) => {
+  dispatch(updateFirmwareUpdate(deviceData))
+  if (codes.includes(deviceData.code)) {
+    dispatch(addFirmWareFinishData(deviceData.MACAddress))
+  }
 }
 const statusStep = ['wait', 'start', 'done']
 const firmwareSlice = createSlice({
@@ -98,14 +106,14 @@ const firmwareSlice = createSlice({
         filePath: action.payload
       }
     },
-    INIT_FIRMWARE_UPDATE_DATA: (state, action) => {
+    initFirmwareUpdate: (state, action) => {
       return {
         ...state,
         deviceRealTimeData: action.payload.deviceRealTimeData,
         deviceData: action.payload.deviceData
       }
     },
-    updateFirmwareUpdateData: (state, action) => {
+    updateFirmwareUpdate: (state, action) => {
       return {
         ...state,
         deviceRealTimeData: {
@@ -122,6 +130,14 @@ const firmwareSlice = createSlice({
         ...state,
         activeStep: action.payload,
         status: statusStep[action.payload]
+      }
+    },
+    addFirmWareFinishData: (state, action) => {
+      if (!state.FWUDoneDeviceData.includes(action.payload)) {
+        return {
+          ...state,
+          FWUDoneDeviceData: [...state.FWUDoneDeviceData, action.payload]
+        }
       }
     },
     clearFirmwareUpdateData: () => {
@@ -141,8 +157,9 @@ export const {
   setFirmWareUpdateFilePath,
   changeFirmwareUpdateStatus,
   clearFirmwareUpdateData,
-  updateFirmwareUpdateData,
-  INIT_FIRMWARE_UPDATE_DATA
+  updateFirmwareUpdate,
+  initFirmwareUpdate,
+  addFirmWareFinishData
 } = firmwareSlice.actions
 export const firmwareSelector = (state) => {
   const { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status } =
