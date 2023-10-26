@@ -4,6 +4,9 @@ import { CloudUploadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import DeviceList from './DeviceList/DeviceList'
 import FileList from './FileList/FileList'
+import { useDispatch } from 'react-redux'
+import { clearData } from '../../../features/backupRestoreSlice'
+
 // import { backupRestoreSelector } from '../../../features/backupRestoreSlice'
 // import { useSelector } from 'react-redux'
 
@@ -12,15 +15,20 @@ const BackupRestoreDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
-
+  const dispatch = useDispatch()
   useEffect(() => {
     setTimeout(() => {
       setDidMount(true)
     }, 200)
+
+    return () => {
+      dispatch(clearData())
+    }
   }, [])
 
   const handleCancelButtonOnClick = () => {
     setDidMount(false)
+
     setTimeout(() => {
       onClose()
     }, 400)
@@ -36,6 +44,7 @@ const BackupRestoreDialog = ({ onClose }) => {
         }
         open
         onCancel={handleCancelButtonOnClick}
+        onClose={handleCancelButtonOnClick}
         width={1000}
         maskClosable={false}
         // bodyStyle={{

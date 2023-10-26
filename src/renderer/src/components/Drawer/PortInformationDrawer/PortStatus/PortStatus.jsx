@@ -13,7 +13,7 @@ const PortStatus = () => {
   const { token } = useToken()
 
   const { portStatusData, isWaiting, switchLoadings } = useSelector(portInformationSelector)
-  console.log(portStatusData)
+  // console.log(portStatusData)
   let arrayData = []
   Object.entries(portStatusData).forEach(([portName, portStatus]) => {
     arrayData = [

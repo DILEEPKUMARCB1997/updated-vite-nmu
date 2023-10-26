@@ -82,21 +82,25 @@ const DeviceList = () => {
   const handleStartButtonOnClick = () => {
     dispatch(
       startTask((msg) => {
+        console.log('msg', msg)
         notification.error({ message: msg })
       })
     )
   }
-  const handleDeviceListItemOnClick = (MACAddress) => () => {
+  const handleDeviceListItemOnClick = (MACAddress) => {
     dispatch(deviceSelect({ selectDevice: MACAddress }))
   }
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
     key,
+    element,
     MACAddress: key,
     IPAddress: element.IPAddress,
     model: element.model,
     status: element.status
   }))
+
+  console.log('data', data)
 
   return (
     <ConfigProvider
@@ -157,7 +161,7 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
-                percent={isTaskRunning === 'active' ? 0 : 100}
+                percent={isTaskRunning ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'
@@ -186,7 +190,7 @@ const DeviceList = () => {
               columns={columns}
               dataSource={data}
               style={{ width: '100%' }}
-              onClick={handleDeviceListItemOnClick}
+              // onClick={handleDeviceListItemOnClick}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
@@ -195,6 +199,13 @@ const DeviceList = () => {
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+              }}
+              onRow={(record, rowIndex) => {
+                return {
+                  onClick: (event) => {
+                    handleDeviceListItemOnClick(record.MACAddress)
+                  }
+                }
               }}
             ></Table>
           </div>

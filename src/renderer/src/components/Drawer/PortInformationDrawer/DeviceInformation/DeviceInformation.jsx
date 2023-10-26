@@ -4,6 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { portInformationSelector } from '../../../../features/portInformationSlice'
 import { BulbFilled, BulbOutlined } from '@ant-design/icons'
+import { validateLegacyAuthorizationArgs } from '@electron/notarize/lib/validate-args'
 
 const DeviceInformation = () => {
   const { useToken } = theme
@@ -13,8 +14,7 @@ const DeviceInformation = () => {
   console.log('state', state)
 
   const { powerStatusData } = useSelector(portInformationSelector)
-  // const { model, IPAddress, MACAddress, kernel, ap } = modelInfo
-  const { power } = powerStatusData
+  console.log('power status data', powerStatusData)
 
   const infoItem = [
     { label: 'Model Name', id: 'model' },
@@ -51,13 +51,23 @@ const DeviceInformation = () => {
             <div>
               {Object.entries(state.powerStatusData).map(([power, status]) => (
                 <div key={power}>
-                  <Typography key={power}>{`${power}`}</Typography>
-                  {status === 1 ? <BulbOutlined /> : <BulbFilled />}
+                  <Typography.Text style={{ fontSize: '15px' }} strong key={power}>
+                    {`${power}`}
+                    {'   '} {status === 1 ? <BulbOutlined /> : <BulbFilled />}
+                    {' -  '}{' '}
+                    {status === 1 ? (
+                      <span style={{ color: 'green' }}>On</span>
+                    ) : (
+                      <span style={{ color: 'red' }}>Off</span>
+                    )}
+                  </Typography.Text>
                 </div>
               ))}
             </div>
           ) : (
-            <Typography>{`${state.modelInfo[item.id]}`}</Typography>
+            <Typography.Text style={{ fontSize: '15px' }} strong>{`${
+              state.modelInfo[item.id]
+            }`}</Typography.Text>
           )}
         </div>
       ))}

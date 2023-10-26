@@ -164,7 +164,7 @@ const portInformationSlice = createSlice({
       }
     },
     updatePowerStatusData: (state, { payload }) => {
-      return { ...state, powerStatus: payload }
+      return { ...state, powerStatusData: payload }
     },
     waitForPortStatusData: (state, { payload }) => {
       const { labels } = state

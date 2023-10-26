@@ -265,36 +265,40 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
-    dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+    // dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initSingleNetworkSetting({ MACAddress }))
     } else {
-      requestCheckSNMP(
-        {
-          MACAddress,
-          IPAddress
-        },
-        () => {
-          dispatch(initSingleNetworkSetting({ MACAddress }))
-        }
+      dispatch(
+        requestCheckSNMP(
+          {
+            MACAddress,
+            IPAddress
+          },
+          () => {
+            dispatch(initSingleNetworkSetting({ MACAddress }))
+          }
+        )
       )
     }
   }
 
   const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
     console.log(MACAddress, IPAddress, deviceType)
-    dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
+    // dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initDeviceAdvanced({ MACAddress }))
     } else {
-      requestCheckSNMP(
-        {
-          MACAddress,
-          IPAddress
-        },
-        () => {
-          dispatch(initDeviceAdvanced({ MACAddress }))
-        }
+      dispatch(
+        requestCheckSNMP(
+          {
+            MACAddress,
+            IPAddress
+          },
+          () => {
+            dispatch(initDeviceAdvanced({ MACAddress }))
+          }
+        )
       )
     }
   }
