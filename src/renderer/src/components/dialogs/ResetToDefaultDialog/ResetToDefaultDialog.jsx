@@ -53,18 +53,6 @@ const columns = [
         </span>
       )
     )
-
-    // render: (element) => {
-    //   return element ? (
-    //     element ? (
-    //       <span style={{ color: 'green' }}>SUCCESS</span>
-    //     ) : (
-    //       <span style={{ color: 'red' }}>ERROR</span>
-    //     )
-    //   ) : (
-    //     <span>WAITING</span>
-    //   )
-    // }
   }
 ]
 

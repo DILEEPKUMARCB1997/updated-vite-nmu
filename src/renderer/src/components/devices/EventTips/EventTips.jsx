@@ -10,6 +10,7 @@ import { initFirmwareUpdateData } from '../../../features/firmwareUpdate'
 import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 import { initNetworkSettingData } from '../../../features/networkSettingSlice'
 import { initTrapSettingData } from '../../../features/trapSettingSlice'
+import { closeSnack } from '../../../features/snackSlice'
 import './EventTips.css'
 
 const messages = {

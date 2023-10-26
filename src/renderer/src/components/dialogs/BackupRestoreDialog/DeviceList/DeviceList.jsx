@@ -86,12 +86,13 @@ const DeviceList = () => {
       })
     )
   }
-  const handleDeviceListItemOnClick = (MACAddress) => () => {
+  const handleDeviceListItemOnClick = (MACAddress) => {
     dispatch(deviceSelect({ selectDevice: MACAddress }))
   }
 
   const data = Object.entries(deviceStatus).map(([key, element]) => ({
     key,
+    element,
     MACAddress: key,
     IPAddress: element.IPAddress,
     model: element.model,
@@ -157,7 +158,8 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
-                percent={isTaskRunning === 'active' ? 0 : 100}
+                status={deviceStatus}
+                percent={deviceStatus === 'active' ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'
@@ -186,7 +188,6 @@ const DeviceList = () => {
               columns={columns}
               dataSource={data}
               style={{ width: '100%' }}
-              onClick={handleDeviceListItemOnClick}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
@@ -195,6 +196,14 @@ const DeviceList = () => {
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+              }}
+              onRow={(record, rowIndex) => {
+                return {
+                  onClick: (event) => {
+                    event.preventDefault()
+                    handleDeviceListItemOnClick(record.MACAddress)
+                  }
+                }
               }}
             ></Table>
           </div>

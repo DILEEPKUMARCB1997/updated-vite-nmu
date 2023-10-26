@@ -92,14 +92,12 @@ const backupResultListener = (callback, dispatch) => (event, arg) => {
   const { type } = arg
   if (type === 1) {
     callback('There is some problem in backup process.')
-    // dispatch(updateAllDeviceStatusError())
     dispatch(updateAllDeviceStatusError())
   } else {
     const { success } = arg
     const { MACAddress } = arg.data
     dispatch(updateDeviceStatus({ MACAddress, success }))
   }
-
   const { finish } = arg.data
   if (finish) {
     window.electron.ipcRenderer.removeAllListeners(RESPONSE_RP_BACKUP_CONFIG)
@@ -171,13 +169,12 @@ const backupRestoreSlice = createSlice({
     updateDeviceStatus: (state, action) => {
       const { MACAddress, success } = action.payload
       const deviceStatus = { ...state.deviceStatus }
-      // console.log(deviceStatus)
-      // console.log(MACAddress)
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      // return void {
-      //   ...state,
-      //   deviceStatus
-      // }
+
+      return void {
+        ...state,
+        deviceStatus
+      }
     },
     setIsRestoreFinish: (state) => {
       return { ...state, isRestoreFisish: true }
@@ -207,6 +204,15 @@ const backupRestoreSlice = createSlice({
       const deviceStatus = { ...state.deviceStatus }
       deviceStatus[selectDevice].files = [...files]
       return void { ...state, deviceStatus }
+    },
+    clearData: () => {
+      return {
+        mode: 'backup',
+        deviceStatus: {},
+        selectDevice: '',
+        isTaskRunning: false,
+        isRestoreFisish: false
+      }
     }
   }
 })
@@ -217,6 +223,7 @@ export const {
   updateDeviceStatus,
   setIsRestoreFinish,
   setAllFiles,
+  clearData,
   deviceSelect,
   setRestoreIndexFile,
   setFiles,

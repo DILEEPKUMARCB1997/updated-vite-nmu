@@ -10,6 +10,7 @@ import {
   showDiscoveryTableCheckBox,
   clearDiscoverTableSelect
 } from './discoverySlice'
+import { closeSnack } from './snackSlice'
 
 const SNMPOnlyEvents = ['resetToDefault', 'backupRestore', 'syslogSetting', 'trapSetting']
 export const requestAppInitialData = () => (dispatch) => {
