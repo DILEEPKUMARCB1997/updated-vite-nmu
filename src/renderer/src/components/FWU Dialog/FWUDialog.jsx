@@ -29,14 +29,14 @@ const FWUDialog = ({ onClose }) => {
         SEND_RP_FIRMWARE_UPDATE_PROGRESS,
         firmwareUpdateDataListener
       )
-      clearFirmwareUpdateData()
+      dispatch(clearFirmwareUpdateData())
     }
   }, [])
   const firmwareUpdateDataListener = (event, arg) => {
     if (Object.keys(arg).length !== 1) {
-      updateFirmwareUpdateData(arg)
+      dispatch(updateFirmwareUpdateData(arg))
     } else {
-      changeFirmwareUpdateStatus(2)
+      dispatch(changeFirmwareUpdateStatus(2))
     }
   }
 

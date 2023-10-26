@@ -7,9 +7,7 @@ const SyslogConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
   const [serverIP, setServerIP] = useState('')
-  console.log(serverIP)
   const [serverPort, setServerPort] = useState(514)
-  console.log(serverPort)
   const [logToFlash, setLogToFlash] = useState(1)
   const [logToServer, setLogToServer] = useState(1)
   const [logLevel, setLogLevel] = useState(7)
@@ -20,18 +18,22 @@ const SyslogConfiguration = () => {
     dispatch(startTask())
   }, [])
 
-  const handleChangeLogToFlash = (name) => (event) => {
-    if (event.target.checked) {
-      setLogToFlash({
-        [name]: 1
-      })
+  const handleChangeLogToFlash = (value) => {
+    if (value) {
+      setLogToFlash(1)
     } else {
-      setLogToFlash({ [name]: 2 })
+      setLogToFlash(2)
     }
   }
-  const handleLogLevelChange = (event) => {
-    console.log(event)
-    setLogLevel(event.target.value)
+  const handleChangeLogToServer = (value) => {
+    if (value) {
+      setLogToServer(1)
+    } else {
+      setLogToServer(2)
+    }
+  }
+  const handleLogLevelChange = (value) => {
+    setLogLevel(value)
   }
 
   const handleServerInputChange = (event) => {
@@ -90,20 +92,13 @@ const SyslogConfiguration = () => {
             labelAlign="start"
             label="logToFlash"
             colon={false}
-            extra={
-              <Switch checked={logToFlash === 1} onChange={handleChangeLogToFlash('logToFlash')} />
-            }
+            extra={<Switch checked={logToFlash === 1} onChange={handleChangeLogToFlash} />}
           ></Form.Item>
           <Form.Item
             label="logToServer"
             colon={false}
             labelAlign="start"
-            extra={
-              <Switch
-                checked={logToServer === 1}
-                onChange={handleChangeLogToFlash('logToServer')}
-              />
-            }
+            extra={<Switch checked={logToServer === 1} onChange={handleChangeLogToServer} />}
           ></Form.Item>
           <Form.Item htmlFor="log-level">
             <Select
