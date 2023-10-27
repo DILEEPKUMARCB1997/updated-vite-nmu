@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,9 +34,7 @@ const Snacks = () => {
     <Snack
       key={id}
       id={id}
-      onClose={() => {
-        dispatch(closeSnack(id))
-      }}
+      // onClose={() => dispatch(closeSnack(id))}
     />
   ))
 }

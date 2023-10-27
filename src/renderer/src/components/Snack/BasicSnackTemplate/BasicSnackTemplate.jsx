@@ -5,8 +5,11 @@ import React, { useEffect } from 'react'
 // import message from '../ResetToDefaultSnack/ResetToDefaultSnack'
 // import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack/ResetToDefaultSnack'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearDiscoverTableSelect, discoverySelector } from '../../../features/discoverySlice'
-// import { closeSnack } from '../../../features/snackSlice'
+import {
+  clearDiscoverTableSelect,
+  discoverySelector,
+  selectDiscoveryTable
+} from '../../../features/discoverySlice'
 
 const BasicSnackTemplate = ({ onClose, props }) => {
   const dispatch = useDispatch()
@@ -32,6 +35,7 @@ const BasicSnackTemplate = ({ onClose, props }) => {
 
   const closeSnack = () => {
     dispatch(clearDiscoverTableSelect())
+
     onClose()
   }
 
