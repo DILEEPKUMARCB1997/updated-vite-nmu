@@ -34,7 +34,7 @@ const EventTips = () => {
 
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
 
-  var disableOK = selected.length === 0
+  const disableOK = selected.length === 0
   // console.log(disableOK)
   // console.log(selected)
 

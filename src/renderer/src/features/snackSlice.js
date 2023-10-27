@@ -19,10 +19,10 @@ const snackSlice = createSlice({
         snacks: [action.payload]
       }
     },
-    closeSnack: (state, action) => {
+    closeSnack: (state, { payload }) => {
       return {
         ...state,
-        snacks: state.snacks.filter((id) => id !== action.payload)
+        snacks: state.snacks.filter((id) => id !== payload)
       }
     }
   }
