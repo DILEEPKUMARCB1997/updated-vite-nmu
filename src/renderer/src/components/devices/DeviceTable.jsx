@@ -20,8 +20,7 @@ import {
 import { requestOpenWebData } from '../../features/openWebSlice'
 import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
-import { openDrawer } from '../../features/singleNetworkSettingSlice'
-import { openPortInfoDrawer, initPortInfoData } from '../../features/portInformationSlice'
+import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector } from '../../features/UIControllSlice'
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
@@ -120,7 +119,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
-  // console.log(showCheckBox)
+  console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -341,8 +340,7 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-  const enableOk = selected.length !== 0
-  // const isSupportSNMP = deviceType !== 'gwd'
+
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows, info) => {
     //   console.log(
@@ -354,11 +352,21 @@ const DeviceTable = ({ deviceData = [] }) => {
     //   )
     // },
     onSelect: (record, selected, selectedRows, nativeEvent) => {
-      console.log(record, selected, selectedRows, nativeEvent)
+      console.log('record', record)
+      console.log('selected', selected)
+      console.log('selected rows', selectedRows)
+      console.log('native', nativeEvent)
       dispatch(
         selectDiscoveryTable({
           isSelect: selected,
           deviceData: [record.MACAddress]
+        })
+      )
+    },
+    onchange: () => {
+      dispatch(
+        selectDiscoveryTable({
+          isSelect: false
         })
       )
     },
@@ -369,28 +377,6 @@ const DeviceTable = ({ deviceData = [] }) => {
       }
     )
   }
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-
-  //     dispatch(
-  //       selectDiscoveryTable({
-  //         isSelect
-  //       })
-  //     )
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
-  //   })
-  // }
-
-  // const handleCheckBoxChange = (isSelect) => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect
-  //     })
-  //   )
-  // }
 
   return (
     <div>
@@ -455,7 +441,6 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceType: 'localStorage'
           }}
           rowSelection={showCheckBox ? rowSelection : undefined}
-          // onRow={(record) => {
           onRow={(record, rowIndex) => {
             // console.log(record)
             return {

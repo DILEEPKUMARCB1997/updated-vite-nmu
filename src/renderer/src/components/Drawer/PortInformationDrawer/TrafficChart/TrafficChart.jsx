@@ -52,6 +52,19 @@ const TrafficChart = () => {
     ],
 
     chart: { type: 'line', toolbar: { show: false } },
+    grid: {
+      show: true,
+      xaxis: {
+        lines: {
+          show: true
+        }
+      },
+      yaxis: {
+        lines: {
+          show: true
+        }
+      }
+    },
     stroke: {
       width: 3
     },
@@ -60,6 +73,7 @@ const TrafficChart = () => {
       showForSingleSeries: true,
       position: 'top'
     },
+
     xaxis: {
       type: 'category',
       // categories: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'],
