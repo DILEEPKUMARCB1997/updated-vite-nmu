@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
@@ -6,6 +7,7 @@ import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
 
 const BackupRestoreSnack = ({ onClose }) => {
   const dispatch = useDispatch()
+
   const handleSnackOnClose = () => {
     onClose()
   }

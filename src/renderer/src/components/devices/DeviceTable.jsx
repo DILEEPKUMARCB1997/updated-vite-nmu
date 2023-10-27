@@ -23,7 +23,8 @@ import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreS
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
 import { openPortInfoDrawer, initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector } from '../../features/UIControllSlice'
+import { UIControlSelector, setBatchOperateEvents } from '../../features/UIControllSlice'
+
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
@@ -102,7 +103,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
-  const { showCheckSNMPModal } = useSelector(UIControlSelector)
+  const { showCheckSNMPModal, batchOperateEvent } = useSelector(UIControlSelector)
   const { modal } = App.useApp()
 
   const showCheckSNMPFailModal = () => {
@@ -336,27 +337,23 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-  const enableOk = selected.length !== 0
-  // const isSupportSNMP = deviceType !== 'gwd'
+  // const enableOk = selected.length !== 0
+  const disableCheckBox = (record, deviceType) => {
+    !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+  }
+  const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
-    // onChange: (selectedRowKeys, selectedRows, info) => {
-    //   console.log(
-    //     `selectedRowKeys: ${selectedRowKeys}`,
-    //     'selectedRows: ',
-    //     selectedRows,
-    //     'info: ',
-    //     info
-    //   )
-    // },
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
+
       dispatch(
         selectDiscoveryTable({
-          isSelect: selected,
+          isSelect: headerCheckBox,
           deviceData: [record.MACAddress]
         })
       )
     },
+
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
@@ -364,28 +361,6 @@ const DeviceTable = ({ deviceData = [] }) => {
       }
     )
   }
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-
-  //     dispatch(
-  //       selectDiscoveryTable({
-  //         isSelect
-  //       })
-  //     )
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: !record.isAUZ || !record.online || (!record.deviceType !== 'gwd' && SNMPSelectOnly)
-  //   })
-  // }
-
-  // const handleCheckBoxChange = (isSelect) => {
-  //   dispatch(
-  //     selectDiscoveryTable({
-  //       isSelect
-  //     })
-  //   )
-  // }
 
   return (
     <div>

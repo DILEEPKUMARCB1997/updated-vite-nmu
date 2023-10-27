@@ -10,7 +10,6 @@ import {
   discoverySelector,
   selectDiscoveryTable
 } from '../../../features/discoverySlice'
-// import { closeSnack } from '../../../features/snackSlice'
 
 const BasicSnackTemplate = ({ onClose, props }) => {
   const dispatch = useDispatch()
