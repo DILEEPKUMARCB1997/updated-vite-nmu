@@ -161,7 +161,8 @@ const DeviceList = () => {
             </Select>
             {isTaskRunning ? (
               <Progress
-                percent={isTaskRunning ? 0 : 100}
+                status={deviceStatus}
+                percent={deviceStatus === 'active' ? 0 : 100}
                 style={{
                   width: '300px',
                   verticalAlign: 'middle'
@@ -190,7 +191,6 @@ const DeviceList = () => {
               columns={columns}
               dataSource={data}
               style={{ width: '100%' }}
-              // onClick={handleDeviceListItemOnClick}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
@@ -203,6 +203,7 @@ const DeviceList = () => {
               onRow={(record, rowIndex) => {
                 return {
                   onClick: (event) => {
+                    event.preventDefault()
                     handleDeviceListItemOnClick(record.MACAddress)
                   }
                 }

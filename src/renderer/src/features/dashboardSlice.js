@@ -29,6 +29,7 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'trap': {
         const resultTrap = requestGraphData(data)
+        // dispatch(updateTrapGraph(resultTrap))
         dispatch(updateTrapGraph(resultTrap))
         break
       }
@@ -115,19 +116,19 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraph: (state, action) => {
-      // const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-      //   action.payload
-      const { payload } = action
+    updateCustomGraph: (state, { payload }) => {
+      const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
+        payload
+      // const { payload } = action
       return {
         ...state,
         customGraphData: {
-          label: payload.label,
-          InformationData: payload.InformationData,
-          CriticalData: payload.CriticalData,
-          tableData: payload.tableResult,
-          WarningData: payload.WarningData,
-          lastUpdated: payload.lastUpdated
+          label: label,
+          InformationData: InformationData,
+          CriticalData: CriticalData,
+          tableData: tableResult,
+          WarningData: WarningData,
+          lastUpdated: lastUpdated
         }
       }
     },

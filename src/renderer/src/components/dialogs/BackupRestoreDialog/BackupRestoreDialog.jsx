@@ -4,11 +4,9 @@ import { CloudUploadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import DeviceList from './DeviceList/DeviceList'
 import FileList from './FileList/FileList'
-import { useDispatch } from 'react-redux'
 import { clearData } from '../../../features/backupRestoreSlice'
-
 // import { backupRestoreSelector } from '../../../features/backupRestoreSlice'
-// import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const BackupRestoreDialog = ({ onClose }) => {
   // const { selectDevice } = useSelector(backupRestoreSelector)
@@ -20,7 +18,6 @@ const BackupRestoreDialog = ({ onClose }) => {
     setTimeout(() => {
       setDidMount(true)
     }, 200)
-
     return () => {
       dispatch(clearData())
     }

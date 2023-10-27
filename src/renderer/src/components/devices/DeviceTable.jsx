@@ -22,7 +22,8 @@ import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
 import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector } from '../../features/UIControllSlice'
+import { UIControlSelector, setBatchOperateEvents } from '../../features/UIControllSlice'
+
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
@@ -101,7 +102,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
-  const { showCheckSNMPModal } = useSelector(UIControlSelector)
+  const { showCheckSNMPModal, batchOperateEvent } = useSelector(UIControlSelector)
   const { modal } = App.useApp()
 
   const showCheckSNMPFailModal = () => {
@@ -341,24 +342,22 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
 
+  // const enableOk = selected.length !== 0
+  const disableCheckBox = (record, deviceType) => {
+    !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+  }
+  const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
-    // onChange: (selectedRowKeys, selectedRows, info) => {
-    //   console.log(
-    //     `selectedRowKeys: ${selectedRowKeys}`,
-    //     'selectedRows: ',
-    //     selectedRows,
-    //     'info: ',
-    //     info
-    //   )
-    // },
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log('record', record)
       console.log('selected', selected)
       console.log('selected rows', selectedRows)
       console.log('native', nativeEvent)
+      console.log(record, selected, selectedRows, nativeEvent)
+
       dispatch(
         selectDiscoveryTable({
-          isSelect: selected,
+          isSelect: headerCheckBox,
           deviceData: [record.MACAddress]
         })
       )
@@ -370,6 +369,7 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
+
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {

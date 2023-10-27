@@ -1,13 +1,10 @@
 import { Col, Row } from 'antd'
 import DevicesControl from '../components/devices/DevicesControl'
 import DeviceTable from '../components/devices/DeviceTable'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { discoverySelector } from '../features/discoverySlice'
 import GroupDeviceTable from '../components/devices/GroupDeviceTable'
 import EventTips from '../components/devices/EventTips/EventTips'
-import { useEffect } from 'react'
-import { closeSnack } from '../features/snackSlice'
-// // import Snacks from '../components/Snack/Snacks'
 
 const DevicePage = () => {
   const { groupView, defaultDeviceArrayData } = useSelector(discoverySelector)
