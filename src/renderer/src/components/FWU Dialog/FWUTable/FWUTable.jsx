@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { Progress, Table, Tag } from 'antd'
 import { useSelector } from 'react-redux'
 import Code from '../Code/Code'
-//import Code from '../Code/Code'
 
 const codes = {
   none: { type: 'normal', label: 'Waiting' },
@@ -19,8 +18,6 @@ const codes = {
 const FWUTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
   const { code, uploadProgress } = deviceRealTimeData
-  // console.log(deviceRealTimeData)
-  // console.log(deviceData)
 
   const columnData = [
     {
@@ -42,31 +39,31 @@ const FWUTable = () => {
     },
     {
       title: 'Progress',
-      dataIndex: 'uploadProgress',
-      key: 'uploadProgress',
+      dataIndex: 'progress',
+      key: 'progress',
       render: (text, record) => {
-        const progress = uploadProgress ? uploadProgress : 0
+        const progress = record.uploadProgress ? record.uploadProgress : 0
         return <Progress type="line" style={{ width: '150px' }} percent={progress} />
       }
     },
     {
       title: 'Status',
-      dataIndex: 'code',
-      key: 'code',
+      dataIndex: 'status',
+      key: 'status',
       render: (text, record) => {
         // console.log(record)
-        // return <Code MACAddress={record.MACAddress} />
-        const code1 =
-          codes.S001.type[code] === 'success'
-            ? 'green'
-            : codes.E001.type[code] === 'error'
-            ? 'red'
-            : 'blue'
-        return (
-          <span>
-            <span style={{ color: code1 }}>{codes.none.label}</span>
-          </span>
-        )
+        return <Code MACAddress={record.MACAddress} />
+        // const code1 =
+        //   codes.S001.type[record.code] === 'success'
+        //     ? 'green'
+        //     : codes.E001.type[record.code] === 'error'
+        //     ? 'red'
+        //     : 'blue'
+        // return (
+        //   <span>
+        //     <span style={{ color: code1 }}>{codes.none.label}</span>
+        //   </span>
+        // )
       }
     }
     // {
@@ -108,7 +105,8 @@ const FWUTable = () => {
     MACAddress: key,
     IPAddress: value.IPAddress,
     model: value.model,
-    deviceStatus
+    deviceStatus,
+    status: value.status
   }))
   console.log(dataSource)
 

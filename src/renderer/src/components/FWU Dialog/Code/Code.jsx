@@ -17,18 +17,18 @@ const Code = () => {
   const { deviceRealTimeData } = useSelector(firmwareSelector)
   const { code } = deviceRealTimeData
   const code1 =
-    codes.S002.type === 'success'
+    codes.S002.type[code] === 'success'
       ? 'green'
-      : codes.E001.type === 'error'
+      : codes.E001.type[code] === 'error'
       ? 'red'
-      : codes.none.label === 'normal'
-      ? 'blue'
-      : 'null'
+      : codes.none.label[code] === 'normal'
+      ? 'null'
+      : 'blue'
 
   return (
     <div>
       <span>
-        <Tag style={{ color: code1 }}>{codes.none.label[code]}</Tag>
+        <span style={{ color: code1 }}>{codes.none.label}</span>
       </span>
     </div>
   )
