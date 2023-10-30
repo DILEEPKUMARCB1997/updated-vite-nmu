@@ -20,8 +20,7 @@ import {
 import { requestOpenWebData } from '../../features/openWebSlice'
 import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
-import { openDrawer } from '../../features/singleNetworkSettingSlice'
-import { openPortInfoDrawer, initPortInfoData } from '../../features/portInformationSlice'
+import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector, setBatchOperateEvents } from '../../features/UIControllSlice'
 
@@ -121,7 +120,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
-  // console.log(showCheckBox)
+  console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -156,6 +155,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   })
 
   const handleItemClick = (key, data) => {
+    console.log(key)
     console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
@@ -265,36 +265,40 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
-    dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
+    // dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initSingleNetworkSetting({ MACAddress }))
     } else {
-      requestCheckSNMP(
-        {
-          MACAddress,
-          IPAddress
-        },
-        () => {
-          dispatch(initSingleNetworkSetting({ MACAddress }))
-        }
+      dispatch(
+        requestCheckSNMP(
+          {
+            MACAddress,
+            IPAddress
+          },
+          () => {
+            dispatch(initSingleNetworkSetting({ MACAddress }))
+          }
+        )
       )
     }
   }
 
   const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
     console.log(MACAddress, IPAddress, deviceType)
-    dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
+    // dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initDeviceAdvanced({ MACAddress }))
     } else {
-      requestCheckSNMP(
-        {
-          MACAddress,
-          IPAddress
-        },
-        () => {
-          dispatch(initDeviceAdvanced({ MACAddress }))
-        }
+      dispatch(
+        requestCheckSNMP(
+          {
+            MACAddress,
+            IPAddress
+          },
+          () => {
+            dispatch(initDeviceAdvanced({ MACAddress }))
+          }
+        )
       )
     }
   }
@@ -337,14 +341,16 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
+
   // const enableOk = selected.length !== 0
   // const disableCheckBox = (record, deviceType) => {
   //   !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
   // }
   // const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
-    onSelect: (record, selected, selectedRows, nativeEvent) => {
-      console.log(record, selected, selectedRows, nativeEvent)
+    onSelect: (record) => {
+      console.log('record', record)
+      console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({
@@ -425,7 +431,6 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceType: 'localStorage'
           }}
           rowSelection={showCheckBox ? rowSelection : undefined}
-          // onRow={(record) => {
           onRow={(record, rowIndex) => {
             // console.log(record)
             return {

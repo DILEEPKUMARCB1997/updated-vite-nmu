@@ -82,6 +82,7 @@ const DeviceList = () => {
   const handleStartButtonOnClick = () => {
     dispatch(
       startTask((msg) => {
+        console.log('msg', msg)
         notification.error({ message: msg })
       })
     )
@@ -98,6 +99,8 @@ const DeviceList = () => {
     model: element.model,
     status: element.status
   }))
+
+  console.log('data', data)
 
   return (
     <ConfigProvider
