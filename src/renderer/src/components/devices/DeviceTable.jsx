@@ -348,24 +348,14 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
   const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
-    onSelect: (record, selected, selectedRows, nativeEvent) => {
+    onSelect: (record) => {
       console.log('record', record)
       console.log('selected', selected)
-      console.log('selected rows', selectedRows)
-      console.log('native', nativeEvent)
-      console.log(record, selected, selectedRows, nativeEvent)
 
       dispatch(
         selectDiscoveryTable({
-          isSelect: headerCheckBox,
+          isSelect: selected,
           deviceData: [record.MACAddress]
-        })
-      )
-    },
-    onchange: () => {
-      dispatch(
-        selectDiscoveryTable({
-          isSelect: false
         })
       )
     },
