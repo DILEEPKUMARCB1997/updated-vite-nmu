@@ -31,7 +31,7 @@ export const setBatchOperateEvent = (payload) => (dispatch) => {
 }
 
 export const removeBatchOperateEvent = () => (dispatch) => {
-  dispatch(REMOVE_BATCH_OPERATE_EVENT())
+  dispatch(removeBatchOperate())
   dispatch(showDiscoveryTableCheckBox(false))
   dispatch(clearDiscoverTableSelect())
 }
@@ -56,7 +56,7 @@ const UIControlSlice = createSlice({
     showCheckSNMPModal: (state, { payload }) => {
       return { ...state, showCheckSNMPModal: payload }
     },
-    REMOVE_BATCH_OPERATE_EVENT: (state, { payload }) => {
+    removeBatchOperate: (state, { payload }) => {
       return { ...state, showBatchOperateTips: false, batchOperateEvent: '' }
     },
     setBatchOperateEvents: (state, action) => {
@@ -70,7 +70,7 @@ export const {
   openDevicesMenu,
   nextInitRenderStep,
   showCheckSNMPModal,
-  REMOVE_BATCH_OPERATE_EVENT,
+  removeBatchOperate,
   setBatchOperateEvents
 } = UIControlSlice.actions
 

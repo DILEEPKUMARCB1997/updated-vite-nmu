@@ -23,7 +23,8 @@ import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreS
 import { openDrawer } from '../../features/singleNetworkSettingSlice'
 import { openPortInfoDrawer, initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector, setBatchOperateEvents } from '../../features/UIControllSlice'
+import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
+import DisabledContext from 'antd/es/config-provider/DisabledContext'
 
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
@@ -338,17 +339,25 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
   // const enableOk = selected.length !== 0
-  const disableCheckBox = (record, deviceType) => {
-    !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-  }
-  const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
+  // const handleCheckBox = (record) => {
+  //   dispatch(
+  //     selectDiscoveryTable({
+  //       isSelect: selected,
+  //       deviceData: [record.MACAddress]
+  //     })
+  //   )
+  // }
+
+  // const headerCheckBox = (
+  //   <Checkbox checked={selected} indeterminate={selected.length === 0} onChange={handleCheckBox} />
+  // )
+
   const rowSelection = {
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
       dispatch(
         selectDiscoveryTable({
-          isSelect: headerCheckBox,
+          isSelect: selected[record.MACAddress],
           deviceData: [record.MACAddress]
         })
       )

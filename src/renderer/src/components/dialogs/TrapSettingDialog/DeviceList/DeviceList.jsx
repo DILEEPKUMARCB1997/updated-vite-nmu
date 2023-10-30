@@ -47,7 +47,7 @@ const columns = [
 ]
 const DeviceList = () => {
   const { isTaskRunning, deviceStatus } = useSelector(trapSettingSelector)
-  console.log(deviceStatus)
+  // console.log(deviceStatus)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -64,7 +64,7 @@ const DeviceList = () => {
     model: element.model,
     status: element.status
   }))
-  console.log(data)
+  // console.log(data)
   return (
     <ConfigProvider
       theme={{

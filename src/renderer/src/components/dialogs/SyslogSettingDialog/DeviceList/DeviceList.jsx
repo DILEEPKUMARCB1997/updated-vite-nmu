@@ -47,18 +47,26 @@ const DeviceList = () => {
   // console.log(deviceStatus)
   const { useToken } = theme
   const { token } = useToken()
-  const [dataSource, setDataSource] = useState([])
+  // const [dataSource, setDataSource] = useState([])
 
-  useEffect(() => {
-    const newDataSource = Object.entries(deviceStatus).map(([key, element]) => ({
-      key,
-      MACAddress: key,
-      IPAddress: element.IPAddress,
-      model: element.model,
-      status: element.status
-    }))
-    setDataSource(newDataSource)
-  }, [])
+  // useEffect(() => {
+  //   const newDataSource = Object.entries(deviceStatus).map(([key, element]) => ({
+  //     key,
+  //     MACAddress: key,
+  //     IPAddress: element.IPAddress,
+  //     model: element.model,
+  //     status: element.status
+  //   }))
+  //   setDataSource(newDataSource)
+  // }, [])
+  const data = Object.entries(deviceStatus).map(([key, element]) => ({
+    key,
+    MACAddress: key,
+    IPAddress: element.IPAddress,
+    model: element.model,
+    status: element.status
+  }))
+  console.log(data)
 
   return (
     <ConfigProvider
@@ -97,12 +105,12 @@ const DeviceList = () => {
               rowKey="MACAddress"
               columns={columns}
               style={{ width: '100%' }}
-              dataSource={dataSource}
+              dataSource={data}
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
                 size: 'default',
-                total: dataSource.length,
+                total: data.length,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 15, 20, 25],
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`

@@ -189,7 +189,7 @@ const DevicesControl = ({ onClose }) => {
         <Tooltip title="Network Settings">
           <Button
             icon={<ShareAltOutlined />}
-            onClick={() => dispatch(setBatchOperateEvent({ event: 'networkSetting' }))}
+            onClick={() => dispatch(({ event: 'networkSetting' }))}
           />
         </Tooltip>
         <Tooltip title="Reset To Default">
