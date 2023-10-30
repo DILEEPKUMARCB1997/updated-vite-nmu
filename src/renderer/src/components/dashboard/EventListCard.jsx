@@ -6,17 +6,15 @@ import { Row, Col, Card } from 'antd'
 
 import { useTheme } from 'antd-style'
 
-// import './EventListCard.css'
-
 const EventListCard = (props) => {
   const token = useTheme()
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
-  // console.log(props)
+
   return (
     <div
       style={{
         boxSizing: 'border-box',
-        // minHeight: '150px',
+
         display: 'flex',
         flexDirection: 'column'
       }}

@@ -62,7 +62,6 @@ const FWUDialog = ({ onClose }) => {
       <br />
       <br />
       <FWUTableTab />
-
       <FWUButton handleDialogOnClose={handleDialogOnClose} />
     </Modal>
   )
