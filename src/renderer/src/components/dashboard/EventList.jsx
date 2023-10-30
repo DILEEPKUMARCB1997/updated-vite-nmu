@@ -11,7 +11,7 @@ const EventList = () => {
   // console.log(customEventListData)
 
   return (
-    <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
+    <div style={{ overflow: 'auto', height: 'calc(100vh - 12vh)' }}>
       {customEventListData.map((item) => (
         <EventListCard
           key={item.eventId}

@@ -101,7 +101,7 @@ const portInformationSlice = createSlice({
       const newIntervalBuffer = [...state.intervalBuffer]
       const { upTime } = payload
       Object.entries(payload.portInfo).forEach(([portName, portData]) => {
-        const oldPortBuffer = state.tarrifBuffer[portName]
+        const oldPortBuffer = state.trafficBuffer[portName]
         if (portData.enableStatus === 1 && portData.portStatus === 'up') {
           if (oldPortBuffer === undefined) {
             newTrafficBuffer = {
@@ -164,7 +164,7 @@ const portInformationSlice = createSlice({
       }
     },
     updatePowerStatusData: (state, { payload }) => {
-      return { ...state, powerStatus: payload }
+      return { ...state, powerStatusData: payload }
     },
     waitForPortStatusData: (state, { payload }) => {
       const { labels } = state
@@ -203,7 +203,7 @@ const portInformationSlice = createSlice({
         upTime: 0
       }
     },
-    clearPortInfoData: (state, { payload }) => {
+    clearPortInfoData: () => {
       return {
         intervalBuffer: [],
         trigger: false,

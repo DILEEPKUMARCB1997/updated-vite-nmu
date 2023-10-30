@@ -12,7 +12,8 @@ import {
 } from '../../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
 
-const ConfigureSchedule = () => {
+const ConfigureSchedule = (...props) => {
+  console.log(props)
   const {
     isEditMode,
     frequency,
@@ -59,7 +60,7 @@ const ConfigureSchedule = () => {
     customFrequency: 1,
     scheduleTime: nowHours + ':' + nowMinutes,
     scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate,
-    weeekDay: 0
+    weeekDay: 1
   })
   console.log(state)
   const [form] = Form.useForm()
@@ -173,7 +174,7 @@ const ConfigureSchedule = () => {
         customFrequency: customFrequency
       })
     }
-  }, [scheduleId])
+  }, [scheduleId, frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency])
 
   return (
     <Card

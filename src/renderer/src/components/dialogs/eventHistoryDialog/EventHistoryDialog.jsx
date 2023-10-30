@@ -90,10 +90,9 @@ const EventHistoryDialog = ({ onClose }) => {
         closable={true}
         maskClosable={false}
         onCancel={handleCloseButtonOnClick}
-        width={1200}
+        width="90%"
         style={{ top: 20 }}
         bodyStyle={{
-          height: 'calc(100vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
@@ -109,10 +108,10 @@ const EventHistoryDialog = ({ onClose }) => {
           }
         }}
       >
-        <div style={{ display: 'inline-flex', marginTop: '9px' }}>
+        <div style={{ marginTop: '9px' }}>
           <Input
             placeholder="MAC Address"
-            style={{ width: '150px', margin: '0px 10px 0px 10px' }}
+            style={{ width: 150, margin: '0px 10px 0px 10px' }}
             onChange={handleMACAddressInputChange}
           />
           <CustomRangePicker onChange={rangePickerChange} />
@@ -129,7 +128,7 @@ const EventHistoryDialog = ({ onClose }) => {
 
         <Divider style={{ margin: '10px 0px' }} />
         <Table
-          style={{ height: '50%', tableLayout: 'auto' }}
+          // style={{ height: '50%', tableLayout: 'auto' }}
           loading={tableLoading}
           rowKey="eventId"
           bordered
@@ -143,7 +142,7 @@ const EventHistoryDialog = ({ onClose }) => {
             pageSizeOptions: [25, 50, 75, 100],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
-          scroll={{ y: 'calc(80vh - 165px)' }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
         />
       </Modal>
     </ConfigProvider>

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { portInformationSelector } from '../../../../features/portInformationSlice'
 
 const TrafficChart = () => {
-  const [selectPort, setSelectPort] = useState('Port6')
+  const [selectPort, setSelectPort] = useState('Port1')
   const { useToken } = theme
   const { token } = useToken()
   const { Option } = Select
@@ -14,7 +14,7 @@ const TrafficChart = () => {
   const { trafficBuffer, labels, portStatusData } = useSelector(portInformationSelector)
 
   const selectItem = Object.keys(portStatusData)
-  console.log(selectItem)
+  // console.log(selectItem)
 
   let showLabels = ['', '', '', '', '', '', '', '', '', '', '', '', '']
   const chartData = trafficBuffer[selectPort]
@@ -52,6 +52,19 @@ const TrafficChart = () => {
     ],
 
     chart: { type: 'line', toolbar: { show: false } },
+    grid: {
+      show: true,
+      xaxis: {
+        lines: {
+          show: true
+        }
+      },
+      yaxis: {
+        lines: {
+          show: true
+        }
+      }
+    },
     stroke: {
       width: 3
     },
@@ -60,6 +73,7 @@ const TrafficChart = () => {
       showForSingleSeries: true,
       position: 'top'
     },
+
     xaxis: {
       type: 'category',
       // categories: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'],

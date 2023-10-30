@@ -17,7 +17,7 @@ import { useThemeStore } from '../../utils/themes/useStore'
 const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
-  const { trapGraphData, tableData } = useSelector(dashboardSelector)
+  const { trapGraphData } = useSelector(dashboardSelector)
   const dispatch = useDispatch()
   // const { label, data, tableData, lastUpdated } = trapGraphData
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
@@ -41,11 +41,8 @@ const TrapGraphSummary = () => {
         events: {
           // dataPointSelection: (event, chartContext, config) => {
           //   console.log(chartContext)
-          click: (e, element) => {
-            console.log(element.series.length)
-            // if (element.length > 0) {
-            //   onTrapGraphClick(element[0].index)
-            // }
+          markerClick: function (event, chartContext, { seriesIndex, dataPointIndex, config }) {
+            console.log(chartContext)
           }
         }
       },
