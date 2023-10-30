@@ -9,16 +9,6 @@ import {
 import { openDialog } from '../features/dialogSlice'
 import { createSlice } from '@reduxjs/toolkit'
 
-// export const codes = {
-//   none: { type: 'normal', label: 'Waiting' },
-//   a: { type: 'normal', label: 'Upload Image' },
-//   c: { type: 'normal', label: 'User Cancel' },
-//   S001: { type: 'normal', label: 'Erasing' },
-//   S002: { type: 'success', label: 'Update Successful' },
-//   E001: { type: 'error', label: 'Upload Fail(E001)' },
-//   E007: { type: 'error', label: 'Upload Fail(E007)' },
-//   TO: { type: 'error', label: 'Connect Timeout' }
-// }
 export const requestStartFirmwareUpdate = () => (dispatch, getState) => {
   const sendData = getState().firmwareUpdate
   window.electron.ipcRenderer.once(RESPONSE_RP_START_FIRMWARE_UPDATE, (event, arg) => {

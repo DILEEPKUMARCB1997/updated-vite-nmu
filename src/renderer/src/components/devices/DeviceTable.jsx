@@ -343,10 +343,10 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   // const enableOk = selected.length !== 0
-  const disableCheckBox = (record, deviceType) => {
-    !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-  }
-  const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
+  // const disableCheckBox = (record, deviceType) => {
+  //   !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+  // }
+  // const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
     onSelect: (record) => {
       console.log('record', record)

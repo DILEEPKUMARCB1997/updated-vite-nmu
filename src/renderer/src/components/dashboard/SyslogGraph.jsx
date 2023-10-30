@@ -20,7 +20,7 @@ import { SyncOutlined } from '@ant-design/icons'
 const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
-
+  // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
       {
@@ -98,10 +98,6 @@ const SyslogGraph = () => {
     }
   })
 
-  // const onSyslogGraphClick = (barIndex) => {
-  //   let tableData = tableData[barIndex]
-  //   showSyslogTableData(tableData)
-  // }
   const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
@@ -125,19 +121,6 @@ const SyslogGraph = () => {
       )
     }, 1500)
   }, [])
-  // useEffect(() => {
-  //  // setGraphData(graphData)
-  //   setTimeout(() => {
-  //     dispatch(
-  //       requestHistoryData({
-  //         type: 'syslog',
-  //         sourceIP: '',
-  //         ge: '',
-  //         le: ''
-  //       })
-  //     )
-  //   }, 1500)
-  // }, [])
 
   useEffect(() => {
     if (Array.isArray(syslogGraphData.data) && syslogGraphData.data.length > 0) {
