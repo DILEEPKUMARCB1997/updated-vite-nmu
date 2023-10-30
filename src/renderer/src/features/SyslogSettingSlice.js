@@ -70,7 +70,7 @@ const syslogSettingSlice = createSlice({
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      return void { ...state, deviceStatus }
+      // return void { ...state, deviceStatus }
       // return {
       //   ...state,
       //   deviceStatus: {
