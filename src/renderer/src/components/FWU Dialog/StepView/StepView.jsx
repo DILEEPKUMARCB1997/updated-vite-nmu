@@ -2,7 +2,7 @@ import { Steps } from 'antd'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { useSelector } from 'react-redux'
 
-const Step = Steps.Step
+//const Step = Steps.Step
 
 const StepView = () => {
   const { activeStep } = useSelector(firmwareSelector)

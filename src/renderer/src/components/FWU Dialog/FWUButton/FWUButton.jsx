@@ -13,7 +13,7 @@ import { Button } from 'antd'
 const FWUButton = ({ handleDialogOnClose }) => {
   const dispatch = useDispatch()
   const { status, filePath } = useSelector(firmwareSelector)
-  console.log(filePath)
+  // console.log(filePath)
 
   const handleStartButtonClick = () => {
     dispatch(requestStartFirmwareUpdate())
