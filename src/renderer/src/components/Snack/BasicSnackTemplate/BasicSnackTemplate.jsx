@@ -40,7 +40,8 @@ const BasicSnackTemplate = ({ onClose, props }) => {
   }
 
   const handleCancelButtonOnClick = () => {
-    closeSnack()
+    dispatch(clearDiscoverTableSelect())
+    dispatch(closeSnack())
   }
 
   const handleOKButtonOnClick = () => {

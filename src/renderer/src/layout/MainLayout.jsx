@@ -12,7 +12,11 @@ import { useThemeStore } from '../utils/themes/useStore'
 import _DefaultProps from './_DefaultProps'
 import atopLogo from '../assets/images/atop-logo.svg'
 import { clearUsersData } from '../features/userManagementSlice'
-import { nextInitRenderStep, requestAppInitialData } from '../features/UIControllSlice'
+import {
+  nextInitRenderStep,
+  removeBatchOperateEvent,
+  requestAppInitialData
+} from '../features/UIControllSlice'
 import RenameGroupDialog from '../components/dialogs/renameGroupDialog/RenameGroupDialog'
 import Dialogs from '../components/dialogs/Dialogs'
 import { closeDialog, dialogSelector, openDialog } from '../features/dialogSlice.js'
@@ -29,6 +33,7 @@ import { requestDiscoveryAfterLogin, updateDiscoveryData } from '../features/dis
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
 import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import Snacks from '../components/Snack/Snacks'
+import { closeSnack } from '../features/snackSlice'
 
 // import Snacks from '../components/Snack/Snacks'
 
@@ -46,6 +51,9 @@ const MainLayout = () => {
 
   useEffect(() => {
     setPathname(location.pathname || '/')
+    return () => {
+      dispatch(removeBatchOperateEvent())
+    }
   }, [location])
 
   useEffect(() => {

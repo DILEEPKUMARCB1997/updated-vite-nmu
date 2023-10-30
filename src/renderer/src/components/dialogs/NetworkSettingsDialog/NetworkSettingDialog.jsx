@@ -62,7 +62,7 @@ const NetworkSettingDialog = ({ onClose }) => {
       width={1000}
       closable={true}
       okText="start"
-      cancelButtonProps={{ disabled: !disableCancel }}
+      cancelButtonProps={{ disabled: !disableCancel, style: { display: 'none' } }}
       okButtonProps={{ disabled: !enableStart }}
     >
       <Row gutter={[15]}>

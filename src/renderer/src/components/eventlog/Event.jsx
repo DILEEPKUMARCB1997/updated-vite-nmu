@@ -80,50 +80,39 @@ function Event() {
         }
       }}
     >
-      <div
-        style={{
-          boxSizing: 'border-box',
-          position: 'relative',
-          height: '100%',
-          width: '100%',
-          minWidth: '761px',
-          paddingTop: '0px'
-        }}
+      {/* // <Card> */}
+      <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
+        History
+      </Button>
+      <Button
+        type="primary"
+        ghost
+        onClick={handleClearButtonOnClick}
+        style={{ marginBottom: '15px', marginLeft: '10px' }}
       >
-        {/* // <Card> */}
-        <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
-          History
-        </Button>
-        <Button
-          type="primary"
-          ghost
-          onClick={handleClearButtonOnClick}
-          style={{ marginBottom: '15px', marginLeft: '10px' }}
-        >
-          Clear
-        </Button>
-        <Alert
-          message="Here you can check today's log data, please check history for past data."
-          type="warning"
-          showIcon
-        />
-        <Table
-          columns={columns}
-          dataSource={eventData}
-          loading={tableLoading}
-          // bordered
-          pagination={{
-            // showQuickJumper: true,
-            // showSizeChanger: true,
-            size: 'default',
-            defaultPageSize: 10,
-            pageSizeOptions: [10, 15, 20, 25],
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
-          }}
-          // scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
-        />
-        {/* </Card> */}
-      </div>
+        Clear
+      </Button>
+      <Alert
+        message="Here you can check today's log data, please check history for past data."
+        type="warning"
+        showIcon
+      />
+      <Table
+        columns={columns}
+        dataSource={eventData}
+        loading={tableLoading}
+        // bordered
+        pagination={{
+          // showQuickJumper: true,
+          // showSizeChanger: true,
+          size: 'default',
+          defaultPageSize: 10,
+          pageSizeOptions: [10, 15, 20, 25],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+        }}
+        scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
+      />
+      {/* </Card> */}
     </ConfigProvider>
   )
 }

@@ -30,13 +30,7 @@ const Snack = ({ id, onClose, ...rest }) => {
 const Snacks = () => {
   const { snacks } = useSelector(snackSelector)
   const dispatch = useDispatch()
-  return snacks.map((id) => (
-    <Snack
-      key={id}
-      id={id}
-      // onClose={() => dispatch(closeSnack(id))}
-    />
-  ))
+  return snacks.map((id) => <Snack key={id} id={id} onClose={() => dispatch(closeSnack(id))} />)
 }
 
 export default Snacks

@@ -7,6 +7,7 @@ import {
   RESPONSE_RP_GET_SNMP_DEVICE_NETWORK_SETTINGS,
   REQUEST_MP_GET_SNMP_DEVICE_NETWORK_SETTINGS
 } from '../../../main/utils/IPCEvents'
+import { openDialog } from './dialogSlice'
 const IPFormat =
   /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
 export const clearSingleNetworkSettingData = () => (dispatch) => {
@@ -34,7 +35,7 @@ export const initSingleNetworkSetting = (payload) => (dispatch, getState) => {
     })
     window.electron.ipcRenderer.send(REQUEST_MP_GET_SNMP_DEVICE_NETWORK_SETTINGS, { MACAddress })
   }
-  dispatch(openDrawer(true))
+  dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
 }
 
 export const requestSetNetworkSetting = (callback) => (dispatch, getState) => {

@@ -14,7 +14,6 @@ const BackupRestoreDialog = ({ onClose }) => {
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
   const dispatch = useDispatch()
-
   useEffect(() => {
     setTimeout(() => {
       setDidMount(true)
@@ -26,6 +25,7 @@ const BackupRestoreDialog = ({ onClose }) => {
 
   const handleCancelButtonOnClick = () => {
     setDidMount(false)
+
     setTimeout(() => {
       onClose()
     }, 400)
@@ -41,6 +41,7 @@ const BackupRestoreDialog = ({ onClose }) => {
         }
         open
         onCancel={handleCancelButtonOnClick}
+        onClose={handleCancelButtonOnClick}
         width={1000}
         maskClosable={false}
         // bodyStyle={{

@@ -4,16 +4,19 @@
 import React from 'react'
 import { Row, Col, Card } from 'antd'
 
+import { useTheme } from 'antd-style'
+
 // import './EventListCard.css'
 
 const EventListCard = (props) => {
+  const token = useTheme()
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
   // console.log(props)
   return (
     <div
       style={{
         boxSizing: 'border-box',
-        minHeight: '150px',
+        // minHeight: '150px',
         display: 'flex',
         flexDirection: 'column'
       }}
@@ -22,17 +25,18 @@ const EventListCard = (props) => {
       <Card
         style={{
           borderRadius: '0px',
-          padding: '7px',
-          fontWeight: '600',
+          padding: '0px',
+          fontWeight: '500',
           color: '#000000ed',
-          margin: '0px 2px 5px'
+          margin: '0px 2px 5px 0px'
         }}
+        bodyStyle={{ padding: '5px', backgroundColor: token.colorBorderSecondary }}
       >
         <Row style={{ marginBottom: '5px' }}>
-          <Col span={12} style={{ textAlign: 'left' }}>
+          <Col span={10} style={{ textAlign: 'left' }}>
             {hostname}
           </Col>
-          <Col span={12} style={{ textAlign: 'right' }}>
+          <Col span={14} style={{ textAlign: 'right' }}>
             {createAt}
           </Col>
         </Row>
