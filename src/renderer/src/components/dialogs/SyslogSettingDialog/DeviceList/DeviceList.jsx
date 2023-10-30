@@ -44,7 +44,7 @@ const columns = [
 ]
 const DeviceList = () => {
   const { deviceStatus } = useSelector(syslogSettingSelector)
-  console.log(deviceStatus)
+  //console.log(deviceStatus)
   const { useToken } = theme
   const { token } = useToken()
   const [dataSource, setDataSource] = useState([])

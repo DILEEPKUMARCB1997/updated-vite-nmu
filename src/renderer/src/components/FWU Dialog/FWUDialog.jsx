@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux'
 import OpenFile from './OpenFile/OpenFile'
 import Typography from 'antd/es/typography/Typography'
 import FWUTableTab from './FWUTable/FWUTableTab/FWUTableTab'
+import FWUDoneTable from './FWUTable/FWUDoneTable'
 
 const FWUDialog = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -61,6 +62,7 @@ const FWUDialog = ({ onClose }) => {
       <br />
       <br />
       <FWUTableTab />
+
       <FWUButton handleDialogOnClose={handleDialogOnClose} />
     </Modal>
   )

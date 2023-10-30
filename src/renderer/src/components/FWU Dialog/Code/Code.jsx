@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Tag } from 'antd'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 const codes = {
   none: { type: 'normal', label: 'Waiting' },
@@ -14,27 +15,22 @@ const codes = {
 
 const Code = () => {
   const { deviceRealTimeData } = useSelector(firmwareSelector)
-  console.log(deviceRealTimeData)
   const { code } = deviceRealTimeData
-  //console.log(code)
+  const code1 =
+    codes.S002.type === 'success'
+      ? 'green'
+      : codes.E001.type === 'error'
+      ? 'red'
+      : codes.none.label === 'normal'
+      ? 'blue'
+      : 'null'
+
   return (
-    <h6
-      style={{
-        fontSize: '1rem',
-        marginTop: '0',
-        marginBottom: '0.5rem',
-        color:
-          codes.type === codes.S002
-            ? 'green'
-            : codes.type === codes.E001
-            ? 'red'
-            : codes.type === codes.none
-            ? 'blue'
-            : 'none'
-      }}
-    >
-      {code}
-    </h6>
+    <div>
+      <span>
+        <Tag style={{ color: code1 }}>{codes.none.label[code]}</Tag>
+      </span>
+    </div>
   )
 }
 
