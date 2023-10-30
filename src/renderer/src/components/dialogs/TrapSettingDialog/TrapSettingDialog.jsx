@@ -13,6 +13,15 @@ const TrapSettingDialog = ({ onClose }) => {
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setDidMount(true)
+  //   }, 200)
+  //   return () => {
+  //     dispatch(clearData())
+  //   }
+  // }, [])
+
   useEffect(() => {
     setTimeout(() => {
       setDidMount(true)

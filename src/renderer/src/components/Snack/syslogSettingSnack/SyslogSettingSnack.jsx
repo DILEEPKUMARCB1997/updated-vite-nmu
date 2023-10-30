@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import BasicSnackTemplate from '../BasicSnackTemplate/BasicSnackTemplate'
-// import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
-import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
+import { initBackupRestoreData } from '../../../features/backupRestoreSlice'
+// import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 import { useDispatch } from 'react-redux'
 import { closeSnack } from '../../../features/snackSlice'
 
@@ -14,7 +14,7 @@ const SyslogSettingSnack = ({ onClose }) => {
   }
 
   const handleOKButtonOnClick = () => {
-    dispatch(initSyslogSettingData())
+    dispatch(initBackupRestoreData())
   }
   return (
     <div>

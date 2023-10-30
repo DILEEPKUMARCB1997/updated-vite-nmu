@@ -22,7 +22,7 @@ import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
 import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector, setBatchOperateEvents } from '../../features/UIControllSlice'
+import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
 
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
@@ -348,9 +348,12 @@ const DeviceTable = ({ deviceData = [] }) => {
   // }
   // const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
-    onSelect: (record) => {
-      console.log('record', record)
-      console.log('selected', selected)
+    onSelect: (record, selected, selectedRows, nativeEvent) => {
+      console.log(record, selected, selectedRows, nativeEvent)
+
+      // onSelect: (record) => {
+      //   console.log('record', record)
+      //   console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({
