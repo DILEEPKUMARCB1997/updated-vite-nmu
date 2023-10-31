@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Modal } from 'antd'
+import { Table, Modal, ConfigProvider } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
 import { useSelector } from 'react-redux'
+import { useTheme } from 'antd-style'
 
 const columns = [
   {
@@ -15,12 +16,14 @@ const columns = [
   {
     key: 'eventCondition',
     title: 'Event Condition',
-    dataIndex: 'eventCondition'
+    dataIndex: 'eventCondition',
+    width: 150
   },
   {
     key: 'severity',
     title: 'Severity',
     dataIndex: 'severity',
+    width: 150,
     sorter: (a, b) => (a.severity > b.severity ? 1 : -1),
     sortDirections: ['descend', 'ascend']
   },
@@ -43,43 +46,84 @@ const columns = [
 ]
 
 const CustomGraphTableDialog = ({ onClose }) => {
+  const token = useTheme()
   const { customTableData } = useSelector(dashboardSelector)
   const [tableLoading, setTableLoading] = useState(false)
 
-  // useEffect(() => {
-  //   setTableLoading(tableLoading)
-  // }, [tableLoading])
+  console.log('custom table data', customTableData)
+
   useEffect(() => {
     setTableLoading(false)
-  }, [tableLoading])
+  }, [])
 
   const handleCloseButtonOnClick = () => {
     onClose()
   }
 
   return (
-    <Modal
-      open
-      maxWidth={false}
-      title={<span style={{ float: 'left', marginTop: '12px' }}>Custom Event Graph Data</span>}
-      onCancel={handleCloseButtonOnClick}
+    <ConfigProvider
+      theme={{
+        inherit: true,
+        components: {
+          Table: {
+            colorFillAlter: token.colorPrimaryBg,
+            fontSize: 14
+          }
+        }
+      }}
     >
-      <Table
-        loading={tableLoading}
-        rowKey="eventId"
-        bordered
-        columns={columns}
-        dataSource={customTableData}
-        pagination={{ pageSize: 25 }}
-        scroll={{ y: 'calc(80vh - 160px)', x: 1500 }}
-        rowClassName={(record) => {
-          if (record.severity === 'Information') return 'table-information'
-          if (record.severity === 'Warning') return 'table-warning'
-          if (record.severity === 'Critical') return 'table-critical'
-          return ''
+      <Modal
+        open
+        onCancel={handleCloseButtonOnClick}
+        width="90%"
+        title="Custom Events Graph Data"
+        onOk={onClose}
+        closable={true}
+        maskClosable={false}
+        style={{ top: 20 }}
+        bodyStyle={{
+          // height: 'calc(70vh - 150px)',
+          margin: 0,
+          paddingTop: 10,
+          paddingBottom: '10px'
+          // maxHeight: '98%'
         }}
-      />
-    </Modal>
+        okButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
+        cancelButtonProps={{
+          style: {
+            display: 'none'
+          }
+        }}
+      >
+        <Table
+          loading={tableLoading}
+          rowKey="eventId"
+          bordered
+          style={{ text: { color: token.colorSuccess } }}
+          columns={columns}
+          dataSource={customTableData}
+          rowClassName={(record) => {
+            if (record.severity === 'Information') return 'table-information'
+            if (record.severity === 'Warning') return 'table-warning'
+            if (record.severity === 'Critical') return 'table-critical'
+            return ''
+          }}
+          pagination={{
+            // showQuickJumper: true,
+            // showSizeChanger: true,
+            size: 'default',
+            defaultPageSize: 25,
+            pageSizeOptions: [25, 50, 75, 100],
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+          }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
+        />
+      </Modal>
+    </ConfigProvider>
   )
 }
 

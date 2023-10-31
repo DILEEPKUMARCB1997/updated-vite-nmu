@@ -7,15 +7,18 @@ import {
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
 import { requestGraphData, requestCustomGraphData } from '../components/dashboard/requestGraphData'
+import { openDialog } from './dialogSlice'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
+  dispatch(openDialog('customGraphTable'))
 }
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
   dispatch(openDialog('syslogGraphTable'))
 }
 export const showTrapTableData = (payload) => (dispatch) => {
+  console.log(payload)
   dispatch(updateTrapTableData(payload))
   dispatch(openDialog('trapGraphTable'))
 }
@@ -148,6 +151,7 @@ const dashboardSlice = createSlice({
     },
 
     updateTrapTableData: (state, { payload }) => {
+      console.log('payload', payload)
       return { ...state, trapTableData: payload }
     }
 
@@ -169,7 +173,6 @@ export const {
   updateSyslogGraph,
   updateSyslogTableData,
   updateTrapTableData,
-  openDialog,
   updateCustomTableData,
   updateCustomGraph
 } = dashboardSlice.actions

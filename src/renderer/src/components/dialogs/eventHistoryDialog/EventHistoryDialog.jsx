@@ -142,7 +142,7 @@ const EventHistoryDialog = ({ onClose }) => {
             pageSizeOptions: [25, 50, 75, 100],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
-          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1000 }}
         />
       </Modal>
     </ConfigProvider>

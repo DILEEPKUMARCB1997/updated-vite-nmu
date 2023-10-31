@@ -28,6 +28,27 @@ const GlobalStyle = () => {
           font-weight: 500;
           letter-spacing: 0.02857em;
         }
+        .table-information {
+          background-color: #f6ffed !important;
+          color: #52c41a !important;
+        }
+        .table-information:hover {
+          color: rgba(0, 0, 0, 0.65) !important;
+        }
+        .table-warning {
+          background-color: #fff7e6 !important;
+          color: #fa8c16 !important;
+        }
+        .table-warning:hover {
+          color: rgba(0, 0, 0, 0.65) !important;
+        }
+        .table-critical {
+          background-color: #fff1f0 !important;
+          color: #f5222d !important;
+        }
+        .table-critical:hover {
+          color: rgba(0, 0, 0, 0.65) !important;
+        }
       `}
     />
   )

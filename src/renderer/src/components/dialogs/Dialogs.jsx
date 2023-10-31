@@ -33,7 +33,7 @@ import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDia
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
 import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
-// import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
+import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -67,10 +67,10 @@ const Dialog = ({ id, onClose, ...rest }) => {
           buzzer: <BuzzerDialog onClose={onClose} />,
           beep: <Beep onClose={onClose} />,
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
-          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
+          customGraphTable: <CustomGraphTableDialog onClose={onClose} />,
           trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
-          customHistory: <CustomHistoryDialog onClose={onClose} />
-          // syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
+          customHistory: <CustomHistoryDialog onClose={onClose} />,
+          syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
         }[id]
       }
     </div>

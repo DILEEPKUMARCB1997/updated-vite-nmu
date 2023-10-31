@@ -13,11 +13,14 @@ import { Button, Tooltip, theme as antdTheme } from 'antd'
 import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
+import { openDialog } from '../../features/dialogSlice'
 
 const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
+  const { tableData } = trapGraphData
+
   const dispatch = useDispatch()
   // const { label, data, tableData, lastUpdated } = trapGraphData
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
@@ -25,7 +28,7 @@ const TrapGraphSummary = () => {
       {
         name: 'SNMP Trap Message Count',
         // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
-        data: []
+        data: trapGraphData.data
       }
     ],
     options: {
@@ -39,10 +42,15 @@ const TrapGraphSummary = () => {
         offsetY: -20,
         offsetX: -5,
         events: {
-          // dataPointSelection: (event, chartContext, config) => {
-          //   console.log(chartContext)
-          markerClick: function (event, chartContext, { seriesIndex, dataPointIndex, config }) {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onTrapGraphClick(config.dataPointIndex)
+            }
+            // console.log(trapGraphData.tableData[config.dataPointIndex])
+            // console.log(event)
             console.log(chartContext)
+            // console.log(config.w.config.series[0].data[config.dataPointIndex])
+            // console.log(config.selectedDataPoints[0].length)
           }
         }
       },
@@ -104,8 +112,7 @@ const TrapGraphSummary = () => {
   })
 
   const onTrapGraphClick = (barIndex) => {
-    let tableData = tableData[barIndex]
-    dispatch(showTrapTableData(tableData))
+    dispatch(showTrapTableData(tableData[barIndex]))
   }
 
   useEffect(() => {
