@@ -13,6 +13,7 @@ import {
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
+import { showSyslogTableData } from '../../features/dashboardSlice'
 
 // function getRandomInt(min = 1, max = 9) {
 //   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -20,7 +21,14 @@ import { SyncOutlined } from '@ant-design/icons'
 const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
-  // console.log(syslogGraphData)
+  const { tableData } = syslogGraphData
+
+  const onSylogGraphClick = () => {
+    // let tableData1 = tableData[barIndex]
+    // console.log(tableData1)
+    dispatch(showSyslogTableData(tableData))
+  }
+
   const [graphData, setGraphData] = useState({
     series: [
       {
@@ -50,6 +58,7 @@ const SyslogGraph = () => {
       fill: {
         type: 'solid'
       },
+
       plotOptions: {
         bar: {
           borderRadius: 0,
@@ -153,11 +162,17 @@ const SyslogGraph = () => {
       >
         <i>{syslogGraphData.lastUpdated}</i>
         <Tooltip title="Refresh">
-          <Button onClick={handleRefreshGraph} icon={<SyncOutlined />} />
+          <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>
       </div>
       <div>
-        <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
+        <Chart
+          options={graphData.options}
+          series={graphData.series}
+          type="bar"
+          height={210}
+          onClick={onSylogGraphClick}
+        />
       </div>
     </>
   )

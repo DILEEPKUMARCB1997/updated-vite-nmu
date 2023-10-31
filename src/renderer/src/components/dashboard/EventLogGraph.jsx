@@ -105,14 +105,16 @@ const EventLogGraph = () => {
   }
 
   useEffect(() => {
-    dispatch(
-      requestHistoryData({
-        type: 'custom',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'custom',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 1500)
   }, [])
 
   useEffect(() => {
