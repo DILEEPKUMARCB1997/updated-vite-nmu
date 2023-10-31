@@ -8,7 +8,9 @@ import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
-  requestHistoryData
+  requestHistoryData,
+  showSyslogTableData
+
   //showSyslogTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
@@ -20,6 +22,7 @@ import { SyncOutlined } from '@ant-design/icons'
 const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
+  const { tableData } = syslogGraphData
   // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
@@ -37,7 +40,14 @@ const SyslogGraph = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: -5
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onSyslogGraphClick(config.dataPointIndex)
+            }
+          }
+        }
       },
 
       legend: {
@@ -97,6 +107,10 @@ const SyslogGraph = () => {
       }
     }
   })
+
+  const onSyslogGraphClick = (barIndex) => {
+    dispatch(showSyslogTableData(tableData[barIndex]))
+  }
 
   const handleRefreshGraph = () => {
     dispatch(
