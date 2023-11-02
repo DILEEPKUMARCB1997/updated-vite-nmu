@@ -1,8 +1,7 @@
 import fs from 'fs'
 import mv from 'mv'
-const { Telnet } = require('telnet-client')
-
 // const Telnet = require('telnet-client')
+const { Telnet } = require('telnet-client')
 const pathRoot = require('path')
 
 const rootFolderPath =

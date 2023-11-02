@@ -26,7 +26,7 @@ function Event() {
       key: 'createAt',
       title: 'Time',
       dataIndex: 'createAt',
-      width: 200,
+      width: 150,
       defaultSortOrder: 'descend',
       sorter: (a, b) => new Date(a.createAt) - new Date(b.createAt)
     },
@@ -38,14 +38,14 @@ function Event() {
       sorter: (a, b) => (a.sourceIP > b.sourceIP ? 1 : -1),
       sortDirections: ['descend', 'ascend']
     },
-    { key: 'model', title: 'Model', dataIndex: 'model', width: 200 },
+    { key: 'model', title: 'Model', dataIndex: 'model', width: 180 },
     {
       key: 'MACAddress',
       title: 'MAC Address',
       dataIndex: 'MACAddress',
-      width: 200
+      width: 150
     },
-    { key: 'msg', title: 'Message', dataIndex: 'msg' }
+    { key: 'msg', title: 'Message', dataIndex: 'msg', width: 150 }
   ]
 
   useEffect(() => {
@@ -99,6 +99,7 @@ function Event() {
       />
       <Table
         columns={columns}
+        bordered
         dataSource={eventData}
         loading={tableLoading}
         // bordered
@@ -110,7 +111,7 @@ function Event() {
           pageSizeOptions: [10, 15, 20, 25],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
         }}
-        scroll={{ y: 'calc(100vh - 365px)', x: 1500 }}
+        scroll={{ y: 'calc(100vh - 365px)', x: 1000 }}
       />
       {/* </Card> */}
     </ConfigProvider>

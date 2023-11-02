@@ -14,9 +14,11 @@ const SyslogConfiguration = () => {
 
   const { useToken } = theme
   const { token } = useToken()
-  // useEffect(() => {
-  //   dispatch(startTask())
-  // }, [])
+  useEffect(() => {
+    return () => {
+      dispatch(startTask())
+    }
+  }, [])
 
   const handleChangeLogToFlash = (value) => {
     if (value) {
@@ -32,13 +34,7 @@ const SyslogConfiguration = () => {
       setLogToServer(2)
     }
   }
-  // const handleChangeLogToServer = (value) => {
-  //   if (value) {
-  //     setLogToServer(1)
-  //   } else {
-  //     setLogToServer(2)
-  //   }
-  // }
+
   const handleLogLevelChange = (value) => {
     setLogLevel(value)
   }

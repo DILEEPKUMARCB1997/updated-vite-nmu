@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,13 +11,9 @@ import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
-  const { customGraphData } = useSelector(dashboardSelector)
+  const { customGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = customGraphData
-
-  const onCustomGraphClick = (barIndex) => {
-    tableData[barIndex]
-    dispatch(showCustomTableData(tableData))
-  }
+  console.log(customGraphData)
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -31,11 +25,13 @@ const EventLogGraph = () => {
         name: 'Warning',
         color: '#F57F17',
         data: customGraphData.WarningData
+        // data: [10, 15, 30, 12, 0, 15, 27]
       },
       {
         name: 'Critical',
         color: '#D50000',
         data: customGraphData.CriticalData
+        // data: [12, 6, 23, 25, 20, 35, 12]
       }
     ],
     options: {
@@ -46,7 +42,14 @@ const EventLogGraph = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: -5
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onCustomGraphClick(config.dataPointIndex)
+            }
+          }
+        }
       },
       legend: {
         show: true,
@@ -105,7 +108,7 @@ const EventLogGraph = () => {
       }
     }
   })
-  const handleRefreshGraph = () => {
+  const handleRefreshGraph = useCallback(() => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -114,17 +117,26 @@ const EventLogGraph = () => {
         le: ''
       })
     )
-  }
+  }, [dispatch])
+
+  const onCustomGraphClick = useCallback(
+    (barIndex) => {
+      dispatch(showCustomTableData(tableData[barIndex]))
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
-    dispatch(
-      requestHistoryData({
-        type: 'custom',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'custom',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 1500)
   }, [])
 
   useEffect(() => {

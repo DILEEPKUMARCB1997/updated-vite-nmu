@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { ConfigProvider, Modal, Table, theme } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Table, Modal, ConfigProvider } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
 import { useSelector } from 'react-redux'
+import { useTheme } from 'antd-style'
 
 const columns = [
   {
@@ -13,6 +14,20 @@ const columns = [
     sorter: (a, b) => new Date(a.createAt) - new Date(b.createAt)
   },
   {
+    key: 'eventCondition',
+    title: 'Event Condition',
+    dataIndex: 'eventCondition',
+    width: 150
+  },
+  {
+    key: 'severity',
+    title: 'Severity',
+    dataIndex: 'severity',
+    width: 150,
+    sorter: (a, b) => (a.severity > b.severity ? 1 : -1),
+    sortDirections: ['descend', 'ascend']
+  },
+  {
     key: 'sourceIP',
     title: 'Source IP',
     dataIndex: 'sourceIP',
@@ -20,40 +35,22 @@ const columns = [
     sorter: (a, b) => (a.sourceIP > b.sourceIP ? 1 : -1),
     sortDirections: ['descend', 'ascend']
   },
+  { key: 'model', title: 'Model', dataIndex: 'model', width: 200 },
   {
-    key: 'upTime',
-    title: 'Up Time',
-    dataIndex: 'upTime',
-    width: 150,
-    sorter: (a, b) => a.upTime - b.upTime,
-    sortDirections: ['descend', 'ascend']
+    key: 'MACAddress',
+    title: 'MAC Address',
+    dataIndex: 'MACAddress',
+    width: 200
   },
-  {
-    key: 'facility',
-    title: 'Facility',
-    dataIndex: 'facility',
-    width: 110,
-    sorter: (a, b) => a.facility - b.facility,
-    sortDirections: ['descend', 'ascend']
-  },
-  {
-    key: 'severity',
-    title: 'Severity',
-    dataIndex: 'severity',
-    width: 110,
-    sorter: (a, b) => a.severity - b.severity,
-    sortDirections: ['descend', 'ascend']
-  },
-  { key: 'tag', title: 'Tag', dataIndex: 'tag', width: 100 },
-  { key: 'message', title: 'Message', dataIndex: 'message' }
+  { key: 'msg', title: 'Message', dataIndex: 'msg' }
 ]
 
-const SyslogGraphTableDialog = ({ onClose }) => {
-  const { useToken } = theme
-  const { token } = useToken()
-  const [tableLoading, setTableLoading] = useState(true)
-  const { syslogTableData } = useSelector(dashboardSelector)
-  console.log(syslogTableData)
+const CustomGraphTableDialog = ({ onClose }) => {
+  const token = useTheme()
+  const { customTableData } = useSelector(dashboardSelector)
+  const [tableLoading, setTableLoading] = useState(false)
+
+  console.log('custom table data', customTableData)
 
   useEffect(() => {
     setTableLoading(false)
@@ -79,7 +76,7 @@ const SyslogGraphTableDialog = ({ onClose }) => {
         open
         onCancel={handleCloseButtonOnClick}
         width="90%"
-        title="Syslog Graph Data"
+        title="Custom Events Graph Data"
         onOk={onClose}
         closable={true}
         maskClosable={false}
@@ -104,10 +101,17 @@ const SyslogGraphTableDialog = ({ onClose }) => {
       >
         <Table
           loading={tableLoading}
-          rowKey="syslogId"
+          rowKey="eventId"
           bordered
+          style={{ text: { color: token.colorSuccess } }}
           columns={columns}
-          dataSource={syslogTableData}
+          dataSource={customTableData}
+          rowClassName={(record) => {
+            if (record.severity === 'Information') return 'table-information'
+            if (record.severity === 'Warning') return 'table-warning'
+            if (record.severity === 'Critical') return 'table-critical'
+            return ''
+          }}
           pagination={{
             // showQuickJumper: true,
             // showSizeChanger: true,
@@ -123,4 +127,4 @@ const SyslogGraphTableDialog = ({ onClose }) => {
   )
 }
 
-export default SyslogGraphTableDialog
+export default CustomGraphTableDialog

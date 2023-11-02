@@ -2,13 +2,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Chart from 'react-apexcharts'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
-  requestHistoryData
+  requestHistoryData,
+  showSyslogTableData
+
   //showSyslogTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
@@ -19,7 +21,8 @@ import { SyncOutlined } from '@ant-design/icons'
 // }
 const SyslogGraph = () => {
   const dispatch = useDispatch()
-  const { syslogGraphData } = useSelector(dashboardSelector)
+  const { syslogGraphData } = useSelector(useMemo(() => dashboardSelector, []))
+  const { tableData } = syslogGraphData
   // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
@@ -37,7 +40,14 @@ const SyslogGraph = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: -5
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onSyslogGraphClick(config.dataPointIndex)
+            }
+          }
+        }
       },
 
       legend: {
@@ -50,6 +60,7 @@ const SyslogGraph = () => {
       fill: {
         type: 'solid'
       },
+
       plotOptions: {
         bar: {
           borderRadius: 0,
@@ -98,6 +109,10 @@ const SyslogGraph = () => {
     }
   })
 
+  const onSyslogGraphClick = (barIndex) => {
+    dispatch(showSyslogTableData(tableData[barIndex]))
+  }
+
   const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
@@ -110,16 +125,14 @@ const SyslogGraph = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'syslog',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1500)
+    dispatch(
+      requestHistoryData({
+        type: 'syslog',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
   }, [])
 
   useEffect(() => {
@@ -153,7 +166,7 @@ const SyslogGraph = () => {
       >
         <i>{syslogGraphData.lastUpdated}</i>
         <Tooltip title="Refresh">
-          <Button onClick={handleRefreshGraph} icon={<SyncOutlined />} />
+          <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>
       </div>
       <div>

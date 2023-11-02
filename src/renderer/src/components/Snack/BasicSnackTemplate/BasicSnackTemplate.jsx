@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   clearDiscoverTableSelect,
   discoverySelector,
-  selectDiscoveryTable
+  selectDiscoveryTable,
+  showDiscoveryTableCheckBox
 } from '../../../features/discoverySlice'
 
 const BasicSnackTemplate = ({ onClose, props }) => {
@@ -40,8 +41,7 @@ const BasicSnackTemplate = ({ onClose, props }) => {
   }
 
   const handleCancelButtonOnClick = () => {
-    dispatch(clearDiscoverTableSelect())
-    dispatch(closeSnack())
+    closeSnack()
   }
 
   const handleOKButtonOnClick = () => {

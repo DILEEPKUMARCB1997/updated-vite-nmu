@@ -13,7 +13,7 @@ const columns = [
     key: 'createAt',
     title: 'Time',
     dataIndex: 'createAt',
-    width: 200,
+    width: 150,
     defaultSortOrder: 'descend',
     sorter: (a, b) => new Date(a.createAt) - new Date(b.createAt)
   },

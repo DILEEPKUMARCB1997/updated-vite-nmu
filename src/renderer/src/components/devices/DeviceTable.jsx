@@ -120,7 +120,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
 
-  //console.log(selected)
+  // console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -342,11 +342,6 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
 
-  // const enableOk = selected.length !== 0
-  // const disableCheckBox = (record, deviceType) => {
-  //   !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-  // }
-  // const headerCheckBox = <Checkbox checked={isSelect} disabled={disableCheckBox} />
   const rowSelection = {
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
@@ -385,13 +380,6 @@ const DeviceTable = ({ deviceData = [] }) => {
           }
         }}
       >
-        {/* <EnhanceCheckBox
-          disable={false}
-          groupId={groupId}
-          parents="header"
-          handleCheckBoxChange={handleCheckBoxChange}
-          viewDevicesData={viewDevicesData}
-        /> */}
         <ProTable
           cardProps={{
             style: { boxShadow: token?.Card?.boxShadow }
@@ -433,6 +421,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
+          // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
             // console.log(record)

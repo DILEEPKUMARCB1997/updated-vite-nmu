@@ -100,8 +100,6 @@ const DeviceList = () => {
     status: element.status
   }))
 
-  console.log('data', data)
-
   return (
     <ConfigProvider
       theme={{
