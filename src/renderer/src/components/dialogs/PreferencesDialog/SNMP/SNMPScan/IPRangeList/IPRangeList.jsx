@@ -45,27 +45,30 @@ const IPRangeList = () => {
           itemLayout="horizontal"
           dataSource={Object.entries(IPRangeData)}
           renderItem={(item) => (
-            <ListItem
-              className="item"
-              actions={[
-                <Button
-                  size="small"
-                  key=""
-                  icon={<CloseOutlined></CloseOutlined>}
-                  onClick={handleIPRangeDataRemoveButtonClick(item[0])}
-                />
-              ]}
-            >
-              <ListItemMeta
-                avatar={
-                  <Checkbox
-                    checked={item[1].isActive}
-                    onChange={handleIPRangeDataCheckBoxChange(item[0])}
+            console.log('item', item),
+            (
+              <ListItem
+                className="item"
+                actions={[
+                  <Button
+                    size="small"
+                    key=""
+                    icon={<CloseOutlined></CloseOutlined>}
+                    onClick={handleIPRangeDataRemoveButtonClick(item)}
                   />
-                }
-                title={`${item[1].startIP} - ${item[1].endIP}`}
-              />
-            </ListItem>
+                ]}
+              >
+                <ListItemMeta
+                  avatar={
+                    <Checkbox
+                      checked={item[1].isActive}
+                      onChange={handleIPRangeDataCheckBoxChange(item)}
+                    />
+                  }
+                  title={`${item[1].startIP} - ${item[1].endIP}`}
+                />
+              </ListItem>
+            )
           )}
         />
         <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />

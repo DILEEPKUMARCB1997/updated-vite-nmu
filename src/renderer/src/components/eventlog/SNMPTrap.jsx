@@ -13,7 +13,7 @@ const columns = [
     key: 'createAt',
     title: 'Time',
     dataIndex: 'createAt',
-    width: 150,
+    width: 200,
     defaultSortOrder: 'descend',
     sorter: (a, b) => new Date(a.createAt) - new Date(b.createAt)
   },
@@ -37,7 +37,7 @@ const columns = [
     key: 'specific',
     title: 'GT',
     dataIndex: 'specific',
-    width: 80,
+    width: 150,
     sorter: (a, b) => a.specific - b.specific,
     sortDirections: ['descend', 'ascend']
   },
@@ -45,7 +45,7 @@ const columns = [
     key: 'generic',
     title: 'ST',
     dataIndex: 'generic',
-    width: 80,
+    width: 150,
     sorter: (a, b) => a.generic - b.generic,
     sortDirections: ['descend', 'ascend']
   },
@@ -53,7 +53,7 @@ const columns = [
     key: 'version',
     title: 'Version',
     dataIndex: 'version',
-    width: 120,
+    width: 100,
     sorter: (a, b) => a.version - b.version,
     sortDirections: ['descend', 'ascend']
   },
@@ -61,10 +61,10 @@ const columns = [
     key: 'enterprise',
     title: 'Enterprise',
     dataIndex: 'enterprise',
-    width: 180
+    width: 150
   },
-  { key: 'community', title: 'Community', dataIndex: 'community', width: 110 },
-  { key: 'msg', title: 'Description', dataIndex: 'msg', width: 150 }
+  { key: 'community', title: 'Community', dataIndex: 'community', width: 150 },
+  { key: 'msg', title: 'Description', dataIndex: 'msg' }
 ]
 
 const SNMPTrap = () => {
