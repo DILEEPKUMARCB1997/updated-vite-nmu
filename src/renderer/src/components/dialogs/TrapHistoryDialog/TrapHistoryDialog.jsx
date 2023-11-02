@@ -41,7 +41,7 @@ const columns = [
     key: 'specific',
     title: 'GT',
     dataIndex: 'specific',
-    width: 80,
+    width: 150,
     sorter: (a, b) => a.specific - b.specific,
     sortDirections: ['descend', 'ascend']
   },
@@ -49,7 +49,7 @@ const columns = [
     key: 'generic',
     title: 'ST',
     dataIndex: 'generic',
-    width: 80,
+    width: 150,
     sorter: (a, b) => a.generic - b.generic,
     sortDirections: ['descend', 'ascend']
   },
@@ -57,7 +57,7 @@ const columns = [
     key: 'version',
     title: 'Version',
     dataIndex: 'version',
-    width: 120,
+    width: 100,
     sorter: (a, b) => a.version - b.version,
     sortDirections: ['descend', 'ascend']
   },
@@ -65,10 +65,10 @@ const columns = [
     key: 'enterprise',
     title: 'Enterprise',
     dataIndex: 'enterprise',
-    width: 180
+    width: 150
   },
-  { key: 'community', title: 'Community', dataIndex: 'community', width: 110 },
-  { key: 'msg', title: 'Description', dataIndex: 'msg', width: 150 }
+  { key: 'community', title: 'Community', dataIndex: 'community', width: 150 },
+  { key: 'msg', title: 'Description', dataIndex: 'msg' }
 ]
 
 const TrapHistoryDialog = ({ onClose }) => {
@@ -137,7 +137,7 @@ const TrapHistoryDialog = ({ onClose }) => {
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
-          // maxHeight: '98%'
+          // height: '50%'
         }}
         okButtonProps={{
           style: {
@@ -179,7 +179,7 @@ const TrapHistoryDialog = ({ onClose }) => {
             pageSizeOptions: [25, 50, 75, 100],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
-          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
+          scroll={{ y: 'calc(80vh - 195px)', x: 1500 }}
         />
       </Modal>
     </ConfigProvider>

@@ -12,7 +12,7 @@ import {
   theme,
   ConfigProvider
 } from 'antd'
-
+import { LoadingOutlined } from '@ant-design/icons'
 import {
   changeMode,
   backupRestoreSelector,
@@ -73,7 +73,7 @@ const DeviceList = () => {
   const dispatch = useDispatch()
   const { mode, isTaskRunning, isRestoreFisish, deviceStatus, selectDevice } =
     useSelector(backupRestoreSelector)
-  console.log(deviceStatus)
+  // console.log(deviceStatus)
 
   const handleModeSelectOnChange = (mode) => {
     dispatch(changeMode({ mode }))
@@ -153,18 +153,22 @@ const DeviceList = () => {
                   label: 'Restore'
                 }
               ]}
-            >
-              {/* <Option value="backup">Backup</Option>
-            <Option value="restore">Restore</Option> */}
-            </Select>
+            ></Select>
             {isTaskRunning ? (
-              <Progress
-                status={deviceStatus}
-                percent={deviceStatus === 'active' ? 0 : 100}
+              // <Progress
+              //   status={deviceStatus}
+              //   percent={deviceStatus === 'active' ? 0 : 100}
+              //   style={{
+              //     width: '300px',
+              //     verticalAlign: 'middle'
+              //   }}
+              // />
+              <LoadingOutlined
                 style={{
-                  width: '300px',
-                  verticalAlign: 'middle'
+                  fontSize: 30,
+                  marginRight: '15px'
                 }}
+                spin
               />
             ) : (
               <Button
