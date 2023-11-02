@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,9 +12,9 @@ import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
-  const { customGraphData } = useSelector(dashboardSelector)
+  const { customGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = customGraphData
-  // console.log(customGraphData)
+  console.log(customGraphData)
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -107,7 +107,7 @@ const EventLogGraph = () => {
       }
     }
   })
-  const handleRefreshGraph = () => {
+  const handleRefreshGraph = useCallback(() => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -116,7 +116,7 @@ const EventLogGraph = () => {
         le: ''
       })
     )
-  }
+  }, [dispatch])
 
   const onCustomGraphClick = (barIndex) => {
     dispatch(showCustomTableData(tableData[barIndex]))

@@ -24,11 +24,11 @@ const SyslogGraph = () => {
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
 
-  const onSylogGraphClick = () => {
-    // let tableData1 = tableData[barIndex]
-    // console.log(tableData1)
-    dispatch(showSyslogTableData(tableData))
-  }
+  // const onSylogGraphClick = () => {
+  //   // let tableData1 = tableData[barIndex]
+  //   // console.log(tableData1)
+  //   dispatch(showSyslogTableData(tableData))
+  // }
 
   // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({

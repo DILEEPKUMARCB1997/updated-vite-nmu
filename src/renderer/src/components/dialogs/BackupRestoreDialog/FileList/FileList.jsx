@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Card, Checkbox, Row, Table, Typography, Button, theme } from 'antd'
+import { Card, Checkbox, Row, Table, Typography, Button, theme, List } from 'antd'
 import { CloseOutlined } from '@ant-design/icons'
 import {
   backupRestoreSelector,
@@ -8,13 +8,16 @@ import {
   requestDeleteFile
 } from '../../../../features/backupRestoreSlice'
 import { useDispatch, useSelector } from 'react-redux'
-let files = []
-let restoreFile = ''
+
 const FileList = () => {
+  const ListItem = List.Item
+
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
-  const { mode, isTaskRunning, isRestoreFisish } = useSelector(backupRestoreSelector)
+  const { mode, isTaskRunning, isRestoreFisish, selectDevice, deviceStatus } =
+    useSelector(backupRestoreSelector)
+  // console.log(selectDevice)
 
   const handleFileCheckboxOnChange = (file) => () => {
     dispatch(setRestoreFileIndex({ file }))
@@ -22,6 +25,15 @@ const FileList = () => {
   const handleDeleteFileButtonOnClick = (file) => () => {
     dispatch(requestDeleteFile({ file }))
   }
+  let files = []
+  let restoreFile = ''
+  const status = deviceStatus[selectDevice]
+  if (selectDevice !== '') {
+    files = [...status.files]
+    ;({ restoreFile } = status)
+  }
+  console.log(files)
+
   return (
     <div>
       <Card
@@ -43,9 +55,13 @@ const FileList = () => {
             overflow: 'auto'
           }}
         >
-          <Table style={{ width: '100%' }}>
-            {files.map((file) => (
-              <Row key={file}>
+          <List
+            size="small"
+            split={false}
+            itemLayout="horizontal"
+            dataSource={files}
+            renderItem={(file) => (
+              <ListItem>
                 {mode === 'restore' && (
                   <Checkbox
                     disabled={isTaskRunning || isRestoreFisish}
@@ -53,7 +69,6 @@ const FileList = () => {
                     onChange={handleFileCheckboxOnChange(file)}
                   ></Checkbox>
                 )}
-
                 {mode === 'backup' && (
                   <Button
                     disabled={isTaskRunning}
@@ -65,9 +80,19 @@ const FileList = () => {
                     <CloseOutlined />
                   </Button>
                 )}
-              </Row>
-            ))}
-          </Table>
+              </ListItem>
+            )}
+            pagination={{
+              type: 'bottom',
+              align: 'center',
+              showQuickJumper: true,
+              size: 'small',
+              total: files.length,
+              defaultPageSize: 5,
+              pageSizeOptions: [5, 10, 15, 20],
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+            }}
+          />
         </div>
       </Card>
     </div>
