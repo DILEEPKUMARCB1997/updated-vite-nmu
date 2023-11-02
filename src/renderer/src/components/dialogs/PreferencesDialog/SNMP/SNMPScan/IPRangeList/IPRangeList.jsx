@@ -21,14 +21,14 @@ const IPRangeList = () => {
   const dispatch = useDispatch()
 
   const { IPRangeData } = useSelector(snmpSelector)
-  console.log(Object.entries(IPRangeData))
+  // console.log(Object.entries(IPRangeData))
 
   const handleAddIPRangeButtonClick = () => {
     dispatch(openDialog('addIPRange'))
   }
 
   const handleIPRangeDataCheckBoxChange = (id) => (e) => {
-    console.log(e.target)
+    //  console.log(e.target)
     dispatch(updateIPRangeActive({ isActive: e.target.checked, id }))
   }
 

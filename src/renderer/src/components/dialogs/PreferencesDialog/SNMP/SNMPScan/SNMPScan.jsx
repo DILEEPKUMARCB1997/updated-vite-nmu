@@ -26,17 +26,17 @@ const SNMPScan = () => {
   }
 
   const handleSNMPPollIntervalInputOnChange = (value) => {
-    console.log(value)
+    // console.log(value)
     dispatch(setSNMPPollInterval(value))
   }
 
   const handleICMPTimeoutInputOnChange = (value) => {
-    console.log(value)
+    //console.log(value)
     dispatch(setICMPTimeout(value))
   }
 
   const handleSNMPTimeoutInputOnChange = (value) => {
-    console.log(value)
+    // console.log(value)
     dispatch(setSNMPTimeout(value))
   }
 

@@ -29,10 +29,11 @@ import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/Sin
 import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
 import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
 import Beep from './BeepDialog/BeepDialog'
-import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
+//import CustomGraphTableDialog from './CustomGraphTableDialog/CustomGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
-import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
+import EventGraphTableDialog from './eventGraphTableDialog/EventGraphTableDialog'
+//import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
 // import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
@@ -67,9 +68,9 @@ const Dialog = ({ id, onClose, ...rest }) => {
           buzzer: <BuzzerDialog onClose={onClose} />,
           beep: <Beep onClose={onClose} />,
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
-          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
-          trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
-          customHistory: <CustomHistoryDialog onClose={onClose} />
+          eventGraphTableDialog: <EventGraphTableDialog onClose={onClose} />,
+          trapGraphTable: <TrapGraphTableDialog onClose={onClose} />
+          //customHistory: <CustomHistoryDialog onClose={onClose} />
           // syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
         }[id]
       }

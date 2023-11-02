@@ -14,9 +14,9 @@ const SyslogConfiguration = () => {
 
   const { useToken } = theme
   const { token } = useToken()
-  useEffect(() => {
-    dispatch(startTask())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(startTask())
+  // }, [])
 
   const handleChangeLogToFlash = (value) => {
     if (value) {
@@ -32,6 +32,13 @@ const SyslogConfiguration = () => {
       setLogToServer(2)
     }
   }
+  // const handleChangeLogToServer = (value) => {
+  //   if (value) {
+  //     setLogToServer(1)
+  //   } else {
+  //     setLogToServer(2)
+  //   }
+  // }
   const handleLogLevelChange = (value) => {
     setLogLevel(value)
   }
@@ -95,9 +102,9 @@ const SyslogConfiguration = () => {
             extra={<Switch checked={logToFlash === 1} onChange={handleChangeLogToFlash} />}
           ></Form.Item>
           <Form.Item
+            labelAlign="start"
             label="logToServer"
             colon={false}
-            labelAlign="start"
             extra={<Switch checked={logToServer === 1} onChange={handleChangeLogToServer} />}
           ></Form.Item>
           <Form.Item htmlFor="log-level">

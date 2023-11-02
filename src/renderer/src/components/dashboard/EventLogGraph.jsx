@@ -4,13 +4,22 @@ import React, { useEffect, useState } from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
-import { dashboardSelector, requestHistoryData } from '../../features/dashboardSlice'
+import {
+  dashboardSelector,
+  requestHistoryData,
+  showCustomTableData
+} from '../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
-  // console.log(customGraphData)
+  const { tableData } = customGraphData
+
+  const onCustomGraphClick = (barIndex) => {
+    tableData[barIndex]
+    dispatch(showCustomTableData(tableData))
+  }
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -73,7 +82,8 @@ const EventLogGraph = () => {
         position: 'bottom',
         labels: {
           rotate: -45,
-          rotateAlways: true
+          rotateAlways: true,
+          show: true
         },
         fill: {
           type: 'solid',
@@ -85,6 +95,7 @@ const EventLogGraph = () => {
           }
         }
       },
+
       yaxis: {
         title: {
           lines: {
@@ -160,6 +171,7 @@ const EventLogGraph = () => {
           series={eventLogData.series}
           type="bar"
           height={210}
+          onClick={onCustomGraphClick}
         />
       </div>
     </>

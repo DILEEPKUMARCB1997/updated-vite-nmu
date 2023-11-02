@@ -7,18 +7,21 @@ import {
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
 import { requestGraphData } from '../components/dashboard/requestGraphData'
+import { openDialog } from './dialogSlice'
 
-// export const showCustomTableDatashowCustomTableData = (payload) => (dispatch) => {
-//   dispatch(updateCustomTableData(payload))
-// }
-// export const showSyslogTableData = (payload) => (dispatch) => {
-//   dispatch(updateSyslogTableData(payload))
-//   dispatch(openDialog('syslogGraphTable'))
-// }
-// export const showTrapTableData = (payload) => (dispatch) => {
-//   dispatch(updateTrapTableData(payload))
-//   dispatch(openDialog('trapGraphTable'))
-// }
+export const showCustomTableData = (payload) => (dispatch) => {
+  dispatch(updateCustomTableData(payload))
+  dispatch(openDialog('eventGraphTableDialog'))
+}
+
+export const showSyslogTableData = (payload) => (dispatch) => {
+  dispatch(updateSyslogTableData(payload))
+  dispatch(openDialog('syslogGraphTable'))
+}
+export const showTrapTableData = (payload) => (dispatch) => {
+  dispatch(updateTrapTableData(payload))
+  dispatch(openDialog('trapGraphTable'))
+}
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
@@ -27,9 +30,14 @@ export const requestHistoryData = (param) => (dispatch) => {
     switch (type) {
       case 'event':
         break
+      case 'custom': {
+        const customData = requestCustomGraphData(data)
+        dispatch(updateCustomGraph(customData))
+        break
+      }
       case 'trap': {
         const resultTrap = requestGraphData(data)
-        // dispatch(updateTrapGraph(resultTrap))
+        //  console.log(data)
         dispatch(updateTrapGraph(resultTrap))
         break
       }
@@ -38,12 +46,7 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateSyslogGraph(resultSyslog))
         break
       }
-      case 'custom': {
-        const resultCustom = requestCustomGraphData(data)
-        dispatch(updateCustomGraph(resultCustom))
 
-        break
-      }
       default:
         break
     }
@@ -80,7 +83,6 @@ const dashboardSlice = createSlice({
     trapTableData: [],
     customTableData: []
   },
-
   reducers: {
     initDiskUses: (state, { payload }) => {
       const { free, size } = payload
@@ -117,6 +119,7 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomGraph: (state, action) => {
+      //console.log(action)
       const { payload } = action
       return {
         ...state,
@@ -130,25 +133,8 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    // updateCustomGraph: (state, { payload }) => {
-    //   const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-    //     payload
-    //   // const { payload } = action
-    //   return {
-    //     ...state,
-    //     customGraphData: {
-    //       label: label,
-    //       InformationData: InformationData,
-    //       CriticalData: CriticalData,
-    //       tableData: tableResult,
-    //       WarningData: WarningData,
-    //       lastUpdated: lastUpdated
-    //     }
-    //   }
-    // },
 
     updateSyslogTableData: (state, { payload }) => {
-      //  const { payload } = action
       return {
         ...state,
         syslogTableData: payload
@@ -162,6 +148,7 @@ const dashboardSlice = createSlice({
     },
 
     updateTrapTableData: (state, { payload }) => {
+      console.log(payload)
       return { ...state, trapTableData: payload }
     }
 
@@ -183,7 +170,7 @@ export const {
   updateSyslogGraph,
   updateSyslogTableData,
   updateTrapTableData,
-  openDialog,
+  //openDialog,
   updateCustomTableData,
   updateCustomGraph
 } = dashboardSlice.actions
@@ -262,6 +249,10 @@ export const requestCustomGraphData = (Items) => {
       -2
     )}`
     label.push(gelabel)
+    // let gelabel = `${('00' + (gedate.getMonth() + 1)).slice(-2)}/${('00' + gedate.getDate()).slice(
+    //   -2
+    // )}`
+    // label.push(gelabel)
     InformationData.push(resultInformation.length)
     CriticalData.push(resultCritical.length)
     WarningData.push(resultWarning.length)
