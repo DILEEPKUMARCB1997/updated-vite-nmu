@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Modal, ConfigProvider, theme } from 'antd'
-import { useSelector } from 'react-redux'
+import { ConfigProvider, Modal, Table, theme } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
+import { useSelector } from 'react-redux'
 
 const columns = [
   {
@@ -53,6 +53,7 @@ const SyslogGraphTableDialog = ({ onClose }) => {
   const { token } = useToken()
   const [tableLoading, setTableLoading] = useState(true)
   const { syslogTableData } = useSelector(dashboardSelector)
+  console.log(syslogTableData)
 
   useEffect(() => {
     setTableLoading(false)
