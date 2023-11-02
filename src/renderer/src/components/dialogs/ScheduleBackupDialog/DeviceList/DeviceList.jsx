@@ -3,6 +3,7 @@ import { App, Button, Card, Collapse, Divider, Table, Typography, notification, 
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  getBackupFile,
   getScheduledData,
   scheduleBackupSelector,
   setEditMode
@@ -94,6 +95,10 @@ const DeviceList = (props) => {
     dispatch(setEditMode({ isEditMode: true, scheduleId: scheduleId }))
   }
 
+  const handleDeviceListItemOnClick = (MACAddress) => {
+    dispatch(getBackupFile({ MACAddress }))
+  }
+
   const handleDeleteSchedule = (scheduleId) => {
     console.log(scheduleId)
     modal.confirm({
@@ -179,7 +184,19 @@ const DeviceList = (props) => {
               </Button>
             </div>
             <div style={{ padding: '10px' }}>
-              <Table columns={columns} dataSource={scheduledDeviceArrayData[scheduleId]} />
+              <Table
+                bordered
+                columns={columns}
+                dataSource={scheduledDeviceArrayData[scheduleId]}
+                style={{ cursor: 'pointer' }}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick: (event) => {
+                      handleDeviceListItemOnClick(record.MACAddress)
+                    }
+                  }
+                }}
+              />
             </div>
           </Panel>
         </Collapse>
