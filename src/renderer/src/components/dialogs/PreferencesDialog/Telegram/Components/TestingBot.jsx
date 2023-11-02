@@ -10,7 +10,7 @@ const TestingBot = () => {
   const [value, setValue] = useState('')
 
   const testTelegram = (param) => {
-    console.log(param)
+    //   console.log(param)
     window.electron.ipcRenderer.send(REQUEST_SEND_TELEGRAM_MSG, param)
   }
 

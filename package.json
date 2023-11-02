@@ -67,6 +67,7 @@
     "react-swipeable-views": "^0.14.0",
     "sweetalert2-react": "^0.8.3",
     "syslogd": "^1.1.2",
+    "telnet": "0.0.1",
     "telnet-client": "^2.0.8",
     "tftp": "^0.1.2",
     "use-socketio": "^2.1.0",

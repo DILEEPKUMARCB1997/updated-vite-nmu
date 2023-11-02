@@ -6,13 +6,13 @@ import { setPrecheckSNMP, snmpSelector } from '../../../../../features/Preferenc
 
 const Other = () => {
   const { isPrecheck } = useSelector(snmpSelector)
-  console.log(isPrecheck)
+  //console.log(isPrecheck)
   const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
 
   const handlePrecheckSwitchOnChange = (checked) => {
-    console.log(checked)
+    // console.log(checked)
     dispatch(setPrecheckSNMP(checked))
   }
 

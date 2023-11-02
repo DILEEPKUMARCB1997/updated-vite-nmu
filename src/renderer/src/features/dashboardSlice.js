@@ -13,6 +13,7 @@ export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
   dispatch(openDialog('customGraphTable'))
 }
+
 export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(updateSyslogTableData(payload))
   dispatch(openDialog('syslogGraphTable'))
@@ -30,9 +31,14 @@ export const requestHistoryData = (param) => (dispatch) => {
     switch (type) {
       case 'event':
         break
+      case 'custom': {
+        const customData = requestCustomGraphData(data)
+        dispatch(updateCustomGraph(customData))
+        break
+      }
       case 'trap': {
         const resultTrap = requestGraphData(data)
-        // dispatch(updateTrapGraph(resultTrap))
+        //  console.log(data)
         dispatch(updateTrapGraph(resultTrap))
         break
       }
@@ -41,12 +47,7 @@ export const requestHistoryData = (param) => (dispatch) => {
         dispatch(updateSyslogGraph(resultSyslog))
         break
       }
-      case 'custom': {
-        const resultCustom = requestCustomGraphData(data)
-        dispatch(updateCustomGraph(resultCustom))
 
-        break
-      }
       default:
         break
     }
@@ -83,7 +84,6 @@ const dashboardSlice = createSlice({
     trapTableData: [],
     customTableData: []
   },
-
   reducers: {
     initDiskUses: (state, { payload }) => {
       const { free, size } = payload
@@ -107,31 +107,30 @@ const dashboardSlice = createSlice({
       }
     },
 
-    updateSyslogGraph: (state, { payload }) => {
-      const { label, data, tableResult, lastUpdated } = payload
+    updateSyslogGraph: (state, action) => {
+      const { payload } = action
       return {
         ...state,
         syslogGraphData: {
-          label: label,
-          data: data,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          data: payload.data,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
-    updateCustomGraph: (state, { payload }) => {
-      const { label, tableResult, lastUpdated, InformationData, CriticalData, WarningData } =
-        payload
-      // const { payload } = action
+    updateCustomGraph: (state, action) => {
+      //console.log(action)
+      const { payload } = action
       return {
         ...state,
         customGraphData: {
-          label: label,
-          InformationData: InformationData,
-          CriticalData: CriticalData,
-          tableData: tableResult,
-          WarningData: WarningData,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
+          WarningData: payload.WarningData,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },

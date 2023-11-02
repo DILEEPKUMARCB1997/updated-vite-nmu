@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ConfigProvider, Divider, Input, Modal, Table, theme } from 'antd'
+import { ConfigProvider, Modal, Table, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearHistoryData,
-  eventLogSelector,
-  requestHistoryData
-} from '../../../features/eventLogSlice'
-import CustomRangePicker from '../Common Code/CustomRangePicker'
+import { dashboardSelector } from '../../../features/dashboardSlice'
 
-const CustomHistoryDialog = ({ onClose }) => {
+const EventGraphTableDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const [tableLoading, setTableLoading] = useState(true)
-  const [sourceIP, setSourceIp] = useState('')
-  const [dateRange, setDateRange] = useState({ ge: '', le: '' })
-  const { customEventHistoryData } = useSelector(eventLogSelector)
-  console.log(customEventHistoryData)
+  const { customTableData } = useSelector(dashboardSelector)
+  console.log(customTableData)
+
   const dispatch = useDispatch()
   const columns = [
     {
@@ -60,28 +54,8 @@ const CustomHistoryDialog = ({ onClose }) => {
     setTableLoading(false)
   }, [])
 
-  const handleMACAddressInputChange = (event) => {
-    setSourceIp(event.target.value)
-  }
-
-  const rangePickerChange = (value, dateString) => {
-    setDateRange({ ...dateRange, ge: dateString[0], le: dateString[1] })
-  }
-
-  const handleRefreshButtonClick = () => {
-    dispatch(
-      requestHistoryData({
-        type: 'custom',
-        sourceIP: sourceIP,
-        ge: dateRange.ge,
-        le: dateRange.le
-      })
-    )
-  }
-
   const handleCloseButtonOnClick = () => {
     dispatch(onClose())
-    clearHistoryData()
   }
 
   return (
@@ -97,70 +71,44 @@ const CustomHistoryDialog = ({ onClose }) => {
       }}
     >
       <Modal
-        title="Trap History"
+        title="Event Graph Data"
         open
         onOk={onClose}
         closable={true}
         maskClosable={false}
         onCancel={handleCloseButtonOnClick}
-        width={1200}
+        width="90%"
         style={{ top: 20 }}
         bodyStyle={{
-          height: 'calc(100vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
         }}
-        okButtonProps={{
-          style: {
-            display: 'none'
-          }
-        }}
-        cancelButtonProps={{
-          style: {
-            display: 'none'
-          }
-        }}
+        footer={null}
       >
-        <div style={{ display: 'inline-flex', marginTop: '9px' }}>
-          <Input
-            placeholder="MAC Address"
-            style={{ width: '150px', margin: '0px 10px 0px 10px' }}
-            onChange={handleMACAddressInputChange}
-          />
-          <CustomRangePicker onChange={rangePickerChange} />
-          <Button
-            type="primary"
-            ghost
-            // style={{ margin: '10px' }}
-            onClick={handleRefreshButtonClick}
-            // className={styles.refreshButton}
-          >
-            Refresh
-          </Button>
-        </div>
-
-        <Divider style={{ margin: '10px 0px' }} />
         <Table
-          style={{ height: '50%', tableLayout: 'auto' }}
           loading={tableLoading}
-          rowKey="trapId"
+          rowKey="EventId"
           bordered
           columns={columns}
-          dataSource={customEventHistoryData}
+          dataSource={customTableData}
           pagination={{
-            // showQuickJumper: true,
-            // showSizeChanger: true,
             size: 'default',
             defaultPageSize: 25,
             pageSizeOptions: [25, 50, 75, 100],
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
           }}
-          scroll={{ y: 'calc(80vh - 165px)' }}
+          scroll={{ y: 'calc(80vh - 165px)', x: 1500 }}
+          rowClassName={(record) => {
+            if (record.Severity === 'information') return 'table-information'
+            if (record.Severity === 'warning') return 'table-warning'
+            if (record.Severity === 'critical') return 'table-critical'
+            return ''
+          }}
         />
       </Modal>
     </ConfigProvider>
   )
 }
 
-export default CustomHistoryDialog
+export default EventGraphTableDialog

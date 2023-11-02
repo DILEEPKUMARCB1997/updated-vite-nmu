@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Chart from 'react-apexcharts'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,15 +21,8 @@ import { SyncOutlined } from '@ant-design/icons'
 // }
 const SyslogGraph = () => {
   const dispatch = useDispatch()
-  const { syslogGraphData } = useSelector(dashboardSelector)
+  const { syslogGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = syslogGraphData
-
-  const onSylogGraphClick = () => {
-    // let tableData1 = tableData[barIndex]
-    // console.log(tableData1)
-    dispatch(showSyslogTableData(tableData))
-  }
-
   // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
@@ -132,16 +125,14 @@ const SyslogGraph = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'syslog',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1500)
+    dispatch(
+      requestHistoryData({
+        type: 'syslog',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
   }, [])
 
   useEffect(() => {

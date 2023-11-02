@@ -14,8 +14,8 @@ const { Option } = Select
 const General = () => {
   const { NICData } = useSelector(generalSelector)
   const { niList, activeIndex } = NICData
-  console.log(niList)
-  console.log(activeIndex)
+  // console.log(niList)
+  // console.log(activeIndex)
 
   const { useToken } = theme
   const { token } = useToken()
