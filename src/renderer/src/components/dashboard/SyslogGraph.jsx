@@ -8,12 +8,13 @@ import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
-  requestHistoryData
+  requestHistoryData,
+  showSyslogTableData
+
   //showSyslogTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
-import { showSyslogTableData } from '../../features/dashboardSlice'
 
 // function getRandomInt(min = 1, max = 9) {
 //   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -29,6 +30,7 @@ const SyslogGraph = () => {
     dispatch(showSyslogTableData(tableData))
   }
 
+  // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
       {
@@ -45,7 +47,14 @@ const SyslogGraph = () => {
           show: false
         },
         offsetY: -20,
-        offsetX: -5
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onSyslogGraphClick(config.dataPointIndex)
+            }
+          }
+        }
       },
 
       legend: {
@@ -107,6 +116,10 @@ const SyslogGraph = () => {
     }
   })
 
+  const onSyslogGraphClick = (barIndex) => {
+    dispatch(showSyslogTableData(tableData[barIndex]))
+  }
+
   const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
@@ -166,13 +179,7 @@ const SyslogGraph = () => {
         </Tooltip>
       </div>
       <div>
-        <Chart
-          options={graphData.options}
-          series={graphData.series}
-          type="bar"
-          height={210}
-          onClick={onSylogGraphClick}
-        />
+        <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
       </div>
     </>
   )

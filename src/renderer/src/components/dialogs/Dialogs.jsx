@@ -67,7 +67,7 @@ const Dialog = ({ id, onClose, ...rest }) => {
           buzzer: <BuzzerDialog onClose={onClose} />,
           beep: <Beep onClose={onClose} />,
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
-          CustomGraphTableDialog: <CustomGraphTableDialog onClose={onClose} />,
+          customGraphTable: <CustomGraphTableDialog onClose={onClose} />,
           trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
           customHistory: <CustomHistoryDialog onClose={onClose} />,
           syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
