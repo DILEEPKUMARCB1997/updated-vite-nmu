@@ -54,7 +54,7 @@ const IPRangeList = () => {
                     size="small"
                     key=""
                     icon={<CloseOutlined></CloseOutlined>}
-                    onClick={handleIPRangeDataRemoveButtonClick(item)}
+                    onClick={handleIPRangeDataRemoveButtonClick(item[0])}
                   />
                 ]}
               >

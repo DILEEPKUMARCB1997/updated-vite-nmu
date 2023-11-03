@@ -8,11 +8,12 @@ import { startServer, closeServer, isServerAlive } from '../server/TFTPServer'
 ipcMain.on(REQUEST_MP_SYSLOG_SETTING, (event, arg) => {
   try {
     const { devices, param } = arg
+    // console.log('param:', param)
     const host = iFaceManagement.default.getCurrentNetworkInterface().data.IPAddress
     const mib = mibs.default.getMib()
     const SNMPSessionList = snmp.default.getSNMPSessionList()
-    //console.log(devices);
-    //console.log(arg.param);
+    // console.log(devices)
+    // console.log(arg.param)
     const { syslogStatus, serverPort, eventServerLevel, eventLogToFlash, eventServerIP } =
       mib.private.syslogSetting
 
