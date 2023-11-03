@@ -71,7 +71,7 @@ const mib = {
       systemModel: '.1.10.0'
     },
     syslogSetting: {
-      syslogStatus: '.10.1.2.1.0',
+      sysLogStatus: '.10.1.2.1.0',
       serverPort: '.10.1.2.3.0',
       eventServerLevel: '.10.1.2.4.0',
       eventLogToFlash: '.10.1.2.5.0',

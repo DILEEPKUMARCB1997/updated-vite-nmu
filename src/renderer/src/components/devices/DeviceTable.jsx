@@ -451,7 +451,12 @@ const DeviceTable = ({ deviceData = [] }) => {
           footer={null}
           open={showCheckSNMPModal}
         >
-          <Spin indicator={antIcon} size="large" />
+          <Spin
+            tip="Loading"
+            indicator={antIcon}
+            // indicator={antIcon}
+            size="large"
+          />
           {'Checking SNMP feature...'}
         </Modal>
       </ConfigProvider>

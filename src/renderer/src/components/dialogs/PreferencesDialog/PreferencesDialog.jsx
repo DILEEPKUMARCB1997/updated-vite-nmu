@@ -4,7 +4,7 @@
 // // /* eslint-disable no-unused-vars */
 // // // /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import { Modal, Menu, Layout, App, Spin, theme, Typography, Card } from 'antd'
+import { Modal, Menu, Layout, App, Spin, theme, Typography, Card, Tooltip } from 'antd'
 import { BorderBottomOutlined, CarFilled, SettingOutlined } from '@ant-design/icons'
 import {
   preferenceSelector,
@@ -66,7 +66,7 @@ const items = [
   }
 ]
 
-const PreferencesDialog = ({ onClose }) => {
+const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -340,7 +340,13 @@ const PreferencesDialog = ({ onClose }) => {
             }}
           >
             <Card bordered={false} style={{ height: '100%', overflow: 'auto' }}>
-              {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
+              {loading ? (
+                <Tooltip title="Loading">
+                  <Spin size="large" />
+                </Tooltip>
+              ) : (
+                items[selectedIndex].page
+              )}
             </Card>
           </Content>
         </Layout>
@@ -350,3 +356,14 @@ const PreferencesDialog = ({ onClose }) => {
 }
 
 export default PreferencesDialog
+/*
+import { Spin, Tooltip } from 'antd';
+
+const MyComponent = () => {
+  return (
+    <Tooltip title="Loading...">
+      <Spin />
+    </Tooltip>
+  );
+};
+*/

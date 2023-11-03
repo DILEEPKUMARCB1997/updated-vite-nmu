@@ -14,7 +14,7 @@ ipcMain.on(REQUEST_MP_SYSLOG_SETTING, (event, arg) => {
     const SNMPSessionList = snmp.default.getSNMPSessionList()
     // console.log(devices)
     // console.log(arg.param)
-    const { syslogStatus, serverPort, eventServerLevel, eventLogToFlash, eventServerIP } =
+    const { sysLogStatus, serverPort, eventServerLevel, eventLogToFlash, eventServerIP } =
       mib.private.syslogSetting
 
     if (!isServerAlive()) {
@@ -31,7 +31,7 @@ ipcMain.on(REQUEST_MP_SYSLOG_SETTING, (event, arg) => {
         const { systemRebootAction } = mib.private.basicSetting.systemReboot
         const oids = [
           {
-            oid: sysObjectId + syslogStatus,
+            oid: sysObjectId + sysLogStatus,
             type: netSNMP.ObjectType.Integer,
             value: param.logToServer
           },
