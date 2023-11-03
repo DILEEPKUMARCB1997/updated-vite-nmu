@@ -86,7 +86,8 @@ const EventLogGraph = () => {
         position: 'bottom',
         labels: {
           rotate: -45,
-          rotateAlways: true
+          rotateAlways: true,
+          show: true
         },
         fill: {
           type: 'solid',
@@ -98,6 +99,7 @@ const EventLogGraph = () => {
           }
         }
       },
+
       yaxis: {
         title: {
           lines: {
@@ -118,9 +120,12 @@ const EventLogGraph = () => {
     )
   }, [dispatch])
 
-  const onCustomGraphClick = (barIndex) => {
-    dispatch(showCustomTableData(tableData[barIndex]))
-  }
+  const onCustomGraphClick = useCallback(
+    (barIndex) => {
+      dispatch(showCustomTableData(tableData[barIndex]))
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     setTimeout(() => {
@@ -179,6 +184,7 @@ const EventLogGraph = () => {
           series={eventLogData.series}
           type="bar"
           height={210}
+          onClick={onCustomGraphClick}
         />
       </div>
     </>

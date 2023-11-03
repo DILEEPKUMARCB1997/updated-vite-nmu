@@ -15,11 +15,11 @@ const DefaultCommunity = () => {
   const { token } = useToken()
   const { SNMPData, validsData } = useSelector(snmpSelector)
   const { readCommunity, writeCommunity, version } = SNMPData
-  console.log(SNMPData)
+  //console.log(SNMPData)
   const { isReadCommunityValid, isWriteCommunityValid } = validsData
 
   const handleSNMPVersionSelectOnChange = (value) => {
-    console.log(value)
+    // console.log(value)
     dispatch(setSNMPVersion(value))
   }
 

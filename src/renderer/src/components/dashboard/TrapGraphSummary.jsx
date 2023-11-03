@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
 import {
@@ -18,9 +18,8 @@ import { openDialog } from '../../features/dialogSlice'
 const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
-  const { trapGraphData } = useSelector(dashboardSelector)
+  const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = trapGraphData
-
   const dispatch = useDispatch()
   // const { label, data, tableData, lastUpdated } = trapGraphData
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
