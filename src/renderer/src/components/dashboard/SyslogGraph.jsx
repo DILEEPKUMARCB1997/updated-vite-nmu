@@ -21,8 +21,15 @@ import { SyncOutlined } from '@ant-design/icons'
 // }
 const SyslogGraph = () => {
   const dispatch = useDispatch()
-  const { syslogGraphData } = useSelector(useMemo(() => dashboardSelector, []))
+  const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
+
+  // const onSylogGraphClick = () => {
+  //   // let tableData1 = tableData[barIndex]
+  //   // console.log(tableData1)
+  //   dispatch(showSyslogTableData(tableData))
+  // }
+
   // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
