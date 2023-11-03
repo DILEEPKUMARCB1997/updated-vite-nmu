@@ -61,7 +61,7 @@ const FWUTable = (props) => {
             : 'blue'
         return (
           <span>
-            <span style={{ color: code1 }}>{deviceRealTimeData.code}</span>
+            <span style={{ color: code1 }}>{code}</span>
           </span>
         )
       }
@@ -106,7 +106,6 @@ const FWUTable = (props) => {
     IPAddress: value.IPAddress,
     model: value.model,
     data
-    //status: value.status
   }))
   console.log(dataSource)
 
