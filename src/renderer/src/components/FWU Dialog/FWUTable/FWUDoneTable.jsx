@@ -5,6 +5,7 @@ import { Progress, Table } from 'antd'
 //import FWUDoneTableRow from './FWUDoneTableRow/FWUDoneTableRow'
 import { useSelector } from 'react-redux'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
+import Code from '../Code/Code'
 
 const FWUDoneTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
@@ -63,12 +64,15 @@ const FWUDoneTable = () => {
   ]
 
   return (
-    <Table
-      dataSource={dataSource}
-      columns={columns}
-      rowKey="MACAddress"
-      // className={styles.table}
-    />
+    <>
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        rowKey="MACAddress"
+        // className={styles.table}
+      />
+      // <Code />
+    </>
   )
 }
 
