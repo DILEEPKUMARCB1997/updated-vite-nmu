@@ -107,14 +107,14 @@ const SyslogConfiguration = () => {
               onChange={handleLogLevelChange}
               style={{ width: '230px', marginTop: '20px' }}
               options={[
-                { label: '0:LOG EMERG', value: 0 },
-                { label: '1:LOG_ALERT', value: 1 },
-                { label: '2:LOG_CRIT', value: 2 },
-                { label: '3:LOG_ERR', value: 3 },
-                { label: '4:LOG_WARNING', value: 4 },
-                { label: '5:LOG_NOTICE', value: 5 },
-                { label: '6:LOG_INFO', value: 6 },
-                { label: '7:LOG_DEBUG', value: 7 }
+                { label: '1:LOG EMERG', value: 0 },
+                { label: '2:LOG_ALERT', value: 1 },
+                { label: '3:LOG_CRIT', value: 2 },
+                { label: '4:LOG_ERR', value: 3 },
+                { label: '5:LOG_WARNING', value: 4 },
+                { label: '6:LOG_NOTICE', value: 5 },
+                { label: '7:LOG_INFO', value: 6 },
+                { label: '8:LOG_DEBUG', value: 7 }
               ]}
             ></Select>
           </Form.Item>

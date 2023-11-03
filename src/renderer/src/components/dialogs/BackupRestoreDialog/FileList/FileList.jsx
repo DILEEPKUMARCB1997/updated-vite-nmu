@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Card, Checkbox, Row, Table, Typography, Button, theme, List } from 'antd'
+import { Card, Checkbox, Row, Table, Typography, Button, theme, List, ConfigProvider } from 'antd'
 
 import { CloseOutlined, StarOutlined } from '@ant-design/icons'
 import {

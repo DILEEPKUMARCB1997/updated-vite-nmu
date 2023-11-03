@@ -61,7 +61,7 @@ const FWUTable = (props) => {
             : 'blue'
         return (
           <span>
-            <span style={{ color: code1 }}>{code}</span>
+            <span style={{ color: code1 }}>{codes.none.label}</span>
           </span>
         )
       }
