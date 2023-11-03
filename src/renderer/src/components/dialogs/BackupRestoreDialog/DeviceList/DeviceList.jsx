@@ -155,14 +155,6 @@ const DeviceList = () => {
               ]}
             ></Select>
             {isTaskRunning ? (
-              // <Progress
-              //   status={deviceStatus}
-              //   percent={deviceStatus === 'active' ? 0 : 100}
-              //   style={{
-              //     width: '300px',
-              //     verticalAlign: 'middle'
-              //   }}
-              // />
               <LoadingOutlined
                 style={{
                   fontSize: 30,

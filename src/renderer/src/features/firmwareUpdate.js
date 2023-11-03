@@ -10,10 +10,10 @@ import { openDialog } from '../features/dialogSlice'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const requestStartFirmwareUpdate = () => (dispatch, getState) => {
-  const sendData = getState().firmwareUpdate
+  const sendData = getState().firmwareUpdate.deviceData
   window.electron.ipcRenderer.once(RESPONSE_RP_START_FIRMWARE_UPDATE, (event, arg) => {
     if (arg.success) {
-      dispatch({ type: changeFirmwareUpdateStatus, payload: 1 })
+      dispatch(changeFirmwareUpdateStatus(1))
     }
   })
   window.electron.ipcRenderer.send(
@@ -153,7 +153,7 @@ export const {
 } = firmwareSlice.actions
 export const firmwareSelector = (state) => {
   const { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status } =
-    state.firmware
+    state.firmwareUpdate
   return { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status }
 }
 

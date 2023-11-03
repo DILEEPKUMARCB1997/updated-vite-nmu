@@ -21,6 +21,8 @@ const TrapGraphSummary = () => {
   const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
+  console.log('trap graph data', trapGraphData)
+  console.log('trap table data', tableData)
   // const { label, data, tableData, lastUpdated } = trapGraphData
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [

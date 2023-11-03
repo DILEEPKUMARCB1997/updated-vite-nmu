@@ -12,7 +12,8 @@ import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
-  const { customGraphData } = useSelector(useMemo(() => dashboardSelector, []))
+  // const { customGraphData } = useSelector(useMemo(() => dashboardSelector, []))
+  const { customGraphData } = useSelector(dashboardSelector)
   const { tableData } = customGraphData
   console.log(customGraphData)
   const [eventLogData, setEventLogData] = useState({
@@ -109,7 +110,18 @@ const EventLogGraph = () => {
       }
     }
   })
-  const handleRefreshGraph = useCallback(() => {
+  // const handleRefreshGraph = useCallback(() => {
+  //   dispatch(
+  //     requestHistoryData({
+  //       type: 'custom',
+  //       sourceIP: '',
+  //       ge: '',
+  //       le: ''
+  //     })
+  //   )
+  // }, [dispatch])
+
+  const handleRefreshGraph = () => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -118,25 +130,22 @@ const EventLogGraph = () => {
         le: ''
       })
     )
-  }, [dispatch])
+  }
 
-  const onCustomGraphClick = useCallback(
-    (barIndex) => {
-      dispatch(showCustomTableData(tableData[barIndex]))
-    },
-    [dispatch]
-  )
+  // const onCustomGraphClick = useCallback(
+  //   (barIndex) => {
+  //     dispatch(showCustomTableData(tableData[barIndex]))
+  //   },
+  //   [dispatch]
+  // )
+
+  const onCustomGraphClick = (barIndex) => {
+    dispatch(showCustomTableData(tableData[barIndex]))
+  }
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'custom',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
+      dispatch(requestHistoryData({ type: 'custom', sourceIP: '', ge: '', le: '' }))
     }, 1500)
   }, [])
 
@@ -184,7 +193,6 @@ const EventLogGraph = () => {
           series={eventLogData.series}
           type="bar"
           height={210}
-          onClick={onCustomGraphClick}
         />
       </div>
     </>

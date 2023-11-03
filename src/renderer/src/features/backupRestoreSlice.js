@@ -106,6 +106,9 @@ const backupResultListener = (callback, dispatch) => (event, arg) => {
     dispatch(setTaskRunning(false))
     dispatch(requestGetAllFiles())
   }
+  // else if (!finish) {
+  //   dispatch(setTaskRunning(false))
+  // }
 }
 
 export const setRestoreFileIndex = (payload) => (dispatch, getState) => {
