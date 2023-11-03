@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const StepView = () => {
   const { activeStep } = useSelector(firmwareSelector)
-  console.log(activeStep)
+  // console.log(activeStep)
   return (
     <Steps
       current={activeStep}

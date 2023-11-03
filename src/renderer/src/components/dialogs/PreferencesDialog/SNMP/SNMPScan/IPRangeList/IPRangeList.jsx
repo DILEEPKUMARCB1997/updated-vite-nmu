@@ -44,7 +44,7 @@ const IPRangeList = () => {
           split={false}
           itemLayout="horizontal"
           dataSource={Object.entries(IPRangeData)}
-          renderItem={(item) => (
+          renderItem={(item, id) => (
             console.log('item', item),
             (
               <ListItem

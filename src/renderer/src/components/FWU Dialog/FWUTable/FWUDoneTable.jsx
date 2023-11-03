@@ -1,33 +1,66 @@
 import React from 'react'
-import { Table } from 'antd'
+import { Progress, Table } from 'antd'
 // import PropTypes from 'prop-types'
 // import styles from './FWUDoneTable.scss'
 //import FWUDoneTableRow from './FWUDoneTableRow/FWUDoneTableRow'
 import { useSelector } from 'react-redux'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 
-const columnData = [
-  { key: 'model', title: 'Model' },
-  { key: 'IPAddress', title: 'IP Address' },
-  { key: 'MACAddress', title: 'MAC Address' },
-  { key: 'status', title: 'Status' }
-]
-
 const FWUDoneTable = () => {
-  const { FWUDoneDeviceData } = useSelector(firmwareSelector)
-  console.log(FWUDoneDeviceData)
-  const dataSource = Object.entries(FWUDoneDeviceData).map(([key, value]) => ({
+  const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
+  const data = Object.entries(deviceRealTimeData).map(([key, value]) => ({
+    key,
+    status: value.code,
+    Progress: value.uploadProgress
+  }))
+  console.log(data)
+  const dataSource = Object.entries(deviceData).map(([key, value]) => ({
     key,
     MACAddress: key,
     IPAddress: value.IPAddress,
     model: value.model,
-    status: value.status
+    data
   }))
-  const columns = columnData.map((column) => ({
-    title: column.title,
-    dataIndex: column.key,
-    key: column.key
-  }))
+  console.log(dataSource)
+  const columns = [
+    {
+      title: 'Model',
+      dataIndex: 'model',
+      key: 'model'
+    },
+    {
+      title: 'IP Address',
+      dataIndex: 'IPAddress',
+      key: 'IPAddress'
+    },
+    {
+      title: 'MAC Address',
+      dataIndex: 'MACAddress',
+      key: 'MACAddress'
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (record) => {
+        return <span>{deviceRealTimeData.code}</span>
+      }
+    },
+    {
+      title: 'Progress',
+      dataIndex: 'progress',
+      key: 'progress',
+      render: (record) => {
+        return (
+          <Progress
+            type="line"
+            percent={deviceRealTimeData.uploadProgress}
+            //   status={record.uploadProgress}
+          />
+        )
+      }
+    }
+  ]
 
   return (
     <Table

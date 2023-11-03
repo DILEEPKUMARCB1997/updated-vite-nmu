@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
@@ -36,7 +36,6 @@ const SyslogConfiguration = () => {
   const handleLogLevelChange = (value) => {
     setState({ ...state, logLevel: value })
   }
-
   const handleServerInputChange = (event) => {
     const IPFormat =
       /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
@@ -47,6 +46,7 @@ const SyslogConfiguration = () => {
       setState({ ...state, serverIP: event.target.value })
     }
   }
+
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
