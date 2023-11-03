@@ -3,6 +3,7 @@ import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { Progress, Table, Tag } from 'antd'
 import { useSelector } from 'react-redux'
 import Code from '../Code/Code'
+import { update } from 'lodash'
 
 const codes = {
   none: { type: 'normal', label: 'Waiting' },
@@ -18,7 +19,8 @@ const codes = {
 const FWUTable = (props) => {
   const { MACAddress } = props
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
-  // const { code, uploadProgress } = deviceRealTimeData
+  console.log(deviceRealTimeData)
+
   const { uploadProgress } = deviceRealTimeData[MACAddress] || {}
 
   const columnData = [
@@ -44,7 +46,9 @@ const FWUTable = (props) => {
       dataIndex: 'progress',
       key: 'progress',
       render: (text, record) => {
-        return <Progress type="line" percent={uploadProgress} />
+        return (
+          <Progress type="line" percent={deviceRealTimeData[record.MACAddress].uploadProgress} />
+        )
       }
     },
     {
