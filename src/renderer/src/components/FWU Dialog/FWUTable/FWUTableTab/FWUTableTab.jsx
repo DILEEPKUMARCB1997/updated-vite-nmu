@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Tabs, Button } from 'antd'
 import FWUTable from '../FWUTable'
+import FWUDoneTable from '../FWUDoneTable'
 
 const FWUTableTab = () => {
   const [step, setStep] = useState(0)

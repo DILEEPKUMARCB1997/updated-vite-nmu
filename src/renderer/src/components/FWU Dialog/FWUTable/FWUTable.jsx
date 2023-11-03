@@ -16,10 +16,9 @@ const codes = {
 }
 
 const FWUTable = (props) => {
-  const { MACAddress } = props
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
   // const { code, uploadProgress } = deviceRealTimeData
-  const { uploadProgress } = deviceRealTimeData[MACAddress] || {}
+  const { uploadProgress } = deviceRealTimeData
 
   const columnData = [
     {
@@ -44,7 +43,7 @@ const FWUTable = (props) => {
       dataIndex: 'progress',
       key: 'progress',
       render: (text, record) => {
-        return <Progress type="line" percent={uploadProgress} />
+        return <Progress type="line" percent={uploadProgress} status={record.uploadProgress} />
       }
     },
     {
@@ -62,7 +61,7 @@ const FWUTable = (props) => {
             : 'blue'
         return (
           <span>
-            <span style={{ color: code1 }}>{codes.none.label}</span>
+            <span style={{ color: code1 }}>{deviceRealTimeData.code}</span>
           </span>
         )
       }
@@ -95,10 +94,10 @@ const FWUTable = (props) => {
     // }
   ]
 
-  const deviceStatus = Object.entries(deviceRealTimeData).map((item) => ({
-    ...item,
-    status: item.status,
-    progress: item.progress
+  const data = Object.entries(deviceRealTimeData).map(([key, value]) => ({
+    key,
+    status: value.code,
+    Progress: value.uploadProgress
   }))
 
   const dataSource = Object.entries(deviceData).map(([key, value]) => ({
@@ -106,7 +105,7 @@ const FWUTable = (props) => {
     MACAddress: key,
     IPAddress: value.IPAddress,
     model: value.model,
-    deviceStatus
+    data
     //status: value.status
   }))
   console.log(dataSource)
