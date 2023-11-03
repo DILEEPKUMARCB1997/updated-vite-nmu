@@ -8,6 +8,10 @@ import { startServer, closeServer, isServerAlive } from '../server/TFTPServer'
 ipcMain.on(REQUEST_MP_SYSLOG_SETTING, (event, arg) => {
   try {
     const { devices, param } = arg
+    console.log('param:', param)
+    if (!param) {
+      throw new Error('Invalid input parameters')
+    }
     const host = iFaceManagement.default.getCurrentNetworkInterface().data.IPAddress
     const mib = mibs.default.getMib()
     const SNMPSessionList = snmp.default.getSNMPSessionList()

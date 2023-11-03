@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
@@ -8,17 +8,12 @@ const SyslogConfiguration = () => {
   const dispatch = useDispatch()
   const [serverIP, setServerIP] = useState('')
   const [serverPort, setServerPort] = useState(514)
-  const [logToFlash, setLogToFlash] = useState(1)
+  const [logToFlash, setLogToFlash] = useState(0)
   const [logToServer, setLogToServer] = useState(1)
-  const [logLevel, setLogLevel] = useState(7)
+  const [logLevel, setLogLevel] = useState(2)
 
   const { useToken } = theme
   const { token } = useToken()
-  useEffect(() => {
-    return () => {
-      dispatch(startTask())
-    }
-  }, [])
 
   const handleChangeLogToFlash = (value) => {
     if (value) {
@@ -38,7 +33,6 @@ const SyslogConfiguration = () => {
   const handleLogLevelChange = (value) => {
     setLogLevel(value)
   }
-
   const handleServerInputChange = (event) => {
     const IPFormat =
       /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
@@ -49,6 +43,7 @@ const SyslogConfiguration = () => {
       setServerIP(event.target.value)
     }
   }
+
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
@@ -61,7 +56,7 @@ const SyslogConfiguration = () => {
 
   const handleOnStartButton = () => {
     if (ValidateIPaddress(serverIP)) {
-      dispatch(startTask())
+      dispatch(startTask(serverIP))
     } else {
       notification.error({ message: 'Invalid ip address' })
     }
@@ -109,14 +104,14 @@ const SyslogConfiguration = () => {
               onChange={handleLogLevelChange}
               style={{ width: '230px', marginTop: '20px' }}
               options={[
-                { label: '1:LOG EMERG', value: 1 },
-                { label: '2:LOG_ALERT', value: 2 },
-                { label: '3:LOG_CRIT', value: 3 },
-                { label: '4:LOG_ERR', value: 4 },
-                { label: '5:LOG_WARNING', value: 5 },
-                { label: '6:LOG_NOTICE', value: 6 },
-                { label: '7:LOG_INFO', value: 7 },
-                { label: '8:LOG_DEBUG', value: 8 }
+                { label: '0:LOG EMERG', value: 0 },
+                { label: '1:LOG_ALERT', value: 1 },
+                { label: '2:LOG_CRIT', value: 2 },
+                { label: '3:LOG_ERR', value: 3 },
+                { label: '4:LOG_WARNING', value: 4 },
+                { label: '5:LOG_NOTICE', value: 5 },
+                { label: '6:LOG_INFO', value: 6 },
+                { label: '7:LOG_DEBUG', value: 7 }
               ]}
             ></Select>
           </Form.Item>
