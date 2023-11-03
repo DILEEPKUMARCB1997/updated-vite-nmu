@@ -73,7 +73,7 @@ const DeviceList = () => {
   const dispatch = useDispatch()
   const { mode, isTaskRunning, isRestoreFisish, deviceStatus, selectDevice } =
     useSelector(backupRestoreSelector)
-  console.log(deviceStatus)
+  // console.log(deviceStatus)
 
   const handleModeSelectOnChange = (mode) => {
     dispatch(changeMode({ mode }))
@@ -153,10 +153,7 @@ const DeviceList = () => {
                   label: 'Restore'
                 }
               ]}
-            >
-              {/* <Option value="backup">Backup</Option>
-            <Option value="restore">Restore</Option> */}
-            </Select>
+            ></Select>
             {isTaskRunning ? (
               <LoadingOutlined
                 style={{

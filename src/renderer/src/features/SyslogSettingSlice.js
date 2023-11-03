@@ -26,6 +26,7 @@ export const initSyslogSettingData = () => (dispatch, getState) => {
 }
 
 export const startTask = (param) => (dispatch, getState) => {
+  // console.log(param)
   dispatch(setTaskRunning(true))
   const { deviceStatus } = getState().syslogSetting
   const devices = Object.keys(deviceStatus)
@@ -70,7 +71,7 @@ const syslogSettingSlice = createSlice({
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      // return void { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
       // return {
       //   ...state,
       //   deviceStatus: {
