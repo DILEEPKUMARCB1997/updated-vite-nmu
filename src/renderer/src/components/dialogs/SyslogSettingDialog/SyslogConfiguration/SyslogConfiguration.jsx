@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
@@ -6,57 +6,60 @@ import { startTask } from '../../../../features/SyslogSettingSlice'
 const SyslogConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
-  const [serverIP, setServerIP] = useState('')
-  const [serverPort, setServerPort] = useState(514)
-  const [logToFlash, setLogToFlash] = useState(0)
-  const [logToServer, setLogToServer] = useState(1)
-  const [logLevel, setLogLevel] = useState(2)
+
+  const [state, setState] = useState({
+    serverIP: '',
+    serverPort: 514,
+    logToFlash: 1,
+    logToServer: 1,
+    logLevel: 7
+  })
 
   const { useToken } = theme
   const { token } = useToken()
 
   const handleChangeLogToFlash = (value) => {
     if (value) {
-      setLogToFlash(1)
+      setState({ ...state, logToFlash: 1 })
     } else {
-      setLogToFlash(2)
+      setState({ ...state, logToFlash: 2 })
     }
   }
   const handleChangeLogToServer = (value) => {
     if (value) {
-      setLogToServer(1)
+      setState({ ...state, logToServer: 1 })
     } else {
-      setLogToServer(2)
+      setState({ ...state, logToServer: 2 })
     }
   }
 
   const handleLogLevelChange = (value) => {
-    setLogLevel(value)
+    setState({ ...state, logLevel: value })
   }
   const handleServerInputChange = (event) => {
     const IPFormat =
       /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
     const ipAddress = event.target.value
     if (ipAddress.match(IPFormat)) {
-      setServerIP(event.target.value)
+      setState({ ...state, serverIP: event.target.value })
     } else {
-      setServerIP(event.target.value)
+      setState({ ...state, serverIP: event.target.value })
     }
   }
 
   const handleServerPortChange = (event) => {
     if (event.target.value.length > 0) {
       if (event.target.value >= 1 && event.target.value <= 65535) {
-        setServerPort(event.target.value)
+        setState({ ...state, serverPort: event.target.value })
       }
     } else {
-      setServerPort(event.target.value)
+      setState({ ...state, serverPort: event.target.value })
     }
   }
 
   const handleOnStartButton = () => {
-    if (ValidateIPaddress(serverIP)) {
-      dispatch(startTask(serverIP))
+    if (ValidateIPaddress(state.serverIP)) {
+      dispatch(startTask(state))
     } else {
       notification.error({ message: 'Invalid ip address' })
     }
@@ -90,17 +93,17 @@ const SyslogConfiguration = () => {
             labelAlign="start"
             label="logToFlash"
             colon={false}
-            extra={<Switch checked={logToFlash === 1} onChange={handleChangeLogToFlash} />}
+            extra={<Switch checked={state.logToFlash === 1} onChange={handleChangeLogToFlash} />}
           ></Form.Item>
           <Form.Item
             labelAlign="start"
             label="logToServer"
             colon={false}
-            extra={<Switch checked={logToServer === 1} onChange={handleChangeLogToServer} />}
+            extra={<Switch checked={state.logToServer === 1} onChange={handleChangeLogToServer} />}
           ></Form.Item>
           <Form.Item htmlFor="log-level">
             <Select
-              value={logLevel}
+              value={state.logLevel}
               onChange={handleLogLevelChange}
               style={{ width: '230px', marginTop: '20px' }}
               options={[
@@ -131,20 +134,24 @@ const SyslogConfiguration = () => {
                 paddingTop: '10px'
               }}
             >
-              <Input placeholder="Server IP" value={serverIP} onChange={handleServerInputChange} />
+              <Input
+                placeholder="Server IP"
+                value={state.serverIP}
+                onChange={handleServerInputChange}
+              />
             </Form.Item>
 
             <Form.Item
               colon={false}
               help={
                 <Typography style={{ color: 'red' }}>
-                  {serverPort === '' ? 'Server port is required' : ''}
+                  {state.serverPort === '' ? 'Server port is required' : ''}
                 </Typography>
               }
               style={{ color: token.colorError, width: '230px', paddingTop: '10px' }}
             >
               <Input
-                value={serverPort}
+                value={state.serverPort}
                 onChange={handleServerPortChange}
                 placeholder="server Port"
                 type="number"

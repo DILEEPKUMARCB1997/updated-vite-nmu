@@ -26,7 +26,8 @@ export const initSyslogSettingData = () => (dispatch, getState) => {
 }
 
 export const startTask = (param) => (dispatch, getState) => {
-  //console.log(param);
+  // console.log(param)
+  dispatch(setTaskRunning(true))
   const { deviceStatus } = getState().syslogSetting
   const devices = Object.keys(deviceStatus)
   //console.log(devices);
@@ -51,33 +52,6 @@ export const startTask = (param) => (dispatch, getState) => {
   console.log('param:', param)
 }
 
-// export const startTask = (param) => (dispatch, getState) => {
-// //console.log(param)
-//   dispatch(setTaskRunning(true))
-//   const { deviceStatus } = getState().syslogSetting
-//   const devices = Object.keys(deviceStatus)
-//   //console.log(devices);
-//   window.electron.ipcRenderer.on(RESPONSE_RP_SYSLOG_SETTING, (event, arg) => {
-//     const { type } = arg
-//     if (type === 1) {
-//       //callback('There is some problem in syslog setting process.');
-//       dispatch(updateAllDeviceStatusError())
-//     } else {
-//       const { success } = arg
-//       const { MACAddress } = arg.data
-//       dispatch(updateDeviceStatus({ MACAddress, success }))
-//     }
-//     const { finish } = arg.data
-//     if (finish) {
-//       window.electron.ipcRenderer.removeAllListeners(RESPONSE_RP_SYSLOG_SETTING)
-//       // dispatch(setTaskRunning(false))
-//       dispatch(setTaskRunning(false))
-//     }
-//   })
-//   window.electron.ipcRenderer.send(REQUEST_MP_SYSLOG_SETTING, { devices, param: param })
-//   console.log('param:', param)
-// }
-
 const syslogSettingSlice = createSlice({
   name: 'syslogSettingSlice',
   initialState: {
@@ -98,7 +72,7 @@ const syslogSettingSlice = createSlice({
       //console.log(deviceStatus);
       //console.log(MACAddress);
       deviceStatus[MACAddress].status = success ? SUCCESS : ERROR
-      // return void { ...state, deviceStatus }
+      return void { ...state, deviceStatus }
       // return {
       //   ...state,
       //   deviceStatus: {

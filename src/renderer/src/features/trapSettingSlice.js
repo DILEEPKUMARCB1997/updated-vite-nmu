@@ -24,7 +24,7 @@ export const initTrapSettingData = () => (dispatch, getState) => {
 }
 
 export const startTask = (param) => (dispatch, getState) => {
-  //console.log(param);
+  // console.log(param)
   const { deviceStatus } = getState().trapSetting
   const devices = Object.keys(deviceStatus)
   //console.log(devices);
