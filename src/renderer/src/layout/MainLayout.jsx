@@ -111,6 +111,10 @@ const MainLayout = () => {
     dispatch(updateEventLog(arg))
   }
 
+  // const deviceListListener = useCallback((_, args) => {
+  //   dispatch(updateDiscoveryData(JSON.parse(args)))
+  // }, [])
+
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
       dispatch(clearUsersData())
