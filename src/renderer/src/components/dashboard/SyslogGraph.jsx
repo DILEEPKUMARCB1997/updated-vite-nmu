@@ -23,7 +23,7 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { tableData } = syslogGraphData
-  // console.log(syslogGraphData)
+  console.log('syslog', syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
       {

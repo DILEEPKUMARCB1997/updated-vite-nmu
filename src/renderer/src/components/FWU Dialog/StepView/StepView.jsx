@@ -9,7 +9,7 @@ const StepView = () => {
   console.log(activeStep)
   return (
     <Steps
-      activestep={activeStep}
+      current={activeStep}
       size="large"
       items={[
         {
