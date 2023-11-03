@@ -47,7 +47,7 @@ export const store = configureStore({
     telegram: telegramSlice.reducer,
     snmp: snmpSlice.reducer,
     advanced: advancedSlice.reducer,
-    firmware: firmwareSlice.reducer,
+    firmwareUpdate: firmwareSlice.reducer,
     mail: mailSlice.reducer,
     resetToDefault: resetToDefaultSlice.reducer,
     snmpScanProgress: snmpScanProgressSlice.reducer,

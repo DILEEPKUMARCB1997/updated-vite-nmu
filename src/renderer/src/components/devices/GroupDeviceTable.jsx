@@ -11,6 +11,9 @@ const GroupDeviceTable = () => {
   const token = useTheme()
   const { groupDeviceData, groupDeviceArrayData } = useSelector(discoverySelector)
 
+  console.log('group Device data', groupDeviceData)
+  console.log('groupdevice array data', groupDeviceArrayData)
+
   const panelStyle = {
     marginBottom: 8,
     background: token.colorBgContainer,
