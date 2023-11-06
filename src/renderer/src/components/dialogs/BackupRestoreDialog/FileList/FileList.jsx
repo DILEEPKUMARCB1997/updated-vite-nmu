@@ -87,7 +87,7 @@ const FileList = () => {
         pagination={{
           type: 'bottom',
           align: 'center',
-          showQuickJumper: true,
+          showQuickJumper: false,
           size: 'small',
           total: files.length,
           defaultPageSize: 5,

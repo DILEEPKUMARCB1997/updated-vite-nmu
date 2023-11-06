@@ -40,7 +40,13 @@ const FWUTable = () => {
       key: 'progress',
       render: (record) => {
         console.log(record)
-        return <Progress type="line" percent={record.uploadProgress} status="active" />
+        return (
+          <Progress
+            type="line"
+            percent={record.uploadProgress === '0' ? 100 : 0}
+            status={record.uploadProgress}
+          />
+        )
       }
     },
     {
@@ -84,7 +90,7 @@ const FWUTable = () => {
     progress: data.find((item) => item.key === key)?.progress,
     status: data.find((item) => item.key === key)?.status
   }))
-  // console.log(dataSource)
+  console.log(dataSource)
   return (
     <div>
       <Table columns={columnData} dataSource={dataSource} rowKey="MACAddress" />
