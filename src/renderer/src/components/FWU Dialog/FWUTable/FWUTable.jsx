@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { Progress, Table } from 'antd'
@@ -47,12 +48,14 @@ const FWUTable = () => {
     },
     {
       title: 'Status',
+      dataIndex: 'status',
       key: 'status',
       render: (record) => {
         console.log(record)
+        const status = codes[record.status]
         return (
-          <span color={codes[record.status].type} key={record.status}>
-            {codes[record.status].label}
+          <span color={status.type} key={record.status}>
+            {status.label}
           </span>
         )
       }

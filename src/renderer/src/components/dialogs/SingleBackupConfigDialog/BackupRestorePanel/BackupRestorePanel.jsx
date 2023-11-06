@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Input, Button, Progress, notification, App, Typography, theme } from 'antd'
+import { Input, Button, Progress, App, Typography, theme } from 'antd'
 import {
   singleBackupRestoreSelector,
   requestBackupSelectFolder,
@@ -10,18 +10,20 @@ import {
   requestRestore
 } from '../../../../features/singleBackupRestoreSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const BackupRestorePanel = () => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
-  const { modal } = App.useApp()
+  const { modal, notification } = App.useApp()
   const { backupPath, filename, isBackingUP, restorePath } = useSelector(
     singleBackupRestoreSelector
   )
   // console.log(backupPath)
   // console.log(filename)
   // console.log(restorePath)
+
   const disableBackupButton = backupPath === '' || filename === '' || isBackingUP
   const disableRestoreButton = restorePath === ''
   const handleSelectFolderButtonOnClick = () => {
@@ -108,7 +110,13 @@ const BackupRestorePanel = () => {
         File Name:
         <Input value={filename} onChange={handleBackupFileNameInputOnChange} />
         {isBackingUP ? (
-          <Progress percent={40} />
+          <LoadingOutlined
+            style={{
+              fontSize: 30,
+              marginRight: '15px'
+            }}
+            spin
+          />
         ) : (
           <Button
             type="primary"
