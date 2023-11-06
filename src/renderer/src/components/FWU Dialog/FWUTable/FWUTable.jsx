@@ -16,7 +16,6 @@ const codes = {
 
 const FWUTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
-
   const columnData = [
     {
       title: 'Model',
@@ -39,22 +38,34 @@ const FWUTable = () => {
       title: 'Progress',
       dataIndex: 'progress',
       key: 'progress',
-      render: (record, value) => {
-        return (
-          <Progress type="line" percent={value.uploadProgress} status={record.uploadProgress} />
-        )
+      render: (record) => {
+        console.log(record)
+        return <Progress type="line" percent={record.uploadProgress} status="active" />
       }
     },
     {
       title: 'Status',
       key: 'status',
       render: (record) => {
-        console.log(record)
-        return (
-          <span color={codes[record.status].type} key={record.status}>
-            {codes[record.status].label}
-          </span>
-        )
+        const status = codes[record.status]
+        if (status) {
+          return (
+            <span
+              style={{
+                fontSize: '1rem',
+                marginTop: '0',
+                marginBottom: '0.5rem',
+                color:
+                  status.type === 'normal' ? 'blue' : status.type === 'success' ? 'green' : 'red'
+              }}
+              key={record.status}
+            >
+              {status.label}
+            </span>
+          )
+        } else {
+          return null
+        }
       }
     }
   ]
@@ -73,7 +84,7 @@ const FWUTable = () => {
     progress: data.find((item) => item.key === key)?.progress,
     status: data.find((item) => item.key === key)?.status
   }))
-  console.log(dataSource)
+  // console.log(dataSource)
   return (
     <div>
       <Table columns={columnData} dataSource={dataSource} rowKey="MACAddress" />
