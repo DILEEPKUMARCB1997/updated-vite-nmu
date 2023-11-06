@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-// import Chart from 'react-apexcharts'
+import React, { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -10,30 +9,29 @@ import {
 } from '../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
+
 const EventLogGraph = () => {
   const dispatch = useDispatch()
-  // const { customGraphData } = useSelector(useMemo(() => dashboardSelector, []))
   const { customGraphData } = useSelector(dashboardSelector)
-  const { tableData } = customGraphData
-  console.log(customGraphData)
+  const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
+    customGraphData
+  console.log(customGraphData.InformationData)
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
         name: 'Information',
         color: '#46b300',
-        data: customGraphData.InformationData
+        data: InformationData
       },
       {
         name: 'Warning',
         color: '#F57F17',
-        data: customGraphData.WarningData
-        // data: [10, 15, 30, 12, 0, 15, 27]
+        data: WarningData
       },
       {
         name: 'Critical',
         color: '#D50000',
-        data: customGraphData.CriticalData
-        // data: [12, 6, 23, 25, 20, 35, 12]
+        data: CriticalData
       }
     ],
     options: {
@@ -83,7 +81,7 @@ const EventLogGraph = () => {
       },
       xaxis: {
         type: 'category',
-        categories: customGraphData.label,
+        categories: label,
         position: 'bottom',
         labels: {
           rotate: -45,
@@ -110,16 +108,6 @@ const EventLogGraph = () => {
       }
     }
   })
-  // const handleRefreshGraph = useCallback(() => {
-  //   dispatch(
-  //     requestHistoryData({
-  //       type: 'custom',
-  //       sourceIP: '',
-  //       ge: '',
-  //       le: ''
-  //     })
-  //   )
-  // }, [dispatch])
 
   const handleRefreshGraph = () => {
     dispatch(
@@ -132,13 +120,6 @@ const EventLogGraph = () => {
     )
   }
 
-  // const onCustomGraphClick = useCallback(
-  //   (barIndex) => {
-  //     dispatch(showCustomTableData(tableData[barIndex]))
-  //   },
-  //   [dispatch]
-  // )
-
   const onCustomGraphClick = (barIndex) => {
     dispatch(showCustomTableData(tableData[barIndex]))
   }
@@ -150,18 +131,24 @@ const EventLogGraph = () => {
   }, [])
 
   useEffect(() => {
-    if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
+    if (Array.isArray(InformationData) && InformationData.length > 0) {
       setEventLogData((prev) => ({
         ...prev,
         series: [
           {
-            data: customGraphData.data
+            data: InformationData
+          },
+          {
+            data: WarningData
+          },
+          {
+            data: CriticalData
           }
         ],
         options: {
           ...prev.options,
           xaxis: {
-            categories: customGraphData.label
+            categories: label
           }
         }
       }))
@@ -178,7 +165,7 @@ const EventLogGraph = () => {
         }}
       >
         <div>
-          <i>{customGraphData.lastUpdated}</i>
+          <i>{lastUpdated}</i>
         </div>
         <Button
           style={{ padding: '5px' }}
