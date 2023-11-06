@@ -46,7 +46,7 @@ const FWUButton = ({ handleDialogOnClose }) => {
             </div>
           ),
           start: (
-            <Button type="secondary" onClick={handleStopButtonClick}>
+            <Button type="primary" danger onClick={handleStopButtonClick}>
               Stop
             </Button>
           ),

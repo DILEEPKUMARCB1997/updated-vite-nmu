@@ -23,7 +23,7 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
-  console.log('syslog', syslogGraphData)
+  console.log('syslog', syslogGraphData.data)
 
   // const onSylogGraphClick = () => {
   //   // let tableData1 = tableData[barIndex]
