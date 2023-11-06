@@ -23,11 +23,10 @@ export const requestStartFirmwareUpdate = () => (dispatch, getState) => {
     })
   )
 }
-
 export const requestStopFirmwareUpdate = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_STOP_FIRMWARE_UPDATE, (event, arg) => {
     if (arg.success) {
-      dispatch({ type: changeFirmwareUpdateStatus, payload: 2 })
+      dispatch(changeFirmwareUpdateStatus(2))
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_STOP_FIRMWARE_UPDATE)
@@ -60,13 +59,7 @@ export const initFirmwareUpdateData = () => (dispatch, getState) => {
       }
     }
   })
-  // dispatch({
-  //   type: INIT_FIRMWARE_UPDATE_DATA,
-  //   payload: {
-  //     deviceData,
-  //     deviceRealTimeData
-  //   }
-  // })
+
   dispatch(initFirmwareUpdate({ deviceData, deviceRealTimeData }))
   dispatch(openDialog('FWU'))
 }
