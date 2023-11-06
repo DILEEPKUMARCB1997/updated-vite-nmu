@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
-import { Progress, Table, Tag } from 'antd'
+import { Progress, Table } from 'antd'
 import { useSelector } from 'react-redux'
-import Code from '../Code/Code'
 
 const codes = {
   none: { type: 'normal', label: 'Waiting' },
@@ -15,10 +15,8 @@ const codes = {
   TO: { type: 'error', label: 'Connect Timeout' }
 }
 
-const FWUTable = (props) => {
+const FWUTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
-  // const { code, uploadProgress } = deviceRealTimeData
-  const { uploadProgress } = deviceRealTimeData
 
   const columnData = [
     {
@@ -42,62 +40,32 @@ const FWUTable = (props) => {
       title: 'Progress',
       dataIndex: 'progress',
       key: 'progress',
-      render: (text, record) => {
-        return <Progress type="line" percent={uploadProgress} status={record.uploadProgress} />
+      render: (record, value) => {
+        return (
+          <Progress type="line" percent={value.uploadProgress} status={record.uploadProgress} />
+        )
       }
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (text, record) => {
-        // console.log(record)
-
-        const code1 =
-          codes.S001.type[record.code] === 'success'
-            ? 'green'
-            : codes.E001.type[record.code] === 'error'
-            ? 'red'
-            : 'blue'
+      render: (record) => {
+        console.log(record)
+        const status = codes[record.status]
         return (
-          <span>
-            <span style={{ color: code1 }}>{codes.none.label}</span>
+          <span color={status.type} key={record.status}>
+            {status.label}
           </span>
         )
       }
     }
-    // {
-    //   title: 'Status',
-    //   dataIndex: 'status',
-    //   key: 'status',
-    //   render: (text) => {
-    //     const code = codes[text]
-    //     return (
-    //       <span>
-    //         <span
-    //           style={{
-    //             color:
-    //               codes.type === 'success'
-    //                 ? 'green'
-    //                 : codes.type === 'error'
-    //                 ? 'red'
-    //                 : codes.type === 'normal'
-    //                 ? 'blue'
-    //                 : 'gray'
-    //           }}
-    //         >
-    //           {codes.label}
-    //         </span>
-    //       </span>
-    //     )
-    //   }
-    // }
   ]
 
   const data = Object.entries(deviceRealTimeData).map(([key, value]) => ({
     key,
     status: value.code,
-    Progress: value.uploadProgress
+    progress: value.uploadProgress
   }))
 
   const dataSource = Object.entries(deviceData).map(([key, value]) => ({
@@ -105,10 +73,10 @@ const FWUTable = (props) => {
     MACAddress: key,
     IPAddress: value.IPAddress,
     model: value.model,
-    data
+    progress: data.find((item) => item.key === key)?.progress,
+    status: data.find((item) => item.key === key)?.status
   }))
   console.log(dataSource)
-
   return (
     <div>
       <Table columns={columnData} dataSource={dataSource} rowKey="MACAddress" />
