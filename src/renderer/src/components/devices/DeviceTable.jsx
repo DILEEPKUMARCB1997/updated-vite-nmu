@@ -154,13 +154,15 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   })
 
+  const shell = require('electron').shell
+
   const handleItemClick = (key, data) => {
     console.log(key)
     console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
-        window.electron.shell.openExternal(`http://${IPAddress}`)
+        shell.openExternal(`http://${IPAddress}`)
         break
       case 'openOnNMUApplication':
         return handleOpenWeb(IPAddress, MACAddress)
@@ -361,7 +363,8 @@ const DeviceTable = ({ deviceData = [] }) => {
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
-        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+        disabled:
+          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
   }
