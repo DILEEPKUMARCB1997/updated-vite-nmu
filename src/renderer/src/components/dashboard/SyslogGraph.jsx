@@ -20,9 +20,9 @@ import { SyncOutlined } from '@ant-design/icons'
 //   return Math.floor(Math.random() * (max - min + 1)) + min
 // }
 const SyslogGraph = () => {
-  const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
+  const dispatch = useDispatch()
   console.log('syslog', syslogGraphData)
 
   // const onSylogGraphClick = () => {
@@ -36,7 +36,7 @@ const SyslogGraph = () => {
     series: [
       {
         name: 'Syslog Message Count',
-        data: []
+        data: syslogGraphData.data
       }
     ],
     options: {

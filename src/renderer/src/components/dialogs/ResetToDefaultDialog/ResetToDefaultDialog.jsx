@@ -61,6 +61,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { token } = useToken()
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
   console.log(resetToDefaultStatus)
+  console.log(taskStatus)
 
   // const dataSource = []
   // useEffect(() => {
@@ -161,7 +162,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
             {/* <Table columns={columns} dataSource={deviceDataList} /> */}
           </div>
           {taskStatus === RUNNING && (
-            <Progress size="small" percent={taskStatus === 'active' ? 0 : 100} />
+            <Progress size="small" percent={taskStatus === SUCCESS ? 100 : 0} />
           )}
           <div>
             {taskStatus === WAITING && (

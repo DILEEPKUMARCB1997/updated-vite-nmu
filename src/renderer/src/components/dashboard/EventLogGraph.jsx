@@ -150,12 +150,18 @@ const EventLogGraph = () => {
   }, [])
 
   useEffect(() => {
-    if (Array.isArray(customGraphData.data) && customGraphData.data.length > 0) {
+    if (Array.isArray(customGraphData.WarningData) && customGraphData.WarningData.length > 0) {
       setEventLogData((prev) => ({
         ...prev,
         series: [
           {
-            data: customGraphData.data
+            data: customGraphData.InformationData
+          },
+          {
+            data: customGraphData.WarningData
+          },
+          {
+            data: customGraphData.CriticaLData
           }
         ],
         options: {

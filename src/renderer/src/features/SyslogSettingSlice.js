@@ -49,7 +49,7 @@ export const startTask = (param) => (dispatch, getState) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_SYSLOG_SETTING, { devices, param: param })
-  console.log('param:', param)
+  // console.log('param:', param)
 }
 
 const syslogSettingSlice = createSlice({
