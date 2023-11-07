@@ -16,6 +16,7 @@ const codes = {
 
 const FWUTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
+
   const columnData = [
     {
       title: 'Model',
@@ -41,11 +42,7 @@ const FWUTable = () => {
       render: (record) => {
         console.log(record)
         return (
-          <Progress
-            type="line"
-            percent={record.uploadProgress === '0' ? 100 : 0}
-            status={record.uploadProgress}
-          />
+          <Progress type="line" percent={record.uploadProgress} status={record.uploadProgress} />
         )
       }
     },
