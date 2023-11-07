@@ -141,7 +141,9 @@ const dashboardSlice = createSlice({
         syslogTableData: action.payload
       }
     },
-    updateCustomTableData: (state, { payload }) => {
+    updateCustomTableData: (state, action) => {
+      console.log(action)
+      const { payload } = action
       return {
         ...state,
         customTableData: payload
