@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { Progress, Table } from 'antd'
@@ -17,7 +16,6 @@ const codes = {
 
 const FWUTable = () => {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
-
   const columnData = [
     {
       title: 'Model',
@@ -40,24 +38,40 @@ const FWUTable = () => {
       title: 'Progress',
       dataIndex: 'progress',
       key: 'progress',
-      render: (record, value) => {
+      render: (record) => {
+        console.log(record)
         return (
-          <Progress type="line" percent={value.uploadProgress} status={record.uploadProgress} />
+          <Progress
+            type="line"
+            percent={record.uploadProgress === '0' ? 100 : 0}
+            status={record.uploadProgress}
+          />
         )
       }
     },
     {
       title: 'Status',
-      dataIndex: 'status',
       key: 'status',
       render: (record) => {
-        console.log(record)
         const status = codes[record.status]
-        return (
-          <span color={status.type} key={record.status}>
-            {status.label}
-          </span>
-        )
+        if (status) {
+          return (
+            <span
+              style={{
+                fontSize: '1rem',
+                marginTop: '0',
+                marginBottom: '0.5rem',
+                color:
+                  status.type === 'normal' ? 'blue' : status.type === 'success' ? 'green' : 'red'
+              }}
+              key={record.status}
+            >
+              {status.label}
+            </span>
+          )
+        } else {
+          return null
+        }
       }
     }
   ]

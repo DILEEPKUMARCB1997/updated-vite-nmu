@@ -31,9 +31,9 @@ import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin, updateDiscoveryData } from '../features/discoverySlice'
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
-import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
-import Snacks from '../components/Snack/Snacks'
-import { closeSnack } from '../features/snackSlice'
+// import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+// import Snacks from '../components/Snack/Snacks'
+// import { closeSnack } from '../features/snackSlice'
 
 // import Snacks from '../components/Snack/Snacks'
 

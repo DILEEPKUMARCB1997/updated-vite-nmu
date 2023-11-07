@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Table, Modal, ConfigProvider } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
@@ -48,9 +49,9 @@ const columns = [
 const CustomGraphTableDialog = ({ onClose }) => {
   const token = useTheme()
   const { customTableData } = useSelector(dashboardSelector)
-  const [tableLoading, setTableLoading] = useState(false)
+  const [tableLoading, setTableLoading] = useState(true)
 
-  console.log('custom table data', customTableData)
+  // console.log('custom table data', customTableData)
 
   useEffect(() => {
     setTableLoading(false)

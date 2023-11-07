@@ -103,7 +103,7 @@ export const requestCustomGraphData = (Items) => {
   }
   const date = new Date()
   const lastUpdated =
-    'last update ' +
+    'Last update ' +
     ('00' + date.getDate()).slice(-2) +
     '/' +
     ('00' + (date.getMonth() + 1)).slice(-2) +

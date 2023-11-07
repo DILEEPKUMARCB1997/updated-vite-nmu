@@ -19,11 +19,13 @@ const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
+  console.log('trap Graph data', trapGraphData)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-  console.log('trap graph data', trapGraphData)
-  // console.log('trap table data', tableData)
-  // const { label, data, tableData, lastUpdated } = trapGraphData
+
+  const onTrapGraphClick = (barIndex) => {
+    dispatch(showTrapTableData(tableData[barIndex]))
+  }
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [
       {
@@ -111,10 +113,6 @@ const TrapGraphSummary = () => {
       }
     }
   })
-
-  const onTrapGraphClick = (barIndex) => {
-    dispatch(showTrapTableData(tableData[barIndex]))
-  }
 
   useEffect(() => {
     setTimeout(() => {

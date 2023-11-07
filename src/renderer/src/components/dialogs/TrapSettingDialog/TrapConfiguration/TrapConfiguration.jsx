@@ -8,20 +8,7 @@ import { useDispatch } from 'react-redux'
 const TrapConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
-  // const [trapServerIP, setTrapServerIP] = useState('')
-  // // console.log(trapServerIP)
-  // const [trapServerPort, setTrapServerPort] = useState(162)
-  // // console.log(trapServerPort)
-  // const [trapCommString, setTrapCommString] = useState('')
-  // console.log(trapCommString)
-  // const [trapServerIP, setTrapServerIP] = useState('')
-  // console.log(trapServerIP)
-  // const [trapServerPort, setTrapServerPort] = useState(162)
-  // console.log(trapServerPort)
-  // const [trapCommString, setTrapCommString] = useState('')
-  // console.log(trapCommString)
   const [state, setState] = useState({ trapServerIP: '', trapServerPort: 162, trapCommString: '' })
-
   const { useToken } = theme
   const { token } = useToken()
 

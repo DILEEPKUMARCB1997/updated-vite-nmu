@@ -28,13 +28,13 @@ export const initSyslogSettingData = () => (dispatch, getState) => {
 export const startTask = (param) => (dispatch, getState) => {
   // console.log(param)
   dispatch(setTaskRunning(true))
-  const { deviceStatus } = getState().syslogSetting
+  const { deviceStatus } = getState().Setting
   const devices = Object.keys(deviceStatus)
   //console.log(devices);
   window.electron.ipcRenderer.on(RESPONSE_RP_SYSLOG_SETTING, (event, arg) => {
     const { type } = arg
     if (type === 1) {
-      //callback('There is some problem in syslog setting process.');
+      //callback('There is some problem in  setting process.');
       dispatch(updateAllDeviceStatusError())
     } else {
       const { success } = arg

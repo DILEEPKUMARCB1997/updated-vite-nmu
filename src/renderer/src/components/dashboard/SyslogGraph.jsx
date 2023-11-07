@@ -25,13 +25,9 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   console.log('syslog', syslogGraphData)
 
-  // const onSylogGraphClick = () => {
-  //   // let tableData1 = tableData[barIndex]
-  //   // console.log(tableData1)
-  //   dispatch(showSyslogTableData(tableData))
-  // }
-
-  // console.log(syslogGraphData)
+  const onSyslogGraphClick = (barIndex) => {
+    dispatch(showSyslogTableData(tableData[barIndex]))
+  }
   const [graphData, setGraphData] = useState({
     series: [
       {
@@ -116,10 +112,6 @@ const SyslogGraph = () => {
       }
     }
   })
-
-  const onSyslogGraphClick = (barIndex) => {
-    dispatch(showSyslogTableData(tableData[barIndex]))
-  }
 
   const handleRefreshGraph = () => {
     dispatch(

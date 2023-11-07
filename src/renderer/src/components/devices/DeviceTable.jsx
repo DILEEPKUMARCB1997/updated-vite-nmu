@@ -22,7 +22,11 @@ import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
 import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
+import {
+  UIControlSelector,
+  removeBatchOperateEvent,
+  setBatchOperateEvents
+} from '../../features/UIControllSlice'
 
 // import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
@@ -356,6 +360,9 @@ const DeviceTable = ({ deviceData = [] }) => {
           deviceData: [record.MACAddress]
         })
       )
+    },
+    onSelectNone: () => {
+      setBatchOperateEvents ? (rowSelection ? false : true) : undefined
     },
 
     getCheckboxProps: (record, deviceType) => (

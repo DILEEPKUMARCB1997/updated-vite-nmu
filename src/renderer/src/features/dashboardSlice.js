@@ -19,7 +19,6 @@ export const showSyslogTableData = (payload) => (dispatch) => {
   dispatch(openDialog('syslogGraphTable'))
 }
 export const showTrapTableData = (payload) => (dispatch) => {
-  console.log(payload)
   dispatch(updateTrapTableData(payload))
   dispatch(openDialog('trapGraphTable'))
 }
@@ -141,16 +140,15 @@ const dashboardSlice = createSlice({
         syslogTableData: action.payload
       }
     },
-    updateCustomTableData: (state, { payload }) => {
+    updateCustomTableData: (state, action) => {
       return {
         ...state,
-        customTableData: payload
+        customTableData: action.payload
       }
     },
 
-    updateTrapTableData: (state, { payload }) => {
-      console.log('payload', payload)
-      return { ...state, trapTableData: payload }
+    updateTrapTableData: (state, action) => {
+      return { ...state, trapTableData: action.payload }
     }
 
     // openDialog: (state, action) => {
