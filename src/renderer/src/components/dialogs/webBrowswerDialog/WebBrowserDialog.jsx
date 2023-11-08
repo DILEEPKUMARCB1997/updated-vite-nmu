@@ -144,6 +144,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const { Title } = Typography
 
+const shell = require('electron').shell
+
 const WebBrowserDialog = ({ onClose }) => {
   const { IPAddress, URL } = useSelector(openWebSelector)
   const dispatch = useDispatch()
@@ -177,11 +179,11 @@ const WebBrowserDialog = ({ onClose }) => {
   //   // }
   // }
   function goBack() {
-    window.history.back()
+    history.back()
   }
 
   function goForward() {
-    window.history.forward()
+    history.forward()
   }
 
   // const handleGoForwardButtonClick = () => {
@@ -201,7 +203,7 @@ const WebBrowserDialog = ({ onClose }) => {
   }
 
   const handleOpenInBrowserButtonClick = () => {
-    window.electron.shell.openExternal(URL)
+    shell.openExternal(URL)
     // window?.openExternal(URL)
     // window.location.assign('npm https://procomponents.ant.design/en-US/components/table')
 
@@ -217,59 +219,63 @@ const WebBrowserDialog = ({ onClose }) => {
     <Modal
       open
       width="100%"
-      height="100%"
+      style={{ top: 20 }}
+      bodyStyle={{
+        margin: 0,
+        paddingTop: 10,
+        paddingBottom: '10px'
+      }}
       footer={null}
-      closable={false}
+      closable
       maskClosable={false}
-      style={{ padding: '0' }}
     >
-      <div
+      {/* <div
         style={{ background: '#f2f2f2' }}
         // className={styles.header}
-      >
-        <Tooltip title="Previous page">
-          <Button
-            value="Back"
-            onClick={goBack}
-            icon={<ArrowLeftOutlined />}
-            style={{ marginLeft: '10px' }}
-          />
-        </Tooltip>
-        <Tooltip title="Next page">
-          <Button
-            value="Forward"
-            onClick={goForward()}
-            icon={<ArrowRightOutlined />}
-            style={{ marginLeft: '10px' }}
-          />
-        </Tooltip>
-        <Tooltip title="Refresh">
-          <Button
-            onClick={handleReloadButtonClick}
-            icon={<ReloadOutlined />}
-            style={{ marginLeft: '10px' }}
-          />
-        </Tooltip>
-        <Tooltip title="Open on OS browser">
-          <Button
-            onClick={handleOpenInBrowserButtonClick}
-            icon={<ExportOutlined />}
-            style={{ marginLeft: '10px' }}
-          />
-        </Tooltip>
-        <Title
-          level={4}
-          style={{ color: 'black', flexGrow: '1', marginLeft: '5px' }}
-          //  className={styles.url}
-        >
-          {`https://${IPAddress}`}
-        </Title>
+      > */}
+      <Tooltip title="Previous page">
         <Button
-          onClick={handleCloseButtonClick}
-          icon={<CloseOutlined />}
+          value="Back"
+          onClick={goBack}
+          icon={<ArrowLeftOutlined />}
           style={{ marginLeft: '10px' }}
         />
-      </div>
+      </Tooltip>
+      <Tooltip title="Next page">
+        <Button
+          value="Forward"
+          onClick={goForward()}
+          icon={<ArrowRightOutlined />}
+          style={{ marginLeft: '10px' }}
+        />
+      </Tooltip>
+      <Tooltip title="Refresh">
+        <Button
+          onClick={handleReloadButtonClick}
+          icon={<ReloadOutlined />}
+          style={{ marginLeft: '10px' }}
+        />
+      </Tooltip>
+      <Tooltip title="Open on OS browser">
+        <Button
+          onClick={handleOpenInBrowserButtonClick}
+          icon={<ExportOutlined />}
+          style={{ marginLeft: '10px' }}
+        />
+      </Tooltip>
+      <Title
+        level={5}
+        // style={{ color: 'black', flexGrow: '1', marginLeft: '5px' }}
+        //  className={styles.url}
+      >
+        {`https://${IPAddress}`}
+      </Title>
+      <Button
+        onClick={handleCloseButtonClick}
+        icon={<CloseOutlined />}
+        style={{ marginLeft: '10px' }}
+      />
+      {/* </div> */}
 
       <webview
         id="mainWebview"
@@ -277,7 +283,7 @@ const WebBrowserDialog = ({ onClose }) => {
           webv.webview = ref
         }}
         src={URL}
-        style={{ display: 'inline-flex', width: '640px', height: '480px' }}
+        style={{ height: '480px' }}
       />
     </Modal>
   )

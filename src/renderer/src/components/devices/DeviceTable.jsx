@@ -24,7 +24,7 @@ import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
 
-// import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
+import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
   {
@@ -154,13 +154,15 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   })
 
+  const shell = require('electron').shell
+
   const handleItemClick = (key, data) => {
     console.log(key)
     console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
-        window.electron.shell.openExternal(`http://${IPAddress}`)
+        shell.openExternal(`http://${IPAddress}`)
         break
       case 'openOnNMUApplication':
         return handleOpenWeb(IPAddress, MACAddress)
@@ -341,11 +343,14 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-
+  const [selectedRowsArray, setSelectedRowsArray] = useState([])
+  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
+    // selectedRowKeys: selectedRowsArray,
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
+      // setSelectedRowsArray(selectedRows)
       // onSelect: (record) => {
       //   console.log('record', record)
       //   console.log('selected', selected)
@@ -361,9 +366,14 @@ const DeviceTable = ({ deviceData = [] }) => {
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
-        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+        disabled:
+          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
+  }
+
+  const handleCheckBoxChange = (record) => {
+    console.log('record', record)
   }
 
   return (
@@ -421,6 +431,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
+          // rowSelection={showCheckBox ? rowSelection : undefined}
           // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
