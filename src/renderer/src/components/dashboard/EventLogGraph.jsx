@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -114,7 +114,7 @@ const EventLogGraph = () => {
     }
   })
 
-  const handleRefreshGraph = () => {
+  const handleRefreshGraph = useCallback(() => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -123,7 +123,7 @@ const EventLogGraph = () => {
         le: ''
       })
     )
-  }
+  }, [])
 
   useEffect(() => {
     setTimeout(() => {

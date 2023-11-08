@@ -40,6 +40,7 @@ const DevicesControl = ({ onClose }) => {
   const { groupView } = useSelector(discoverySelector)
   const { loggedInUser } = useSelector(userManagementSelector)
   const { userType } = loggedInUser
+
   const { modal } = App.useApp()
 
   useEffect(() => {
@@ -55,25 +56,6 @@ const DevicesControl = ({ onClose }) => {
       cmd: 'addGroup',
       groupName: groupAddInput
     })
-  }
-
-  const handleResetToDefault = () => {
-    dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
-    dispatch(setSNMPSelectOnly(true))
-  }
-
-  const handleBackupRestore = () => {
-    dispatch(setBatchOperateEvent({ event: 'backupRestore' }))
-    dispatch(setSNMPSelectOnly(true))
-  }
-
-  const handleSyslogSetting = () => {
-    dispatch(setBatchOperateEvent({ event: 'syslogSetting' }))
-    dispatch(setSNMPSelectOnly(true))
-  }
-  const handleTrapSetting = () => {
-    dispatch(setBatchOperateEvent({ event: 'trapSetting' }))
-    dispatch(setSNMPSelectOnly(true))
   }
 
   const content = (
@@ -113,43 +95,30 @@ const DevicesControl = ({ onClose }) => {
         break
       case 'firmwareUpdate':
         dispatch(setBatchOperateEvent({ event: 'firmwareUpdate' }))
-        // this.props.openSnack('FWU')
-        // this.props.openMainDeviceCheckBox(true);
+
         break
       case 'networkSetting':
         dispatch(setBatchOperateEvent({ event: 'networkSetting' }))
-        // this.props.removeBatchOperateEvent();
-        // this.props.openSnack('networkSetting');
-        // this.props.openMainDeviceCheckBox(true);
+
         break
       case 'resetToDefault':
         dispatch(setBatchOperateEvent({ event: 'resetToDefault' }))
-        // this.props.openSnack('resetToDefault');
-        // this.props.openMainDeviceCheckBox(true);
         dispatch(setSNMPSelectOnly(true))
         break
       case 'backupRestore':
         dispatch(setBatchOperateEvent({ event: 'backupRestore' }))
-        // this.props.openSnack('backupRestore');
-        // this.props.openMainDeviceCheckBox(true);
         dispatch(setSNMPSelectOnly(true))
         break
       case 'scheduleBackup':
         dispatch(initScheduleBackup())
-        // this.props.openSnack('backupRestore');
-        // this.props.openMainDeviceCheckBox(true);
-        //this.props.setSNMPSelectOnly(true);
+
         break
       case 'syslogSetting':
         dispatch(setBatchOperateEvent({ event: 'syslogSetting' }))
-        // this.props.openSnack('backupRestore');
-        // this.props.openMainDeviceCheckBox(true);
         dispatch(setSNMPSelectOnly(true))
         break
       case 'trapSetting':
         dispatch(setBatchOperateEvent({ event: 'trapSetting' }))
-        // this.props.openSnack('backupRestore');
-        // this.props.openMainDeviceCheckBox(true);
         dispatch(setSNMPSelectOnly(true))
         break
       default:

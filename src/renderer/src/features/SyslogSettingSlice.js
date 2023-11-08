@@ -28,7 +28,7 @@ export const initSyslogSettingData = () => (dispatch, getState) => {
 export const startTask = (param) => (dispatch, getState) => {
   // console.log(param)
   dispatch(setTaskRunning(true))
-  const { deviceStatus } = getState().Setting
+  const { deviceStatus } = getState().syslogSetting
   const devices = Object.keys(deviceStatus)
   //console.log(devices);
   window.electron.ipcRenderer.on(RESPONSE_RP_SYSLOG_SETTING, (event, arg) => {

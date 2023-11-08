@@ -63,11 +63,6 @@ const ResetToDefaultDialog = ({ onClose }) => {
   console.log(resetToDefaultStatus)
   console.log(taskStatus)
 
-  // const dataSource = []
-  // useEffect(() => {
-  //   dataSource.push(resetToDefaultStatus)
-  //   console.log(dataSource)
-  // }, [])
   const dispatch = useDispatch()
   const handleCancelButtonOnClick = () => {
     dispatch(clearResetToDefaultData())
@@ -78,28 +73,6 @@ const ResetToDefaultDialog = ({ onClose }) => {
     dispatch(requestResetToDefault())
   }
 
-  // const data = Object.entries(resetToDefaultStatus).map(([key, value]) => ({
-  //   key,
-  //   MACAddress: key,
-  //   IPAddress: value.IPAddress,
-  //   model: value.model
-  // }))
-
-  // const [inputData, setInputData] = useState('')
-  // const record = (dataSource = []) => {
-  //   let data = columns.map((element) => {
-  //     return dataSource[element.dataIndex]
-  //   })
-  //   return data.includes(true)
-  // }
-  // const deviceDataList = () => {
-  //   return Object.entries(resetToDefaultStatus).map(([key, value]) => ({
-  //     key,
-  //     MACAddress: key,
-  //     IPAddress: value.IPAddress,
-  //     model: value.model
-  //   }))
-  // }
   const data = Object.entries(resetToDefaultStatus).map(([key, element]) => ({
     key,
     MACAddress: key,
@@ -108,17 +81,11 @@ const ResetToDefaultDialog = ({ onClose }) => {
     status: element.status
   }))
 
-  // const dataSource = [{}]
-
   return (
     <div>
       <Modal
         title={
-          <Typography.Title
-            level={4}
-
-            // disabled={taskStatus === RUNNING}
-          >
+          <Typography.Title level={4}>
             <RedoOutlined /> - Reset To Default
           </Typography.Title>
         }
@@ -145,7 +112,6 @@ const ResetToDefaultDialog = ({ onClose }) => {
             <Table
               rowKey={resetToDefaultStatus.key}
               size="middle"
-              // dataSource={resetToDefaultStatus}
               columns={columns}
               dataSource={data}
               pagination={{
@@ -159,7 +125,6 @@ const ResetToDefaultDialog = ({ onClose }) => {
               }}
               bordered
             ></Table>
-            {/* <Table columns={columns} dataSource={deviceDataList} /> */}
           </div>
           {taskStatus === RUNNING && (
             <Progress size="small" percent={taskStatus === SUCCESS ? 100 : 0} />

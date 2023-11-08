@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Chart from 'react-apexcharts'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,8 +10,6 @@ import {
   dashboardSelector,
   requestHistoryData,
   showSyslogTableData
-
-  //showSyslogTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
@@ -113,7 +111,7 @@ const SyslogGraph = () => {
     }
   })
 
-  const handleRefreshGraph = () => {
+  const handleRefreshGraph = useCallback(() => {
     dispatch(
       requestHistoryData({
         type: 'syslog',
@@ -122,7 +120,7 @@ const SyslogGraph = () => {
         le: ''
       })
     )
-  }
+  }, [])
 
   useEffect(() => {
     dispatch(

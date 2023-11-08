@@ -10,6 +10,7 @@ import ReactApexChart from 'react-apexcharts'
 const DiskSpaceSummary = () => {
   const dispatch = useDispatch()
   const { diskUses } = useSelector(dashboardSelector)
+  // console.log(diskUses)
   useEffect(() => {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
       if (arg.success) {
