@@ -24,7 +24,7 @@ import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
 
-// import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
+import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
   {
@@ -343,11 +343,14 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-
+  const [selectedRowsArray, setSelectedRowsArray] = useState([])
+  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
+    // selectedRowKeys: selectedRowsArray,
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
+      // setSelectedRowsArray(selectedRows)
       // onSelect: (record) => {
       //   console.log('record', record)
       //   console.log('selected', selected)
@@ -367,6 +370,10 @@ const DeviceTable = ({ deviceData = [] }) => {
           !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
+  }
+
+  const handleCheckBoxChange = (record) => {
+    console.log('record', record)
   }
 
   return (
@@ -424,6 +431,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
+          // rowSelection={showCheckBox ? rowSelection : undefined}
           // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
