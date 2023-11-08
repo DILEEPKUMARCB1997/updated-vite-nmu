@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
+
 import { useDispatch, useSelector } from 'react-redux'
 import { PageContainer, ProLayout } from '@ant-design/pro-components'
-import { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTheme } from 'antd-style'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { App, Dropdown, Spin } from 'antd'
@@ -198,4 +199,4 @@ const MainLayout = () => {
   )
 }
 
-export default MainLayout
+export default React.memo(MainLayout)

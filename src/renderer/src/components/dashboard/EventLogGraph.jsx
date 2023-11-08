@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+
+import React, { useEffect, useState, useCallback } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -15,7 +16,7 @@ const EventLogGraph = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
-  console.log(customGraphData.InformationData)
+  console.log(customGraphData)
   const [eventLogData, setEventLogData] = useState({
     series: [
       {
@@ -109,7 +110,7 @@ const EventLogGraph = () => {
     }
   })
 
-  const handleRefreshGraph = () => {
+  const handleRefreshGraph = useCallback(() => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -118,17 +119,20 @@ const EventLogGraph = () => {
         le: ''
       })
     )
-  }
+  }, [dispatch])
 
-  const onCustomGraphClick = (barIndex) => {
-    dispatch(showCustomTableData(tableData[barIndex]))
-  }
+  const onCustomGraphClick = useCallback(
+    (barIndex) => {
+      dispatch(showCustomTableData(tableData[barIndex]))
+    },
+    [dispatch, tableData]
+  )
 
   useEffect(() => {
     setTimeout(() => {
       dispatch(requestHistoryData({ type: 'custom', sourceIP: '', ge: '', le: '' }))
     }, 1500)
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (Array.isArray(InformationData) && InformationData.length > 0) {
@@ -153,7 +157,7 @@ const EventLogGraph = () => {
         }
       }))
     }
-  }, [customGraphData])
+  }, [InformationData, WarningData, CriticalData, label])
 
   return (
     <>

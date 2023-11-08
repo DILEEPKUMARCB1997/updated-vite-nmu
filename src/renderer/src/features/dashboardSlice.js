@@ -154,16 +154,6 @@ const dashboardSlice = createSlice({
       console.log('payload', payload)
       return { ...state, trapTableData: payload }
     }
-
-    // openDialog: (state, action) => {
-    //   if (state.dialogs.includes(action.payload)) {
-    //     return state
-    //   }
-    //   return {
-    //     ...state,
-    //     dialogs: [...state.dialogs, action.payload]
-    //   }
-    // }
   }
 })
 

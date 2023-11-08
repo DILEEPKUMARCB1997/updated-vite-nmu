@@ -15,23 +15,14 @@ import {
 } from '../../features/dashboardSlice'
 import { Button, Tooltip } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
+import { memo } from 'react'
 
-// function getRandomInt(min = 1, max = 9) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min
-// }
-const SyslogGraph = () => {
+const SyslogGraph = memo(function SyslogGraph() {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
   console.log('syslog', syslogGraphData.data)
 
-  // const onSylogGraphClick = () => {
-  //   // let tableData1 = tableData[barIndex]
-  //   // console.log(tableData1)
-  //   dispatch(showSyslogTableData(tableData))
-  // }
-
-  // console.log(syslogGraphData)
   const [graphData, setGraphData] = useState({
     series: [
       {
@@ -43,7 +34,6 @@ const SyslogGraph = () => {
       chart: {
         height: 320,
         type: 'bar',
-        // stacked: true,
         toolbar: {
           show: false
         },
@@ -74,7 +64,7 @@ const SyslogGraph = () => {
           borderRadius: 0,
           columnWidth: '50%',
           dataLabels: {
-            position: 'top' // top, center, bottom
+            position: 'top'
           }
         }
       },
@@ -169,7 +159,6 @@ const SyslogGraph = () => {
           padding: '0px 5px',
           display: 'flex',
           justifyContent: 'space-between'
-          // fontSize: '15px'
         }}
       >
         <i>{syslogGraphData.lastUpdated}</i>
@@ -182,6 +171,6 @@ const SyslogGraph = () => {
       </div>
     </>
   )
-}
+})
 
 export default SyslogGraph
