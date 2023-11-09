@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { App, Badge, ConfigProvider, Checkbox, Modal, Spin } from 'antd'
+import { App, Badge, ConfigProvider, Checkbox, Modal, Spin, message } from 'antd'
 import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
@@ -111,16 +111,9 @@ const DeviceTable = ({ deviceData = [] }) => {
       content: 'Please check SNMP of this device is enable.'
     })
   }
-  // const [tableType, setTableType] = useState('')
-  // const [groupId, setGroupId] = useState()
-  // const [order, setOrder] = useState('asc')
-  // const [orderBy, setOrderBy] = useState('')
-  // const [searchValue, setSearchValue] = useState('')
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
-
-  // console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -220,54 +213,49 @@ const DeviceTable = ({ deviceData = [] }) => {
     )
     dispatch(openDialog('webBrowser'))
   }
-  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
-    const confirmed = await modal.confirm({
+
+  const handleBeep = (IPAddress, MACAddress, deviceType) => {
+    modal.confirm({
       title: 'Confirm',
-      content: 'This will let device beep.'
+      content: 'This will let device beep.',
+      onOk: () => {
+        dispatch(
+          requestDeviceBeep({
+            IPAddress,
+            MACAddress,
+            deviceType
+          })
+        )
+      },
+      onCancel: () => {}
     })
-    console.log('Confirmed: ', confirmed)
-    dispatch(
-      requestDeviceBeep({
-        IPAddress,
-        MACAddress,
-        deviceType
-      })
-    )
   }
 
-  const handleReboot = async (MACAddress, IPAddress, deviceType) => {
-    const confirm = await modal.confirm({
+  const handleReboot = (MACAddress, IPAddress, deviceType) => {
+    const confirmed = modal.confirm({
       title: 'Confirm',
-      content: 'This will reboot the device.'
+      content: 'This will reboot the device.',
+      onOk: () => {
+        dispatch(
+          requestDeviceReboot({
+            MACAddress,
+            IPAddress,
+            deviceType
+          })
+        )
+        setTimeout(() => {
+          if (confirmed) {
+            modal.success({ title: 'Success!', content: 'Device reboot success' })
+          } else {
+            modal.error({ title: 'error!', content: 'Device reboot error' })
+          }
+        }, 1500)
+      },
+      onCancel: () => {}
     })
-    console.log(confirm)
-      ? setTimeout(async () => {
-          const confirmed = await modal.error({
-            title: 'Error !',
-            type: 'error',
-            content: 'Device reboot fails.'
-          })
-          console.log(confirmed)
-        }, 3000)
-      : setTimeout(async () => {
-          const confirmed = await modal.success({
-            title: 'Success !',
-            type: 'success',
-            content: 'Device reboot success.'
-          })
-          console.log(confirmed)
-        }, 3000)
-    dispatch(
-      requestDeviceReboot({
-        MACAddress,
-        IPAddress,
-        deviceType
-      })
-    )
   }
 
   const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
-    // dispatch(openDrawer(true), dispatch(openDialog('singleNetworkSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initSingleNetworkSetting({ MACAddress }))
     } else {
@@ -287,7 +275,6 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
     console.log(MACAddress, IPAddress, deviceType)
-    // dispatch(openAdvanceDrawer(true), dispatch(openDialog('advanceSetting')))
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initDeviceAdvanced({ MACAddress }))
     } else {
@@ -350,7 +337,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-      // setSelectedRowsArray(selectedRows)
+
       // onSelect: (record) => {
       //   console.log('record', record)
       //   console.log('selected', selected)
@@ -411,7 +398,6 @@ const DeviceTable = ({ deviceData = [] }) => {
           scroll={{
             x: 1100
           }}
-          // rowSelection={handleCheckBoxChange}
           toolbar={{
             search: {
               onSearch: (value) => {
@@ -432,10 +418,8 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceType: 'localStorage'
           }}
           // rowSelection={showCheckBox ? rowSelection : undefined}
-          // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
-            // console.log(record)
             return {
               onContextMenu: (event) => {
                 if (!record.isAUZ || !record.online) {

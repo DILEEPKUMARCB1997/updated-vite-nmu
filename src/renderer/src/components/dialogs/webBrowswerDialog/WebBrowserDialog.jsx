@@ -141,6 +141,7 @@ import {
 } from '@ant-design/icons'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { Header } from 'antd/es/layout/layout'
 
 const { Title } = Typography
 
@@ -218,12 +219,14 @@ const WebBrowserDialog = ({ onClose }) => {
   return (
     <Modal
       open
+      onCancel={handleCloseButtonClick}
       width="100%"
       style={{ top: 20 }}
       bodyStyle={{
         margin: 0,
         paddingTop: 10,
-        paddingBottom: '10px'
+        paddingBottom: '10px',
+        height: '90vh'
       }}
       footer={null}
       closable
@@ -233,7 +236,7 @@ const WebBrowserDialog = ({ onClose }) => {
         style={{ background: '#f2f2f2' }}
         // className={styles.header}
       > */}
-      <Tooltip title="Previous page">
+      <Tooltip title="Previous page" style={{ color: 'white' }}>
         <Button
           value="Back"
           onClick={goBack}
@@ -241,7 +244,7 @@ const WebBrowserDialog = ({ onClose }) => {
           style={{ marginLeft: '10px' }}
         />
       </Tooltip>
-      <Tooltip title="Next page">
+      <Tooltip title="Next page" style={{ color: 'white' }}>
         <Button
           value="Forward"
           onClick={goForward()}
@@ -249,34 +252,28 @@ const WebBrowserDialog = ({ onClose }) => {
           style={{ marginLeft: '10px' }}
         />
       </Tooltip>
-      <Tooltip title="Refresh">
+      <Tooltip title="Refresh" style={{ color: 'white' }}>
         <Button
           onClick={handleReloadButtonClick}
           icon={<ReloadOutlined />}
           style={{ marginLeft: '10px' }}
         />
       </Tooltip>
-      <Tooltip title="Open on OS browser">
+      <Tooltip title="Open on OS browser" style={{ color: 'white' }}>
         <Button
           onClick={handleOpenInBrowserButtonClick}
           icon={<ExportOutlined />}
           style={{ marginLeft: '10px' }}
         />
       </Tooltip>
-      <Title
-        level={5}
-        // style={{ color: 'black', flexGrow: '1', marginLeft: '5px' }}
+      &nbsp; &nbsp;&nbsp;
+      <Tooltip
+        // level={5}
+        style={{ color: 'black', flexGrow: '1', marginLeft: '4em', marginRight: '20px' }}
         //  className={styles.url}
       >
         {`https://${IPAddress}`}
-      </Title>
-      <Button
-        onClick={handleCloseButtonClick}
-        icon={<CloseOutlined />}
-        style={{ marginLeft: '10px' }}
-      />
-      {/* </div> */}
-
+      </Tooltip>
       <webview
         id="mainWebview"
         ref={(ref) => {

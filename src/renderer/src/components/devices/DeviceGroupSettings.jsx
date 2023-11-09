@@ -88,4 +88,4 @@ const DeviceGroupSettings = ({ groupId, groupName }) => {
   )
 }
 
-export default DeviceGroupSettings
+export default React.memo(DeviceGroupSettings)
