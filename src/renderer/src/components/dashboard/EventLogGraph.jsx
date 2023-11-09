@@ -23,16 +23,19 @@ const EventLogGraph = () => {
         name: 'Information',
         color: '#46b300',
         data: InformationData
+        // data: [23, 13, 45, 19, 12, 27, 26]
       },
       {
         name: 'Warning',
         color: '#F57F17',
         data: WarningData
+        // data: [12, 15, 25, 34, 23, 12, 23]
       },
       {
         name: 'Critical',
         color: '#D50000',
         data: CriticalData
+        // data: [40, 13, 34, 26, 27, 19, 12]
       }
     ],
     options: {
@@ -46,8 +49,10 @@ const EventLogGraph = () => {
         offsetX: -5,
         events: {
           dataPointSelection: (event, chartContext, config) => {
-            if (config.selectedDataPoints[0].length > 0) {
-              onCustomGraphClick(config.dataPointIndex)
+            console.log('config', config)
+            if (config.selectedDataPoints[config.seriesIndex].length > 0) {
+              // onCustomGraphClick(config.dataPointIndex)
+              dispatch(showCustomTableData(tableData[config.dataPointIndex]))
             }
           }
         }

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { App, Badge, ConfigProvider, Checkbox, Modal, Spin } from 'antd'
+import { App, Badge, ConfigProvider, Checkbox, Modal, Spin, message } from 'antd'
 import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from 'antd-style'
@@ -24,7 +24,7 @@ import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
 
-// import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
+import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
 const columns = [
   {
@@ -147,13 +147,15 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   })
 
+  const shell = require('electron').shell
+
   const handleItemClick = (key, data) => {
     console.log(key)
     console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
-        window.electron.shell.openExternal(`http://${IPAddress}`)
+        shell.openExternal(`http://${IPAddress}`)
         break
       case 'openOnNMUApplication':
         return handleOpenWeb(IPAddress, MACAddress)
@@ -211,69 +213,46 @@ const DeviceTable = ({ deviceData = [] }) => {
     )
     dispatch(openDialog('webBrowser'))
   }
-  // const handleOk = (IPAddress, MACAddress, deviceType) => {
-  //   dispatch(
-  //     requestDeviceBeep({
-  //       IPAddress,
-  //       MACAddress,
-  //       deviceType
-  //     })
-  //   )
-  // }
 
-  // const showPropsConfirm = () => {
-  //   modal.confirm({
-  //     title: 'Confirm',
-  //     content: 'This will let device beep.',
-  //     okText: 'Yes',
-  //     // okType: 'danger',
-  //     cancelText: 'No',
-  //     onOk() {
-  //       console.log('OK')
-  //     },
-  //     onCancel() {
-  //       console.log('Cancel')
-  //     }
-  //   })
-  // }
-
-  const handleBeep = async (IPAddress, MACAddress, deviceType) => {
-    const showPropsConfirm = await modal.confirm({
+  const handleBeep = (IPAddress, MACAddress, deviceType) => {
+    modal.confirm({
       title: 'Confirm',
       content: 'This will let device beep.',
-      okText: 'Yes',
-      // okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        console.log('OK')
+      onOk: () => {
+        dispatch(
+          requestDeviceBeep({
+            IPAddress,
+            MACAddress,
+            deviceType
+          })
+        )
       },
-      onCancel() {
-        console.log('Cancel')
-      }
+      onCancel: () => {}
     })
-    if (!showPropsConfirm) {
-      dispatch(
-        requestDeviceBeep({
-          IPAddress,
-          MACAddress,
-          deviceType
-        })
-      )
-    }
   }
 
-  const handleReboot = async (MACAddress, IPAddress, deviceType) => {
-    await modal.confirm({
+  const handleReboot = (MACAddress, IPAddress, deviceType) => {
+    const confirmed = modal.confirm({
       title: 'Confirm',
-      content: 'This will reboot the device.'
+      content: 'This will reboot the device.',
+      onOk: () => {
+        dispatch(
+          requestDeviceReboot({
+            MACAddress,
+            IPAddress,
+            deviceType
+          })
+        )
+        setTimeout(() => {
+          if (confirmed) {
+            modal.success({ title: 'Success!', content: 'Device reboot success' })
+          } else {
+            modal.error({ title: 'error!', content: 'Device reboot error' })
+          }
+        }, 1500)
+      },
+      onCancel: () => {}
     })
-    dispatch(
-      requestDeviceReboot({
-        MACAddress,
-        IPAddress,
-        deviceType
-      })
-    )
   }
 
   const handleNetworkSetting = (MACAddress, IPAddress, deviceType) => {
@@ -351,10 +330,17 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
-
+  const [selectedRowsArray, setSelectedRowsArray] = useState([])
+  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
+    // selectedRowKeys: selectedRowsArray,
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
+
+      // onSelect: (record) => {
+      //   console.log('record', record)
+      //   console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({
@@ -367,9 +353,14 @@ const DeviceTable = ({ deviceData = [] }) => {
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
-        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+        disabled:
+          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
+  }
+
+  const handleCheckBoxChange = (record) => {
+    console.log('record', record)
   }
 
   return (
@@ -426,6 +417,7 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
+          // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
             return {
