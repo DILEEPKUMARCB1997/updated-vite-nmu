@@ -29,6 +29,12 @@ const items = [
     ]
   },
   {
+    label: 'Open on Os Browser',
+    key: 'openOnOSbrowser',
+    icon: <SelectOutlined />
+  },
+  { label: 'Open on NMU', key: 'openOnNMUApplication' },
+  {
     label: 'Telnet',
     key: 'telnet',
     icon: <FontSizeOutlined />

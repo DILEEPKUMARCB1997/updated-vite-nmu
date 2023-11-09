@@ -12,13 +12,19 @@ export const requestOpenWebData =
       (event, arg) => {
         // console.log(arg);
         if (arg.success) {
-          dispatch({
-            type: initOpenWebData,
-            payload: {
+          // dispatch({
+          //   type: initOpenWebData,
+          //   payload: {
+          //     IPAddress: param.IPAddress,
+          //     URL: `https://${arg.data.username}:${arg.data.password}@${param.IPAddress}`
+          //   }
+          // })
+          dispatch(
+            initOpenWebData({
               IPAddress: param.IPAddress,
               URL: `https://${arg.data.username}:${arg.data.password}@${param.IPAddress}`
-            }
-          })
+            })
+          )
         }
       }
     )
