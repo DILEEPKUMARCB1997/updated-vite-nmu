@@ -24,8 +24,6 @@ import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
 import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
 
-import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
-
 const columns = [
   {
     title: 'Online',
@@ -99,6 +97,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([])
+
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
@@ -249,7 +249,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           } else {
             modal.error({ title: 'error!', content: 'Device reboot error' })
           }
-        }, 1500)
+        }, 1000)
       },
       onCancel: () => {}
     })
@@ -331,7 +331,7 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  console.log('seleceted rows array', selectedRowsArray)
+  // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     // selectedRowKeys: selectedRowsArray,
 
@@ -349,7 +349,10 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
-
+    onselectionchange: () => {
+      setSelectedRowsArray([])
+      setSelectedCheckboxes([])
+    },
     getCheckboxProps: (record, deviceType) => (
       console.log(record),
       {
@@ -358,9 +361,14 @@ const DeviceTable = ({ deviceData = [] }) => {
       }
     )
   }
-
-  const handleCheckBoxChange = (record) => {
-    console.log('record', record)
+  const handleCheckboxChange = (event) => {
+    const checkboxValue = event.target.value
+    if (event.target.checked) {
+      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
+    } else {
+      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
+    }
+    setSelectedRowsArray([]) // reset selected rows array
   }
 
   return (
@@ -417,7 +425,6 @@ const DeviceTable = ({ deviceData = [] }) => {
             persistenceKey: 'device-table',
             persistenceType: 'localStorage'
           }}
-          // rowSelection={showCheckBox ? rowSelection : undefined}
           rowSelection={showCheckBox ? rowSelection : undefined}
           onRow={(record, rowIndex) => {
             return {

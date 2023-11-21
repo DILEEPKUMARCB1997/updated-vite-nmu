@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Card, Tabs } from 'antd'
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import Event from '../components/eventlog/Event'
 import { useDispatch } from 'react-redux'
 import {
@@ -16,7 +16,7 @@ import Syslog from '../components/eventlog/Syslog'
 // import CustomEvent from '../components/eventlog/CustomEvent'
 
 var clearLogTimeOut
-function EventLogPage() {
+const EventLogPage = memo(function EventLogPage() {
   const dispatch = useDispatch()
 
   const items = [
@@ -76,6 +76,6 @@ function EventLogPage() {
       </Card>
     </div>
   )
-}
+})
 
 export default EventLogPage

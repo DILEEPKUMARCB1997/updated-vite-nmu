@@ -1,5 +1,4 @@
-//import { DeleteFilled, EditOutlined, SettingOutlined, UserAddOutlined } from '@ant-design/icons'
-import { Button, Collapse, Dropdown, Typography } from 'antd'
+import { Collapse, Typography } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { discoverySelector } from '../../features/discoverySlice'

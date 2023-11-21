@@ -80,83 +80,114 @@ const TopologyGraph = (props) => {
     console.log(props)
   }, [])
 
+  // useEffect(() => {
+  //   //ComponentDidMount Code
+  //   // eslint-disable-next-line react/prop-types
+  //   onRef(networkRef.current)
+  //   console.log(networkRef.current)
+  //   window.addEventListener('resize', updateDimensions)
+  //   window.addEventListener('enter-full-screen', updateDimensions)
+  //   networkRef.current.Network.on('select', (params) => {
+  //     const { nodes, edges } = params
+  //     dispatch(setNetworkSelectElement({ nodes, edges }))
+  //     let devicelistSelect = ''
+  //     if (nodes.length === 1 && !nodes[0].startsWith('virtual')) {
+  //       devicelistSelect = nodes
+  //     }
+  //     dispatch(setDeviceListSelect({ MACAddress: devicelistSelect }))
+  //   })
+
+  //   networkRef.current.Network.on('click', () => {
+  //     dispatch(openDevicesMenu(false))
+  //   })
+
+  //   networkRef.current.Network.on('oncontext', (params) => {
+  //     const { x, y } = params.pointer.DOM
+  //     // const { groupDevices, currentGroup } = props
+  //     const rightClickMAC = networkRef.current.Network.getNodeAt({ x, y })
+  //     console.log('rightClickMAC', rightClickMAC)
+  //     if (
+  //       rightClickMAC === undefined ||
+  //       groupDevices[rightClickMAC] === undefined ||
+  //       !groupDevices[rightClickMAC].online ||
+  //       (currentGroup === 'all' && !groupDevices[rightClickMAC].isAUZ)
+  //     ) {
+  //       dispatch(openDevicesMenu(false))
+  //     } else {
+  //       const { MACAddress, deviceType, IPAddress, model } = groupDevices[rightClickMAC]
+  //       dispatch(openDevicesMenu(true))
+  //       setNodeData({
+  //         nodeMACAddress: MACAddress,
+  //         nodeDeviceType: deviceType,
+  //         nodeIPAddress: IPAddress,
+  //         nodeModel: model
+  //       })
+  //     }
+  //   })
+
+  //   networkRef.current.Network.on('afterDrawing', (ctx) => {
+  //     networkCanvas = ctx.canvas
+  //   })
+
+  //   switch (event) {
+  //     case 'addNode':
+  //       networkRef.current.Network.addNodeMode()
+  //       break
+  //     case 'addEdge':
+  //       networkRef.current.Network.addEdgeMode()
+  //       break
+  //     default:
+  //       break
+  //   }
+
+  //   if (newNodeTemp !== '') {
+  //     dispatch(clearNewNodeTemp())
+  //   }
+  //   if (nodesIds.length !== 0 && followPosition) {
+  //     setFollowPosition(false)
+  //   }
+  //   if (!currentGroup) {
+  //     setFollowPosition(true)
+  //   }
+
+  //   return () => {
+  //     // eslint-disable-next-line react/prop-types
+  //     onRef(undefined)
+  //   }
+  // }, [])
+  // function Network(props) {
+  //   const [followPosition, setFollowPosition] = useState(false);
+
   useEffect(() => {
-    //ComponentDidMount Code
-    // eslint-disable-next-line react/prop-types
-    onRef(networkRef.current)
-    console.log(networkRef.current)
-    window.addEventListener('resize', updateDimensions)
-    window.addEventListener('enter-full-screen', updateDimensions)
-    networkRef.current.Network.on('select', (params) => {
-      const { nodes, edges } = params
-      dispatch(setNetworkSelectElement({ nodes, edges }))
-      let devicelistSelect = ''
-      if (nodes.length === 1 && !nodes[0].startsWith('virtual')) {
-        devicelistSelect = nodes
-      }
-      dispatch(setDeviceListSelect({ MACAddress: devicelistSelect }))
-    })
-
-    networkRef.current.Network.on('click', () => {
-      dispatch(openDevicesMenu(false))
-    })
-
-    networkRef.current.Network.on('oncontext', (params) => {
-      const { x, y } = params.pointer.DOM
-      // const { groupDevices, currentGroup } = props
-      const rightClickMAC = networkRef.current.Network.getNodeAt({ x, y })
-      console.log('rightClickMAC', rightClickMAC)
-      if (
-        rightClickMAC === undefined ||
-        groupDevices[rightClickMAC] === undefined ||
-        !groupDevices[rightClickMAC].online ||
-        (currentGroup === 'all' && !groupDevices[rightClickMAC].isAUZ)
-      ) {
-        dispatch(openDevicesMenu(false))
-      } else {
-        const { MACAddress, deviceType, IPAddress, model } = groupDevices[rightClickMAC]
-        dispatch(openDevicesMenu(true))
-        setNodeData({
-          nodeMACAddress: MACAddress,
-          nodeDeviceType: deviceType,
-          nodeIPAddress: IPAddress,
-          nodeModel: model
-        })
-      }
-    })
-
-    networkRef.current.Network.on('afterDrawing', (ctx) => {
-      networkCanvas = ctx.canvas
-    })
-
-    switch (event) {
+    switch (props.event) {
       case 'addNode':
-        networkRef.current.Network.addNodeMode()
+        props.network.addNodeMode()
         break
       case 'addEdge':
-        networkRef.current.Network.addEdgeMode()
+        props.network.addEdgeMode()
         break
       default:
         break
     }
+    // if (props.newNodeTemp !== '') {
+    //   props.clearNewNodeTemp()
+    // }
+    // if (props.nodesIds.length !== 0 && followPosition) {
+    //   setFollowPosition(false)
+    // }
+    // if (props.currentGroup !== prevProps.currentGroup) {
+    //   setFollowPosition(true)
+    // }
+  }, [
+    props.event,
+    props.newNodeTemp,
+    props.nodesIds,
+    props.currentGroup,
+    // prevProps.currentGroup,
+    followPosition,
+    props.network
+  ])
 
-    if (newNodeTemp !== '') {
-      dispatch(clearNewNodeTemp())
-    }
-    if (nodesIds.length !== 0 && followPosition) {
-      setFollowPosition(false)
-    }
-    if (!currentGroup) {
-      setFollowPosition(true)
-    }
-
-    return () => {
-      // eslint-disable-next-line react/prop-types
-      onRef(undefined)
-    }
-  }, [])
-
-  let networkCanvas
   const roundnessValue = [
     0, 0.15, -2.15, 0.25, -2.25, 0.35, -2.35, 0.45, -2.45, 0.55, -2.55, 0.65, -2.65, 0.75, -2.75,
     0.85, -2.85, 0.95, -2.95
@@ -168,7 +199,7 @@ const TopologyGraph = (props) => {
   }
 
   const updateDimensions = () => {
-    networkRef.current.Network.redraw()
+    networkRef.current.fitView()
   }
 
   const networkFitViewPoint = () => {

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Table } from 'antd'
 import { useSelector } from 'react-redux'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 
-const FWUDoneTable = () => {
+const FWUDoneTable = memo(function FWUDoneTable() {
   const { deviceData, deviceRealTimeData, FWUDoneDeviceData } = useSelector(firmwareSelector)
 
   const columnData = [
@@ -52,9 +52,9 @@ const FWUDoneTable = () => {
       status: device?.status
     }
   })
-  console.log(updateDataSource)
+  // console.log(updateDataSource)
 
   return <Table dataSource={updateDataSource} columns={columnData} rowKey="MACAddress" />
-}
+})
 
 export default FWUDoneTable
