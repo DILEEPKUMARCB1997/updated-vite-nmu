@@ -1,12 +1,10 @@
 import { Steps } from 'antd'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { useSelector } from 'react-redux'
-
-//const Step = Steps.Step
+import React from 'react'
 
 const StepView = () => {
   const { activeStep } = useSelector(firmwareSelector)
-  // console.log(activeStep)
   return (
     <Steps
       current={activeStep}
@@ -25,4 +23,4 @@ const StepView = () => {
     ></Steps>
   )
 }
-export default StepView
+export default React.memo(StepView)
