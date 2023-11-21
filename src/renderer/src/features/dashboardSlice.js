@@ -106,15 +106,15 @@ const dashboardSlice = createSlice({
       }
     },
 
-    updateSyslogGraph: (state, action) => {
-      const { payload } = action
+    updateSyslogGraph: (state, { payload }) => {
+      const { label, data, tableResult, lastUpdated } = payload
       return {
         ...state,
         syslogGraphData: {
-          label: payload.label,
-          data: payload.data,
-          tableData: payload.tableResult,
-          lastUpdated: payload.lastUpdated
+          label: label,
+          data: data,
+          tableData: tableResult,
+          lastUpdated: lastUpdated
         }
       }
     },
@@ -150,16 +150,6 @@ const dashboardSlice = createSlice({
     updateTrapTableData: (state, action) => {
       return { ...state, trapTableData: action.payload }
     }
-
-    // openDialog: (state, action) => {
-    //   if (state.dialogs.includes(action.payload)) {
-    //     return state
-    //   }
-    //   return {
-    //     ...state,
-    //     dialogs: [...state.dialogs, action.payload]
-    //   }
-    // }
   }
 })
 

@@ -8,7 +8,8 @@ import { setSNMPAppInitialData } from './Preferences/snmpSlice'
 import {
   setSNMPSelectOnly,
   showDiscoveryTableCheckBox,
-  clearDiscoverTableSelect
+  clearDiscoverTableSelect,
+  selectDiscoveryTable
 } from './discoverySlice'
 import { closeSnack } from './snackSlice'
 
@@ -33,7 +34,8 @@ export const setBatchOperateEvent = (payload) => (dispatch) => {
 export const removeBatchOperateEvent = () => (dispatch) => {
   dispatch(removeBatchOperate())
   dispatch(showDiscoveryTableCheckBox(false))
-  dispatch(clearDiscoverTableSelect())
+
+  dispatch(clearDiscoverTableSelect(true))
 }
 
 const UIControlSlice = createSlice({

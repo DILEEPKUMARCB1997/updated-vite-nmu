@@ -52,4 +52,4 @@ const GroupDeviceTable = () => {
   )
 }
 
-export default GroupDeviceTable
+export default React.memo(GroupDeviceTable)

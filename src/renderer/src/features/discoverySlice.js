@@ -108,9 +108,9 @@ const discoverySlice = createSlice({
         SNMPSelectOnly: action.payload
       }
     },
-    showCheckSNMPModal: (state, action) => {
-      return { ...state, showCheckSNMPModal: action.payload }
-    },
+    // showCheckSNMPModal: (state, action) => {
+    //   return { ...state, showCheckSNMPModal: action.payload }
+    // },
     selectDiscoveryTable: (state, { payload }) => {
       const { isSelect, deviceData } = payload
       const { SNMPSelectOnly } = state

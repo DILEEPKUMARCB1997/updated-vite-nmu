@@ -41,15 +41,25 @@ const FWUTable = () => {
       key: 'progress',
       render: (record) => {
         console.log(record)
-        return (
-          <Progress type="line" percent={record.uploadProgress} status={record.uploadProgress} />
-        )
+
+        return <Progress type="line" percent={record} status="active" />
       }
+      // render: (record) => {
+      //   console.log(record)
+      //   return (
+      //     <Progress
+      //       type="line"
+      //       percent={record.uploadProgress === 'active' ? 0 : 100}
+      //       status={record.uploadProgress}
+      //     />
+      //   )
+      // }
     },
     {
       title: 'Status',
       key: 'status',
       render: (record) => {
+        console.log(record)
         const status = codes[record.status]
         if (status) {
           return (
@@ -96,3 +106,17 @@ const FWUTable = () => {
 }
 
 export default FWUTable
+
+/*
+render: (record) => {
+  console.log(record)
+  const progress = record.uploadProgress === 'active'? 0 : 100;
+  return (
+    <Progress
+      type="line"
+      percent={progress}
+      status={record.uploadProgress}
+    />
+  )
+}
+*/

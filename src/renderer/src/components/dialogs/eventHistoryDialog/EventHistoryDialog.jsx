@@ -15,6 +15,7 @@ const EventHistoryDialog = ({ onClose }) => {
   const [MACAddress, setMACAddress] = useState('')
   const [dateRange, setDateRange] = useState({ ge: '', le: '' })
   const { eventHistoryData } = useSelector(eventLogSelector)
+  // console.log(eventHistoryData)
   const dispatch = useDispatch()
   const columns = [
     {

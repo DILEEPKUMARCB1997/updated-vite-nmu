@@ -17,10 +17,12 @@ import { SyncOutlined } from '@ant-design/icons'
 // function getRandomInt(min = 1, max = 9) {
 //   return Math.floor(Math.random() * (max - min + 1)) + min
 // }
+
 const SyslogGraph = () => {
+  const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData } = syslogGraphData
-  const dispatch = useDispatch()
+
   console.log('syslog', syslogGraphData)
 
   const onSyslogGraphClick = (barIndex) => {
@@ -37,7 +39,6 @@ const SyslogGraph = () => {
       chart: {
         height: 320,
         type: 'bar',
-        // stacked: true,
         toolbar: {
           show: false
         },
@@ -68,7 +69,7 @@ const SyslogGraph = () => {
           borderRadius: 0,
           columnWidth: '50%',
           dataLabels: {
-            position: 'top' // top, center, bottom
+            position: 'top'
           }
         }
       },
@@ -111,26 +112,10 @@ const SyslogGraph = () => {
     }
   })
 
-  const handleRefreshGraph = useCallback(() => {
-    dispatch(
-      requestHistoryData({
-        type: 'syslog',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
-  }, [])
-
   useEffect(() => {
-    dispatch(
-      requestHistoryData({
-        type: 'syslog',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
   }, [])
 
   useEffect(() => {
@@ -152,6 +137,17 @@ const SyslogGraph = () => {
     }
   }, [syslogGraphData])
 
+  const handleRefreshGraph = () => {
+    dispatch(
+      requestHistoryData({
+        type: 'syslog',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
+  }
+
   return (
     <>
       <div
@@ -159,7 +155,6 @@ const SyslogGraph = () => {
           padding: '0px 5px',
           display: 'flex',
           justifyContent: 'space-between'
-          // fontSize: '15px'
         }}
       >
         <i>{syslogGraphData.lastUpdated}</i>

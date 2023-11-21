@@ -11,7 +11,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 
 const rebootResultListener = (dispatch) => (event, arg) => {
-  //console.log(arg);
+  console.log(arg)
   if (arg.success) {
     dispatch(
       openAlertDialog({

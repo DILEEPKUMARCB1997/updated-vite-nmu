@@ -54,14 +54,7 @@ const FWUDoneTable = () => {
   })
   console.log(updateDataSource)
 
-  return (
-    <Table
-      dataSource={updateDataSource}
-      columns={columnData}
-      pagination={false}
-      rowKey="MACAddress"
-    />
-  )
+  return <Table dataSource={updateDataSource} columns={columnData} rowKey="MACAddress" />
 }
 
 export default FWUDoneTable

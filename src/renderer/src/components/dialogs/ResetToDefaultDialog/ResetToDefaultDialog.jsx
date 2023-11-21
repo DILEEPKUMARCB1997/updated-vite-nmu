@@ -60,8 +60,8 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
-  console.log(resetToDefaultStatus)
-  console.log(taskStatus)
+  // console.log(resetToDefaultStatus)
+  // console.log(taskStatus)
 
   const dispatch = useDispatch()
   const handleCancelButtonOnClick = () => {

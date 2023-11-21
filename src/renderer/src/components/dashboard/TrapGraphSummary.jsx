@@ -14,8 +14,9 @@ import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
 import { openDialog } from '../../features/dialogSlice'
+import { memo } from 'react'
 
-const TrapGraphSummary = () => {
+const TrapGraphSummary = memo(function TrapGraphSummary() {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
@@ -26,18 +27,19 @@ const TrapGraphSummary = () => {
   const onTrapGraphClick = (barIndex) => {
     dispatch(showTrapTableData(tableData[barIndex]))
   }
+
+  //console.log('trap table data', tableData)
+
   const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
     series: [
       {
         name: 'SNMP Trap Message Count',
-        // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
         data: trapGraphData.data
       }
     ],
     options: {
       chart: {
         type: 'bar',
-        // background: token.colorBgContainer,
         height: 320,
         toolbar: {
           show: false
@@ -49,11 +51,7 @@ const TrapGraphSummary = () => {
             if (config.selectedDataPoints[0].length > 0) {
               onTrapGraphClick(config.dataPointIndex)
             }
-            // console.log(trapGraphData.tableData[config.dataPointIndex])
-            // console.log(event)
             console.log(chartContext)
-            // console.log(config.w.config.series[0].data[config.dataPointIndex])
-            // console.log(config.selectedDataPoints[0].length)
           }
         }
       },
@@ -82,7 +80,6 @@ const TrapGraphSummary = () => {
       },
       xaxis: {
         type: 'category',
-        // categories: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'],
         categories: trapGraphData.label,
         labels: {
           rotate: -45,
@@ -165,11 +162,10 @@ const TrapGraphSummary = () => {
           series={snmpTrapMsgData.series}
           type="bar"
           height={210}
-          // width={400}
         />
       </div>
     </>
   )
-}
+})
 
 export default TrapGraphSummary
