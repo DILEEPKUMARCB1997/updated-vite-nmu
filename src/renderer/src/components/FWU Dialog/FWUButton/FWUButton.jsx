@@ -61,4 +61,4 @@ const FWUButton = ({ handleDialogOnClose }) => {
   )
 }
 
-export default FWUButton
+export default React.memo(FWUButton)
