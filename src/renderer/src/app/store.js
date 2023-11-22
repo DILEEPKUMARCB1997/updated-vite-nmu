@@ -32,6 +32,13 @@ import deviceBasicOperatorSlice from '../features/deviceBasiceOperatorSlice'
 import singleBackupRestoreSlice from '../features/singleBackupRestoreSlice'
 import portInformationSlice from '../features/portInformationSlice'
 
+const ReactReduxDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+if (window.navigator.userAgent.includes('Chrome') && ReactReduxDevTools) {
+  process.env.NODE_ENV !== 'production'
+}
+
 export const store = configureStore({
   reducer: {
     userManagement: userManagementSlice.reducer,

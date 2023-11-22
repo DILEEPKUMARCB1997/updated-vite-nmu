@@ -6,14 +6,13 @@ import DevicePage from '../../pages/DevicePage'
 import LoginPage from '../../pages/LoginPage'
 import PageNotFound from '../../pages/PageNotFound'
 import EventLogPage from '../../pages/EventLogPage'
-// import DeviceConfigPage from '../../pages/DeviceConfigPage'
-
 import UserManagement from '../../pages/UserManagementPage'
 import ConfigComparission from '../../pages/ConfigComparission'
 import TopologyPage from '../../pages/TopologyPage'
 import RowContextMenu from '../../components/RowContextMenu/RowContextMenu'
+import React, { memo } from 'react'
 
-const AppRoutes = () => {
+const AppRoutes = memo(function AppRoutes() {
   let element = useRoutes([
     {
       path: '/',
@@ -40,10 +39,6 @@ const AppRoutes = () => {
           path: 'usermanagement',
           element: <UserManagement />
         },
-        // {
-        //   path: 'file',
-        //   element: <DeviceConfigPage />
-        // },
         {
           path: 'ConfigComparission',
           element: <ConfigComparission />
@@ -60,6 +55,6 @@ const AppRoutes = () => {
   ])
 
   return element
-}
+})
 
 export default AppRoutes

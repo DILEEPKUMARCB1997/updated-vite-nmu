@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { firmwareSelector } from '../../../features/firmwareUpdate'
 import { Progress, Table } from 'antd'
 import { useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ const codes = {
   TO: { type: 'error', label: 'Connect Timeout' }
 }
 
-const FWUTable = () => {
+const FWUTable = memo(function FWUTable() {
   const { deviceData, deviceRealTimeData } = useSelector(firmwareSelector)
 
   const columnData = [
@@ -40,20 +40,10 @@ const FWUTable = () => {
       dataIndex: 'progress',
       key: 'progress',
       render: (record) => {
-        console.log(record)
-
-        return <Progress type="line" percent={record} status="active" />
+        return (
+          <Progress type="line" percent={record} status={record.uploadProgress} showInfo={false} />
+        )
       }
-      // render: (record) => {
-      //   console.log(record)
-      //   return (
-      //     <Progress
-      //       type="line"
-      //       percent={record.uploadProgress === 'active' ? 0 : 100}
-      //       status={record.uploadProgress}
-      //     />
-      //   )
-      // }
     },
     {
       title: 'Status',
@@ -88,7 +78,6 @@ const FWUTable = () => {
     status: value.code,
     progress: value.uploadProgress
   }))
-
   const dataSource = Object.entries(deviceData).map(([key, value]) => ({
     key,
     MACAddress: key,
@@ -97,26 +86,12 @@ const FWUTable = () => {
     progress: data.find((item) => item.key === key)?.progress,
     status: data.find((item) => item.key === key)?.status
   }))
-  console.log(dataSource)
+  //console.log(dataSource)
   return (
     <div>
       <Table columns={columnData} dataSource={dataSource} rowKey="MACAddress" />
     </div>
   )
-}
+})
 
 export default FWUTable
-
-/*
-render: (record) => {
-  console.log(record)
-  const progress = record.uploadProgress === 'active'? 0 : 100;
-  return (
-    <Progress
-      type="line"
-      percent={progress}
-      status={record.uploadProgress}
-    />
-  )
-}
-*/

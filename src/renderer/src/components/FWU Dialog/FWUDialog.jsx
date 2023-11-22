@@ -10,13 +10,11 @@ import {
 } from '../../features/firmwareUpdate'
 import { SEND_RP_FIRMWARE_UPDATE_PROGRESS } from '../../../../main/utils/IPCEvents'
 import StepView from './StepView/StepView'
-//import FWUTable from './FWUTable/FWUTable'
 import FWUButton from './FWUButton/FWUButton'
 import { useDispatch } from 'react-redux'
 import OpenFile from './OpenFile/OpenFile'
 import Typography from 'antd/es/typography/Typography'
 import FWUTableTab from './FWUTable/FWUTableTab/FWUTableTab'
-import FWUDoneTable from './FWUTable/FWUDoneTable'
 
 const FWUDialog = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -67,4 +65,4 @@ const FWUDialog = ({ onClose }) => {
   )
 }
 
-export default FWUDialog
+export default React.memo(FWUDialog)

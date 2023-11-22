@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Tabs } from 'antd'
 
 import FWUTable from '../FWUTable'
 import TabPane from 'antd/es/tabs/TabPane'
 import FWUDoneTable from '../FWUDoneTable'
 
-const FWUTableTab = () => {
+const FWUTableTab = memo(function FWUTableTab() {
   const [current, setCurrent] = useState(0)
-  console.log(current)
+  //console.log(current)
 
   const handleStepChange = (current) => {
     setCurrent(current)
@@ -25,6 +25,6 @@ const FWUTableTab = () => {
       </Tabs>
     </div>
   )
-}
+})
 
-export default FWUTableTab
+export default React.memo(FWUTableTab)

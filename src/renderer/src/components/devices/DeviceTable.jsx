@@ -105,6 +105,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
+
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
@@ -120,6 +121,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
+  console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -255,7 +257,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           } else {
             modal.error({ title: 'error!', content: 'Device reboot error' })
           }
-        }, 1500)
+        }, 1000)
       },
       onCancel: () => {}
     })
@@ -340,16 +342,21 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
   console.log('seleceted rows array', selectedRowsArray)
 
+  // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
-    onSelect: (record, selectedRows, nativeEvent) => {
-      console.log(record, selectedRows, nativeEvent)
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    onSelect: (record, selected, selectedRows, nativeEvent) => {
+      console.log(record, selected, selectedRows, nativeEvent)
+
       // onSelect: (record) => {
       //   console.log('record', record)
       //   console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({
-          isSelect,
+          isSelect: selected,
           deviceData: [record.MACAddress]
         })
       )
@@ -363,10 +370,6 @@ const DeviceTable = ({ deviceData = [] }) => {
       }
     )
   }
-
-  // const handleCheckBoxChange = (record) => {
-  //   console.log('record', record)
-  // }
 
   return (
     <div>

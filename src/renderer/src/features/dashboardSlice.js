@@ -32,6 +32,8 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'custom': {
         const customData = requestCustomGraphData(data)
+        // console.log(customData)
+        //   dispatch(updateCustomGraph(customData))
         dispatch(updateCustomGraph(customData))
         break
       }
@@ -93,34 +95,36 @@ const dashboardSlice = createSlice({
         diskUses: { free, used: size - free, total: size, diskFree, diskUsed }
       }
     },
-    updateTrapGraph: (state, { payload }) => {
-      const { label, data, tableResult, lastUpdated } = payload
+    updateTrapGraph: (state, action) => {
+      // const { label, data, tableResult, lastUpdated } = payload
+      const { payload } = action
       return {
         ...state,
         trapGraphData: {
-          label: label,
-          data: data,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          data: payload.data,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
 
-    updateSyslogGraph: (state, { payload }) => {
-      const { label, data, tableResult, lastUpdated } = payload
+    updateSyslogGraph: (state, action) => {
+      const { payload } = action
       return {
         ...state,
         syslogGraphData: {
-          label: label,
-          data: data,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          data: payload.data,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
     updateCustomGraph: (state, action) => {
       //console.log(action)
       const { payload } = action
+
       return {
         ...state,
         customGraphData: {

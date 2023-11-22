@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -17,6 +17,7 @@ const EventLogGraph = () => {
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
   console.log(customGraphData)
+
   const eventLogData = useMemo(() => {
     return {
       series: [
@@ -24,19 +25,16 @@ const EventLogGraph = () => {
           name: 'Information',
           color: '#46b300',
           data: InformationData
-          // data: [23, 13, 45, 19, 12, 27, 26]
         },
         {
           name: 'Warning',
           color: '#F57F17',
           data: WarningData
-          // data: [12, 15, 25, 34, 23, 12, 23]
         },
         {
           name: 'Critical',
           color: '#D50000',
           data: CriticalData
-          // data: [40, 13, 34, 26, 27, 19, 12]
         }
       ],
       options: {
@@ -52,7 +50,6 @@ const EventLogGraph = () => {
             dataPointSelection: (event, chartContext, config) => {
               console.log('config', config)
               if (config.selectedDataPoints[config.seriesIndex].length > 0) {
-                // onCustomGraphClick(config.dataPointIndex)
                 dispatch(showCustomTableData(tableData[config.dataPointIndex]))
               }
             }
@@ -115,9 +112,16 @@ const EventLogGraph = () => {
         }
       }
     }
-  }, [InformationData, CriticalData, WarningData, label])
+  }, [InformationData, WarningData, CriticalData, label, tableData])
+
+  useMemo(() => {
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'custom', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
+  }, [])
 
   const handleRefreshGraph = () => {
+    //  forceRender((prev) => !prev)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -127,44 +131,6 @@ const EventLogGraph = () => {
       })
     )
   }
-
-  // const onCustomGraphClick = useCallback(
-  //   (barIndex) => {
-  //     dispatch(showCustomTableData(tableData[barIndex]))
-  //   },
-  //   [dispatch, tableData]
-  // )
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(requestHistoryData({ type: 'custom', sourceIP: '', ge: '', le: '' }))
-    }, 1500)
-  }, [])
-
-  // useEffect(() => {
-  //   if (Array.isArray(InformationData) && InformationData.length > 0) {
-  //     setEventLogData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: InformationData
-  //         },
-  //         {
-  //           data: WarningData
-  //         },
-  //         {
-  //           data: CriticalData
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [InformationData, WarningData, CriticalData, label])
 
   return (
     <>
