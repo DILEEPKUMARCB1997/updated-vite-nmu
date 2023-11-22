@@ -23,18 +23,10 @@ export const showTrapTableData = (payload) => (dispatch) => {
   dispatch(openDialog('trapGraphTable'))
 }
 export const requestHistoryData = (param) => (dispatch) => {
-  window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
-    // console.log(type)
-    // console.log(data)
     switch (type) {
-      case 'event':
-        break
-      case 'custom': {
-        const customData = requestCustomGraphData(data)
-        // console.log(customData)
-        //   dispatch(updateCustomGraph(customData))
-        dispatch(updateCustomGraph(customData))
+      case 'event': {
         break
       }
       case 'trap': {
@@ -46,6 +38,14 @@ export const requestHistoryData = (param) => (dispatch) => {
       case 'syslog': {
         const resultSyslog = requestGraphData(data)
         dispatch(updateSyslogGraph(resultSyslog))
+        break
+      }
+
+      case 'custom': {
+        const customData = requestCustomGraphData(data)
+        // console.log(customData)
+        //   dispatch(updateCustomGraph(customData))
+        dispatch(updateCustomGraph(customData))
         break
       }
 

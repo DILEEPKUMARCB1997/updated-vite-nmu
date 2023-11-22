@@ -17,6 +17,7 @@ const EventLogGraph = () => {
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
   console.log(customGraphData)
+  // const [, forceRender] = useState(undefined)
 
   const eventLogData = useMemo(() => {
     return {
@@ -114,14 +115,7 @@ const EventLogGraph = () => {
     }
   }, [InformationData, WarningData, CriticalData, label, tableData])
 
-  useMemo(() => {
-    setTimeout(() => {
-      dispatch(requestHistoryData({ type: 'custom', sourceIP: '', ge: '', le: '' }))
-    }, 3000)
-  }, [])
-
   const handleRefreshGraph = () => {
-    //  forceRender((prev) => !prev)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -131,7 +125,18 @@ const EventLogGraph = () => {
       })
     )
   }
-
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'custom',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 1000)
+  }, [requestHistoryData])
   return (
     <>
       <div

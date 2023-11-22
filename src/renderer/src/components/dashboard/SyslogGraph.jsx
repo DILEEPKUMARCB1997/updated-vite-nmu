@@ -110,30 +110,22 @@ const SyslogGraph = () => {
     }
   }, [label, data])
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
-    }, 3000)
-  }, [])
-
   // useEffect(() => {
-  //   if (Array.isArray(syslogGraphData.data) && syslogGraphData.data.length > 0) {
-  //     setGraphData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: syslogGraphData.data
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: syslogGraphData.label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [syslogGraphData])
+  //   setTimeout(() => {
+  //     dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+  //   }, 1500)
+  // }, [requestHistoryData])
+
+  // const handleRefreshGraph = () => {
+  //   dispatch(
+  //     requestHistoryData({
+  //       type: 'syslog',
+  //       sourceIP: '',
+  //       ge: '',
+  //       le: ''
+  //     })
+  //   )
+  // }
 
   const handleRefreshGraph = () => {
     dispatch(
@@ -145,7 +137,18 @@ const SyslogGraph = () => {
       })
     )
   }
-
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        requestHistoryData({
+          type: 'syslog',
+          sourceIP: '',
+          ge: '',
+          le: ''
+        })
+      )
+    }, 1000)
+  }, [requestHistoryData])
   return (
     <>
       <div
