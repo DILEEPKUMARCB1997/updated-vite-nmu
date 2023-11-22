@@ -24,5 +24,6 @@
     "SNMP",
     "Spce",
     "TXTT"
-  ]
+  ],
+  "liveServer.settings.port": 5501
 }

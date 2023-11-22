@@ -26,73 +26,6 @@ import { UIControlSelector, removeBatchOperateEvent } from '../../features/UICon
 
 import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
-const columns = [
-  {
-    title: 'Online',
-    dataIndex: 'online',
-    key: 'online',
-    render: (data) =>
-      data ? (
-        <Badge color="green" className="cutomBadge" status="processing" />
-      ) : (
-        <Badge status="error" className="cutomBadge" />
-      )
-  },
-  {
-    title: 'Device Type',
-    dataIndex: 'deviceType',
-    key: 'deviceType',
-    valueEnum: {
-      all: { text: 'Basic/SNMP' },
-      gwd: { text: 'Basic' },
-      snmp: { text: 'SNMP' },
-      unknown: { text: 'N/A' }
-    }
-  },
-  {
-    title: 'Model',
-    dataIndex: 'model',
-    key: 'model',
-    sorter: (a, b) => (a.model > b.model ? 1 : -1)
-  },
-  {
-    title: 'IP Address',
-    dataIndex: 'IPAddress',
-    key: 'IPAddress',
-    sorter: (a, b) => (a.IPAddress > b.IPAddress ? 1 : -1)
-  },
-  {
-    title: 'MAC Address',
-    dataIndex: 'MACAddress',
-    key: 'MACAddress'
-  },
-  {
-    title: 'Hostname',
-    dataIndex: 'hostname',
-    key: 'hostname'
-  },
-  {
-    title: 'Kernel',
-    dataIndex: 'kernel',
-    key: 'kernel'
-  },
-  {
-    title: 'Ap',
-    dataIndex: 'ap',
-    key: 'ap'
-  },
-  {
-    title: 'Access',
-    dataIndex: 'isAUZ',
-    key: 'isAUZ',
-    render: (data) =>
-      data ? (
-        <CheckOutlined style={{ color: '#49aa19' }} />
-      ) : (
-        <CloseOutlined style={{ color: 'red' }} />
-      )
-  }
-]
 let isSelect
 const DeviceTable = ({ deviceData = [] }) => {
   const [xPos, setXPos] = useState(0)
@@ -112,8 +45,93 @@ const DeviceTable = ({ deviceData = [] }) => {
     })
   }
 
-  const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
-    useSelector(discoverySelector)
+  const {
+    defaultDeviceArrayData,
+    groupDeviceArrayData,
+    SNMPSelectOnly,
+    showCheckBox,
+    selected,
+    defaultDeviceData
+  } = useSelector(discoverySelector)
+
+  console.log('default device array data', defaultDeviceArrayData)
+  console.log('default device data', defaultDeviceData)
+
+  const columns = [
+    // {
+    //   title: '',
+    //   dataIndex: 'online',
+    //   key: 'online',
+    //   render: (text, record) => (
+    //     console.log('record', record), showCheckBox ? <Checkbox /> : undefined
+    //   )
+    // },
+    {
+      title: 'Online',
+      dataIndex: 'online',
+      key: 'online',
+      render: (data) =>
+        data ? (
+          <Badge color="green" className="cutomBadge" status="processing" />
+        ) : (
+          <Badge status="error" className="cutomBadge" />
+        )
+    },
+    {
+      title: 'Device Type',
+      dataIndex: 'deviceType',
+      key: 'deviceType',
+      valueEnum: {
+        all: { text: 'Basic/SNMP' },
+        gwd: { text: 'Basic' },
+        snmp: { text: 'SNMP' },
+        unknown: { text: 'N/A' }
+      }
+    },
+    {
+      title: 'Model',
+      dataIndex: 'model',
+      key: 'model',
+      sorter: (a, b) => (a.model > b.model ? 1 : -1)
+    },
+    {
+      title: 'IP Address',
+      dataIndex: 'IPAddress',
+      key: 'IPAddress',
+      sorter: (a, b) => (a.IPAddress > b.IPAddress ? 1 : -1)
+    },
+    {
+      title: 'MAC Address',
+      dataIndex: 'MACAddress',
+      key: 'MACAddress'
+    },
+    {
+      title: 'Hostname',
+      dataIndex: 'hostname',
+      key: 'hostname'
+    },
+    {
+      title: 'Kernel',
+      dataIndex: 'kernel',
+      key: 'kernel'
+    },
+    {
+      title: 'Ap',
+      dataIndex: 'ap',
+      key: 'ap'
+    },
+    {
+      title: 'Access',
+      dataIndex: 'isAUZ',
+      key: 'isAUZ',
+      render: (data) =>
+        data ? (
+          <CheckOutlined style={{ color: '#49aa19' }} />
+        ) : (
+          <CloseOutlined style={{ color: 'red' }} />
+        )
+    }
+  ]
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -332,15 +350,16 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
   console.log('seleceted rows array', selectedRowsArray)
+
   const rowSelection = {
     // selectedRowKeys: selectedRowsArray,
 
+    // onChange: (selectedRowKeys, rows) => {
+    //   console.log('rows', rows)
+    // },
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
-      // onSelect: (record) => {
-      //   console.log('record', record)
-      //   console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({
@@ -351,10 +370,9 @@ const DeviceTable = ({ deviceData = [] }) => {
     },
 
     getCheckboxProps: (record, deviceType) => (
-      console.log(record),
+      console.log(record, 'device type', deviceType),
       {
-        disabled:
-          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
+        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
       }
     )
   }
@@ -362,6 +380,10 @@ const DeviceTable = ({ deviceData = [] }) => {
   const handleCheckBoxChange = (record) => {
     console.log('record', record)
   }
+
+  // const rowSelection = showCheckBox ? (
+  //   <EnhanceCheckBox handleCheckBoxChange={handleCheckBoxChange} />
+  // ) : undefined
 
   return (
     <div>
