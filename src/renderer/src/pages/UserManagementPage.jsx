@@ -72,7 +72,7 @@ const UserManagement = () => {
   }
 
   const handleDelete = (values) => {
-    console.log(values)
+    //console.log(values)
     modal.confirm({
       title: 'Delete Confirmation',
       content: 'Are you sure you want to delete this user ?',
@@ -84,7 +84,7 @@ const UserManagement = () => {
   }
 
   const handleEdit = (values) => {
-    console.log(values)
+    // console.log(values)
     dispatch(
       setEditUserData({
         UserId: values.UserId,

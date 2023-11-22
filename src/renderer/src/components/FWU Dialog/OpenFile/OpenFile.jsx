@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React from 'react'
 import { requestOpenFile, firmwareSelector } from '../../../features/firmwareUpdate'
 import { useDispatch, useSelector } from 'react-redux'
 import { FileAddOutlined } from '@ant-design/icons'
@@ -41,4 +41,4 @@ const OpenFile = () => {
   )
 }
 
-export default OpenFile
+export default React.memo(OpenFile)

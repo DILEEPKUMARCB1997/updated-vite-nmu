@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
 import {
@@ -16,7 +16,7 @@ import { useThemeStore } from '../../utils/themes/useStore'
 import { openDialog } from '../../features/dialogSlice'
 import { memo } from 'react'
 
-const TrapGraphSummary = memo(function TrapGraphSummary() {
+const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
@@ -46,7 +46,7 @@ const TrapGraphSummary = memo(function TrapGraphSummary() {
             if (config.selectedDataPoints[0].length > 0) {
               onTrapGraphClick(config.dataPointIndex)
             }
-            console.log(chartContext)
+            //  console.log(chartContext)
           }
         }
       },
@@ -136,6 +136,7 @@ const TrapGraphSummary = memo(function TrapGraphSummary() {
   }, [trapGraphData])
 
   const handleRefresh = () => {
+    //console.log(' trap graph refreshed')
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 
@@ -165,6 +166,6 @@ const TrapGraphSummary = memo(function TrapGraphSummary() {
       </div>
     </>
   )
-})
+}
 
-export default TrapGraphSummary
+export default memo(TrapGraphSummary)
