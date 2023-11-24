@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
-import { notification } from 'antd'
+import { App } from 'antd'
 import {
   REQUEST_MP_GET_CONFIG_FILES,
   REQUEST_MP_GET_THE_SCHEDULE_BACKUP_DATA,
@@ -17,17 +17,13 @@ export const initScheduleBackup = () => (dispatch, getState) => {
   dispatch(getScheduledData())
   dispatch(initDeviceStatus())
 }
-
+const { notification } = App.useApp
 export const requestAddScheduleBackup = (param) => (dispatch, getState) => {
-  //console.log(param);
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_THE_SCHEDULE_BACKUP_DATA, (event, arg) => {
-    //console.log(arg);
     if (arg.success) {
       notification.success({
         message: 'Schedule backup added successfully'
       })
-
-      //console.log(arg.data);
     } else {
       notification.error({ message: arg.msg })
     }

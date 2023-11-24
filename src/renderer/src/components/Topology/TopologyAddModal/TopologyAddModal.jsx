@@ -34,21 +34,8 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
     isVirtualNode: false,
     selectGroup: []
   })
-  // const [open, setOpen] = useState(false)
-  // const [addNodePosition, setAddNodePosition] = useState({})
-  // const [addNodeMAC, setAddNodeMAC] = useState('')
-  // const [addEdgeNodes, setAddEdgeNodes] = useState({
-  //   from: '',
-  //   to: ''
-  // })
-  // const [addNodeMax, setAddNodeMax] = useState({ from: 1, to: 1 })
-  // const [fromPort, setFromPort] = useState(1)
-  // const [toPort, setToPort] = useState(1)
-  // const [isVirtualNode, setIsVirtualNode] = useState(false)
-  // // const [selectGroup, setSelectGroup] = useState([])
 
   const openModal = (data) => {
-    //console.log(props);
     if (event === 'addNode') {
       setState({
         open: true,

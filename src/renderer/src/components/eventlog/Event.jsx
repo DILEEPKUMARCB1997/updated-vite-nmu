@@ -103,10 +103,7 @@ function Event() {
         bordered
         dataSource={eventData}
         loading={tableLoading}
-        // bordered
         pagination={{
-          // showQuickJumper: true,
-          // showSizeChanger: true,
           size: 'default',
           defaultPageSize: 10,
           pageSizeOptions: [10, 15, 20, 25],
@@ -114,7 +111,6 @@ function Event() {
         }}
         scroll={{ y: 'calc(100vh - 365px)', x: 1000 }}
       />
-      {/* </Card> */}
     </ConfigProvider>
   )
 }
