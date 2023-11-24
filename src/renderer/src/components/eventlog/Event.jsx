@@ -18,7 +18,7 @@ function Event() {
   const { useToken } = theme
   const { token } = useToken()
   const { eventData } = useSelector(eventLogSelector)
-  console.log(eventData)
+
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
   const columns = [
@@ -53,6 +53,7 @@ function Event() {
   }, [])
 
   const handleHistoryButtonOnClick = () => {
+    console.log('eventdata', eventData)
     dispatch(
       requestHistoryData({
         type: 'event',

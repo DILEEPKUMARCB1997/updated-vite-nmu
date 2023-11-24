@@ -92,10 +92,6 @@ export const requestCustomGraphData = (Items) => {
       -2
     )}`
     label.push(gelabel)
-    // let gelabel = `${('00' + (gedate.getMonth() + 1)).slice(-2)}/${('00' + gedate.getDate()).slice(
-    //   -2
-    // )}`
-    // label.push(gelabel)
     InformationData.push(resultInformation.length)
     CriticalData.push(resultCritical.length)
     WarningData.push(resultWarning.length)

@@ -13,7 +13,7 @@ const DeviceGroupSettings = ({ groupId, groupName }) => {
 
   const handleMenuClick = (e) => {
     e.domEvent.stopPropagation()
-    console.log(e.key, groupId)
+    // console.log(e.key, groupId)
     switch (e.key) {
       case 'editGroupName':
         setOpend(true)

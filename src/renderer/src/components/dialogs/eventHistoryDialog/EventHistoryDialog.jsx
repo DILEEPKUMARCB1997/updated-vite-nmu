@@ -56,6 +56,7 @@ const EventHistoryDialog = ({ onClose }) => {
   }
 
   const handleRefreshButtonClick = () => {
+    console.log('history data', eventHistoryData)
     dispatch(
       requestHistoryData({
         type: 'event',

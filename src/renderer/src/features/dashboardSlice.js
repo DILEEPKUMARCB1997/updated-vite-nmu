@@ -11,7 +11,7 @@ import { openDialog } from './dialogSlice'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
-  dispatch(openDialog('customGraphTable'))
+  dispatch(openDialog('eventGraphTable'))
 }
 
 export const showSyslogTableData = (payload) => (dispatch) => {
@@ -35,7 +35,7 @@ export const requestHistoryData = (param) => (dispatch) => {
       }
       case 'trap': {
         const resultTrap = requestGraphData(data)
-        //  console.log(data)
+
         dispatch(updateTrapGraph(resultTrap))
         break
       }
@@ -117,7 +117,6 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomGraph: (state, { payload }) => {
-      //console.log(action)
       const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
         payload
       return {
@@ -140,7 +139,6 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomTableData: (state, action) => {
-      console.log(action)
       const { payload } = action
       return {
         ...state,
@@ -149,7 +147,6 @@ const dashboardSlice = createSlice({
     },
 
     updateTrapTableData: (state, { payload }) => {
-      console.log('payload', payload)
       return { ...state, trapTableData: payload }
     }
   }

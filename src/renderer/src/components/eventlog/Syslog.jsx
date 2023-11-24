@@ -55,7 +55,7 @@ function Syslog() {
   const { useToken } = theme
   const { token } = useToken()
   const { syslogData } = useSelector(eventLogSelector)
-  console.log(syslogData)
+
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
 
@@ -64,6 +64,7 @@ function Syslog() {
   }, [])
 
   const handleHistoryButtonOnClick = () => {
+    console.log('syslogData', syslogData)
     dispatch(
       requestHistoryData({
         type: 'syslog',
