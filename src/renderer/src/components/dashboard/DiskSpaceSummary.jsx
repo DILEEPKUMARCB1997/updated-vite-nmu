@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react'
 import {
   REQUEST_MP_GET_DISK_USES,
@@ -24,10 +25,7 @@ const DiskSpaceSummary = () => {
 
   const options = {
     series: [diskUses.diskUsed],
-    labels: [
-      `Disk Space Used - ${diskUses.diskUsed} %`
-      // `Disk Space Free - ${diskUses.diskFree} %`
-    ],
+    labels: [`Disk Space Used - ${diskUses.diskUsed} %`],
     legend: {
       show: true,
       showForSingleSeries: true,

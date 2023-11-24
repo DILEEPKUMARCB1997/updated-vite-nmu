@@ -18,7 +18,6 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData, label, lastUpdated, data } = syslogGraphData
-  console.log('syslog', syslogGraphData)
 
   const graphData = useMemo(() => {
     return {
@@ -111,6 +110,7 @@ const SyslogGraph = () => {
   }
 
   const handleRefreshGraph = () => {
+    console.log('syslogGraph clicked', syslogGraphData)
     dispatch(
       requestHistoryData({
         type: 'syslog',

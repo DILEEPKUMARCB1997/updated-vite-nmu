@@ -7,19 +7,14 @@ import {
   dashboardSelector,
   requestHistoryData,
   showTrapTableData
-  //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
 import ReactApexChart from 'react-apexcharts'
-import { useThemeStore } from '../../utils/themes/useStore'
 
 const TrapGraphSummary = () => {
-  const { mode } = useThemeStore()
-  const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-  console.log('trap graph data', trapGraphData)
 
   const snmpTrapMsgData = useMemo(() => {
     return {
@@ -111,9 +106,10 @@ const TrapGraphSummary = () => {
     setTimeout(() => {
       dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
     }, 1500)
-  }, [])
+  }, [dispatch])
 
   const handleRefresh = () => {
+    console.log('trapGraph clicked', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 

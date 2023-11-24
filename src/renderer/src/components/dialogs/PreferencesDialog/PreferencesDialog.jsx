@@ -73,9 +73,6 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
-  console.log(selectedPage)
-  // const { NICData } = useSelector(generalSelector)
-  // const { activeNIC } = NICData
 
   const dispatch = useDispatch()
   const { notification, modal } = App.useApp()
@@ -85,28 +82,17 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
     }
   }, [])
 
-  // const configChangeFlag = [selectedPage].isConfigChange
-  // const configValidFlag = ![selectedPage].validsData
-  // console.log(configChangeFlag)
-  // console.log(configValidFlag)
-
   const configChangeFlag = useSelector((state) => state[selectedPage].isConfigChange)
   const configValidFlag = useSelector(
     (state) => !Object.values(state[selectedPage].validsData).includes(false)
   )
 
-  // console.log(configChangeFlag)
-  // console.log(configValidFlag)
-
   const handleMenuItemClick = ({ key }) => {
     console.log(key)
     const fetchIndex = items.findIndex((e) => e.key === key)
-    console.log(fetchIndex)
 
     if (fetchIndex === selectedIndex) return
     if (configChangeFlag && configValidFlag) {
-      console.log(configChangeFlag)
-      console.log(configValidFlag)
       new Promise((resolve, reject) => {
         showConfirm(resolve, reject)
       })
@@ -160,7 +146,7 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
     })
   }
   const handleRequireSetData = () => {
-    console.log(selectedIndex)
+    //console.log(selectedIndex)
     switch (selectedIndex) {
       case 0:
         dispatch(requireSetNICData(handleShowResult(selectedIndex)))
@@ -208,67 +194,6 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   }
 
   return (
-    // <Modal
-    //   open
-    //   onCancel={onClose}
-    //   footer={null}
-    //   width="100%"
-    //   style={{
-    //     top: '5px'
-    //   }}
-    // >
-    //   <Layout style={{ height: '89vh' }}>
-    //     <Header
-    //       style={{
-    //         fontSize: 35,
-    //         backgroundColor: token.colorPrimaryBorder,
-    //         height: '80px',
-    //         color: '#fff',
-    //         fontWeight: 'bold'
-    //       }}
-    //       onClick={handleCancelButtonClick}
-    //     >
-    //       <SettingOutlined /> Preference
-    //     </Header>
-
-    //     <Layout style={{ height: '100vh' }}>
-    //       <Sider
-    //         style={{
-    //           display: 'flex',
-    //           flexDirection: 'row',
-    //           alignItems: 'center',
-    //           justifyContent: 'left'
-    //         }}
-    //       >
-    //         <Menu
-    //           theme="dark"
-    //           mode="inline"
-    //           // selectedKeys={[selectedIndex]}
-    //           style={{
-    //             fontSize: '16px',
-    //             color: 'white',
-    //             position: 'relative'
-    //             // top: '-10px'
-    //           }}
-    //           onClick={handleMenuItemClick}
-    //           items={items}
-    //         ></Menu>
-    //       </Sider>
-    //       <Content
-    //         style={{
-    //           padding: 24,
-    //           // margin: '24px 16px 24px',
-    //           minHeight: 280,
-    //           background: colorBgContainer,
-    //           overflow: 'auto'
-    //         }}
-    //       >
-    //         {loading ? <Spin tip="Loading" size="small" /> : items[selectedIndex].page}
-    //       </Content>
-    //     </Layout>
-    //   </Layout>
-    // </Modal>
-
     <Modal
       open
       title={
@@ -287,33 +212,11 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
       // bodyStyle={{ overflow: 'auto' }}
     >
       <Layout style={{ height: '80vh' }}>
-        {/* <Header
-          style={{
-            fontSize: 25,
-            backgroundColor: 'white',
-
-            marginTop: '-20px',
-            paddingLeft: '0px',
-            textAlign: 'left',
-            width: '100%',
-            border: 'solid 5px'
-          }}
-          onClick={handleCancelButtonClick}
-        >
-          <SettingOutlined /> - Preferences
-        </Header> */}
         <Layout style={{ height: '100vh', margin: '0px', padding: '0px' }}>
           <Sider
             style={{
-              // display: 'flex',
-              // flexDirection: 'row',
-              // alignItems: 'center',
-              // justifyContent: 'left',
               backgroundColor: 'white',
               paddingTop: '10px'
-              // marginBottom: '50px'
-              // borderRight: 'solid gray',
-              // borderWidth: 'thin'
             }}
           >
             <Menu
@@ -335,7 +238,6 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
               paddingBottom: '20px',
               paddingRight: '15px',
               paddingLeft: '15px',
-              // margin: '24px 16px 24px',
               minHeight: 280
             }}
           >
@@ -356,14 +258,3 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
 }
 
 export default PreferencesDialog
-/*
-import { Spin, Tooltip } from 'antd';
-
-const MyComponent = () => {
-  return (
-    <Tooltip title="Loading...">
-      <Spin />
-    </Tooltip>
-  );
-};
-*/

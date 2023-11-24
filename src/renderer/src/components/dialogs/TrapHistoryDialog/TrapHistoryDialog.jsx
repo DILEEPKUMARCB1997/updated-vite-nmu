@@ -96,6 +96,7 @@ const TrapHistoryDialog = ({ onClose }) => {
   }
 
   const handleRefreshButtonClick = () => {
+    console.log(trapHistoryData)
     dispatch(
       requestHistoryData({
         type: 'trap',

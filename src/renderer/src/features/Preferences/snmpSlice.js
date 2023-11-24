@@ -63,7 +63,7 @@ export const requestSetSNMPData = (callback) => (dispatch, getState) => {
     version,
     isPrecheck
   } = getState().snmp.SNMPData
-  console.log('snmp data', getState().snmp.SNMPData)
+  // console.log('snmp data', getState().snmp.SNMPData)
   const resultArray = []
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_IP_RANGE_SETTINGS, (event, arg) => {
     //console.log(arg);
@@ -150,7 +150,7 @@ const snmpSlice = createSlice({
       }
     },
     setICMPTimeout: (state, { payload }) => {
-      console.log(payload)
+      //console.log(payload)
       if (!valueFormat.common.words4.test(payload)) {
         return { ...state }
       }
@@ -179,7 +179,7 @@ const snmpSlice = createSlice({
       }
     },
     setSNMPVersion: (state, { payload }) => {
-      console.log(payload)
+      //console.log(payload)
       const version = payload
       return {
         ...state,
@@ -236,7 +236,7 @@ const snmpSlice = createSlice({
       }
     },
     removeIPRangeData: (state, { payload }) => {
-      console.log(payload)
+      //   console.log(payload)
       const { [payload]: _, ...IPRangeData } = state.IPRangeData
       console.log(JSON.stringify(state.IPRangeData))
       console.log('iprangedata', payload, IPRangeData)
