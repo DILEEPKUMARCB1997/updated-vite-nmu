@@ -23,7 +23,7 @@ export const showTrapTableData = (payload) => (dispatch) => {
   dispatch(openDialog('trapGraphTable'))
 }
 export const requestHistoryData = (param) => (dispatch) => {
-  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
+  window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     switch (type) {
       case 'event': {

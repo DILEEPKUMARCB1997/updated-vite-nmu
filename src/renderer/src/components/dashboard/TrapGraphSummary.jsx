@@ -10,14 +10,17 @@ import {
   //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
+import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 import { useThemeStore } from '../../utils/themes/useStore'
+import { openDialog } from '../../features/dialogSlice'
+import { memo } from 'react'
 
 const TrapGraphSummary = () => {
   const { mode } = useThemeStore()
   const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
-  console.log('trap Graph data', trapGraphData)
+  // console.log('trap Graph data', trapGraphData)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
 
@@ -26,7 +29,6 @@ const TrapGraphSummary = () => {
   }
 
   //console.log('trap table data', tableData)
-  console.log('trap graph data', trapGraphData)
 
   const snmpTrapMsgData = useMemo(() => {
     return {
@@ -50,6 +52,7 @@ const TrapGraphSummary = () => {
               if (config.selectedDataPoints[0].length > 0) {
                 onTrapGraphClick(config.dataPointIndex)
               }
+              //  console.log(chartContext)
             }
           }
         },
@@ -110,37 +113,35 @@ const TrapGraphSummary = () => {
     }
   }, [trapGraphData.data, trapGraphData.label])
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
-  //   }, 1500)
-  // }, [requestHistoryData])
-
-  // const handleRefresh = () => {
-  //   dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
-  // }
-  const handleRefresh = () => {
-    dispatch(
-      requestHistoryData({
-        type: 'trap',
-        sourceIP: '',
-        ge: '',
-        le: ''
-      })
-    )
-  }
   useEffect(() => {
     setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'trap',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1000)
-  }, [requestHistoryData])
+      dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
+  }, [])
+
+  // useEffect(() => {
+  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+  //     setSnmpTrapMsgData((prev) => ({
+  //       ...prev,
+  //       series: [
+  //         {
+  //           data: trapGraphData.data
+  //         }
+  //       ],
+  //       options: {
+  //         ...prev.options,
+  //         xaxis: {
+  //           categories: trapGraphData.label
+  //         }
+  //       }
+  //     }))
+  //   }
+  // }, [trapGraphData])
+
+  const handleRefresh = () => {
+    console.log('trap Graph Data', trapGraphData)
+    dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
+  }
 
   return (
     <>
@@ -170,4 +171,4 @@ const TrapGraphSummary = () => {
   )
 }
 
-export default TrapGraphSummary
+export default memo(TrapGraphSummary)

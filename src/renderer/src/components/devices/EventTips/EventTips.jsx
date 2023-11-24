@@ -36,7 +36,7 @@ const EventTips = () => {
   // console.log(selected)
 
   const handleOKOnClick = () => {
-    console.log(batchOperateEvent)
+    // console.log(batchOperateEvent)
     switch (batchOperateEvent) {
       case 'firmwareUpdate':
         dispatch(initFirmwareUpdateData())

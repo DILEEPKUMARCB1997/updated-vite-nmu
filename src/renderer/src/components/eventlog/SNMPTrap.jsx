@@ -72,7 +72,7 @@ const SNMPTrap = () => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { trapData } = useSelector(eventLogSelector)
-  console.log(trapData)
+  // console.log(trapData)
   const [tableLoading, setTableLoading] = useState(true)
 
   useEffect(() => {
@@ -80,6 +80,7 @@ const SNMPTrap = () => {
   }, [])
 
   const handleHistoryButtonOnClick = () => {
+    console.log(trapData)
     dispatch(
       requestHistoryData({
         type: 'trap',

@@ -77,7 +77,7 @@ const TelegramUserList = () => {
         total: userData.length,
         defaultPageSize: 5,
         pageSizeOptions: [5, 10, 15, 20],
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} `
       }}
     />
   )

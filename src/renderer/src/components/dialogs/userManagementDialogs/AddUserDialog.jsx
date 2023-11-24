@@ -18,7 +18,7 @@ const AddUserDialog = ({ onClose }) => {
     /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@%&? "])[a-zA-Z0-9!#$@%&?]{8,20}$/
 
   const { loggedInUser, usersData } = useSelector(userManagementSelector)
-  console.log(usersData)
+
   const { username, userType } = loggedInUser
   const [form] = Form.useForm()
   const dispatch = useDispatch()

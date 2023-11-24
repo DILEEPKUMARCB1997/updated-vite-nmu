@@ -71,7 +71,6 @@ export const startTask = (callback) => (dispatch, getState) => {
 }
 
 const restoreResultListener = (callback, dispatch) => (event, arg) => {
-  console.log('restore arg', arg)
   const { type } = arg
   if (type === 1) {
     callback('There is some problem in restore process.')
@@ -90,7 +89,6 @@ const restoreResultListener = (callback, dispatch) => (event, arg) => {
   }
 }
 const backupResultListener = (callback, dispatch) => (event, arg) => {
-  console.log('back up arg', arg)
   const { type } = arg
   if (type === 1) {
     callback('There is some problem in backup process.')

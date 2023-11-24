@@ -42,16 +42,13 @@ const columns = [
     dataIndex: 'status',
     key: 'status',
     render: (text, record) => (
-      console.log(record),
-      (
-        <span
-          style={{
-            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
-          }}
-        >
-          {results[record.status]}
-        </span>
-      )
+      <span
+        style={{
+          color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+        }}
+      >
+        {results[record.status]}
+      </span>
     )
   }
 ]
@@ -60,7 +57,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { taskStatus, resetToDefaultStatus } = useSelector(resetToDefaultSelector)
-  // console.log(resetToDefaultStatus)
+
   // console.log(taskStatus)
 
   const dispatch = useDispatch()

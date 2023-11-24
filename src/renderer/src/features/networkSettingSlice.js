@@ -101,7 +101,7 @@ export const setSingleDeviceAddress = (payload) => (dispatch, getState) => {
 }
 
 const networkSettingResultListener = (dispatch) => (event, arg) => {
-  console.log(arg)
+  // console.log(arg)
   dispatch(setDeviceSettingStatus({ MACAddress: arg.data.MACAddress, status: arg.success }))
 }
 
@@ -200,7 +200,7 @@ const networkSettingSlice = createSlice({
       }
     },
     setCalculateResultData: (state, { payload }) => {
-      console.log('calculate', payload)
+      // console.log('calculate', payload)
       return {
         ...state,
         deviceList: payload.newDeviceList,

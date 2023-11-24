@@ -121,7 +121,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
-  console.log(selected)
+  // console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -340,13 +340,11 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  console.log('seleceted rows array', selectedRowsArray)
-
   // console.log('seleceted rows array', selectedRowsArray)
+
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
+    type: 'checkbox',
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
 
@@ -362,13 +360,12 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     },
 
-    getCheckboxProps: (record) => (
-      console.log(record),
-      {
+    getCheckboxProps: (record) =>
+      // console.log(record),
+      ({
         disabled:
           !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
-      }
-    )
+      })
   }
 
   return (

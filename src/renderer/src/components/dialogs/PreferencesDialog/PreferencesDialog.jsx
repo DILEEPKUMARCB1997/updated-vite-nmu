@@ -73,7 +73,7 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { loading, selectedIndex, selectedPage } = useSelector(preferenceSelector)
-  console.log(selectedPage)
+  // console.log(selectedPage)
   // const { NICData } = useSelector(generalSelector)
   // const { activeNIC } = NICData
 
@@ -99,9 +99,9 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   // console.log(configValidFlag)
 
   const handleMenuItemClick = ({ key }) => {
-    console.log(key)
+    // console.log(key)
     const fetchIndex = items.findIndex((e) => e.key === key)
-    console.log(fetchIndex)
+    // console.log(fetchIndex)
 
     if (fetchIndex === selectedIndex) return
     if (configChangeFlag && configValidFlag) {
@@ -160,7 +160,7 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
     })
   }
   const handleRequireSetData = () => {
-    console.log(selectedIndex)
+    // console.log(selectedIndex)
     switch (selectedIndex) {
       case 0:
         dispatch(requireSetNICData(handleShowResult(selectedIndex)))

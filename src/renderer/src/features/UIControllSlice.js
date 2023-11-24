@@ -35,7 +35,7 @@ export const removeBatchOperateEvent = () => (dispatch) => {
   dispatch(removeBatchOperate())
   dispatch(showDiscoveryTableCheckBox(false))
 
-  dispatch(clearDiscoverTableSelect(true))
+  dispatch(clearDiscoverTableSelect())
 }
 
 const UIControlSlice = createSlice({

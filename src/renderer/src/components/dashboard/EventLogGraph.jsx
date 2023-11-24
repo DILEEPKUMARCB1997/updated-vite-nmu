@@ -16,7 +16,7 @@ const EventLogGraph = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
-  console.log(customGraphData)
+  // console.log(customGraphData)
   // const [, forceRender] = useState(undefined)
 
   const eventLogData = useMemo(() => {
@@ -116,6 +116,7 @@ const EventLogGraph = () => {
   }, [InformationData, WarningData, CriticalData, label, tableData])
 
   const handleRefreshGraph = () => {
+    console.log('custom Graph Data', customGraphData)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -136,7 +137,7 @@ const EventLogGraph = () => {
         })
       )
     }, 1000)
-  }, [requestHistoryData])
+  }, [])
   return (
     <>
       <div

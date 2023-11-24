@@ -56,9 +56,7 @@ const TrapConfiguration = () => {
     <Card
       size="small"
       title="Trap Configuration Field"
-      // style={{ width: '100%', height: '100%' }}
       bordered={false}
-      // bodyStyle={{ padding: '5px' }}
       style={{
         height: '450px',
         borderRadius: '4px',
@@ -89,10 +87,6 @@ const TrapConfiguration = () => {
               />
             </Form.Item>
             <Form.Item
-              // style={{ width: '230px', paddingTop: '10px' }}
-              // help=
-
-              // {trapServerPort === '' ? 'Server port is required' : ''}
               colon={false}
               help={
                 <Typography style={{ color: 'red' }}>
