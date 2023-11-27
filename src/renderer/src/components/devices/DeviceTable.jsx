@@ -341,13 +341,16 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
   // console.log('seleceted rows array', selectedRowsArray)
-
+  const onselectchange = (selectedrowkeys) => {
+    setSelectedRowsArray(selectedrowkeys)
+  }
   const rowSelection = {
     type: 'checkbox',
 
+    onchange: onselectchange,
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
       dispatch(
         selectDiscoveryTable({
           isSelect: selected,
