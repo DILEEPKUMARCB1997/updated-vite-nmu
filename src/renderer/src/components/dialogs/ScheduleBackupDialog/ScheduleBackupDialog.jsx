@@ -1,14 +1,10 @@
-import { Card, Col, Modal, Row, Typography } from 'antd'
+import { Col, Modal, Row, Typography } from 'antd'
 import React from 'react'
 import ConfigureSchedule from './ConfigureSchedule/ConfigureSchedule'
 import DeviceList from './DeviceList/DeviceList'
 import FileList from './FileList/FileList'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearData,
-  getScheduledData,
-  scheduleBackupSelector
-} from '../../../features/scheduleBackupSlice'
+import { useDispatch } from 'react-redux'
+import { clearData, getScheduledData } from '../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
 import { CloudUploadOutlined } from '@ant-design/icons'
 

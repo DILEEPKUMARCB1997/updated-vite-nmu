@@ -9,13 +9,16 @@ import {
   showTrapTableData
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
-import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
 
 const TrapGraphSummary = () => {
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
+
+  const onTrapGraphClick = (barIndex) => {
+    dispatch(showTrapTableData(tableData[barIndex]))
+  }
 
   const snmpTrapMsgData = useMemo(() => {
     return {
