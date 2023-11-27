@@ -62,7 +62,7 @@ const IPRangeList = () => {
                   avatar={
                     <Checkbox
                       checked={item[1].isActive}
-                      onChange={handleIPRangeDataCheckBoxChange(item)}
+                      onChange={handleIPRangeDataCheckBoxChange(item[0])}
                     />
                   }
                   title={`${item[1].startIP} - ${item[1].endIP}`}
