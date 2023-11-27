@@ -35,7 +35,6 @@ export const requestHistoryData = (param) => (dispatch) => {
       }
       case 'trap': {
         const resultTrap = requestGraphData(data)
-
         dispatch(updateTrapGraph(resultTrap))
         break
       }

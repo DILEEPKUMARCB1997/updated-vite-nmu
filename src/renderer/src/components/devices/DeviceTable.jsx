@@ -150,8 +150,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   const shell = require('electron').shell
 
   const handleItemClick = (key, data) => {
-    //console.log(key)
-    // console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
@@ -309,7 +307,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
-    // dispatch(openDialog('singleBackupConfig'))
     if (deviceType !== 'gwd') {
       dispatch(requestGetBackupRestoreData({ MACAddress }))
     } else {
@@ -331,10 +328,7 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
-    // selectedRowKeys: selectedRowsArray,
-
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
 
@@ -344,11 +338,9 @@ const DeviceTable = ({ deviceData = [] }) => {
           deviceData: [record.MACAddress]
         })
       )
-    },
-    onselectionchange: () => {
       setSelectedRowsArray([])
-      setSelectedCheckboxes([])
     },
+
     getCheckboxProps: (record, deviceType) => ({
       disabled:
         !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
@@ -361,7 +353,7 @@ const DeviceTable = ({ deviceData = [] }) => {
     } else {
       setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
     }
-    setSelectedRowsArray([]) // reset selected rows array
+    setSelectedRowsArray([])
   }
 
   return (
@@ -446,12 +438,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           footer={null}
           open={showCheckSNMPModal}
         >
-          <Spin
-            tip="Loading"
-            indicator={antIcon}
-            // indicator={antIcon}
-            size="large"
-          />
+          <Spin tip="Loading" indicator={antIcon} size="large" />
           {'Checking SNMP feature...'}
         </Modal>
       </ConfigProvider>
@@ -469,3 +456,19 @@ const antIcon = (
 )
 
 export default DeviceTable
+
+/*
+onSelect: (record, selected, selectedRows, nativeEvent) => {
+  console.log(record, selected, selectedRows, nativeEvent)
+
+  dispatch(
+    selectDiscoveryTable({
+      isSelect: selected,
+      deviceData: [record.MACAddress]
+    })
+  )
+
+  // clear the selectedRowsArray when a new row is selected
+  setSelectedRowsArray([])
+}
+*/

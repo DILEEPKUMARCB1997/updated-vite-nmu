@@ -3,12 +3,9 @@ import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
 } from '../../../main/utils/IPCEvents'
-// import { customEventSortFilter, filterByDate } from '../components/eventlog/CustomData'
-//import { openDialog } from './dialogSlice'
 
 export const updateEventLog = (payload) => (dispatch) => {
   const { type, data } = payload
-  // console.log(data)
 
   switch (type) {
     case 'trap':
@@ -54,10 +51,8 @@ export const initEventDailyData = (payload) => (dispatch) => {
 
 export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-    // console.log(arg)
     const { type, data } = arg
-    // console.log(type)
-    // console.log(data)
+
     switch (type) {
       case 'event':
         dispatch(updateEventHistory(data))
@@ -70,9 +65,7 @@ export const requestHistoryData = (param) => (dispatch) => {
         break
       case 'custom':
         dispatch(updateCustomHistory(data))
-        // dispatch(updateCustomEvent(data))
-        // dispatch(initEventDailyData({ types: 'custom' }))
-        //   dispatch(initEventDailyData({ types: 'custom' }))
+
         break
       default:
         break
@@ -85,8 +78,7 @@ export const requestHistoryData = (param) => (dispatch) => {
 export const requestInitData = (param) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
-    // console.log(type)
-    // console.log(data)
+
     switch (type) {
       case 'event':
         dispatch(updateEvent(data))
@@ -98,10 +90,6 @@ export const requestInitData = (param) => (dispatch) => {
         dispatch(updateSyslog(data))
         break
 
-      // case 'custom':
-      //   dispatch(updateCustomEvent(data))
-      //   dispatch(initEventDailyData({ types: 'custom' }))
-      //   break
       default:
         break
     }
@@ -141,8 +129,6 @@ const eventLogSlice = createSlice({
       return { ...state, customEventData: [] }
     },
     updateCustomEventDaily: (state) => {
-      // const { action } = payload
-      // console.log(action)
       const sortedItems = customEventSortFilter([...state.customEventHistoryData])
       const filteredCustomEventsDailyData = filterByDate([...state.customEventHistoryData])
       return {

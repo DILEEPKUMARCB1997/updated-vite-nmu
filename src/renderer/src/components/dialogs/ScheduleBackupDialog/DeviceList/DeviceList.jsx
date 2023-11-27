@@ -192,6 +192,7 @@ const DeviceList = (props) => {
                 onRow={(record, rowIndex) => {
                   return {
                     onClick: (event) => {
+                      event.preventDefault()
                       handleDeviceListItemOnClick(record.MACAddress)
                     }
                   }
