@@ -12,8 +12,7 @@ import {
 } from '../../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
 
-const ConfigureSchedule = (...props) => {
-  // console.log(props)
+const ConfigureSchedule = () => {
   const {
     isEditMode,
     frequency,
@@ -70,7 +69,6 @@ const ConfigureSchedule = (...props) => {
   const handleNameInputChange = (e) => {
     // console.log(e.target.value)
     if (e.target.value.length <= 20) {
-      // setScheduleName(e.target.value)
       setState({ ...state, scheduleName: e.target.value })
     }
   }
@@ -158,7 +156,7 @@ const ConfigureSchedule = (...props) => {
 
   useEffect(() => {
     if (isEditMode) {
-      console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
+      // console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
       const now = new Date(scheduleDate + '' + scheduleTime)
       const nowYear = datePad(now.getFullYear().toString())
       const nowMonth = datePad(now.getMonth() + 1).toString()

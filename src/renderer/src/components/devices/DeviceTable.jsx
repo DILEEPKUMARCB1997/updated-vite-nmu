@@ -32,6 +32,8 @@ import {
   setBatchOperateEvents
 } from '../../features/UIControllSlice'
 
+import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
+
 const columns = [
   {
     title: 'Online',
@@ -105,7 +107,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
-
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
@@ -337,10 +338,13 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  // console.log('seleceted rows array', selectedRowsArray)
-
+  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     type: 'checkbox',
+
+    // onChange: (selectedRowKeys, rows) => {
+    //   console.log('rows', rows)
+    // },
 
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
@@ -352,14 +356,30 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
-
-    getCheckboxProps: (record) =>
-      // console.log(record),
-      ({
-        disabled:
-          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
-      })
+    onselectionchange: () => {
+      setSelectedRowsArray([])
+      setSelectedCheckboxes([])
+    },
+    getCheckboxProps: (record, deviceType) => (
+      console.log(record, 'device type', deviceType),
+      {
+        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+      }
+    )
   }
+  const handleCheckboxChange = (event) => {
+    const checkboxValue = event.target.value
+    if (event.target.checked) {
+      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
+    } else {
+      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
+    }
+    setSelectedRowsArray([]) // reset selected rows array
+  }
+
+  // const rowSelection = showCheckBox ? (
+  //   <EnhanceCheckBox handleCheckBoxChange={handleCheckBoxChange} />
+  // ) : undefined
 
   return (
     <div>
