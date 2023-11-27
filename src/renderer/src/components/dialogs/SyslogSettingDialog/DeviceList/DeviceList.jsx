@@ -44,7 +44,7 @@ const columns = [
 ]
 const DeviceList = () => {
   const { deviceStatus } = useSelector(syslogSettingSelector)
-  console.log(deviceStatus)
+  // console.log(deviceStatus)
   const { useToken } = theme
   const { token } = useToken()
   const [dataSource, setDataSource] = useState([])
@@ -88,7 +88,8 @@ const DeviceList = () => {
           <div
             style={{
               maxHeight: '295px',
-              overflow: 'auto',
+              overflowX: 'auto',
+              overflowY: 'hidden',
               marginTop: '8px',
               marginBottom: '5px',
               padding: '10px'

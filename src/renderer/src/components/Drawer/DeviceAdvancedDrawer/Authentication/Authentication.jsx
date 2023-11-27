@@ -79,11 +79,7 @@ const Authentication = () => {
           <Input value={readCommunity} onChange={handleSnmpSettingInputChange('readCommunity')} />
         </Form.Item>
         <Form.Item colon={false} label="Write Community" style={{ margin: '5px' }}>
-          <Input
-            s
-            value={writeCommunity}
-            onChange={handleSnmpSettingInputChange('writeCommunity')}
-          />
+          <Input value={writeCommunity} onChange={handleSnmpSettingInputChange('writeCommunity')} />
         </Form.Item>
       </Form>
     </div>

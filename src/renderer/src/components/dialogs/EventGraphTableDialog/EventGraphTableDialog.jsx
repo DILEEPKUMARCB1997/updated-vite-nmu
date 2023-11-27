@@ -46,12 +46,10 @@ const columns = [
   { key: 'msg', title: 'Message', dataIndex: 'msg' }
 ]
 
-const CustomGraphTableDialog = ({ onClose }) => {
+const EventGraphTableDialog = ({ onClose }) => {
   const token = useTheme()
   const { customTableData } = useSelector(dashboardSelector)
   const [tableLoading, setTableLoading] = useState(true)
-
-  // console.log('custom table data', customTableData)
 
   useEffect(() => {
     setTableLoading(false)
@@ -77,17 +75,15 @@ const CustomGraphTableDialog = ({ onClose }) => {
         open
         onCancel={handleCloseButtonOnClick}
         width="90%"
-        title="Custom Events Graph Data"
+        title=" Event Graph Data"
         onOk={onClose}
         closable={true}
         maskClosable={false}
         style={{ top: 20 }}
         bodyStyle={{
-          // height: 'calc(70vh - 150px)',
           margin: 0,
           paddingTop: 10,
           paddingBottom: '10px'
-          // maxHeight: '98%'
         }}
         okButtonProps={{
           style: {
@@ -128,4 +124,4 @@ const CustomGraphTableDialog = ({ onClose }) => {
   )
 }
 
-export default CustomGraphTableDialog
+export default EventGraphTableDialog

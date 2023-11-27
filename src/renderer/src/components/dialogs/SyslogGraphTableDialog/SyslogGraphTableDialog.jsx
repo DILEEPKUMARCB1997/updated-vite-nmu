@@ -54,7 +54,7 @@ const SyslogGraphTableDialog = ({ onClose }) => {
   const [tableLoading, setTableLoading] = useState(true)
 
   const { syslogTableData } = useSelector(dashboardSelector)
-  // console.log('syslog Table data', syslogTableData)
+  // console.log(syslogTableData)
 
   useEffect(() => {
     setTableLoading(false)

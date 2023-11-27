@@ -49,7 +49,7 @@ const FWUTable = memo(function FWUTable() {
       title: 'Status',
       key: 'status',
       render: (record) => {
-        console.log(record)
+        // console.log(record)
         const status = codes[record.status]
         if (status) {
           return (

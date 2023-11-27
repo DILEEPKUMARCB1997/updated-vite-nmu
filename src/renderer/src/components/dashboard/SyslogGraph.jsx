@@ -117,7 +117,7 @@ const SyslogGraph = () => {
   }, [])
 
   const handleRefreshGraph = () => {
-    console.log('Syslog Graph', syslogGraphData)
+    console.log('syslogGraph clicked', syslogGraphData)
     dispatch(
       requestHistoryData({
         type: 'syslog',

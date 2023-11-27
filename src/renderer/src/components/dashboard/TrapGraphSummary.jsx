@@ -7,28 +7,15 @@ import {
   dashboardSelector,
   requestHistoryData,
   showTrapTableData
-  //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
 import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
-import { useThemeStore } from '../../utils/themes/useStore'
-import { openDialog } from '../../features/dialogSlice'
-import { memo } from 'react'
 
 const TrapGraphSummary = () => {
-  const { mode } = useThemeStore()
-  const { token } = antdTheme.useToken()
-  const { trapGraphData } = useSelector(useMemo(() => dashboardSelector, []))
-  // console.log('trap Graph data', trapGraphData)
+  const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-
-  const onTrapGraphClick = (barIndex) => {
-    dispatch(showTrapTableData(tableData[barIndex]))
-  }
-
-  //console.log('trap table data', tableData)
 
   const snmpTrapMsgData = useMemo(() => {
     return {
@@ -116,8 +103,8 @@ const TrapGraphSummary = () => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
-    }, 3000)
-  }, [])
+    }, 1500)
+  }, [dispatch])
 
   // useEffect(() => {
   //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
@@ -139,7 +126,7 @@ const TrapGraphSummary = () => {
   // }, [trapGraphData])
 
   const handleRefresh = () => {
-    console.log('trap Graph Data', trapGraphData)
+    console.log('trapGraph clicked', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 
@@ -171,4 +158,4 @@ const TrapGraphSummary = () => {
   )
 }
 
-export default memo(TrapGraphSummary)
+export default TrapGraphSummary

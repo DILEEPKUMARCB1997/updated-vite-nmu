@@ -158,8 +158,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const shell = require('electron').shell
 
   const handleItemClick = (key, data) => {
-    console.log(key)
-    console.log(data)
+    //console.log(key)
+    // console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
@@ -347,10 +347,6 @@ const DeviceTable = ({ deviceData = [] }) => {
 
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
-
-      // onSelect: (record) => {
-      //   console.log('record', record)
-      //   console.log('selected', selected)
 
       dispatch(
         selectDiscoveryTable({

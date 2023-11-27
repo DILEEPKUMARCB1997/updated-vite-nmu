@@ -60,7 +60,6 @@ function SyslogHistoryDialog({ onClose }) {
   const { useToken } = theme
   const { token } = useToken()
   const { syslogHistoryData } = useSelector(eventLogSelector)
-  // console.log(syslogHistoryData)
 
   const dispatch = useDispatch()
   const [sourceIP, setSourceIP] = useState()
@@ -81,6 +80,7 @@ function SyslogHistoryDialog({ onClose }) {
   }
 
   const handleRefreshButtonClick = () => {
+    console.log(syslogHistoryData)
     dispatch(requestHistoryData({ type: 'syslog', sourceIP: sourceIP, ge: ge, le: le }))
   }
   const handleCloseButtonOnClick = () => {

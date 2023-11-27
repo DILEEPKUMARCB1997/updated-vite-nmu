@@ -18,30 +18,10 @@ const AddUserDialog = ({ onClose }) => {
     /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@%&? "])[a-zA-Z0-9!#$@%&?]{8,20}$/
 
   const { loggedInUser, usersData } = useSelector(userManagementSelector)
-
+  //console.log(usersData)
   const { username, userType } = loggedInUser
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-
-  // const setUserData = (param) => (dispatch, getState) => {
-  //   window.electron.ipcRenderer.once(RESPONSE_RP_SET_USER_DETAILS, (event, arg) => {
-  //     console.log(arg)
-  //     if (arg.success) {
-  //       console.log(arg.data)
-  //       dispatch(requestGetUsersData())
-  //       notification.success({ message: 'Successfully saved user data.' })
-  //     } else {
-  //       notification.error({ message: arg.msg })
-  //     }
-  //   })
-  //   window.electron.ipcRenderer.send(REQUEST_MP_SET_USER_DETAILS, {
-  //     UserId: param.UserId,
-  //     username: param.username,
-  //     password: param.password,
-  //     userType: param.userType,
-  //     createdBy: username
-  //   })
-  // }
 
   const handleAddUserSubmit = () => {
     form
@@ -69,7 +49,7 @@ const AddUserDialog = ({ onClose }) => {
           createdBy: username
         }
         dispatch(setUserData(userData))
-        // notification.success({ message: 'Successfully saved user data.' })
+
         form.resetFields()
         onClose()
       })
@@ -92,7 +72,6 @@ const AddUserDialog = ({ onClose }) => {
             }
           ]}
         >
-          {/* <Input disabled={isEdit} /> */}
           <Input placeholder="Enter Username" />
         </Form.Item>
 
@@ -113,11 +92,10 @@ const AddUserDialog = ({ onClose }) => {
         >
           <Input.Password placeholder="Enter Password" />
         </Form.Item>
-        {/* add select of role has admin, superuser, user */}
+
         <Form.Item
           name="role"
           label="Role"
-          // initialValue={editUserData.role}
           rules={[
             {
               required: true,

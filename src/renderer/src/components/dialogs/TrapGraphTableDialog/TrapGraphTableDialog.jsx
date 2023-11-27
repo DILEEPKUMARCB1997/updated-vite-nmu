@@ -67,7 +67,7 @@ function TrapGraphTableDialog({ onClose }) {
   const { token } = useToken()
   const [tableLoading, setTableLoading] = useState(true)
   const { trapTableData } = useSelector(dashboardSelector)
-  // console.log('trap table data', trapTableData)
+  //console.log('trap table data', trapTableData)
 
   useEffect(() => {
     setTableLoading(false)
