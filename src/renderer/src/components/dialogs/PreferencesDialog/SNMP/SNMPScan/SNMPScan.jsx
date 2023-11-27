@@ -109,7 +109,7 @@ const SNMPScan = () => {
           <InputNumber
             style={{ width: '200px', marginLeft: '60px' }}
             status={isSNMPTimeoutValid ? null : 'error'}
-            colorAddonAfter="red"
+            coloraddonafter="red"
             maxLength={4}
             addonAfter="ms"
             controls={false}

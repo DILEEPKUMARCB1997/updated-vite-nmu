@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react'
 /* eslint-disable no-unused-vars */
 
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
-import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
+// import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import { Card, Col, Row, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
@@ -282,7 +282,7 @@ const TopologyPage = () => {
                 getEdgeLinkNode={getEdgeLinkNode}
               />
               {/* </Card> */}
-              <TopologyAddModal
+              {/* <TopologyAddModal
                 onRef={(ref) => {
                   setModal(ref)
                 }}
@@ -290,7 +290,7 @@ const TopologyPage = () => {
                 //   modal = ref
                 // }}
                 handleDisableEdit={handleDisableEdit}
-              />
+              /> */}
               {/* <TopologyAddModal
                 onRef={(ref) => {
                   modalRef = ref

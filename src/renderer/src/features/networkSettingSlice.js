@@ -35,7 +35,7 @@ export const calculateIPAddress = () => (dispatch, getState) => {
     existIP = [...existIP, ip.toLong(device.IPAddress)]
   })
 
-  console.log(existIP)
+  // console.log(existIP)
   existIP.sort((a, b) => a - b)
   let tempIP = ip.toLong(getState().networkSetting.startAddress)
   const count = getState().networkSetting.deviceNum
@@ -101,7 +101,7 @@ export const setSingleDeviceAddress = (payload) => (dispatch, getState) => {
 }
 
 const networkSettingResultListener = (dispatch) => (event, arg) => {
-  console.log(arg)
+  // console.log(arg)
   dispatch(setDeviceSettingStatus({ MACAddress: arg.data.MACAddress, status: arg.success }))
 }
 
@@ -200,7 +200,7 @@ const networkSettingSlice = createSlice({
       }
     },
     setCalculateResultData: (state, { payload }) => {
-      console.log('calculate', payload)
+      // console.log('calculate', payload)
       return {
         ...state,
         deviceList: payload.newDeviceList,
@@ -225,7 +225,7 @@ const networkSettingSlice = createSlice({
       }
     },
     setNetworkSettingAddress: (state, { payload }) => {
-      console.log('payload netmask', payload)
+      // console.log('payload netmask', payload)
       const { type, validType, value } = payload
       return { ...state, [type]: value, [validType]: IPFormat.test(value) }
     },

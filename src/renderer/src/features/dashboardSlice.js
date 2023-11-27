@@ -11,7 +11,7 @@ import { openDialog } from './dialogSlice'
 
 export const showCustomTableData = (payload) => (dispatch) => {
   dispatch(updateCustomTableData(payload))
-  dispatch(openDialog('customGraphTable'))
+  dispatch(openDialog('eventGraphTable'))
 }
 
 export const showSyslogTableData = (payload) => (dispatch) => {
@@ -26,22 +26,26 @@ export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
     switch (type) {
-      case 'event':
-        break
-      case 'custom': {
-        const customData = requestCustomGraphData(data)
-        dispatch(updateCustomGraph(customData))
+      case 'event': {
         break
       }
       case 'trap': {
         const resultTrap = requestGraphData(data)
-        //  console.log(data)
+
         dispatch(updateTrapGraph(resultTrap))
         break
       }
       case 'syslog': {
         const resultSyslog = requestGraphData(data)
         dispatch(updateSyslogGraph(resultSyslog))
+        break
+      }
+
+      case 'custom': {
+        const customData = requestCustomGraphData(data)
+        // console.log(customData)
+        //   dispatch(updateCustomGraph(customData))
+        dispatch(updateCustomGraph(customData))
         break
       }
 
@@ -91,15 +95,16 @@ const dashboardSlice = createSlice({
         diskUses: { free, used: size - free, total: size, diskFree, diskUsed }
       }
     },
-    updateTrapGraph: (state, { payload }) => {
-      const { label, data, tableResult, lastUpdated } = payload
+    updateTrapGraph: (state, action) => {
+      // const { label, data, tableResult, lastUpdated } = payload
+      const { payload } = action
       return {
         ...state,
         trapGraphData: {
-          label: label,
-          data: data,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          data: payload.data,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
@@ -117,18 +122,17 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomGraph: (state, { payload }) => {
-      //console.log(action)
-      const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
-        payload
+      // const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
+      //   payload
       return {
         ...state,
         customGraphData: {
-          label: label,
-          InformationData: InformationData,
-          CriticalData: CriticalData,
-          WarningData: WarningData,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
+          WarningData: payload.WarningData,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
@@ -140,16 +144,14 @@ const dashboardSlice = createSlice({
       }
     },
     updateCustomTableData: (state, action) => {
-      console.log(action)
-      const { payload } = action
+      // const { payload } = action
       return {
         ...state,
-        customTableData: payload
+        customTableData: action.payload
       }
     },
 
     updateTrapTableData: (state, { payload }) => {
-      console.log('payload', payload)
       return { ...state, trapTableData: payload }
     }
   }

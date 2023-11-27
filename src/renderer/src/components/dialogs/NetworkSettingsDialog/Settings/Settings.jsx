@@ -24,7 +24,7 @@ const Settings = () => {
     validDNS2
   } = useSelector(networkSettingSelector)
   const data = useSelector(networkSettingSelector)
-  console.log('data', data)
+  // console.log('data', data)
 
   const { useToken } = theme
   const { token } = useToken()
@@ -40,12 +40,12 @@ const Settings = () => {
   ]
 
   const handleDHCPCheckboxCheck = (e) => {
-    console.log(e.target.checked)
+    // console.log(e.target.checked)
     dispatch(setNetworkSettingDHCP(e.target.checked))
   }
 
   const handleAddressInputChange = (key, valid) => (e) => {
-    console.log(key, valid, e.target.value)
+    // console.log(key, valid, e.target.value)
     dispatch(setNetworkSettingAddress({ type: key, validType: valid, value: e.target.value }))
   }
 
@@ -73,21 +73,17 @@ const Settings = () => {
       >
         DHCP
       </Checkbox>
-      {inputData.map(
-        (input) => (
-          console.log('input', input),
-          (
-            <Form.Item key={input.key} label={input.label} colon={false} style={{ margin: '5px' }}>
-              <Input
-                status={data[input.valid] ? null : 'error'}
-                disabled={status !== 'wait' || isDHCP}
-                value={data[input.key]}
-                onChange={handleAddressInputChange(input.key, input.valid)}
-              />
-            </Form.Item>
-          )
-        )
-      )}
+      {inputData.map((input) => (
+        // console.log('input', input),
+        <Form.Item key={input.key} label={input.label} colon={false} style={{ margin: '5px' }}>
+          <Input
+            status={data[input.valid] ? null : 'error'}
+            disabled={status !== 'wait' || isDHCP}
+            value={data[input.key]}
+            onChange={handleAddressInputChange(input.key, input.valid)}
+          />
+        </Form.Item>
+      ))}
 
       {/* <Form.Item label="Gateway" colon={false} style={{ margin: '5px' }}>
         <Input

@@ -139,8 +139,8 @@ const RowContextMenu = ({ position = {}, onMenuClick, record }) => {
           components: {
             Menu: {
               colorActiveBarWidth: 0,
-              colorItemBg: 'transparent',
-              colorSubItemBg: 'transparent',
+              itemSelectedBg: 'transparent',
+              subMenuItemBg: 'transparent',
               colorSplit: 'transparent'
             }
           }

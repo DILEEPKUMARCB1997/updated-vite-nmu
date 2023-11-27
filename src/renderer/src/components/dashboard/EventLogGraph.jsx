@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState, useCallback, memo, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -16,8 +16,6 @@ const EventLogGraph = () => {
   const { customGraphData } = useSelector(dashboardSelector)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
-  console.log(customGraphData)
-  // const [, forceRender] = useState(undefined)
 
   const eventLogData = useMemo(() => {
     return {
@@ -94,7 +92,7 @@ const EventLogGraph = () => {
             show: true
           },
           fill: {
-            type: 'olid',
+            type: 'solid',
             gradient: {
               colorFrom: '#D8E3F0',
               colorTo: '#BED1E6',
@@ -116,6 +114,7 @@ const EventLogGraph = () => {
   }, [InformationData, WarningData, CriticalData, label, tableData])
 
   const handleRefreshGraph = () => {
+    console.log('eventlogGraph clicked', customGraphData)
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -136,7 +135,7 @@ const EventLogGraph = () => {
         })
       )
     }, 1000)
-  }, [requestHistoryData])
+  }, [])
   return (
     <>
       <div

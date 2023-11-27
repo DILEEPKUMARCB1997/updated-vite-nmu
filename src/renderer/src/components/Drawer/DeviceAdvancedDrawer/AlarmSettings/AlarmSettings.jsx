@@ -123,7 +123,6 @@ const AlarmSettings = () => {
       <List
         size="small"
         header={powerListHeadRender()}
-        s
         bordered
         dataSource={powerListData}
         renderItem={(item) => powerListItemRender(item)}

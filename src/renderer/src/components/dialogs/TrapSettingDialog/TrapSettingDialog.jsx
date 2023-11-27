@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Typography, Row, Col, theme } from 'antd'
 import { ClusterOutlined } from '@ant-design/icons'
 import DeviceList from './DeviceList/DeviceList'
@@ -12,15 +13,6 @@ const TrapSettingDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const [didMount, setDidMount] = useState(false)
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setDidMount(true)
-  //   }, 200)
-  //   return () => {
-  //     dispatch(clearData())
-  //   }
-  // }, [])
 
   useEffect(() => {
     setTimeout(() => {

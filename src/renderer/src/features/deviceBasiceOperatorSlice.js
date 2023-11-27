@@ -11,7 +11,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 
 const rebootResultListener = (dispatch) => (event, arg) => {
-  console.log(arg)
+  //console.log(arg)
   if (arg.success) {
     dispatch(
       openAlertDialog({
@@ -32,7 +32,7 @@ const rebootResultListener = (dispatch) => (event, arg) => {
 export const requestDeviceReboot =
   (param = {}) =>
   (dispatch) => {
-    console.log(param)
+    // console.log(param)
     const { MACAddress, IPAddress, deviceType } = param
     if (deviceType === 'snmp' || deviceType === 'all') {
       window.electron.ipcRenderer.once(
@@ -64,7 +64,7 @@ export const requestDeviceBeep =
   }
 
 export const requestOpenTelnet = (param) => () => {
-  console.log(param)
+  // console.log(param)
   window.electron.ipcRenderer.send(REQUEST_MP_OPEN_TELNET, param)
 }
 

@@ -18,7 +18,11 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData, label, lastUpdated, data } = syslogGraphData
-  console.log('syslog', syslogGraphData)
+  // console.log('syslog', syslogGraphData)
+
+  const onSyslogGraphClick = (barIndex) => {
+    dispatch(showSyslogTableData(tableData[barIndex]))
+  }
 
   const graphData = useMemo(() => {
     return {
@@ -106,11 +110,14 @@ const SyslogGraph = () => {
     }
   }, [label, data])
 
-  const onSyslogGraphClick = (barIndex) => {
-    dispatch(showSyslogTableData(tableData[barIndex]))
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
+  }, [])
 
   const handleRefreshGraph = () => {
+    console.log('syslogGraph clicked', syslogGraphData)
     dispatch(
       requestHistoryData({
         type: 'syslog',
@@ -120,19 +127,6 @@ const SyslogGraph = () => {
       })
     )
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'syslog',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1000)
-  }, [])
 
   return (
     <>

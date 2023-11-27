@@ -82,34 +82,6 @@ export const requestHistoryData = (param) => (dispatch) => {
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
 }
 
-export const requestInitData = (param) => (dispatch) => {
-  window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-    const { type, data } = arg
-    // console.log(type)
-    // console.log(data)
-    switch (type) {
-      case 'event':
-        dispatch(updateEvent(data))
-        break
-      case 'trap':
-        dispatch(updateTrap(data))
-        break
-      case 'syslog':
-        dispatch(updateSyslog(data))
-        break
-
-      // case 'custom':
-      //   dispatch(updateCustomEvent(data))
-      //   dispatch(initEventDailyData({ types: 'custom' }))
-      //   break
-      default:
-        break
-    }
-  })
-
-  window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
-}
-
 const eventLogSlice = createSlice({
   name: 'eventLogSlice',
   initialState: {

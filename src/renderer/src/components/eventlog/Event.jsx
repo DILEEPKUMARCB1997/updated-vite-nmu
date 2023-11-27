@@ -5,12 +5,7 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, ConfigProvider, Table, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearEventData,
-  eventLogSelector,
-  requestHistoryData,
-  requestInitData
-} from '../../features/eventLogSlice'
+import { clearEventData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
 import { memo } from 'react'
 
@@ -18,7 +13,6 @@ function Event() {
   const { useToken } = theme
   const { token } = useToken()
   const { eventData } = useSelector(eventLogSelector)
-  console.log(eventData)
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
   const columns = [
@@ -53,6 +47,7 @@ function Event() {
   }, [])
 
   const handleHistoryButtonOnClick = () => {
+    console.log('eventdata', eventData)
     dispatch(
       requestHistoryData({
         type: 'event',
@@ -102,10 +97,7 @@ function Event() {
         bordered
         dataSource={eventData}
         loading={tableLoading}
-        // bordered
         pagination={{
-          // showQuickJumper: true,
-          // showSizeChanger: true,
           size: 'default',
           defaultPageSize: 10,
           pageSizeOptions: [10, 15, 20, 25],
@@ -113,7 +105,6 @@ function Event() {
         }}
         scroll={{ y: 'calc(100vh - 365px)', x: 1000 }}
       />
-      {/* </Card> */}
     </ConfigProvider>
   )
 }

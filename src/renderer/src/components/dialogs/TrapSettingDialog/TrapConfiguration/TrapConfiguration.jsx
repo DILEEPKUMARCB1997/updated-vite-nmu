@@ -8,20 +8,7 @@ import { useDispatch } from 'react-redux'
 const TrapConfiguration = () => {
   const { notification } = App.useApp()
   const dispatch = useDispatch()
-  // const [trapServerIP, setTrapServerIP] = useState('')
-  // // console.log(trapServerIP)
-  // const [trapServerPort, setTrapServerPort] = useState(162)
-  // // console.log(trapServerPort)
-  // const [trapCommString, setTrapCommString] = useState('')
-  // console.log(trapCommString)
-  // const [trapServerIP, setTrapServerIP] = useState('')
-  // console.log(trapServerIP)
-  // const [trapServerPort, setTrapServerPort] = useState(162)
-  // console.log(trapServerPort)
-  // const [trapCommString, setTrapCommString] = useState('')
-  // console.log(trapCommString)
   const [state, setState] = useState({ trapServerIP: '', trapServerPort: 162, trapCommString: '' })
-
   const { useToken } = theme
   const { token } = useToken()
 
@@ -69,9 +56,7 @@ const TrapConfiguration = () => {
     <Card
       size="small"
       title="Trap Configuration Field"
-      // style={{ width: '100%', height: '100%' }}
       bordered={false}
-      // bodyStyle={{ padding: '5px' }}
       style={{
         height: '450px',
         borderRadius: '4px',
@@ -102,10 +87,6 @@ const TrapConfiguration = () => {
               />
             </Form.Item>
             <Form.Item
-              // style={{ width: '230px', paddingTop: '10px' }}
-              // help=
-
-              // {trapServerPort === '' ? 'Server port is required' : ''}
               colon={false}
               help={
                 <Typography style={{ color: 'red' }}>

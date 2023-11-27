@@ -1,4 +1,4 @@
-import { Button, Drawer, Tabs, Typography, notification, theme } from 'antd'
+import { Button, Drawer, Tabs, Typography, theme, App } from 'antd'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -14,8 +14,9 @@ const DeviceAdvanceDrawer = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
+  const { notification } = App.useApp()
   const { drawVisible, MACAddress, model } = useSelector(deviceAdvanceSettingSelector)
-  console.log(drawVisible)
+  // console.log(drawVisible)
 
   const items = [
     {

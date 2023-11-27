@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react'
 import {
   REQUEST_MP_GET_DISK_USES,
@@ -10,6 +11,7 @@ import ReactApexChart from 'react-apexcharts'
 const DiskSpaceSummary = () => {
   const dispatch = useDispatch()
   const { diskUses } = useSelector(dashboardSelector)
+  // console.log(diskUses)
   useEffect(() => {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
       if (arg.success) {
@@ -24,10 +26,7 @@ const DiskSpaceSummary = () => {
 
   const options = {
     series: [diskUses.diskUsed],
-    labels: [
-      `Disk Space Used - ${diskUses.diskUsed} %`
-      // `Disk Space Free - ${diskUses.diskFree} %`
-    ],
+    labels: [`Disk Space Used - ${diskUses.diskUsed} %`],
     legend: {
       show: true,
       showForSingleSeries: true,

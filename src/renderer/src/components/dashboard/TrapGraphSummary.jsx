@@ -7,19 +7,15 @@ import {
   dashboardSelector,
   requestHistoryData,
   showTrapTableData
-  //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
+import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
-import { useThemeStore } from '../../utils/themes/useStore'
 
 const TrapGraphSummary = () => {
-  const { mode } = useThemeStore()
-  const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-  console.log('trap graph data', trapGraphData)
 
   const snmpTrapMsgData = useMemo(() => {
     return {
@@ -43,6 +39,7 @@ const TrapGraphSummary = () => {
               if (config.selectedDataPoints[0].length > 0) {
                 onTrapGraphClick(config.dataPointIndex)
               }
+              //  console.log(chartContext)
             }
           }
         },
@@ -103,17 +100,33 @@ const TrapGraphSummary = () => {
     }
   }, [trapGraphData.data, trapGraphData.label])
 
-  const onTrapGraphClick = (barIndex) => {
-    dispatch(showTrapTableData(tableData[barIndex]))
-  }
-
   useEffect(() => {
     setTimeout(() => {
       dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
     }, 1500)
-  }, [])
+  }, [dispatch])
+
+  // useEffect(() => {
+  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+  //     setSnmpTrapMsgData((prev) => ({
+  //       ...prev,
+  //       series: [
+  //         {
+  //           data: trapGraphData.data
+  //         }
+  //       ],
+  //       options: {
+  //         ...prev.options,
+  //         xaxis: {
+  //           categories: trapGraphData.label
+  //         }
+  //       }
+  //     }))
+  //   }
+  // }, [trapGraphData])
 
   const handleRefresh = () => {
+    console.log('trapGraph clicked', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 

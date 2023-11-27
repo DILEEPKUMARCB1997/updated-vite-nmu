@@ -7,7 +7,11 @@ import { ProTable } from '@ant-design/pro-components'
 import RowContextMenu from '../RowContextMenu/RowContextMenu'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectDiscoveryTable, discoverySelector } from '../../features/discoverySlice'
+import {
+  selectDiscoveryTable,
+  discoverySelector,
+  clearDiscoverTableSelect
+} from '../../features/discoverySlice'
 import { initDeviceAdvanced } from '../../features/deviceAdvanceSettingSlice'
 import { snmpSelector } from '../../features/Preferences/snmpSlice'
 import { initSingleNetworkSetting } from '../../features/singleNetworkSettingSlice'
@@ -22,7 +26,11 @@ import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
 import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
+import {
+  UIControlSelector,
+  removeBatchOperateEvent,
+  setBatchOperateEvents
+} from '../../features/UIControllSlice'
 
 import EnhanceCheckBox from './EnhanceCheckBox/EnhanceCheckBox'
 
@@ -99,6 +107,10 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
+<<<<<<< HEAD
+=======
+
+>>>>>>> c27671841c065c63dbb2755f9209baa90f0ed410
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
@@ -114,6 +126,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
+  // console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -150,8 +163,8 @@ const DeviceTable = ({ deviceData = [] }) => {
   const shell = require('electron').shell
 
   const handleItemClick = (key, data) => {
-    console.log(key)
-    console.log(data)
+    //console.log(key)
+    // console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
@@ -330,10 +343,16 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
+
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
+<<<<<<< HEAD
   console.log('seleceted rows array', selectedRowsArray)
+=======
+  // console.log('seleceted rows array', selectedRowsArray)
+
+>>>>>>> c27671841c065c63dbb2755f9209baa90f0ed410
   const rowSelection = {
-    // selectedRowKeys: selectedRowsArray,
+    type: 'checkbox',
 
     // onChange: (selectedRowKeys, rows) => {
     //   console.log('rows', rows)

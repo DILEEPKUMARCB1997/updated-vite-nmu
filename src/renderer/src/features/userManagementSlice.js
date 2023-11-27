@@ -11,9 +11,9 @@ import { notification } from 'antd'
 
 export const setUserData = (param) => (dispatch, getState) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_USER_DETAILS, (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (arg.success) {
-      console.log(arg.data)
+      // console.log(arg.data)
       dispatch(requestGetUsersData())
       notification.success({ message: 'Successfully saved user data.' })
     } else {
@@ -31,7 +31,7 @@ export const setUserData = (param) => (dispatch, getState) => {
 
 export const deleteUserData = (param) => (dispatch, getState) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_DELETE_USER_DETAILS, (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (arg.success) {
       dispatch(requestGetUsersData())
       notification.success({ message: 'Successfully deleted user data.' })
@@ -46,10 +46,10 @@ export const deleteUserData = (param) => (dispatch, getState) => {
 
 export const requestGetUsersData = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_USERS_DATA, (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (arg.success) {
       const usersData = arg.data
-      console.log(usersData)
+      // console.log(usersData)
       dispatch(getUsersData(usersData))
     } else {
       console.log('Error get users data')
