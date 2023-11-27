@@ -107,10 +107,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
-<<<<<<< HEAD
-=======
-
->>>>>>> c27671841c065c63dbb2755f9209baa90f0ed410
   const token = useTheme()
   const dispatch = useDispatch()
   const { isPrecheck } = useSelector(snmpSelector)
@@ -345,12 +341,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-<<<<<<< HEAD
   console.log('seleceted rows array', selectedRowsArray)
-=======
-  // console.log('seleceted rows array', selectedRowsArray)
-
->>>>>>> c27671841c065c63dbb2755f9209baa90f0ed410
   const rowSelection = {
     type: 'checkbox',
 
