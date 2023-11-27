@@ -8,7 +8,7 @@ const FileList = () => {
   const ListItem = List.Item
   const ListItemMeta = List.Item.Meta
   const { files } = useSelector(scheduleBackupSelector)
-  console.log(files)
+  // console.log(files)
   const { useToken } = theme
   const { token } = useToken()
 

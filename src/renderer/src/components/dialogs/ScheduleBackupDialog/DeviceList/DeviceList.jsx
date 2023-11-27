@@ -19,7 +19,7 @@ import {
   RESPONSE_RP_DELETE_SCHEDULE
 } from '../../../../../../main/utils/IPCEvents'
 
-const DeviceList = (props) => {
+const DeviceList = () => {
   const { modal } = App.useApp()
   const {
     isRestoreFinish,
@@ -31,14 +31,14 @@ const DeviceList = (props) => {
     scheduledDeviceArrayData
   } = useSelector(scheduleBackupSelector)
 
-  console.log(scheduledDeviceArrayData)
+  // console.log(scheduledDeviceArrayData)
 
   const scheduledBackupListId = Object.keys(scheduledBackup)
-  console.log(scheduledBackupListId)
+  // console.log(scheduledBackupListId)
   const dispatch = useDispatch()
 
   const data = useSelector((state) => state.scheduleBackup.scheduledBackup)
-  console.log(data)
+  // console.log(data)
 
   const { Panel } = Collapse
   const { useToken } = theme

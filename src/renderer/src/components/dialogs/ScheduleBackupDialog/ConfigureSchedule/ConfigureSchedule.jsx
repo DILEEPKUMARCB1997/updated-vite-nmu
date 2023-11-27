@@ -12,8 +12,7 @@ import {
 } from '../../../../features/scheduleBackupSlice'
 import { useEffect } from 'react'
 
-const ConfigureSchedule = (...props) => {
-  console.log(props)
+const ConfigureSchedule = () => {
   const {
     isEditMode,
     frequency,
@@ -24,16 +23,16 @@ const ConfigureSchedule = (...props) => {
     customFrequency,
     scheduleId
   } = useSelector(scheduleBackupSelector)
-  console.log(
-    isEditMode,
-    frequency,
-    scheduleName,
-    scheduleDate,
-    scheduleTime,
-    weeekDay,
-    customFrequency
-  )
-  console.log(scheduleId)
+  // console.log(
+  //   isEditMode,
+  //   frequency,
+  //   scheduleName,
+  //   scheduleDate,
+  //   scheduleTime,
+  //   weeekDay,
+  //   customFrequency
+  // )
+  // console.log(scheduleId)
   const dispatch = useDispatch()
   const now = new Date()
   const nowYear = datePad(now.getFullYear().toString())
@@ -43,7 +42,7 @@ const ConfigureSchedule = (...props) => {
   const nowMinutes = datePad(now.getMinutes().toString())
   const nowSeconds = datePad(now.getSeconds().toString())
 
-  console.log(now.getFullYear() + '-' + nowMonth + '-' + nowDate)
+  // console.log(now.getFullYear() + '-' + nowMonth + '-' + nowDate)
 
   // const [frequency, setFrequency] = useState(2)
   // const [customFrequency, setCustomFrequency] = useState(1)
@@ -62,33 +61,32 @@ const ConfigureSchedule = (...props) => {
     scheduleDate: now.getFullYear() + '-' + nowMonth + '-' + nowDate,
     weeekDay: 1
   })
-  console.log(state)
+  // console.log(state)
   const [form] = Form.useForm()
   const { useToken } = theme
   const { token } = useToken()
 
   const handleNameInputChange = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     if (e.target.value.length <= 20) {
-      // setScheduleName(e.target.value)
       setState({ ...state, scheduleName: e.target.value })
     }
   }
 
   const handleSelectChange = (value) => {
-    console.log(value)
+    // console.log(value)
     // setFrequency(value)
     setState({ ...state, frequency: value })
   }
 
   const handleDateChange = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     // setScheduleDate(e.target.value)
     setState({ ...state, scheduleDate: e.target.value })
   }
 
   const handleSelectChangeWeek = (value) => {
-    console.log(value)
+    // console.log(value)
     // setWeekDay(value)
     setState({ ...state, weeekDay: value })
   }
@@ -158,7 +156,7 @@ const ConfigureSchedule = (...props) => {
 
   useEffect(() => {
     if (isEditMode) {
-      console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
+      // console.log(frequency, scheduleName, scheduleDate, scheduleTime, weeekDay, customFrequency)
       const now = new Date(scheduleDate + '' + scheduleTime)
       const nowYear = datePad(now.getFullYear().toString())
       const nowMonth = datePad(now.getMonth() + 1).toString()
