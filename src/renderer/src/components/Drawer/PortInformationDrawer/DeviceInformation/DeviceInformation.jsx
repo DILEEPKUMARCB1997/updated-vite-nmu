@@ -11,10 +11,10 @@ const DeviceInformation = () => {
   const { token } = useToken()
 
   const state = useSelector(portInformationSelector)
-  console.log('state', state)
+  // console.log('state', state)
 
   const { powerStatusData } = useSelector(portInformationSelector)
-  console.log('power status data', powerStatusData)
+  // console.log('power status data', powerStatusData)
 
   const infoItem = [
     { label: 'Model Name', id: 'model' },

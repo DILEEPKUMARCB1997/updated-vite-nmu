@@ -62,7 +62,7 @@ const portInformationSlice = createSlice({
   },
   reducers: {
     openPortInfoDrawer: (state, { payload }) => {
-      console.log(payload)
+      // console.log(payload)
       return { ...state, drawerVisible: payload }
     },
     setModelInfo: (state, { payload }) => {

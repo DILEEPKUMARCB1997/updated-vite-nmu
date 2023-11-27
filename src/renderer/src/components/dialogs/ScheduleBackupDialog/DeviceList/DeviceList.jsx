@@ -127,7 +127,7 @@ const DeviceList = (props) => {
         <Collapse
           key={scheduleId}
           accordion
-          expandIconPosition="start"
+          expandIconPosition="end"
           className="custom-colapse"
           style={{
             marginBottom: '10px',

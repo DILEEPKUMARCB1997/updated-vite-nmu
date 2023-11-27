@@ -20,6 +20,7 @@ const FileList = () => {
   const dispatch = useDispatch()
   const { mode, isTaskRunning, isRestoreFisish, deviceStatus, selectDevice } =
     useSelector(backupRestoreSelector)
+
   const status = deviceStatus[selectDevice]
   // console.log('status', status)
   if (selectDevice !== '') {
@@ -42,6 +43,7 @@ const FileList = () => {
       bordered={false}
       style={{
         height: '450px',
+        overflow: 'auto',
         borderRadius: '4px',
         boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
       }}
@@ -53,36 +55,34 @@ const FileList = () => {
         itemLayout="horizontal"
         dataSource={files}
         renderItem={(item) => (
-          console.log('item', item),
-          (
-            <ListItem
-              actions={[
-                mode === 'backup' && (
-                  <Button
-                    size="small"
-                    disabled={isTaskRunning}
-                    style={{ color: 'red' }}
-                    icon={<CloseOutlined></CloseOutlined>}
-                    onClick={handleDeleteFileButtonOnClick(item)}
+          // console.log('item', item),
+          <ListItem
+            actions={[
+              mode === 'backup' && (
+                <Button
+                  size="small"
+                  disabled={isTaskRunning}
+                  style={{ color: 'red' }}
+                  icon={<CloseOutlined></CloseOutlined>}
+                  onClick={handleDeleteFileButtonOnClick(item)}
+                />
+              )
+            ]}
+          >
+            <ListItemMeta
+              title={item}
+              style={{ marginBottom: '0px' }}
+              avatar={
+                mode === 'restore' && (
+                  <Checkbox
+                    disabled={isTaskRunning || isRestoreFisish}
+                    checked={restoreFile === item}
+                    onChange={handleFileCheckboxOnChange(item)}
                   />
                 )
-              ]}
-            >
-              <ListItemMeta
-                title={item}
-                style={{ marginBottom: '0px' }}
-                avatar={
-                  mode === 'restore' && (
-                    <Checkbox
-                      disabled={isTaskRunning || isRestoreFisish}
-                      checked={restoreFile === item}
-                      onChange={handleFileCheckboxOnChange(item)}
-                    />
-                  )
-                }
-              />
-            </ListItem>
-          )
+              }
+            />
+          </ListItem>
         )}
         pagination={{
           type: 'bottom',
@@ -90,7 +90,7 @@ const FileList = () => {
           showQuickJumper: false,
           size: 'small',
           total: files.length,
-          defaultPageSize: 5,
+          defaultPageSize: 8,
           pageSizeOptions: [5, 10, 15, 20],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
         }}

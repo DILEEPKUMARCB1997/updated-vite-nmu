@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState, useCallback, memo, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -92,7 +92,7 @@ const EventLogGraph = () => {
             show: true
           },
           fill: {
-            type: 'olid',
+            type: 'solid',
             gradient: {
               colorFrom: '#D8E3F0',
               colorTo: '#BED1E6',
@@ -135,7 +135,7 @@ const EventLogGraph = () => {
         })
       )
     }, 1000)
-  }, [requestHistoryData])
+  }, [])
   return (
     <>
       <div

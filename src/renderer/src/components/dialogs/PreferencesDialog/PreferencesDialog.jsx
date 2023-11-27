@@ -88,7 +88,7 @@ const PreferencesDialog = ({ onClose, tip = 'Loading' }) => {
   )
 
   const handleMenuItemClick = ({ key }) => {
-    console.log(key)
+    // console.log(key)
     const fetchIndex = items.findIndex((e) => e.key === key)
 
     if (fetchIndex === selectedIndex) return

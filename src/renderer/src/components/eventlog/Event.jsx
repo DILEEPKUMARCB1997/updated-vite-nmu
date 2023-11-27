@@ -5,12 +5,7 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, ConfigProvider, Table, theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearEventData,
-  eventLogSelector,
-  requestHistoryData,
-  requestInitData
-} from '../../features/eventLogSlice'
+import { clearEventData, eventLogSelector, requestHistoryData } from '../../features/eventLogSlice'
 import { openDialog } from '../../features/dialogSlice'
 import { memo } from 'react'
 
@@ -18,7 +13,6 @@ function Event() {
   const { useToken } = theme
   const { token } = useToken()
   const { eventData } = useSelector(eventLogSelector)
-
   const dispatch = useDispatch()
   const [tableLoading, setTableLoading] = useState(true)
   const columns = [
