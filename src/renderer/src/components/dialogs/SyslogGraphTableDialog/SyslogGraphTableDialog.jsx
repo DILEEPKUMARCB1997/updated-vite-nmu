@@ -52,6 +52,7 @@ const SyslogGraphTableDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const [tableLoading, setTableLoading] = useState(true)
+
   const { syslogTableData } = useSelector(dashboardSelector)
   // console.log(syslogTableData)
 

@@ -5,12 +5,7 @@ import React, { useEffect } from 'react'
 // import message from '../ResetToDefaultSnack/ResetToDefaultSnack'
 // import { tipsMessage, handleOKButtonOnClick } from '../ResetToDefaultSnack/ResetToDefaultSnack'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  clearDiscoverTableSelect,
-  discoverySelector,
-  selectDiscoveryTable,
-  showDiscoveryTableCheckBox
-} from '../../../features/discoverySlice'
+import { clearDiscoverTableSelect, discoverySelector } from '../../../features/discoverySlice'
 
 const BasicSnackTemplate = ({ onClose, props }) => {
   const dispatch = useDispatch()

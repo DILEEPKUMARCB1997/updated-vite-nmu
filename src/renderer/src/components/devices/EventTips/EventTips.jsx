@@ -11,7 +11,6 @@ import { initSyslogSettingData } from '../../../features/SyslogSettingSlice'
 import { initNetworkSettingData } from '../../../features/networkSettingSlice'
 import { initTrapSettingData } from '../../../features/trapSettingSlice'
 import './EventTips.css'
-import { closeSnack } from '../../../features/snackSlice'
 
 const messages = {
   firmwareUpdate: 'Firmware Update',
@@ -26,12 +25,10 @@ const TIPS = '(This feature only for device with SNMP support.)'
 
 const EventTips = () => {
   const dispatch = useDispatch()
-  // const disableOK = useSelector((state) => {
-  //   state.discovery.selected.length === 0
-  // })
 
   const { batchOperateEvent, showBatchOperateTips } = useSelector(UIControlSelector)
-
+  // console.log(showBatchOperateTips)
+  // console.log(batchOperateEvent)
   const { SNMPSelectOnly, selected } = useSelector(discoverySelector)
 
   const disableOK = selected.length === 0
@@ -39,12 +36,10 @@ const EventTips = () => {
   // console.log(selected)
 
   const handleOKOnClick = () => {
-    console.log(batchOperateEvent)
+    // console.log(batchOperateEvent)
     switch (batchOperateEvent) {
       case 'firmwareUpdate':
         dispatch(initFirmwareUpdateData())
-        // dispatch(closeSnack())
-        // console.log(initFirmwareUpdateData())
         break
       case 'resetToDefault':
         dispatch(initResetToDefaultData())

@@ -15,7 +15,7 @@ const DeviceDefaultSetting = (props) => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { advancedData, validsData, isConfigChange } = useSelector(advancedSelector)
-  console.log(isConfigChange)
+  // console.log(isConfigChange)
   const { isDefaultUsernameValid, isDefaultPasswordValid } = validsData
   const { defaultUsername, defaultPassword } = advancedData
 

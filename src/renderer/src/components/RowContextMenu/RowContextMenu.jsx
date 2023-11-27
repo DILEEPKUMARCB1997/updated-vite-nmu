@@ -17,16 +17,16 @@ const items = [
   {
     label: 'OpenWeb',
     key: 'openWeb',
-    icon: <GlobalOutlined />,
+    icon: <GlobalOutlined />
 
-    children: [
-      {
-        label: 'Open on Os Browser',
-        key: 'openOnOSbrowser',
-        icon: <SelectOutlined />
-      },
-      { label: 'Open on NMU', key: 'openOnNMUApplication' }
-    ]
+    // children: [
+    //   {
+    //     label: 'Open on Os Browser',
+    //     key: 'openOnOSbrowser',
+    //     icon: <SelectOutlined />
+    //   },
+    //   { label: 'Open on NMU', key: 'openOnNMUApplication' }
+    // ]
   },
   {
     label: 'Open on Os Browser',
@@ -96,8 +96,8 @@ const RowContextMenu = ({ position = {}, onMenuClick, record }) => {
           components: {
             Menu: {
               colorActiveBarWidth: 0,
-              colorItemBg: 'transparent',
-              colorSubItemBg: 'transparent',
+              itemSelectedBg: 'transparent',
+              subMenuItemBg: 'transparent',
               colorSplit: 'transparent'
             }
           }

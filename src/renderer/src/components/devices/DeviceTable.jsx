@@ -7,7 +7,11 @@ import { ProTable } from '@ant-design/pro-components'
 import RowContextMenu from '../RowContextMenu/RowContextMenu'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectDiscoveryTable, discoverySelector } from '../../features/discoverySlice'
+import {
+  selectDiscoveryTable,
+  discoverySelector,
+  clearDiscoverTableSelect
+} from '../../features/discoverySlice'
 import { initDeviceAdvanced } from '../../features/deviceAdvanceSettingSlice'
 import { snmpSelector } from '../../features/Preferences/snmpSlice'
 import { initSingleNetworkSetting } from '../../features/singleNetworkSettingSlice'
@@ -22,7 +26,11 @@ import { openDialog } from '../../features/dialogSlice'
 import { requestGetBackupRestoreData } from '../../features/singleBackupRestoreSlice'
 import { initPortInfoData } from '../../features/portInformationSlice'
 import { requestCheckSNMP } from '../../features/discoverySlice'
-import { UIControlSelector, removeBatchOperateEvent } from '../../features/UIControllSlice'
+import {
+  UIControlSelector,
+  removeBatchOperateEvent,
+  setBatchOperateEvents
+} from '../../features/UIControllSlice'
 
 const columns = [
   {
@@ -97,7 +105,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   const [yPos, setYPos] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [contextRecord, setContextRecord] = useState({})
-  const [selectedCheckboxes, setSelectedCheckboxes] = useState([])
 
   const token = useTheme()
   const dispatch = useDispatch()
@@ -114,6 +121,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const { defaultDeviceArrayData, groupDeviceArrayData, SNMPSelectOnly, showCheckBox, selected } =
     useSelector(discoverySelector)
+  // console.log(selected)
 
   const [inputSearch, setInputSearch] = useState('')
   const recordAfterfiltering = (dataSource) => {
@@ -327,8 +335,13 @@ const DeviceTable = ({ deviceData = [] }) => {
       )
     }
   }
+
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
+  // console.log('seleceted rows array', selectedRowsArray)
+
   const rowSelection = {
+    type: 'checkbox',
+
     onSelect: (record, selected, selectedRows, nativeEvent) => {
       console.log(record, selected, selectedRows, nativeEvent)
 
@@ -338,22 +351,14 @@ const DeviceTable = ({ deviceData = [] }) => {
           deviceData: [record.MACAddress]
         })
       )
-      setSelectedRowsArray([])
     },
 
-    getCheckboxProps: (record, deviceType) => ({
-      disabled:
-        !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
-    })
-  }
-  const handleCheckboxChange = (event) => {
-    const checkboxValue = event.target.value
-    if (event.target.checked) {
-      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
-    } else {
-      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
-    }
-    setSelectedRowsArray([])
+    getCheckboxProps: (record) =>
+      // console.log(record),
+      ({
+        disabled:
+          !record.isAUZ || !record.online || (!(record.deviceType !== 'gwd') && SNMPSelectOnly)
+      })
   }
 
   return (

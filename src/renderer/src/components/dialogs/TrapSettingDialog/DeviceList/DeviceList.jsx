@@ -32,16 +32,14 @@ const columns = [
     dataIndex: 'status',
     key: 'status',
     render: (text, record) => (
-      console.log(record),
-      (
-        <span
-          style={{
-            color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
-          }}
-        >
-          {results[record.status]}
-        </span>
-      )
+      // console.log(record),
+      <span
+        style={{
+          color: record.status === SUCCESS ? 'green' : record.status === ERROR ? 'red' : null
+        }}
+      >
+        {results[record.status]}
+      </span>
     )
   }
 ]
@@ -90,34 +88,35 @@ const DeviceList = () => {
         headStyle={{ backgroundColor: token.colorPrimaryBorder }}
         // bodyStyle={{ padding: '5px' }}
       >
-        <div style={{ height: '400px' }}>
-          <div
-            style={{
-              maxHeight: '295px',
-              overflow: 'auto',
-              marginTop: '8px',
-              marginBottom: '5px',
-              padding: '10px'
+        {/* <div style={{ height: '400px' }}> */}
+        <div
+          style={{
+            maxHeight: '295px',
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            marginTop: '8px',
+            marginBottom: '5px',
+            padding: '10px'
+          }}
+        >
+          <Table
+            rowKey="MACAddress"
+            columns={columns}
+            style={{ width: '100%' }}
+            // onClick={handleDeviceListItemOnClick()}
+            dataSource={data}
+            pagination={{
+              position: ['bottomCenter'],
+              showQuickJumper: true,
+              size: 'default',
+              total: data.length,
+              defaultPageSize: 10,
+              pageSizeOptions: [10, 15, 20, 25],
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
             }}
-          >
-            <Table
-              rowKey="MACAddress"
-              columns={columns}
-              style={{ width: '100%' }}
-              // onClick={handleDeviceListItemOnClick()}
-              dataSource={data}
-              pagination={{
-                position: ['bottomCenter'],
-                showQuickJumper: true,
-                size: 'default',
-                total: data.length,
-                defaultPageSize: 10,
-                pageSizeOptions: [10, 15, 20, 25],
-                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
-              }}
-            ></Table>
-          </div>
+          ></Table>
         </div>
+        {/* </div> */}
       </Card>
     </ConfigProvider>
   )

@@ -20,7 +20,7 @@ const DeviceList = () => {
     startAddress,
     validStartAddress
   } = useSelector(networkSettingSelector)
-  console.log(deviceList)
+  // console.log(deviceList)
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
@@ -47,15 +47,13 @@ const DeviceList = () => {
       width: 130,
       align: 'center',
       render: (text, record) => (
-        console.log('record', record),
-        (
-          <Input
-            value={record.IPAddress}
-            status={!record.isValidIP ? 'error' : null}
-            disabled={status !== 'wait' || isDHCP}
-            onChange={handleIPAddressInputChange(record.key)}
-          />
-        )
+        // console.log('record', record),
+        <Input
+          value={record.IPAddress}
+          status={!record.isValidIP ? 'error' : null}
+          disabled={status !== 'wait' || isDHCP}
+          onChange={handleIPAddressInputChange(record.key)}
+        />
       )
     },
     {
@@ -65,16 +63,14 @@ const DeviceList = () => {
       width: 80,
       align: 'center',
       render: (text, record) => (
-        console.log('progress record', record),
-        (
-          <Progress
-            type="circle"
-            size={50}
-            strokeWidth={10}
-            status={record.deviceStatus}
-            percent={record.deviceStatus === 'active' ? 0 : 100}
-          />
-        )
+        // console.log('progress record', record),
+        <Progress
+          type="circle"
+          size={50}
+          strokeWidth={10}
+          status={record.deviceStatus}
+          percent={record.deviceStatus === 'active' ? 0 : 100}
+        />
       )
     }
   ]
@@ -123,10 +119,10 @@ const DeviceList = () => {
     }
   })
 
-  console.log('net data', data)
+  // console.log('net data', data)
 
   const handleStartAddressInputChange = (e) => {
-    console.log(e)
+    // console.log(e)
     dispatch(setStartAddress(e.target.value))
   }
 

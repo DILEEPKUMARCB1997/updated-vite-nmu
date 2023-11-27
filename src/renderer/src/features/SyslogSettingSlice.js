@@ -34,7 +34,7 @@ export const startTask = (param) => (dispatch, getState) => {
   window.electron.ipcRenderer.on(RESPONSE_RP_SYSLOG_SETTING, (event, arg) => {
     const { type } = arg
     if (type === 1) {
-      //callback('There is some problem in syslog setting process.');
+      //callback('There is some problem in  setting process.');
       dispatch(updateAllDeviceStatusError())
     } else {
       const { success } = arg
@@ -49,7 +49,7 @@ export const startTask = (param) => (dispatch, getState) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_SYSLOG_SETTING, { devices, param: param })
-  console.log('param:', param)
+  // console.log('param:', param)
 }
 
 const syslogSettingSlice = createSlice({

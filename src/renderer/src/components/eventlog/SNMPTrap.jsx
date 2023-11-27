@@ -72,7 +72,6 @@ const SNMPTrap = () => {
   const { token } = useToken()
   const dispatch = useDispatch()
   const { trapData } = useSelector(eventLogSelector)
-
   const [tableLoading, setTableLoading] = useState(true)
 
   useEffect(() => {

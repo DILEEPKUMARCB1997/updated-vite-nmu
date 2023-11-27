@@ -95,7 +95,7 @@ const DashboardPage = () => {
       </Col>
       <Col span={6}>
         <Card
-          title="EvenList"
+          title="EventList"
           size="small"
           style={{ width: '100%', height: '100%' }}
           bordered={false}

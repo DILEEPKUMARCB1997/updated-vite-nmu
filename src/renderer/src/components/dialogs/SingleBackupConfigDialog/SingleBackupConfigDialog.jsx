@@ -16,6 +16,7 @@ const SingleBackupConfigDialog = ({ onClose }) => {
   const disableCancel = isBackingUP
   const [didMount, setDidMount] = useState(false)
   const dispatch = useDispatch()
+
   useEffect(() => {
     setTimeout(() => {
       setDidMount(true)

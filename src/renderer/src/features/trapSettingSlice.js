@@ -46,7 +46,6 @@ export const startTask = (param) => (dispatch, getState) => {
     }
   })
   window.electron.ipcRenderer.send(REQUEST_MP_TRAP_SETTING, { devices, param: param })
-  console.log('param:', param)
 }
 
 const trapSettingSlice = createSlice({

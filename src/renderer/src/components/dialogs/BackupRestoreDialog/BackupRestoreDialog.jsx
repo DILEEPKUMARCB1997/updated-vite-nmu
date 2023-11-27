@@ -25,7 +25,6 @@ const BackupRestoreDialog = ({ onClose }) => {
 
   const handleCancelButtonOnClick = () => {
     setDidMount(false)
-
     setTimeout(() => {
       onClose()
     }, 400)
