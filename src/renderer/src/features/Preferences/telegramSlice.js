@@ -44,7 +44,7 @@ export const saveTelegramToken = () => (dispatch, getState) => {
 export const getTelegramUser = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_TELEGRAM_USER, (event, arg) => {
     if (arg.success) {
-      console.log(arg.data)
+      // console.log(arg.data)
       dispatch(setTelegramUser(arg.data))
     }
   })

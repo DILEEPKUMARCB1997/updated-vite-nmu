@@ -71,7 +71,7 @@ const GroupMemberTransferDialog = ({ onClose }) => {
         titles={['Non Member', 'Member']}
         dataSource={allDevice}
         listStyle={{
-          marginTop: '30px',
+          margin: '30px',
           width: 450,
           height: 375
         }}
