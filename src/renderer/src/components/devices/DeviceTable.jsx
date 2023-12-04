@@ -136,7 +136,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const handleContextMenu = useCallback(
     (e) => {
-      console.log(e)
+      //console.log(e)
       // e.preventDefault()
       setXPos(e.pageX - 220)
       setYPos(e.pageY - 150)
@@ -281,7 +281,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
-    console.log(MACAddress, IPAddress, deviceType)
+    // console.log(MACAddress, IPAddress, deviceType)
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initDeviceAdvanced({ MACAddress }))
     } else {
@@ -338,7 +338,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  console.log('seleceted rows array', selectedRowsArray)
+  //  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     type: 'checkbox',
 
@@ -347,7 +347,7 @@ const DeviceTable = ({ deviceData = [] }) => {
     // },
 
     onSelect: (record, selected, selectedRows, nativeEvent) => {
-      console.log(record, selected, selectedRows, nativeEvent)
+      // console.log(record, selected, selectedRows, nativeEvent)
 
       dispatch(
         selectDiscoveryTable({
@@ -358,28 +358,13 @@ const DeviceTable = ({ deviceData = [] }) => {
     },
     onselectionchange: () => {
       setSelectedRowsArray([])
-      setSelectedCheckboxes([])
     },
-    getCheckboxProps: (record, deviceType) => (
-      console.log(record, 'device type', deviceType),
-      {
+    getCheckboxProps: (record, deviceType) =>
+      //  console.log(record, 'device type', deviceType),
+      ({
         disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-      }
-    )
+      })
   }
-  const handleCheckboxChange = (event) => {
-    const checkboxValue = event.target.value
-    if (event.target.checked) {
-      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
-    } else {
-      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
-    }
-    setSelectedRowsArray([]) // reset selected rows array
-  }
-
-  // const rowSelection = showCheckBox ? (
-  //   <EnhanceCheckBox handleCheckBoxChange={handleCheckBoxChange} />
-  // ) : undefined
 
   return (
     <div>
@@ -481,19 +466,3 @@ const antIcon = (
 )
 
 export default DeviceTable
-
-/*
-onSelect: (record, selected, selectedRows, nativeEvent) => {
-  console.log(record, selected, selectedRows, nativeEvent)
-
-  dispatch(
-    selectDiscoveryTable({
-      isSelect: selected,
-      deviceData: [record.MACAddress]
-    })
-  )
-
-  // clear the selectedRowsArray when a new row is selected
-  setSelectedRowsArray([])
-}
-*/

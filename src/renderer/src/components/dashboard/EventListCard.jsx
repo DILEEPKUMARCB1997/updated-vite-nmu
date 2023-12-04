@@ -14,7 +14,6 @@ const EventListCard = (props) => {
     <div
       style={{
         boxSizing: 'border-box',
-
         display: 'flex',
         flexDirection: 'column'
       }}

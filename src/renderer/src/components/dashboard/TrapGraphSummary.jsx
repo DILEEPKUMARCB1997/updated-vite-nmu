@@ -104,29 +104,8 @@ const TrapGraphSummary = () => {
   }, [trapGraphData.data, trapGraphData.label])
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
-    }, 1500)
+    dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }, [dispatch])
-
-  // useEffect(() => {
-  //   if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
-  //     setSnmpTrapMsgData((prev) => ({
-  //       ...prev,
-  //       series: [
-  //         {
-  //           data: trapGraphData.data
-  //         }
-  //       ],
-  //       options: {
-  //         ...prev.options,
-  //         xaxis: {
-  //           categories: trapGraphData.label
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }, [trapGraphData])
 
   const handleRefresh = () => {
     console.log('trapGraph clicked', trapGraphData)
