@@ -340,18 +340,8 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
 
-  const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
-    type: 'checkbox',
-
-    // onChange: (selectedRowKeys, rows) => {
-    //   console.log('rows', rows)
-    // },
-
     onSelect: (record, selected, selectedRows, nativeEvent) => {
-      console.log(record, selected, selectedRows, nativeEvent)
-
       dispatch(
         selectDiscoveryTable({
           isSelect: selected,
@@ -359,26 +349,22 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
-    onselectionchange: () => {
-      setSelectedRowsArray([])
-      setSelectedCheckboxes([])
-    },
-    getCheckboxProps: (record, deviceType) => (
-      console.log(record, 'device type', deviceType),
-      {
-        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-      }
-    )
+    // onselectionchange: () => {
+    //   setSelectedRowsArray([])
+    // },
+    getCheckboxProps: (record, deviceType) => ({
+      disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+    })
   }
-  const handleCheckboxChange = (event) => {
-    const checkboxValue = event.target.value
-    if (event.target.checked) {
-      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
-    } else {
-      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
-    }
-    setSelectedRowsArray([]) // reset selected rows array
-  }
+  // const handleCheckboxChange = (event) => {
+  //   const checkboxValue = event.target.value
+  //   if (event.target.checked) {
+  //     setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
+  //   } else {
+  //     setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
+  //   }
+  //   setSelectedRowsArray([]) // reset selected rows array
+  // }
 
   // const rowSelection = showCheckBox ? (
   //   <EnhanceCheckBox handleCheckBoxChange={handleCheckBoxChange} />

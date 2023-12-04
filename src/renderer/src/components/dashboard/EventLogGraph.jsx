@@ -14,6 +14,7 @@ import { SyncOutlined } from '@ant-design/icons'
 const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
+  console.log('cus data', customGraphData)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
 

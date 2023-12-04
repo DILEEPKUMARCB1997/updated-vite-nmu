@@ -51,7 +51,7 @@ const ScheduleBackupDialog = ({ onClose }) => {
         paddingBottom: '10px'
       }}
     >
-      <Row gutter={[15, 15]} style={{ margin: '0px' }}>
+      <Row gutter={[15, 15]}>
         <Col span={24}>
           <ConfigureSchedule />
         </Col>
