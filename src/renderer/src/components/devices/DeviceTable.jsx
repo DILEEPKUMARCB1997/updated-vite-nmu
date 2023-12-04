@@ -338,7 +338,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const [selectedRowsArray, setSelectedRowsArray] = useState([])
-  console.log('seleceted rows array', selectedRowsArray)
+  // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     type: 'checkbox',
 
@@ -355,25 +355,12 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
-    onselectionchange: () => {
-      setSelectedRowsArray([])
-      setSelectedCheckboxes([])
-    },
-    getCheckboxProps: (record, deviceType) => (
-      console.log(record, 'device type', deviceType),
-      {
+
+    getCheckboxProps: (record, deviceType) =>
+      // console.log(record, 'device type', deviceType),
+      ({
         disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-      }
-    )
-  }
-  const handleCheckboxChange = (event) => {
-    const checkboxValue = event.target.value
-    if (event.target.checked) {
-      setSelectedCheckboxes([...selectedCheckboxes, checkboxValue])
-    } else {
-      setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue))
-    }
-    setSelectedRowsArray([]) // reset selected rows array
+      })
   }
 
   // const rowSelection = showCheckBox ? (
