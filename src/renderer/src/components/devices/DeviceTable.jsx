@@ -159,8 +159,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   const shell = require('electron').shell
 
   const handleItemClick = (key, data) => {
-    //console.log(key)
-    // console.log(data)
     const { IPAddress, MACAddress, model, deviceType } = data
     switch (key) {
       case 'openOnOSbrowser':
@@ -318,7 +316,6 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleBackupConfig = (MACAddress, IPAddress, deviceType) => {
-    // dispatch(openDialog('singleBackupConfig'))
     if (deviceType !== 'gwd') {
       dispatch(requestGetBackupRestoreData({ MACAddress }))
     } else {
@@ -452,12 +449,7 @@ const DeviceTable = ({ deviceData = [] }) => {
           footer={null}
           open={showCheckSNMPModal}
         >
-          <Spin
-            tip="Loading"
-            indicator={antIcon}
-            // indicator={antIcon}
-            size="large"
-          />
+          <Spin tip="Loading" indicator={antIcon} size="large" />
           {'Checking SNMP feature...'}
         </Modal>
       </ConfigProvider>
@@ -475,3 +467,19 @@ const antIcon = (
 )
 
 export default DeviceTable
+
+/*
+onSelect: (record, selected, selectedRows, nativeEvent) => {
+  console.log(record, selected, selectedRows, nativeEvent)
+
+  dispatch(
+    selectDiscoveryTable({
+      isSelect: selected,
+      deviceData: [record.MACAddress]
+    })
+  )
+
+  // clear the selectedRowsArray when a new row is selected
+  setSelectedRowsArray([])
+}
+*/

@@ -1,30 +1,21 @@
-import React, { memo, useState } from 'react'
-import { Tabs } from 'antd'
-
+import React from 'react'
 import FWUTable from '../FWUTable'
-import TabPane from 'antd/es/tabs/TabPane'
 import FWUDoneTable from '../FWUDoneTable'
-
-const FWUTableTab = memo(function FWUTableTab() {
-  const [current, setCurrent] = useState(0)
-  //console.log(current)
-
-  const handleStepChange = (current) => {
-    setCurrent(current)
+import { Tabs } from 'antd'
+const onChange = (key) => {
+  console.log(key)
+}
+const items = [
+  {
+    key: '1',
+    label: 'Updating',
+    children: <FWUTable />
+  },
+  {
+    key: '2',
+    label: 'Done',
+    children: <FWUDoneTable />
   }
-
-  return (
-    <div>
-      <Tabs defaultActiveKey="0" onChange={handleStepChange}>
-        <TabPane tab="Updating" key="0">
-          <FWUTable />
-        </TabPane>
-        <TabPane tab="Done" key="1">
-          <FWUDoneTable />
-        </TabPane>
-      </Tabs>
-    </div>
-  )
-})
-
-export default React.memo(FWUTableTab)
+]
+const FWUTableTab = () => <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+export default FWUTableTab
