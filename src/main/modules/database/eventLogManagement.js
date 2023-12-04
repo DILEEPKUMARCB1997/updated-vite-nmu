@@ -75,7 +75,7 @@ function getEventLogByMACAddress(data) {
 export default { updateEventLog, getEventLogByMACAddress }
 
 ipcMain.on(REQUEST_MP_GET_EVENT_LOG_HISTORY, (event, arg) => {
-  console.log(arg)
+  console.log('arg', arg)
   try {
     const filter = { ...arg }
     // const filter = {

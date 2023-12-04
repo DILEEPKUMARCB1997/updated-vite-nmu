@@ -129,6 +129,7 @@ Syslogd((info) => {
     upTime: info.upTime,
     message: info.msg
   }
+  console.log('syslog msg', syslogMsg)
   eventLogManagement.default.updateEventLog(syslogMsg, 'syslog')
   // console.log('Syslog received:')
   // console.log('123', info)
