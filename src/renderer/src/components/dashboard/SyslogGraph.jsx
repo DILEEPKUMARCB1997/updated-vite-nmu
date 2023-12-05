@@ -135,7 +135,7 @@ const SyslogGraph = () => {
           justifyContent: 'space-between'
         }}
       >
-        <i>{lastUpdated}</i>
+        <i data-testid="custom-element">{lastUpdated}</i>
         <Tooltip title="Refresh">
           <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>

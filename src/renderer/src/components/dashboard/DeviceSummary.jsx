@@ -30,7 +30,7 @@ const DeviceSummary = () => {
   }
 
   return (
-    <div>
+    <div data-testid="custom-element">
       <Row gutter={16}>
         <Col span={12}>
           <SummaryCard
