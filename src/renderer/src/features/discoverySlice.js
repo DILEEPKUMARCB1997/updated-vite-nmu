@@ -21,7 +21,6 @@ export const requestCheckSNMP = (param, callback) => (dispatch) => {
 
 export const requestDiscovery = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
-    // console.log(arg)
     if (arg.isEnableSNMP) {
       dispatch(openDialog('snmpScanProgress'))
     }
@@ -31,7 +30,6 @@ export const requestDiscovery = () => (dispatch) => {
 
 export const requestDiscoveryAfterLogin = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_DISCOVERY_ALL_DEVICES, (event, arg) => {
-    // console.log(arg);
     if (arg.isEnableSNMP) {
       // dispatch(openDialog('snmpScanProgress'));
     }

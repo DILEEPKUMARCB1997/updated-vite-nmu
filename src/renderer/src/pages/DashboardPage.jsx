@@ -6,8 +6,8 @@ import { Card, Col, Row } from 'antd'
 import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 import SyslogGraph from '../components/dashboard/SyslogGraph'
 import EventSummary from '../components/dashboard/EventSummary'
-import EventLogGraph from '../components/dashboard/EventLogGraph'
 import EventList from '../components/dashboard/EventList'
+import EventLogGraph from '../components/dashboard/eventlog/EventLogGraph'
 
 const DashboardPage = () => {
   const deviceSummary = useMemo(() => <DeviceSummary />, [])
@@ -23,6 +23,7 @@ const DashboardPage = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Card
+              data-testid="custom-element"
               title="Device Summary"
               bordered={false}
               size="small"

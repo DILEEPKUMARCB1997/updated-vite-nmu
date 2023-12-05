@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
   requestHistoryData,
   showCustomTableData
-} from '../../features/dashboardSlice'
+} from '../../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
 const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
-  console.log('cus data', customGraphData)
+  //console.log('cus data', customGraphData)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
 
@@ -126,16 +126,14 @@ const EventLogGraph = () => {
     )
   }
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(
-        requestHistoryData({
-          type: 'custom',
-          sourceIP: '',
-          ge: '',
-          le: ''
-        })
-      )
-    }, 1000)
+    dispatch(
+      requestHistoryData({
+        type: 'custom',
+        sourceIP: '',
+        ge: '',
+        le: ''
+      })
+    )
   }, [])
   return (
     <>
