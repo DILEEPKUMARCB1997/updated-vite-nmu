@@ -38,7 +38,7 @@ const EventSummary = () => {
     }
   }, [])
   return (
-    <div>
+    <div data-testid="custom-element">
       <Row gutter={8}>
         <Col span={8}>
           <SummaryCard

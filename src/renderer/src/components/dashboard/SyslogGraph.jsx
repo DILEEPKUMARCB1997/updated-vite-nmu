@@ -142,7 +142,7 @@ const SyslogGraph = () => {
           <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>
       </div>
-      <div>
+      <div data-testid="syslog">
         <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
       </div>
     </>
