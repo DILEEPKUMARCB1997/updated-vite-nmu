@@ -35,23 +35,23 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
     selectGroup: []
   })
 
-  const openModal = (data) => {
-    if (event === 'addNode') {
-      setState({
-        open: true,
-        addNodePosition: data
-      })
-    } else {
-      setState({
-        open: true,
-        addEdgeNodes: data,
-        addNodeMax: {
-          from: data.from.startsWith('virtual') ? 1 : findPortMaxLength(data.from),
-          to: data.to.startsWith('virtual') ? 1 : findPortMaxLength(data.to)
-        }
-      })
-    }
-  }
+  // const openModal = (data) => {
+  //   if (event === 'addNode') {
+  //     setState({
+  //       open: true,
+  //       addNodePosition: data
+  //     })
+  //   } else {
+  //     setState({
+  //       open: true,
+  //       addEdgeNodes: data,
+  //       addNodeMax: {
+  //         from: data.from.startsWith('virtual') ? 1 : findPortMaxLength(data.from),
+  //         to: data.to.startsWith('virtual') ? 1 : findPortMaxLength(data.to)
+  //       }
+  //     })
+  //   }
+  // }
 
   const findPortMaxLength = (modeln) => {
     let Model = state.nodesData[modeln].model.toString('utf8')
@@ -173,112 +173,11 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
   const isFromVirtual = state.addEdgeNodes.from.startsWith('virtual')
   const isToVirtual = state.addEdgeNodes.to.startsWith('virtual')
 
-  // const handleAddNodeMACInputChange = (event) => {
-  //   setAddNodeMAC(event.target.value)
-  // }
-
-  // const handleModalOKButtonClick = () => {
-  //   if (event === 'addNode') {
-  //     if (isVirtualNode) {
-  //       dispatch(
-  //         addNewVirtualNode({
-  //           x: addNodePosition.x,
-  //           y: addNodePosition.y
-  //         })
-  //       )
-  //     } else {
-  //       dispatch(
-  //         addNewNode({
-  //           MACAddress: addNodeMAC,
-  //           x: addNodePosition.x,
-  //           y: addNodePosition.y,
-  //           groupIds: selectGroup
-  //         })
-  //       )
-  //     }
-  //   } else {
-  //     dispatch(
-  //       addNewEdge({
-  //         fromId: addEdgeNodes.from,
-  //         toId: addEdgeNodes.to,
-  //         fromPort: fromPort,
-  //         toPort: toPort
-  //       })
-  //     )
-  //   }
-  //   handleModalCancel()
-  // }
-
-  // const handleModalCancel = () => {
-  //   setOpen(open)
-  //   setAddNodePosition(addNodePosition)
-  //   setAddNodeMAC(addNodeMAC)
-  //   setAddEdgeNodes(addEdgeNodes)
-  //   setAddNodeMax(addNodeMax)
-  //   setFromPort(fromPort)
-  //   setToPort(toPort)
-  //   setIsVirtualNode(isVirtualNode)
-  //   setSelectGroup(selectGroup)
-
-  //   handleDisableEdit()
-  // }
-
-  // const handleModalCancelButtonClick = () => {
-  //   handleModalCancel()
-  // }
-
-  // const handleFromPortInputChange = (value) => {
-  //   if (value !== undefined) {
-  //     setFromPort(value)
-  //   }
-  // }
-
-  // const handleToPortInputChange = (value) => {
-  //   if (value !== undefined) {
-  //     setToPort(value)
-  //   }
-  // }
-
-  // const handleVirtualNodeCheckOnChange = (value) => {
-  //   setIsVirtualNode(value.target.checked)
-  // }
-
-  // const handleGroupSelectOnChange = (value) => {
-  //   setSelectGroup(value)
-  // }
-  // const groupList = []
-  // Object.entries(groupDeviceData).forEach(([key, value]) => {
-  //   if (key !== 'unGrouped') {
-  //     groupList.push({ name: value.groupName, id: key })
-  //   }
-  // })
-  // let groupSelectWidth = 105
-  // groupList.forEach((element) => {
-  //   const minWidth = element.name.length * 12
-  //   if (minWidth > groupSelectWidth) {
-  //     groupSelectWidth = minWidth
-  //   }
-  // })
-
-  // const isAddNodePass =
-  //   (selectGroup.length !== 0 &&
-  //     currentGroup === 'all' &&
-  //     MACAddressFormat.test(addNodeMAC) &&
-  //     !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-  //   (currentGroup !== 'all' &&
-  //     MACAddressFormat.test(addNodeMAC) &&
-  //     !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-  //   isVirtualNode
-  // const isAddEdgePass = fromPort !== '' && toPort !== ''
-  // const disableOKButton = event === 'addNode' ? !isAddNodePass : !isAddEdgePass
-  // const isFromVirtual = addEdgeNodes.from.startsWith('virtual')
-  // const isToVirtual = addEdgeNodes.to.startsWith('virtual')
-
   return (
     <Modal
-      // destroyOnClose
+      destroyOnClose
       title={event === 'addNode' ? 'Add Node' : 'Add Edge'}
-      open
+      // open={openModal}
       onOk={handleModalOKButtonClick}
       onCancel={handleModalCancelButtonClick}
       okButtonProps={{ disabled: disableOKButton }}
@@ -363,152 +262,3 @@ const TopologyAddModal = ({ handleDisableEdit }) => {
 }
 
 export default TopologyAddModal
-
-/*
-import React, { useState, useEffect } from 'eact';
-import { Modal, Input, Checkbox, Select, InputNumber } from 'antd';
-import styles from './styles.css';
-
-const { Option } = Select;
-
-const TopologyAddModal = ({
-  event,
-  nodesData,
-  nodesIds,
-  groupList,
-  groupSelectWidth,
-  currentGroup,
-  addNewNode,
-  addNewEdge,
-  addNewVirtualNode,
-  handleDisableEdit,
-  onRef,
-}) => {
-  const [open, setOpen] = useState(false);
-  const [addNodePosition, setAddNodePosition] = useState({});
-  const [addNodeMAC, setAddNodeMAC] = useState('');
-  const [addEdgeNodes, setAddEdgeNodes] = useState({
-    from: '',
-    to: '',
-  });
-  const [addNodeMax, setAddNodeMax] = useState({
-    from: 1,
-    to: 1,
-  });
-  const [fromPort, setFromPort] = useState(1);
-  const [toPort, setToPort] = useState(1);
-  const [isVirtualNode, setIsVirtualNode] = useState(false);
-  const [selectGroup, setSelectGroup] = useState([]);
-
-  useEffect(() => {
-    onRef(undefined);
-  }, []);
-
-  const openModal = data => {
-    if (event === 'addNode') {
-      setOpen(true);
-      setAddNodePosition(data);
-    } else {
-      setOpen(true);
-      setAddEdgeNodes(data);
-      setAddNodeMax({
-        from: data.from.startsWith('virtual')? 1 : findPortMaxLength(data.from),
-        to: data.to.startsWith('virtual')? 1 : findPortMaxLength(data.to),
-      });
-    }
-  };
-
-  const findPortMaxLength = modeln => {
-    let Model = nodesData[modeln].model.toString('utf8');
-    let MaxValue = 1;
-    if (Model.indexOf('-') > -1) {
-      MaxValue = parseInt(
-        Model.substring(Model.indexOf('-') - 2, Model.indexOf('-')),
-      );
-    } else {
-      MaxValue = parseInt(Model.substring(Model.length - 2, Model.length));
-    }
-    return MaxValue.toString() === 'NaN'? 28 : MaxValue;
-  };
-
-  const handleAddNodeMACInputChange = event => {
-    setAddNodeMAC(event.target.value);
-  };
-
-  const handleModalOKButtonClick = () => {
-    if (event === 'addNode') {
-      if (isVirtualNode) {
-        addNewVirtualNode({
-          x: addNodePosition.x,
-          y: addNodePosition.y,
-        });
-      } else {
-        addNewNode({
-          MACAddress: addNodeMAC,
-          x: addNodePosition.x,
-          y: addNodePosition.y,
-          groupIds: selectGroup,
-        });
-      }
-    } else {
-      addNewEdge({
-        fromId: addEdgeNodes.from,
-        toId: addEdgeNodes.to,
-        fromPort: fromPort,
-        toPort: toPort,
-      });
-    }
-    handleModalCancel();
-  };
-
-  const handleModalCancel = () => {
-    setOpen(false);
-    setAddNodePosition({});
-    setAddNodeMAC('');
-    setAddEdgeNodes({
-      from: '',
-      to: '',
-    });
-    setAddNodeMax({
-      from: 1,
-      to: 1,
-    });
-    setFromPort(1);
-    setToPort(1);
-    setIsVirtualNode(false);
-    setSelectGroup([]);
-    handleDisableEdit();
-  };
-
-  const handleModalCancelButtonClick = () => {
-    handleModalCancel();
-  };
-
-  const handleFromPortInputChange = value => {
-    if (value!== undefined) {
-      setFromPort(value);
-    }
-  };
-
-  const handleToPortInputChange = value => {
-    if (value!== undefined) {
-      setToPort(value);
-    }
-  };
-
-  const handleVirtualNodeCheckOnChange = value => {
-    setIsVirtualNode(value.target.checked);
-  };
-
-  const handleGroupSelectOnChange = value => {
-    setSelectGroup(value);
-  };
-
-  const isAddNodePass =
-    (selectGroup.length!== 0 &&
-      currentGroup === 'all' &&
-      MACAddressFormat.test(addNodeMAC) &&
-     !nodesIds.includes(addNodeMAC.toUpperCase())) ||
-    (currentGroup!== 'all' &&
-      MACAddressFormat.test(add
-*/

@@ -136,7 +136,7 @@ const DeviceTable = ({ deviceData = [] }) => {
 
   const handleContextMenu = useCallback(
     (e) => {
-      console.log(e)
+      //console.log(e)
       // e.preventDefault()
       setXPos(e.pageX - 220)
       setYPos(e.pageY - 150)
@@ -281,7 +281,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   }
 
   const handleDeviceAdvancedSetting = (MACAddress, IPAddress, deviceType) => {
-    console.log(MACAddress, IPAddress, deviceType)
+    // console.log(MACAddress, IPAddress, deviceType)
     if (deviceType !== 'gwd' || !isPrecheck) {
       dispatch(initDeviceAdvanced({ MACAddress }))
     } else {
@@ -474,19 +474,3 @@ const antIcon = (
 )
 
 export default DeviceTable
-
-/*
-onSelect: (record, selected, selectedRows, nativeEvent) => {
-  console.log(record, selected, selectedRows, nativeEvent)
-
-  dispatch(
-    selectDiscoveryTable({
-      isSelect: selected,
-      deviceData: [record.MACAddress]
-    })
-  )
-
-  // clear the selectedRowsArray when a new row is selected
-  setSelectedRowsArray([])
-}
-*/

@@ -144,51 +144,6 @@ const DevicesControl = ({ onClose }) => {
             </Popover>
           </Tooltip>
         )}
-        {/* <Tooltip title="Discovery">
-          <Button icon={<SyncOutlined />} onClick={() => dispatch(requestDiscovery())} />
-        </Tooltip>
-        <Tooltip title="Firmware Update">
-          <Button
-            icon={<UploadOutlined />}
-            onClick={() => {
-              dispatch(setBatchOperateEvent({ event: 'firmwareUpdate' }))
-            }}
-          />
-        </Tooltip>
-        <Tooltip title="Network Settings">
-          <Button
-            icon={<ShareAltOutlined />}
-            onClick={() => dispatch(({ event: 'networkSetting' }))}
-          />
-        </Tooltip>
-        <Tooltip title="Reset To Default">
-          <Button icon={<RedoOutlined />} onClick={handleResetToDefault} />
-        </Tooltip>
-        <Tooltip title="Backup and Restore">
-          <Button icon={<CloudUploadOutlined />} onClick={handleBackupRestore} />
-        </Tooltip>
-        <Tooltip title="Schedule Backup">
-          <Button icon={<ClockCircleOutlined />} onClick={() => dispatch(initScheduleBackup())} />
-        </Tooltip>
-        <Tooltip title="Syslog Settings">
-          <Button icon={<CalendarOutlined />} onClick={handleSyslogSetting} />
-        </Tooltip>
-        <Tooltip title="Trap Settings">
-          <Button icon={<ClusterOutlined />} onClick={handleTrapSetting} />
-        </Tooltip>
-        <Tooltip title="Add New Group">
-          <Popover placement="topLeft" title="Enter group name" content={content} trigger="click">
-            <Button icon={<UsergroupAddOutlined />} />
-          </Popover>
-        </Tooltip>
-        <Tooltip title="Buzzer">
-          <Button
-            icon={<AudioOutlined />}
-            onClick={() => {
-              dispatch(openDialog('buzzer'))
-            }}
-          />
-        </Tooltip>{' '} */}
         <div style={{ flexGrow: 1 }}></div>
         <Segmented options={options} value={groupView} onChange={(v) => handleSwitchTableView(v)} />
       </Flexbox>

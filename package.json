@@ -11,7 +11,6 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
-    "test": "react-scripts test",
     "build": "electron-vite build",
     "test": "react-scripts test",
     "postinstall": "electron-builder install-app-deps",
@@ -84,8 +83,9 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@electron/notarize": "^1.2.3",
-    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@vitejs/plugin-react": "^4.0.0",
     "electron": "^23.0.0",

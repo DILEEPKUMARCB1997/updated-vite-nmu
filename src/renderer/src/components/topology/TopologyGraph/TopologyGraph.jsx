@@ -34,10 +34,10 @@ const TopologyGraph = (props) => {
   // TopologyGraph.PropTypes = {
   //   onRef: PropTypes.func.isRequired
   // }
-  console.log(props)
+  // console.log(props)
   const { onRef } = props
   const networkRef = useRef()
-  console.log(networkRef)
+  //console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
   const [network, setNetwork] = useState(null)
@@ -288,7 +288,7 @@ const TopologyGraph = (props) => {
         this.props.getNodePosition(data)
       },
       editNode: () => {
-        console.log('editNode')
+        // console.log('editNode')
       },
       addEdge: (data, callback) => {
         /* eslint-enable */
@@ -298,7 +298,7 @@ const TopologyGraph = (props) => {
       },
       editEdge: {
         editWithoutDrag: () => {
-          console.log('editEdge')
+          //console.log('editEdge')
         }
       }
     },
@@ -372,12 +372,12 @@ const TopologyGraph = (props) => {
   const events = {
     select: function (event) {
       var { nodes, edges } = event
-      console.log(edges)
-      console.log(nodes)
+      //console.log(edges)
+      // console.log(nodes)
     }
   }
 
-  console.log(networkRef.current)
+  // console.log(networkRef.current)
 
   return (
     <div style={{ border: 'double', marginTop: '50px', height: 'calc(100%-96px)' }}>
@@ -478,7 +478,7 @@ const nodeStyle = (status, model) => {
 }
 
 const edgeStyle = (element, leftMAC, rightMAC) => {
-  console.log('element', element)
+  //console.log('element', element)
   //console.log('leftMAC', leftMAC);
   //console.log('rightMAC', rightMAC);
   //console.log('virtualMAC', virtualMac);
