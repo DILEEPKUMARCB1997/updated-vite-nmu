@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { expect, test, jest } from '@jest/globals'
-import DeviceSummary from './DeviceSummary'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import '@testing-library/jest-dom/extend-expect'
+import DiskSpaceSummary from './DiskSpaceSummary'
 
 // test('should render div tag', async () => {
 //   render(
@@ -27,7 +27,7 @@ test('should render div tag', () => {
 
   render(
     <Provider store={store}>
-      <DeviceSummary />
+      <DiskSpaceSummary />
     </Provider>
   )
   const element = screen.getByTestId('custom-element')
