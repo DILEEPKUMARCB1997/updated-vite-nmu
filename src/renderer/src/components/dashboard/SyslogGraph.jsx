@@ -1,7 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/prop-types */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useMemo } from 'react'
 import Chart from 'react-apexcharts'
 
@@ -18,7 +14,6 @@ const SyslogGraph = () => {
   const dispatch = useDispatch()
   const { syslogGraphData } = useSelector(dashboardSelector)
   const { tableData, label, lastUpdated, data } = syslogGraphData
-  // console.log('syslog', syslogGraphData)
 
   const onSyslogGraphClick = (barIndex) => {
     dispatch(showSyslogTableData(tableData[barIndex]))
@@ -140,7 +135,7 @@ const SyslogGraph = () => {
           <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>
       </div>
-      <div>
+      <div data-testid="syslog">
         <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
       </div>
     </>

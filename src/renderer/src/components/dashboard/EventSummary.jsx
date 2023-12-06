@@ -26,10 +26,23 @@ const EventSummary = () => {
   useEffect(() => {
     dispatch(initEventDailyData({ types: 'custom' }))
     const now = new Date()
-    const night = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0)
+    const night = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // the next day, ...
+      0,
+      0,
+      0 // ...at 00:00:00 hours
+    )
     const msToMidnight = night.getTime() - now.getTime()
     if (msToMidnight > 0) {
       clearLogTimeOut1 = setTimeout(() => {
+        // type: UPDATE_LOG_DATA,
+        // const filterCustomLogDailyData = filterByDate([...state.customEventDailyData])
+        // return {
+        //   ...state,
+        //   customEventDailyData: filterCustomLogDailyData
+        // }
         dispatch(updateLogData())
       }, msToMidnight)
     }

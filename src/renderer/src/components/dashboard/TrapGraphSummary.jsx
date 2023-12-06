@@ -1,114 +1,134 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyncOutlined } from '@ant-design/icons'
 import {
   dashboardSelector,
   requestHistoryData,
   showTrapTableData
+  //updateTrapGraph
 } from '../../features/dashboardSlice'
 import { Button, Tooltip, theme as antdTheme } from 'antd'
+import { Card } from 'antd'
 import ReactApexChart from 'react-apexcharts'
+import { useThemeStore } from '../../utils/themes/useStore'
 
 const TrapGraphSummary = () => {
+  const { mode } = useThemeStore()
+  const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-
   const onTrapGraphClick = (barIndex) => {
     dispatch(showTrapTableData(tableData[barIndex]))
   }
-
-  const snmpTrapMsgData = useMemo(() => {
-    return {
-      series: [
-        {
-          name: 'SNMP Trap Message Count',
-          data: trapGraphData.data
+  const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
+    series: [
+      {
+        name: 'SNMP Trap Message Count',
+        data: []
+      }
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+        height: 320,
+        toolbar: {
+          show: false
+        },
+        offsetY: -20,
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onTrapGraphClick(config.dataPointIndex)
+            }
+          }
         }
-      ],
-      options: {
-        chart: {
-          type: 'bar',
-          height: 320,
-          toolbar: {
-            show: false
-          },
-          offsetY: -20,
-          offsetX: -5,
-          events: {
-            dataPointSelection: (event, chartContext, config) => {
-              if (config.selectedDataPoints[0].length > 0) {
-                onTrapGraphClick(config.dataPointIndex)
-              }
-              //  console.log(chartContext)
-            }
-          }
-        },
-        legend: {
-          show: true,
-          showForSingleSeries: true,
-          position: 'top',
-          horizontalAlign: 'center',
-          offsetY: 20
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            columnWidth: '50%'
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: 2
-        },
+      },
+      legend: {
+        show: true,
+        showForSingleSeries: true,
+        position: 'top',
+        horizontalAlign: 'center',
+        offsetY: 20
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 0,
+          columnWidth: '50%'
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 2
+      },
 
-        grid: {
-          show: true
-        },
-        xaxis: {
-          type: 'category',
-          categories: trapGraphData.label,
-          labels: {
-            rotate: -45,
-            rotateAlways: true
+      grid: {
+        show: true
+      },
+      xaxis: {
+        type: 'category',
+        categories: trapGraphData.label,
+        labels: {
+          rotate: -45,
+          rotateAlways: true
+        }
+      },
+      yaxis: {
+        title: {
+          text: 'Trap Msg Count',
+          lines: {
+            show: true
           }
-        },
-        yaxis: {
-          title: {
-            text: 'Trap Msg Count',
-            lines: {
-              show: true
-            }
-          }
-        },
-        fill: {
-          type: 'solid',
+        }
+      },
+      fill: {
+        type: 'solid',
 
-          gradient: {
-            shade: 'lights',
-            type: 'horizontal',
-            shadeIntensity: 1,
-            gradientToColors: undefined,
-            inverseColors: false,
-            opacityFrom: 0.85,
-            opacityTo: 0.85,
-            stops: [50, 0, 100]
-          }
+        gradient: {
+          shade: 'lights',
+          type: 'horizontal',
+          shadeIntensity: 1,
+          gradientToColors: undefined,
+          inverseColors: false,
+          opacityFrom: 0.85,
+          opacityTo: 0.85,
+          stops: [50, 0, 100]
         }
       }
     }
-  }, [trapGraphData.data, trapGraphData.label])
+  })
 
   useEffect(() => {
-    dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
-  }, [dispatch])
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
+    }, 1500)
+  }, [])
+
+  useEffect(() => {
+    if (Array.isArray(trapGraphData.data) && trapGraphData.data.length > 0) {
+      setSnmpTrapMsgData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: trapGraphData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: trapGraphData.label
+          }
+        }
+      }))
+    }
+  }, [trapGraphData])
 
   const handleRefresh = () => {
-    console.log('trapGraph clicked', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 

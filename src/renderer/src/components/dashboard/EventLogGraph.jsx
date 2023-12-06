@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useEffect, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,14 +5,13 @@ import {
   dashboardSelector,
   requestHistoryData,
   showCustomTableData
-} from '../../../features/dashboardSlice'
+} from '../../features/dashboardSlice'
 import { Button } from 'antd'
 import { SyncOutlined } from '@ant-design/icons'
 
 const EventLogGraph = () => {
   const dispatch = useDispatch()
   const { customGraphData } = useSelector(dashboardSelector)
-  //console.log('cus data', customGraphData)
   const { tableData, label, InformationData, WarningData, CriticalData, lastUpdated } =
     customGraphData
 
@@ -48,7 +45,7 @@ const EventLogGraph = () => {
           offsetX: -5,
           events: {
             dataPointSelection: (event, chartContext, config) => {
-              console.log('config', config)
+              // console.log('config', config)
               if (config.selectedDataPoints[config.seriesIndex].length > 0) {
                 dispatch(showCustomTableData(tableData[config.dataPointIndex]))
               }
