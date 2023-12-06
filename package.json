@@ -84,9 +84,14 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@electron/notarize": "^1.2.3",
+<<<<<<< HEAD
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+=======
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+>>>>>>> 8e0c4f82d6394075f5954518506b76da012bc3cb
     "@vitejs/plugin-react": "^4.0.0",
     "electron": "^23.0.0",
     "electron-builder": "^23.6.0",

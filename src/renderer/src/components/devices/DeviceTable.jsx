@@ -337,8 +337,11 @@ const DeviceTable = ({ deviceData = [] }) => {
     }
   }
 
+  const [selectedRowsArray, setSelectedRowsArray] = useState([])
+  // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     onSelect: (record, selected, selectedRows, nativeEvent) => {
+      console.log(record, selected, selectedRows, nativeEvent)
       dispatch(
         selectDiscoveryTable({
           isSelect: selected,
@@ -346,12 +349,16 @@ const DeviceTable = ({ deviceData = [] }) => {
         })
       )
     },
+
+    getCheckboxProps: (record, deviceType) =>
+      // console.log(record, 'device type', deviceType),
+      ({
+        disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
+      })
     // onselectionchange: () => {
     //   setSelectedRowsArray([])
     // },
-    getCheckboxProps: (record, deviceType) => ({
-      disabled: !record.isAUZ || !record.online || (!(deviceType !== 'gwd') && SNMPSelectOnly)
-    })
+
   }
   // const handleCheckboxChange = (event) => {
   //   const checkboxValue = event.target.value
