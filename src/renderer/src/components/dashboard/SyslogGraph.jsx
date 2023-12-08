@@ -135,13 +135,19 @@ const SyslogGraph = () => {
           justifyContent: 'space-between'
         }}
       >
-        <i data-testid="custom-element">{lastUpdated}</i>
+        <i>{lastUpdated}</i>
         <Tooltip title="Refresh">
           <Button icon={<SyncOutlined />} onClick={handleRefreshGraph} />
         </Tooltip>
       </div>
       <div>
-        <Chart options={graphData.options} series={graphData.series} type="bar" height={210} />
+        <Chart
+          options={graphData.options}
+          series={graphData.series}
+          type="bar"
+          height={210}
+          data-testid="syslogchart"
+        />
       </div>
     </>
   )

@@ -43,6 +43,7 @@ const BackupRestoreDialog = ({ onClose }) => {
         onClose={handleCancelButtonOnClick}
         width={1000}
         maskClosable={false}
+        data-testid="modalData"
         // bodyStyle={{
         //   height: '520px'
         // }}

@@ -166,6 +166,7 @@ const DeviceList = () => {
                 type="primary"
                 disabled={isTaskRunning || isRestoreFisish}
                 onClick={handleStartButtonOnClick}
+                data-testid="button"
               >
                 Start
               </Button>
@@ -184,6 +185,7 @@ const DeviceList = () => {
               columns={columns}
               dataSource={data}
               style={{ width: '100%' }}
+              data-testid="table"
               pagination={{
                 position: ['bottomCenter'],
                 showQuickJumper: true,
