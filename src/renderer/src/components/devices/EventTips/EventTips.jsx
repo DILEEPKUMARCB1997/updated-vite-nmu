@@ -113,7 +113,7 @@ const EventTips = () => {
     )
   }
 
-  return <Alert {...alertProps} />
+  return <Alert {...alertProps} data-testid="alert" />
 }
 
 export default EventTips
