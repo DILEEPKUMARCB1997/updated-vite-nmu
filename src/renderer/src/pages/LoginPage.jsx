@@ -85,7 +85,7 @@ const LoginForm = (props) => {
           <Input.Password prefix={<LockOutlined />} type="password" placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" block>
+          <Button type="primary" htmlType="submit" data-testid="signin" block>
             Sign in
           </Button>
         </Form.Item>
