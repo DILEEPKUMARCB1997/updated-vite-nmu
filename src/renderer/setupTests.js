@@ -3,9 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
-<<<<<<< HEAD
-import './'
-=======
 import { beforeAll, jest } from '@jest/globals'
 
 beforeAll(() => {
@@ -23,4 +20,3 @@ beforeAll(() => {
     }))
   })
 })
->>>>>>> 8e0c4f82d6394075f5954518506b76da012bc3cb

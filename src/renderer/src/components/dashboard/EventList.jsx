@@ -38,6 +38,7 @@ import { useSelector } from 'react-redux'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
+  console.log('cus eve data', customEventListData)
 
   return (
     <div style={{ overflow: 'auto', height: 'calc(100vh - 12vh)' }}>

@@ -41,7 +41,8 @@ const TopologyPage = () => {
   }, [clearTopologyData, requestSwitchPolling])
 
   const topologyDataListener = (event, arg) => {
-    setTopologyData(arg)
+    console.log('arg', arg)
+    dispatch(setTopologyData(arg))
   }
 
   const handleFitViewPoint = () => {
@@ -135,17 +136,7 @@ const TopologyPage = () => {
               />
 
               {/* <Card> */}
-              <TopologyGraph
-                onRef={(ref) => {
-                  setGraph(ref)
-                }}
-                // onRef={(ref) => {
-                //   graph = ref
-                //   console.log(graph)
-                // }}
-                getNodePosition={getNodePosition}
-                getEdgeLinkNode={getEdgeLinkNode}
-              />
+              <TopologyGraph />
               {/* </Card> */}
               <TopologyAddModal
                 onRef={(ref) => {
@@ -153,12 +144,12 @@ const TopologyPage = () => {
                 }}
                 handleDisableEdit={handleDisableEdit}
               />
-              {/* <TopologyAddModal
+              <TopologyAddModal
                 onRef={(ref) => {
                   modalRef = ref
                 }}
                 handleDisableEdit={handleDisableEdit}
-              /> */}
+              />
             </div>
           </Card>
         </Col>

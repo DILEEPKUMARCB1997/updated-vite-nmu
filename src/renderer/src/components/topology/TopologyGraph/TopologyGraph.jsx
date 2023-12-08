@@ -31,13 +31,9 @@ let roundnessList = {}
 let virtualMac = []
 
 const TopologyGraph = (props) => {
-  // TopologyGraph.PropTypes = {
-  //   onRef: PropTypes.func.isRequired
-  // }
-  // console.log(props)
   const { onRef } = props
   const networkRef = useRef()
-  //console.log(networkRef)
+  console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
   const [network, setNetwork] = useState(null)
@@ -50,7 +46,7 @@ const TopologyGraph = (props) => {
 
   const {
     graphOption,
-    // editMode,
+    editMode,
     physics,
     showIP,
     showModel,
@@ -77,86 +73,8 @@ const TopologyGraph = (props) => {
   })
 
   useEffect(() => {
-    console.log(props)
+    console.log('props', props)
   }, [])
-
-  // useEffect(() => {
-  //   //ComponentDidMount Code
-  //   // eslint-disable-next-line react/prop-types
-  //   onRef(networkRef.current)
-  //   console.log(networkRef.current)
-  //   window.addEventListener('resize', updateDimensions)
-  //   window.addEventListener('enter-full-screen', updateDimensions)
-  //   networkRef.current.Network.on('select', (params) => {
-  //     const { nodes, edges } = params
-  //     dispatch(setNetworkSelectElement({ nodes, edges }))
-  //     let devicelistSelect = ''
-  //     if (nodes.length === 1 && !nodes[0].startsWith('virtual')) {
-  //       devicelistSelect = nodes
-  //     }
-  //     dispatch(setDeviceListSelect({ MACAddress: devicelistSelect }))
-  //   })
-
-  //   networkRef.current.Network.on('click', () => {
-  //     dispatch(openDevicesMenu(false))
-  //   })
-
-  //   networkRef.current.Network.on('oncontext', (params) => {
-  //     const { x, y } = params.pointer.DOM
-  //     // const { groupDevices, currentGroup } = props
-  //     const rightClickMAC = networkRef.current.Network.getNodeAt({ x, y })
-  //     console.log('rightClickMAC', rightClickMAC)
-  //     if (
-  //       rightClickMAC === undefined ||
-  //       groupDevices[rightClickMAC] === undefined ||
-  //       !groupDevices[rightClickMAC].online ||
-  //       (currentGroup === 'all' && !groupDevices[rightClickMAC].isAUZ)
-  //     ) {
-  //       dispatch(openDevicesMenu(false))
-  //     } else {
-  //       const { MACAddress, deviceType, IPAddress, model } = groupDevices[rightClickMAC]
-  //       dispatch(openDevicesMenu(true))
-  //       setNodeData({
-  //         nodeMACAddress: MACAddress,
-  //         nodeDeviceType: deviceType,
-  //         nodeIPAddress: IPAddress,
-  //         nodeModel: model
-  //       })
-  //     }
-  //   })
-
-  //   networkRef.current.Network.on('afterDrawing', (ctx) => {
-  //     networkCanvas = ctx.canvas
-  //   })
-
-  //   switch (event) {
-  //     case 'addNode':
-  //       networkRef.current.Network.addNodeMode()
-  //       break
-  //     case 'addEdge':
-  //       networkRef.current.Network.addEdgeMode()
-  //       break
-  //     default:
-  //       break
-  //   }
-
-  //   if (newNodeTemp !== '') {
-  //     dispatch(clearNewNodeTemp())
-  //   }
-  //   if (nodesIds.length !== 0 && followPosition) {
-  //     setFollowPosition(false)
-  //   }
-  //   if (!currentGroup) {
-  //     setFollowPosition(true)
-  //   }
-
-  //   return () => {
-  //     // eslint-disable-next-line react/prop-types
-  //     onRef(undefined)
-  //   }
-  // }, [])
-  // function Network(props) {
-  //   const [followPosition, setFollowPosition] = useState(false);
 
   useEffect(() => {
     switch (props.event) {
@@ -169,15 +87,6 @@ const TopologyGraph = (props) => {
       default:
         break
     }
-    // if (props.newNodeTemp !== '') {
-    //   props.clearNewNodeTemp()
-    // }
-    // if (props.nodesIds.length !== 0 && followPosition) {
-    //   setFollowPosition(false)
-    // }
-    // if (props.currentGroup !== prevProps.currentGroup) {
-    //   setFollowPosition(true)
-    // }
   }, [
     props.event,
     props.newNodeTemp,
@@ -260,23 +169,13 @@ const TopologyGraph = (props) => {
     domtoimage
       .toSvg(networkCanvas, { filter })
       .then((dataUrl) => {
-        saveAs(dataUrl, `${fileName}.svg`)
+        saveAs(dataUrl, `${fileName}.png`)
         return dispatch(setImageExporting(false))
       })
       .catch((error) => {
         console.error(error)
         return dispatch(setImageExporting(false))
       })
-    // domtoimage
-    //   .toBlob(networkCanvas)
-    //   .then((blob) => {
-    //     saveAs(blob, `${fileName}.png`)
-    //     return dispatch(setImageExporting(false))
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //     return dispatch(setImageExporting(false))
-    //   })
   }
 
   const options = {

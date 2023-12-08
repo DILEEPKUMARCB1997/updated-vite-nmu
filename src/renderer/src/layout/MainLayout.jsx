@@ -104,7 +104,7 @@ const MainLayout = () => {
   }
 
   const eventLogUpdateListener = (event, arg) => {
-    // console.log(arg)
+    console.log(arg)
     if (!openBeepDialog && arg.type === 'custom') {
       dispatch(updateBeepSoundStart())
       dispatch(openDialog('buzzer'))
@@ -112,9 +112,9 @@ const MainLayout = () => {
     dispatch(updateEventLog(arg))
   }
 
-  // const deviceListListener = useCallback((_, args) => {
-  //   dispatch(updateDiscoveryData(JSON.parse(args)))
-  // }, [])
+
+
+  
 
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
