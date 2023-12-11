@@ -27,12 +27,14 @@ const TrapGraphSummary = () => {
     series: [
       {
         name: 'SNMP Trap Message Count',
+        // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
         data: []
       }
     ],
     options: {
       chart: {
         type: 'bar',
+        // background: token.colorBgContainer,
         height: 320,
         toolbar: {
           show: false
@@ -154,6 +156,7 @@ const TrapGraphSummary = () => {
           series={snmpTrapMsgData.series}
           type="bar"
           height={210}
+          // width={400}
         />
       </div>
     </>

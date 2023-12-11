@@ -122,6 +122,26 @@ const EventLogGraph = () => {
       })
     )
   }
+
+  useEffect(() => {
+    if (Array.isArray(InformationData.data) && InformationData.data.length > 0) {
+      setSnmpTrapMsgData((prev) => ({
+        ...prev,
+        series: [
+          {
+            data: InformationData.data
+          }
+        ],
+        options: {
+          ...prev.options,
+          xaxis: {
+            categories: InformationData.label
+          }
+        }
+      }))
+    }
+  }, [InformationData])
+
   useEffect(() => {
     dispatch(
       requestHistoryData({
@@ -135,6 +155,7 @@ const EventLogGraph = () => {
   return (
     <>
       <div
+        data-testid="custom-element"
         style={{
           padding: '0px 5px',
           display: 'flex',

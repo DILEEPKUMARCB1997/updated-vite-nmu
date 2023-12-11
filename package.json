@@ -21,6 +21,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-components": "^2.5.5",
+    "@babel/plugin-transform-private-property-in-object": "^7.23.4",
     "@dfinity/auth-client": "^0.18.1",
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",

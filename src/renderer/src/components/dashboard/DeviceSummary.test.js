@@ -40,7 +40,7 @@ describe('DeviceSummary', () => {
     )
     const onlineSummaryCard = screen.getByText('Online')
     expect(onlineSummaryCard).toBeInTheDocument()
-    //expect(offlineSummaryCard).toHaveTextContent('2')
+    expect(onlineSummaryCard).toHaveTextContent('Online')
   })
 
   test('should render the offline summary card with the correct count', () => {
@@ -59,6 +59,6 @@ describe('DeviceSummary', () => {
     )
     const offlineSummaryCard = screen.getByText('Offline')
     expect(offlineSummaryCard).toBeInTheDocument()
-    // expect(offlineSummaryCard).toHaveTextContent('Offline')
+    expect(offlineSummaryCard).toHaveTextContent('Offline')
   })
 })

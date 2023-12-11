@@ -32,15 +32,29 @@ const FWUButton = ({ handleDialogOnClose }) => {
     handleDialogOnClose()
   }
   return (
-    <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
+    <div
+      data-testid="custom-element"
+      style={{ position: 'absolute', bottom: '10px', right: '10px' }}
+    >
       {
         {
           wait: (
-            <div>
-              <Button onClick={handleCancelButtonClick} style={{ marginRight: '5px' }}>
+            <div title="wait">
+              <Button
+                role="cancel"
+                onClick={handleCancelButtonClick}
+                style={{ marginRight: '5px' }}
+                data-testid="id"
+              >
+                {' '}
                 Cancel
               </Button>
-              <Button disabled={filePath === ''} type="primary" onClick={handleStartButtonClick}>
+              <Button
+                role="start"
+                disabled={filePath === ''}
+                type="primary"
+                onClick={handleStartButtonClick}
+              >
                 Start
               </Button>
             </div>
@@ -51,7 +65,7 @@ const FWUButton = ({ handleDialogOnClose }) => {
             </Button>
           ),
           done: (
-            <Button type="primary" onClick={handleFinishButtonClick}>
+            <Button type="primary" role="finish" onClick={handleFinishButtonClick}>
               Finish
             </Button>
           )

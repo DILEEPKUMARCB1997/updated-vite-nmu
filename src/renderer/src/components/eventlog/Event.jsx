@@ -65,6 +65,7 @@ function Event() {
 
   return (
     <ConfigProvider
+      data-testid="custom-element"
       theme={{
         inherit: true,
         components: {
@@ -75,7 +76,6 @@ function Event() {
         }
       }}
     >
-      {/* // <Card> */}
       <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
         History
       </Button>

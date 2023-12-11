@@ -1,10 +1,4 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { eventLogSelector, initEventDailyData, updateLogData } from '../../features/eventLogSlice'
 import { Row, Col, Card } from 'antd'
