@@ -124,25 +124,6 @@ const EventLogGraph = () => {
   }
 
   useEffect(() => {
-    if (Array.isArray(InformationData.data) && InformationData.data.length > 0) {
-      setSnmpTrapMsgData((prev) => ({
-        ...prev,
-        series: [
-          {
-            data: InformationData.data
-          }
-        ],
-        options: {
-          ...prev.options,
-          xaxis: {
-            categories: InformationData.label
-          }
-        }
-      }))
-    }
-  }, [InformationData])
-
-  useEffect(() => {
     dispatch(
       requestHistoryData({
         type: 'custom',
@@ -166,6 +147,7 @@ const EventLogGraph = () => {
           <i>{lastUpdated}</i>
         </div>
         <Button
+          name="Refresh"
           style={{ padding: '5px' }}
           onClick={handleRefreshGraph}
           title="Refresh"
@@ -174,6 +156,8 @@ const EventLogGraph = () => {
       </div>
       <div>
         <ReactApexChart
+          role="graphics-document"
+          name="Bar chart"
           options={eventLogData.options}
           series={eventLogData.series}
           type="bar"

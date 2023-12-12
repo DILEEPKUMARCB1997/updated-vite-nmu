@@ -358,7 +358,6 @@ const DeviceTable = ({ deviceData = [] }) => {
     // onselectionchange: () => {
     //   setSelectedRowsArray([])
     // },
-
   }
   // const handleCheckboxChange = (event) => {
   //   const checkboxValue = event.target.value

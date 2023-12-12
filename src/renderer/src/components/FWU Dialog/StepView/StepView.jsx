@@ -7,6 +7,7 @@ const StepView = () => {
   const { activeStep } = useSelector(firmwareSelector)
   return (
     <Steps
+      role="listitem"
       current={activeStep}
       size="large"
       items={[

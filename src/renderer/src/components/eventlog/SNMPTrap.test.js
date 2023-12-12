@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import '@testing-library/jest-dom'
-import Event from './Event'
+import SNMPTrap from './SNMPTrap'
 
-describe('Event', () => {
+describe('SNMPTrap', () => {
   test('renders the history button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
@@ -15,7 +15,7 @@ describe('Event', () => {
     }))
     render(
       <Provider store={store}>
-        <Event />
+        <SNMPTrap />
       </Provider>
     )
     expect(screen.getByText('History')).toBeInTheDocument()
@@ -31,7 +31,7 @@ describe('Event', () => {
     }))
     render(
       <Provider store={store}>
-        <Event />
+        <SNMPTrap />
       </Provider>
     )
     const alert = screen.getByRole('alert')
@@ -48,10 +48,10 @@ describe('Event', () => {
     }))
     render(
       <Provider store={store}>
-        <Event />
+        <SNMPTrap />
       </Provider>
     )
-    const table = screen.getByTestId('event-table')
+    const table = screen.getByTestId('SNMPTrap-table')
     expect(table).toBeInTheDocument()
   })
 })

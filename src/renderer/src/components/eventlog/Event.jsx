@@ -76,7 +76,7 @@ function Event() {
         }
       }}
     >
-      <Button type="primary" ghost onClick={handleHistoryButtonOnClick}>
+      <Button type="primary" role="history" ghost onClick={handleHistoryButtonOnClick}>
         History
       </Button>
       <Button
@@ -88,11 +88,13 @@ function Event() {
         Clear
       </Button>
       <Alert
+        role="alert"
         message="Here you can check today's log data, please check history for past data."
         type="warning"
         showIcon
       />
       <Table
+        data-testid="event-table"
         columns={columns}
         bordered
         dataSource={eventData}

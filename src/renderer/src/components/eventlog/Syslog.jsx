@@ -112,6 +112,7 @@ function Syslog() {
         showIcon
       />
       <Table
+        data-testid="syslog-table"
         loading={tableLoading}
         bordered
         columns={columns}
