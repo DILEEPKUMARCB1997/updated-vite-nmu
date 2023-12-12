@@ -23,7 +23,7 @@ const DashboardPage = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Card
-              data-testid="custom-element"
+              data-testid="devicesummary"
               title="Device Summary"
               bordered={false}
               size="small"
