@@ -123,11 +123,13 @@ const SNMPTrap = () => {
         Clear
       </Button>
       <Alert
+        role="alert"
         message="Here can check today log data, please check history for past data."
         type="warning"
         showIcon
       />
       <Table
+        data-testid="SNMPTrap-table"
         loading={tableLoading}
         bordered
         columns={columns}

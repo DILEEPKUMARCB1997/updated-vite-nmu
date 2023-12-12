@@ -1,13 +1,11 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { expect, test, describe, jest } from '@jest/globals'
 import { store } from '../../app/store'
-import DeviceSummary from './DeviceSummary'
 import '@testing-library/jest-dom'
+import Event from './Event'
 
-describe('DeviceSummary', () => {
-  test('should render div tag', () => {
+describe('Event', () => {
+  test('renders the history button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -15,16 +13,15 @@ describe('DeviceSummary', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <DeviceSummary />
+        <Event />
       </Provider>
     )
-    const element = screen.getByTestId('custom-element')
-    expect(element).toBeInTheDocument()
+    expect(screen.getByText('History')).toBeInTheDocument()
+    expect(screen.getByText('Clear')).toBeInTheDocument()
   })
-  test('should render the online summary card with the correct count', () => {
+  test('should render alert ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -32,18 +29,16 @@ describe('DeviceSummary', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <DeviceSummary />
+        <Event />
       </Provider>
     )
-    const onlineSummaryCard = screen.getByText('Online')
-    expect(onlineSummaryCard).toBeInTheDocument()
-    expect(onlineSummaryCard).toHaveTextContent('Online')
+    const alert = screen.getByRole('alert')
+    expect(alert).toBeInTheDocument()
   })
 
-  test('should render the offline summary card with the correct count', () => {
+  test('should render table', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -51,14 +46,12 @@ describe('DeviceSummary', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <DeviceSummary />
+        <Event />
       </Provider>
     )
-    const offlineSummaryCard = screen.getByText('Offline')
-    expect(offlineSummaryCard).toBeInTheDocument()
-    expect(offlineSummaryCard).toHaveTextContent('Offline')
+    const table = screen.getByTestId('event-table')
+    expect(table).toBeInTheDocument()
   })
 })

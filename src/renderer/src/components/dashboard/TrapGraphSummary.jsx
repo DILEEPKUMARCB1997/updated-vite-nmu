@@ -160,7 +160,6 @@ const TrapGraphSummary = () => {
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-  // const { label, data, tableData, lastUpdated } = trapGraphData
   const onTrapGraphClick = (barIndex) => {
     dispatch(showTrapTableData(tableData[barIndex]))
   }
@@ -188,7 +187,6 @@ const TrapGraphSummary = () => {
               if (config.selectedDataPoints[0].length > 0) {
                 onTrapGraphClick(config.dataPointIndex)
               }
-              //  console.log(chartContext)
             }
           }
         },
@@ -217,7 +215,6 @@ const TrapGraphSummary = () => {
         },
         xaxis: {
           type: 'category',
-          // categories: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'],
           categories: trapGraphData.label,
           labels: {
             rotate: -45,
@@ -248,7 +245,7 @@ const TrapGraphSummary = () => {
         }
       }
     }
-  }, [trapGraphData.label, trapGraphData.data])
+  }, [trapGraphData.data, trapGraphData.label])
 
   useEffect(() => {
     setTimeout(() => {
@@ -257,7 +254,6 @@ const TrapGraphSummary = () => {
   }, [])
 
   const handleRefresh = () => {
-    console.log('Trap Graph', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 
