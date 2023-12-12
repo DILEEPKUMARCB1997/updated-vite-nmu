@@ -28,11 +28,9 @@ import PortInformationDrawer from '../Drawer/PortInformationDrawer/PortInformati
 import SingleNetworkSettingDrawer from '../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 import SingleBackupConfigDialog from './SingleBackupConfigDialog/SingleBackupConfigDialog'
 import BuzzerDialog from './BuzzerDialog/BuzzerDialog'
-import Beep from './BeepDialog/BeepDialog'
 import EventGraphTableDialog from './EventGraphTableDialog/EventGraphTableDialog'
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
-//import CustomHistoryDialog from './CustomHistoryDialog/CustomHistoryDialog'
 import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
@@ -65,11 +63,11 @@ const Dialog = ({ id, onClose, ...rest }) => {
           singleBackupConfig: <SingleBackupConfigDialog onClose={onClose} />,
           portInformation: <PortInformationDrawer onClose={onClose} />,
           buzzer: <BuzzerDialog onClose={onClose} />,
-          beep: <Beep onClose={onClose} />,
+
           TopologyAddModal: <TopologyAddModal onClose={onClose} />,
           eventGraphTable: <EventGraphTableDialog onClose={onClose} />,
           trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
-          //  customHistory: <CustomHistoryDialog onClose={onClose} />,
+
           syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
         }[id]
       }

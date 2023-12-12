@@ -88,7 +88,7 @@ const FWUTable = memo(function FWUTable() {
   }))
   //console.log(dataSource)
   return (
-    <div>
+    <div data-testid="custom-element">
       <Table columns={columnData} dataSource={dataSource} rowKey="MACAddress" />
     </div>
   )

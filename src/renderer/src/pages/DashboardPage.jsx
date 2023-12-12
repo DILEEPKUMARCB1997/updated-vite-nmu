@@ -7,7 +7,7 @@ import TrapGraphSummary from '../components/dashboard/TrapGraphSummary'
 import SyslogGraph from '../components/dashboard/SyslogGraph'
 import EventSummary from '../components/dashboard/EventSummary'
 import EventList from '../components/dashboard/EventList'
-import EventLogGraph from '../components/dashboard/eventlog/EventLogGraph'
+import EventLogGraph from '../components/dashboard/EventLogGraph'
 
 const DashboardPage = () => {
   const deviceSummary = useMemo(() => <DeviceSummary />, [])

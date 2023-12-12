@@ -9,7 +9,6 @@ import SummaryCard from './SummaryCard'
 
 const DeviceSummary = () => {
   const { groupDeviceArrayData } = useSelector(discoverySelector)
-  // console.log(groupDeviceArrayData)
 
   const getSummaryDetails = () => {
     let online = 0
