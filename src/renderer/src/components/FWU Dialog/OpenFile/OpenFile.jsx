@@ -14,7 +14,7 @@ const OpenFile = () => {
   }
 
   return (
-    <div style={{ display: 'inline-flex', width: '100%' }}>
+    <div style={{ display: 'inline-flex', width: '100%' }} data-testid="custom-element">
       <h5
         style={{
           marginTop: '7px',
@@ -28,7 +28,7 @@ const OpenFile = () => {
       >
         New Firmware File
       </h5>
-      <Input disabled value={filePath} prefix={<FileAddOutlined />} />
+      <Input role="textbox" disabled value={filePath} prefix={<FileAddOutlined />} />
       <Button
         disabled={status !== 'wait'}
         onClick={handleBrowseButtonOnClick}

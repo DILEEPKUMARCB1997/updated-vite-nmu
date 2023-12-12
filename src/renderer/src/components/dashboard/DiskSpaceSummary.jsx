@@ -11,7 +11,6 @@ import ReactApexChart from 'react-apexcharts'
 const DiskSpaceSummary = () => {
   const dispatch = useDispatch()
   const { diskUses } = useSelector(dashboardSelector)
-  // console.log(diskUses)
   useEffect(() => {
     window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
       if (arg.success) {
@@ -90,7 +89,6 @@ const DiskSpaceSummary = () => {
             show: true,
             color: '#1a1818',
             fontSize: '15px',
-            // eslint-disable-next-line no-dupe-keys
             show: false
           },
           value: {
@@ -122,7 +120,6 @@ const DiskSpaceSummary = () => {
     stroke: {
       lineCap: 'solid'
     }
-    // labels: ['Disk Space Used']
   }
 
   return (

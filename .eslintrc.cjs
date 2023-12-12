@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+
   env: {
     browser: true,
     commonjs: true,
@@ -10,9 +11,11 @@ module.exports = {
     ecmaFeatures: {
       jsx: true
     },
+    parser: 'babel-eslint',
     sourceType: 'module',
     ecmaVersion: 2021
   },
+
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

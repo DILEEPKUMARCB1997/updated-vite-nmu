@@ -32,17 +32,11 @@ import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin, updateDiscoveryData } from '../features/discoverySlice'
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
-// import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
-// import Snacks from '../components/Snack/Snacks'
-// import { closeSnack } from '../features/snackSlice'
-
-// import Snacks from '../components/Snack/Snacks'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
   const { openBeepDialog } = useSelector(eventLogSelector)
   const isAppPreferencesDialogOpen = dialogs.includes('perferences')
-  // console.log(isAppPreferencesDialogOpen)
   const dispatch = useDispatch()
   const { mode } = useThemeStore()
   const navigate = useNavigate()
@@ -79,7 +73,6 @@ const MainLayout = () => {
 
   const nativeMenuListener = (event, arg) => {
     console.log(arg)
-    // console.log(isAppPreferencesDialogOpen)
     if (arg.action === 'preference') {
       if (!isAppPreferencesDialogOpen) {
         dispatch(requestGetNICData())
@@ -91,7 +84,6 @@ const MainLayout = () => {
   }
 
   const SNMPStatusListener = (event, arg) => {
-    // console.log(arg)
     if (arg.scanStatus === 'a') {
       dispatch(changeSnmpScanStep(arg.scanStatus))
       setTimeout(() => {
@@ -104,7 +96,7 @@ const MainLayout = () => {
   }
 
   const eventLogUpdateListener = (event, arg) => {
-    console.log(arg)
+    // console.log(arg)
     if (!openBeepDialog && arg.type === 'custom') {
       dispatch(updateBeepSoundStart())
       dispatch(openDialog('buzzer'))
@@ -112,9 +104,9 @@ const MainLayout = () => {
     dispatch(updateEventLog(arg))
   }
 
-
-
-  
+  // const deviceListListener = useCallback((_, args) => {
+  //   dispatch(updateDiscoveryData(JSON.parse(args)))
+  // }, [])
 
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
@@ -192,8 +184,6 @@ const MainLayout = () => {
           <Outlet />
         </PageContainer>
         <Dialogs />
-
-        {/* <Snacks /> */}
       </ProLayout>
     </div>
   )
