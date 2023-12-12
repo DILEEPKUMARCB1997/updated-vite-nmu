@@ -29,7 +29,7 @@ export const initEventDailyData = (payload) => (dispatch) => {
   const { types } = payload
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_EVENT_LOG_HISTORY, (event, arg) => {
     const { type, data } = arg
-    console.log('data', data)
+    // console.log('data', data)
 
     switch (type) {
       case 'custom':

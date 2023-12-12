@@ -5,10 +5,11 @@ import DashboardPage from './DashboardPage'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import '@testing-library/jest-dom/extend-expect'
+import '../../matchMedia'
 
 describe('DashboardPage', () => {
   test('should render deviceSummary Card', () => {
-    global.window.matchMedia = jest.fn().mockImplementation((query) => ({
+    window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
       onchange: null,

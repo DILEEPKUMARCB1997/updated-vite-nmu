@@ -498,11 +498,11 @@ const trap = new Receiver(
         msg: `Port ${generic} - ${trapMapping[specific]}`
       }
       eventLogManagement.default.updateEventLog(trapMsg, 'trap')
-      //console.log('Trap received')
-      //console.log(trapMsg)
-      // console.log('--------------------------------------');
-      // console.log(pkt);
-      // console.log('--------------------------------------');
+      // console.log('Trap received')
+      // console.log(trapMsg)
+      // console.log('--------------------------------------')
+      // console.log(pkt)
+      // console.log('--------------------------------------')
       const isCiscoDevice = getCiscoDeviceIpArray(trapMsg.sourceIP)
       if (!isCiscoDevice) {
         eventLogManagement.default.updateEventLog(trapMsg, 'custom')

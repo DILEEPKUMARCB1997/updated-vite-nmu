@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { expect, test, describe, jest } from '@jest/globals'
+import { expect, test, jest } from '@jest/globals'
 import { store } from '../../../app/store'
 import EventTips from './EventTips'
 import '@testing-library/jest-dom'

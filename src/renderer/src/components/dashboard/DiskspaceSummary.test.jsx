@@ -1,21 +1,11 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { expect, test, jest } from '@jest/globals'
 import { Provider } from 'react-redux'
-import { store } from '../../app/store'
-import '@testing-library/jest-dom/extend-expect'
+import { expect, test, describe, jest } from '@jest/globals'
+import '@testing-library/jest-dom'
 import DiskSpaceSummary from './DiskSpaceSummary'
+import { store } from '../../app/store'
 
-// test('should render div tag', async () => {
-//   render(
-//     <Provider store={store}>
-//       <DiskSpaceSummary />
-//     </Provider>
-//   )
-
-//   const divRender = await screen.getByTestId('graph')
-//   expect(divRender).toBeInTheDocument()
-// })
 test('should render div tag', () => {
   window.matchMedia = jest.fn().mockImplementation((query) => ({
     matches: query !== '(min-width: 240px) and (max-width: 767px)',
