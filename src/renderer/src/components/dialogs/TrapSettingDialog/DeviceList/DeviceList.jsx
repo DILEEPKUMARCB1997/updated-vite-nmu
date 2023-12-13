@@ -86,6 +86,7 @@ const DeviceList = () => {
           boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
         }}
         headStyle={{ backgroundColor: token.colorPrimaryBorder }}
+        data-testid="card"
         // bodyStyle={{ padding: '5px' }}
       >
         {/* <div style={{ height: '400px' }}> */}

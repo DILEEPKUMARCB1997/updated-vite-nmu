@@ -62,12 +62,14 @@ function ConfigComparission() {
                   //   fontSize: '10pt'
                   // }}
                   onChange={(e) => showFile(e)}
+                  data-testid="file1"
                 />
               </Col>
               <Col span={12}>
                 <input
                   type="file"
                   onChange={(e) => showFile1(e)}
+                  data-testid="file2"
                   // style={{
                   //   // color: 'white',
                   //   // display: '-ms-flexbox',
@@ -103,6 +105,7 @@ function ConfigComparission() {
                     newValue={asdf1}
                     compareMethod={DiffMethod.WORDS}
                     splitView={true}
+                    data-testid="viewer"
                   />
                 </Col>
               </Row>
