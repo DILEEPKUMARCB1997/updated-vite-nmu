@@ -1,12 +1,13 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { expect, test, describe, jest } from '@jest/globals'
 import '@testing-library/jest-dom'
 import DiskSpaceSummary from './DiskSpaceSummary'
 import { store } from '../../app/store'
+import '../../../matchMedia'
 
-test('should render div tag', () => {
+test('should disk space summary', () => {
   window.matchMedia = jest.fn().mockImplementation((query) => ({
     matches: query !== '(min-width: 240px) and (max-width: 767px)',
     media: '',
@@ -20,6 +21,7 @@ test('should render div tag', () => {
       <DiskSpaceSummary />
     </Provider>
   )
-  const element = screen.getByTestId('custom-element')
-  expect(element).toBeInTheDocument()
+  const diskSpaceSummary = screen.getByTestId('diskSpaceSummary')
+  fireEvent.click(diskSpaceSummary)
+  expect(diskSpaceSummary).toBeInTheDocument()
 })

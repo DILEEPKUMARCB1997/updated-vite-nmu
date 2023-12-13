@@ -137,6 +137,7 @@ const DeviceList = () => {
 
   return (
     <Card
+      data-testid="networkSettingDeviceTable"
       title="IP Assign"
       size="small"
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
