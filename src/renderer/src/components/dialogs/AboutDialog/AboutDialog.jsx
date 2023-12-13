@@ -24,7 +24,7 @@ const AboutDialog = ({ onClose }) => {
     >
       <img src={icon} alt="icon" />
       <Typography>
-        <Title level={2}>{`${APP_NAME} ${version}`}</Title>
+        <Title level={2} data-testid="title">{`${APP_NAME} ${version}`}</Title>
       </Typography>
     </Modal>
   )

@@ -148,8 +148,8 @@ const dashboardSlice = createSlice({
       }
     },
 
-    updateTrapTableData: (state, { payload }) => {
-      return { ...state, trapTableData: payload }
+    updateTrapTableData: (state, action) => {
+      return { ...state, trapTableData: action.payload }
     }
   }
 })

@@ -93,6 +93,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
         bodyStyle={{ height: '300px' }}
         style={{ top: '20px' }}
         maskClosable={false}
+        data-testid="modalData"
       >
         <ConfigProvider
           theme={{
@@ -124,7 +125,11 @@ const ResetToDefaultDialog = ({ onClose }) => {
             ></Table>
           </div>
           {taskStatus === RUNNING && (
-            <Progress size="small" percent={taskStatus === SUCCESS ? 100 : 0} />
+            <Progress
+              size="small"
+              percent={taskStatus === SUCCESS ? 100 : 0}
+              data-testid="progress"
+            />
           )}
           <div>
             {taskStatus === WAITING && (
@@ -132,6 +137,7 @@ const ResetToDefaultDialog = ({ onClose }) => {
                 type="primary"
                 onClick={handleStartButtonOnClick}
                 style={{ float: 'right', right: '25px' }}
+                data-testid="startButton"
               >
                 Start
               </Button>
