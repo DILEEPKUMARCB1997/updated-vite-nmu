@@ -7,7 +7,7 @@ import SyslogConfiguration from './SyslogConfiguration/SyslogConfiguration'
 import { clearData } from '../../../features/trapSettingSlice'
 import { useDispatch } from 'react-redux'
 
-const syslogSettingDialog = ({ onClose }) => {
+const SyslogSettingDialog = ({ onClose }) => {
   const dispatch = useDispatch()
   const { useToken } = theme
   const { token } = useToken()
@@ -45,7 +45,7 @@ const syslogSettingDialog = ({ onClose }) => {
         width={1000}
         okText="start"
       >
-        <Row gutter={24}>
+        <Row gutter={24} role="row">
           <Col className="gutter-row" span={14}>
             {' '}
             <DeviceList didMount={didMount} />
@@ -60,4 +60,4 @@ const syslogSettingDialog = ({ onClose }) => {
   )
 }
 
-export default syslogSettingDialog
+export default SyslogSettingDialog
