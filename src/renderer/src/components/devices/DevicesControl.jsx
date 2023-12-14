@@ -35,6 +35,7 @@ const options = [
 ]
 
 const DevicesControl = ({ onClose }) => {
+  const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
   const [groupAddInput, setGroupAddInput] = useState('')
   const { groupView } = useSelector(discoverySelector)
@@ -56,6 +57,7 @@ const DevicesControl = ({ onClose }) => {
       cmd: 'addGroup',
       groupName: groupAddInput
     })
+    onClose()
   }
 
   const content = (

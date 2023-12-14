@@ -24,7 +24,6 @@ const Settings = () => {
     validDNS2
   } = useSelector(networkSettingSelector)
   const data = useSelector(networkSettingSelector)
-  // console.log('data', data)
 
   const { useToken } = theme
   const { token } = useToken()

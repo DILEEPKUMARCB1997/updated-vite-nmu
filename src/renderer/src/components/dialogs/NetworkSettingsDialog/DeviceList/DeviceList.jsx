@@ -145,6 +145,7 @@ const DeviceList = () => {
         borderRadius: '4px',
         boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.14), 0px 7px 10px -5px rgba(0, 0, 0, 0.4)'
       }}
+      data-testid="networkSettingDeviceTable"
     >
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <Form.Item label="Start Address" colon={false} style={{ margin: '0px', tableLayout: true }}>
@@ -156,6 +157,7 @@ const DeviceList = () => {
           />
         </Form.Item>
         <Button
+          data-testid="calculateButton"
           type="primary"
           style={{ marginLeft: '20px' }}
           disabled={!validStartAddress || status !== 'wait' || isDHCP}

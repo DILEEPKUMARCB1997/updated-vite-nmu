@@ -123,9 +123,13 @@ const DiskSpaceSummary = () => {
   }
 
   return (
-    <div>
-      <ReactApexChart options={options} series={options.series} type="radialBar" width={500} />
-    </div>
+    <ReactApexChart
+      data-testid="diskSpaceSummary"
+      options={options}
+      series={options.series}
+      type="radialBar"
+      width={500}
+    />
   )
 }
 
