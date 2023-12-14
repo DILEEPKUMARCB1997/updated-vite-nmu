@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByTestId, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import FWUButton from './FWUButton'
 import { Provider } from 'react-redux'
 import { store } from '../../../app/store'
