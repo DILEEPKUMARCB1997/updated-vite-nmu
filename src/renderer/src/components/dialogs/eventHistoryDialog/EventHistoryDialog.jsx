@@ -118,6 +118,7 @@ const EventHistoryDialog = ({ onClose }) => {
           />
           <CustomRangePicker onChange={rangePickerChange} />
           <Button
+            role="Refresh"
             type="primary"
             ghost
             // style={{ margin: '10px' }}
@@ -130,6 +131,7 @@ const EventHistoryDialog = ({ onClose }) => {
 
         <Divider style={{ margin: '10px 0px' }} />
         <Table
+          role="table"
           // style={{ height: '50%', tableLayout: 'auto' }}
           loading={tableLoading}
           rowKey="eventId"

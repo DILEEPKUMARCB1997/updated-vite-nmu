@@ -133,6 +133,7 @@ function SyslogHistoryDialog({ onClose }) {
           />
           <CustomRangePicker onChange={rangePickerChange} />
           <Button
+            role="Refresh"
             onClick={handleRefreshButtonClick}
             type="primary"
             ghost

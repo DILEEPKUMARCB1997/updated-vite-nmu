@@ -104,6 +104,7 @@ const SyslogGraphTableDialog = ({ onClose }) => {
         }}
       >
         <Table
+          role="table"
           loading={tableLoading}
           rowKey="syslogId"
           bordered

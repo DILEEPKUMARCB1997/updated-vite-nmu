@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
 
 const SyslogConfiguration = () => {
-  // const { notification } = App.useApp()
+  //const { notification } = App.useApp()
   const dispatch = useDispatch()
 
   const [state, setState] = useState({
@@ -100,8 +100,8 @@ const SyslogConfiguration = () => {
       }}
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
     >
-      <Row justify="space-around" align="middle">
-        <Col span={24}>
+      <Row justify="space-around" align="middle" role="row">
+        <Col span={24} data-testid="custom-element">
           <Form.Item
             labelAlign="start"
             label="logToFlash"
@@ -148,7 +148,7 @@ const SyslogConfiguration = () => {
               }}
             >
               <Input
-                placeholder="Server IP"
+                placeholder="ServerIP"
                 value={state.serverIP}
                 onChange={handleServerInputChange}
               />
