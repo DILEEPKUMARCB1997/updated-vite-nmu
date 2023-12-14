@@ -74,7 +74,8 @@ const DeviceList = () => {
       }}
     >
       <Card
-        title=" Devices"
+        data-testid="custom-element"
+        title="Devices"
         size="small"
         bordered={false}
         style={{
