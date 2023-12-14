@@ -1,12 +1,13 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { expect, test, describe, jest } from '@jest/globals'
 import { store } from '../../../app/store'
-import EventTips from './EventTips'
+import SingleBackupConfigDialog from './SingleBackupConfigDialog'
 import '@testing-library/jest-dom'
-describe('EventTips', () => {
-  test('should render alert', () => {
+
+describe('./SingleBackupConfigDialog ', () => {
+  test('should render Modal', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -17,13 +18,14 @@ describe('EventTips', () => {
 
     render(
       <Provider store={store}>
-        <EventTips />
+        <SingleBackupConfigDialog />
       </Provider>
     )
-    const element = screen.getByTestId('alert', {})
+    const element = screen.getByRole('dialog')
+    fireEvent.click(element)
     expect(element).toBeInTheDocument()
   })
-  test('should render anchor tag', () => {
+  test('should render Alert', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -34,10 +36,10 @@ describe('EventTips', () => {
 
     render(
       <Provider store={store}>
-        <EventTips />
+        <SingleBackupConfigDialog />
       </Provider>
     )
-    const anchorTag = screen.getByRole('link', { current: 'page' })
-    expect(anchorTag).toBeInTheDocument()
+    const alertComponent = screen.getByRole('alert')
+    expect(alertComponent).toBeInTheDocument()
   })
 })

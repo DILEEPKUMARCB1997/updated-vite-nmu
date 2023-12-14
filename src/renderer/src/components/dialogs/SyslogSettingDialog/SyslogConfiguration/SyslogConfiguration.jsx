@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
-import { Card, theme, Row, Col, Form, Input, Button, App, Switch, Select, Typography } from 'antd'
+import {
+  Card,
+  theme,
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  App,
+  Switch,
+  Select,
+  Typography,
+  notification
+} from 'antd'
 import { useDispatch } from 'react-redux'
 import { startTask } from '../../../../features/SyslogSettingSlice'
 
 const SyslogConfiguration = () => {
-  const { notification } = App.useApp()
+  // const { notification } = App.useApp()
   const dispatch = useDispatch()
 
   const [state, setState] = useState({

@@ -5,6 +5,7 @@ import { expect, test, jest, describe } from '@jest/globals'
 import { store } from '../../../../app/store'
 import TrapConfiguration from './TrapConfiguration'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 
 describe('should render Trap Configuration', () => {
   test('should render card', () => {
@@ -75,7 +76,7 @@ describe('should render Trap Configuration', () => {
     const CommString = screen.getByPlaceholderText('Trap Comm String')
     expect(CommString).toBeInTheDocument()
   })
-  test('should render start button ', () => {
+  test('should render start button ', async () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -84,13 +85,14 @@ describe('should render Trap Configuration', () => {
       removeListener: jest.fn()
     }))
 
+    const handleStartButton = jest.fn()
     render(
       <Provider store={store}>
-        <TrapConfiguration />
+        <TrapConfiguration handleOnStartButton={handleStartButton} />
       </Provider>
     )
-    const startButton = screen.getByRole('button')
-    fireEvent.click(startButton)
-    expect(startButton).toBeInTheDocument()
+    const startButton = screen.getByRole('button', { name: 'Start' })
+    await fireEvent.click(startButton)
+    expect(handleStartButton).toHaveBeenCalledTimes(0)
   })
 })

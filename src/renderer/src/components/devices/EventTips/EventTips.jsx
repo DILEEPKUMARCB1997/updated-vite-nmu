@@ -94,6 +94,7 @@ const EventTips = () => {
             tabIndex="0"
             onClick={handleOKOnClick}
             onKeyDown={handleOKOnKeyPress}
+            aria-current="page"
           >
             {' '}
             OK
