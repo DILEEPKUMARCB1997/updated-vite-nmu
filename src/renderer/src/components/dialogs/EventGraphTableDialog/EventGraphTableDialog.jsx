@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Table, Modal, ConfigProvider } from 'antd'
+import { Table, Modal, ConfigProvider, theme } from 'antd'
 import { dashboardSelector } from '../../../features/dashboardSlice'
 import { useSelector } from 'react-redux'
-import { useTheme } from 'antd-style'
 
 const columns = [
   {
@@ -47,7 +46,8 @@ const columns = [
 ]
 
 const EventGraphTableDialog = ({ onClose }) => {
-  const token = useTheme()
+  const { useToken } = theme
+  const { token } = useToken()
   const { customTableData } = useSelector(dashboardSelector)
   const [tableLoading, setTableLoading] = useState(true)
 
@@ -75,7 +75,7 @@ const EventGraphTableDialog = ({ onClose }) => {
         open
         onCancel={handleCloseButtonOnClick}
         width="90%"
-        title=" Event Graph Data"
+        title="Event Graph Data"
         onOk={onClose}
         closable={true}
         maskClosable={false}
