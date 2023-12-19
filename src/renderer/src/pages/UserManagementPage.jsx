@@ -116,6 +116,7 @@ const UserManagement = () => {
       <Card
         title="List of Users"
         bodyStyle={{ paddingTop: '5px', paddingBottom: '0px' }}
+        data-testid="user-card"
         extra={
           <Button type="primary" icon={<UserAddOutlined />} ghost onClick={handleAddUser}>
             Add User

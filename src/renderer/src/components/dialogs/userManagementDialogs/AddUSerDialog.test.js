@@ -1,14 +1,14 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { expect, test, describe, jest } from '@jest/globals'
-import { userEvent } from '@testing-library/user-event'
-import { store } from '../../../../app/store'
-import DeviceList from './DeviceList'
 import '@testing-library/jest-dom'
+import AddUserDialog from './AddUserDialog'
+import { store } from '../../../app/store'
+import userEvent from '@testing-library/user-event'
 
-describe('should render Device list card in Backup and Restore Dialog', () => {
-  test('should render start button', () => {
+describe('Add User Dialog TestCases', () => {
+  test('should render add user dialog', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -19,14 +19,13 @@ describe('should render Device list card in Backup and Restore Dialog', () => {
 
     render(
       <Provider store={store}>
-        <DeviceList />
+        <AddUserDialog />
       </Provider>
     )
-    const startButton = screen.getByTestId('button')
-    userEvent.click(startButton)
-    expect(startButton).toBeInTheDocument()
+    const addUserModal = screen.getByRole('dialog')
+    expect(addUserModal).toBeInTheDocument()
   })
-  test('should render select component', () => {
+  test('should render OK Button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -37,14 +36,15 @@ describe('should render Device list card in Backup and Restore Dialog', () => {
 
     render(
       <Provider store={store}>
-        <DeviceList />
+        <AddUserDialog />
       </Provider>
     )
-    const select = screen.getByRole('combobox')
-    userEvent.selectOptions(select, ['backup', 'restore'])
-    expect(select).toBeInTheDocument()
+    const okButton = screen.getByText(/ok/i)
+    userEvent.click(okButton)
+    expect(okButton).toBeInTheDocument()
   })
-  test('should render table component', () => {
+
+  test('should render Cancel Button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -55,15 +55,16 @@ describe('should render Device list card in Backup and Restore Dialog', () => {
 
     render(
       <Provider store={store}>
-        <DeviceList />
+        <AddUserDialog />
       </Provider>
     )
-    const tableData = screen.getByTestId('table', {
-      name: /model, MACAddress, IPAddress, status/i
-    })
-    expect(tableData).toBeInTheDocument()
+
+    const cancelButton = screen.getByText(/cancel/i)
+    userEvent.click(cancelButton)
+    expect(cancelButton).toBeInTheDocument()
   })
-  test('should render Alert component', () => {
+
+  test('should render dropdown input field', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -74,10 +75,11 @@ describe('should render Device list card in Backup and Restore Dialog', () => {
 
     render(
       <Provider store={store}>
-        <DeviceList />
+        <AddUserDialog />
       </Provider>
     )
-    const alertData = screen.getByRole('alert')
-    expect(alertData).toBeInTheDocument()
+    const dropdown = screen.getByRole('combobox')
+    userEvent.selectOptions(dropdown, ['Admin', 'Supervisor', 'Operator'])
+    expect(dropdown).toBeInTheDocument()
   })
 })
