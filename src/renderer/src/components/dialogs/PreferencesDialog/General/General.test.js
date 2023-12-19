@@ -1,12 +1,12 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { Provider } from 'react-redux'
-import { expect, test, jest } from '@jest/globals'
-import { store } from '../../../app/store'
-import EventTips from './EventTips'
 import '@testing-library/jest-dom'
-describe('EventTips', () => {
-  test('should render alert', () => {
+import General from './General'
+import { store } from '../../../../app/store'
+import { Provider } from 'react-redux'
+import userEvent from '@testing-library/user-event'
+
+describe('General', () => {
+  test('should render the divider ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -14,16 +14,15 @@ describe('EventTips', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <EventTips />
+        <General />
       </Provider>
     )
-    const element = screen.getByTestId('alert')
-    expect(element).toBeInTheDocument()
+    const divider = screen.getByText('Network Interface Card')
+    expect(divider).toBeInTheDocument()
   })
-  test('should render anchor ok button', () => {
+  test('should render the select ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -31,16 +30,17 @@ describe('EventTips', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
+    const SelectOnChange = jest.fn()
     render(
       <Provider store={store}>
-        <EventTips />
+        <General handleNICSelectOnChange={SelectOnChange} />
       </Provider>
     )
-    const okButton = screen.getByTestId('okbutton', { current: 'page' })
-    expect(okButton).toBeInTheDocument()
+    const element = screen.getByRole('combobox')
+    userEvent.selectOptions(element, ['index'])
+    expect(SelectOnChange).toHaveBeenCalledTimes(0)
   })
-  test('should render anchor cancel button', () => {
+  test('should render the divider2 ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -51,10 +51,10 @@ describe('EventTips', () => {
 
     render(
       <Provider store={store}>
-        <EventTips />
+        <General />
       </Provider>
     )
-    const cancelButton = screen.getByTestId('cancelbutton', { current: false })
-    expect(cancelButton).toBeInTheDocument()
+    const divider2 = screen.getByTestId('divider')
+    expect(divider2).toBeInTheDocument()
   })
 })

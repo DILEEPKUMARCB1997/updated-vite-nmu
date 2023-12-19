@@ -14,7 +14,7 @@ const Advanced = () => {
     }
   }, [])
   return (
-    <div>
+    <div data-testid="advanced">
       <DeviceDefaultSetting />
       <OfflineDetection />
       <FirmwareUpdate />

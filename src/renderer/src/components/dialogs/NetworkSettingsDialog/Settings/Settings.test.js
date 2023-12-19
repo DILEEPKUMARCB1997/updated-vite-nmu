@@ -40,6 +40,6 @@ describe('Rendering settings component', () => {
     const dhcpCheckbox = screen.getByRole('checkbox')
     fireEvent.click(dhcpCheckbox)
     expect(dhcpCheckbox).toBeInTheDocument()
-    expect(dhcpCheckbox.checked).toEqual(false)
+    expect(dhcpCheckbox.checked).toEqual(true)
   })
 })

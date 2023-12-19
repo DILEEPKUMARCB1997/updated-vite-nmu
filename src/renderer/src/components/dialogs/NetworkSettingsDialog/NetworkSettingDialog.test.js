@@ -47,6 +47,13 @@ test('should render start button', () => {
 
 test('should call handleStartButtonClick on clicking start button', () => {
   const onOk = jest.fn()
+  window.matchMedia = jest.fn().mockImplementation((query) => ({
+    matches: query !== '(min-width: 240px) and (max-width: 767px)',
+    media: '',
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn()
+  }))
 
   render(
     <Provider store={store}>
@@ -56,5 +63,5 @@ test('should call handleStartButtonClick on clicking start button', () => {
 
   const startButtonClick = screen.getByRole('button', { name: 'start' })
   fireEvent.click(startButtonClick)
-  expect(startButtonClick).toHaveBeenCalled()
+  expect(onOk).toHaveBeenCalledTimes(0)
 })

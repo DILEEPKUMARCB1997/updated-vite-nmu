@@ -92,7 +92,7 @@ describe('should render Trap Configuration', () => {
       </Provider>
     )
     const startButton = screen.getByRole('button', { name: 'Start' })
-    await fireEvent.click(startButton)
+    await userEvent.click(startButton)
     expect(handleStartButton).toHaveBeenCalledTimes(0)
   })
 })

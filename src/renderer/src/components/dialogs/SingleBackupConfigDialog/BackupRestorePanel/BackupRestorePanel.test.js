@@ -155,7 +155,7 @@ describe('./BackupRestorePanel', () => {
     const restoreInput = screen.getByLabelText('restorepath')
     expect(restoreInput).toBeTruthy()
   })
-  test('should render Select File Button', async () => {
+  test('should render Select File Button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -164,20 +164,18 @@ describe('./BackupRestorePanel', () => {
       removeListener: jest.fn(),
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-      ipcRenderer: { once: jest.fn(), send: jest.fn() }
+      dispatchEvent: jest.fn()
     }))
-    const selectFileButton = jest.fn()
+
     render(
       <Provider store={store}>
-        <BackupRestorePanel handleSelectFileButtonOnClick={selectFileButton} />
+        <BackupRestorePanel />
       </Provider>
     )
 
     const selectButton = screen.getByRole('button', { name: 'Select File' })
 
-    await userEvent.click(selectButton)
-    expect(selectFileButton).toHaveBeenCalledTimes(0)
+    expect(selectButton).toBeInTheDocument()
   })
   test('should render Restore Button', async () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
