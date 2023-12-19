@@ -135,7 +135,7 @@ const SingleNetworkSettingDrawer = (props) => {
         }
       >
         <Typography style={{ marginBottom: '10px' }}>{`${model}(${MACAddress})`}</Typography>
-        <Form layout="vertical">
+        <Form layout="vertical" role="form">
           <Form.Item>
             <Checkbox
               style={{ paddingTop: '10px' }}
@@ -145,15 +145,21 @@ const SingleNetworkSettingDrawer = (props) => {
               DHCP
             </Checkbox>
           </Form.Item>
-          <Form.Item label="IP Address" colon={false} style={{ margin: '2px' }}>
+          <Form.Item
+            label="IP Address"
+            aria-label="IPAddress"
+            colon={false}
+            style={{ margin: '2px' }}
+          >
             <Input
+              placeholder="IPAddress"
               status={!validIPAddress}
               disabled={isDHCP}
               value={IPAddress}
               onChange={handleNetworkAddressInputOnChange('IPAddress', validIPAddress)}
             />
           </Form.Item>
-          <Form.Item label="Netmask" colon={false} style={{ margin: '2px' }}>
+          <Form.Item label="Netmask" aria-label="Netmask" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validNetmask}
               disabled={isDHCP}
@@ -171,7 +177,12 @@ const SingleNetworkSettingDrawer = (props) => {
           </Form.Item>
           {isSNMPmode && (
             <>
-              <Form.Item label="Preferred DNS server" colon={false} style={{ margin: '2px' }}>
+              <Form.Item
+                label="Preferred DNS server"
+                aria-label="Preferred DNS server"
+                colon={false}
+                style={{ margin: '2px' }}
+              >
                 <Input
                   status={!validDNS1}
                   disabled={isDHCP}
@@ -179,7 +190,12 @@ const SingleNetworkSettingDrawer = (props) => {
                   onChange={handleNetworkAddressInputOnChange('dns1', validDNS1)}
                 />
               </Form.Item>
-              <Form.Item label="Alternate DNS server" colon={false} style={{ margin: '2px' }}>
+              <Form.Item
+                label="Alternate DNS server"
+                aria-label="Alternate DNS server"
+                colon={false}
+                style={{ margin: '2px' }}
+              >
                 <Input
                   status={!validDNS2}
                   disabled={isDHCP}

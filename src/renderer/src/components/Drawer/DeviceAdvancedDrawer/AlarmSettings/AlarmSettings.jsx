@@ -103,6 +103,7 @@ const AlarmSettings = () => {
         Port
       </Divider>
       <List
+        role="list"
         size="small"
         header={portListHeadRender()}
         bordered

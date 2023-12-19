@@ -6,7 +6,6 @@ import {
   deviceAdvanceSettingSelector,
   requireSaveDeviceAdvanced
 } from '../../../features/deviceAdvanceSettingSlice'
-import Event from '../../eventlog/Event'
 import Authentication from './Authentication/Authentication'
 import AlarmSettings from './AlarmSettings/AlarmSettings'
 
@@ -49,7 +48,7 @@ const DeviceAdvanceDrawer = ({ onClose }) => {
   return (
     <Drawer
       open={drawVisible}
-      title={<Typography.Title level={4}> Advance Setting</Typography.Title>}
+      title={<Typography.Title level={4}>Advance Setting</Typography.Title>}
       closable={false}
       maskClosable={false}
       onClose={handleCloseDrawer}

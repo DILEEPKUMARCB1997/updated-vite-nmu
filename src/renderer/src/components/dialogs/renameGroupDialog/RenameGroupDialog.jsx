@@ -20,6 +20,7 @@ const RenameGroupDialog = ({ open, onClose, groupId }) => {
   }
   return (
     <Modal
+      role="dialog"
       title="Rename Group"
       width={250}
       okText="Apply"

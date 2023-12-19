@@ -48,7 +48,7 @@ const DeviceInformation = () => {
             }}
           >{`${item.label}`}</Typography.Title>
           {item.id === 'power' ? (
-            <div>
+            <div data-testid="custom-element">
               {Object.entries(state.powerStatusData).map(([power, status]) => (
                 <div key={power}>
                   <Typography.Text style={{ fontSize: '15px' }} strong key={power}>

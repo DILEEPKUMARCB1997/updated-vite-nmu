@@ -42,11 +42,15 @@ const Authentication = () => {
       >
         General
       </Divider>
-      <Form layout="vertical">
+      <Form layout="vertical" role="form">
         <Form.Item label="Username" colon={false} style={{ margin: '5px' }}>
-          <Input value={username} onChange={handleAuthenticationSettingInputChange('username')} />
+          <Input
+            value={username}
+            placeholder="username"
+            onChange={handleAuthenticationSettingInputChange('username')}
+          />
         </Form.Item>
-        <Form.Item label="Password" colon={false} style={{ margin: '5px' }}>
+        <Form.Item label="Password" aria-label="Password" colon={false} style={{ margin: '5px' }}>
           <Input.Password
             value={password}
             onChange={handleAuthenticationSettingInputChange('password')}
@@ -64,7 +68,12 @@ const Authentication = () => {
         SNMP
       </Divider>
       <Form layout="vertical">
-        <Form.Item label="SNMP Version" colon={false} style={{ fontWeight: 'bold', margin: '5px' }}>
+        <Form.Item
+          label="SNMP Version"
+          aria-label="SNMP Version"
+          colon={false}
+          style={{ fontWeight: 'bold', margin: '5px' }}
+        >
           <Select
             // defaultValue={SNMPVersion}
             value={SNMPVersion}
@@ -75,10 +84,20 @@ const Authentication = () => {
             onChange={handleSNMPVersionSelectChange}
           />
         </Form.Item>
-        <Form.Item colon={false} label="Read Community" style={{ margin: '5px' }}>
+        <Form.Item
+          colon={false}
+          label="Read Community"
+          style={{ margin: '5px' }}
+          aria-label="Read Community"
+        >
           <Input value={readCommunity} onChange={handleSnmpSettingInputChange('readCommunity')} />
         </Form.Item>
-        <Form.Item colon={false} label="Write Community" style={{ margin: '5px' }}>
+        <Form.Item
+          colon={false}
+          label="Write Community"
+          style={{ margin: '5px' }}
+          aria-label="Write Community"
+        >
           <Input value={writeCommunity} onChange={handleSnmpSettingInputChange('writeCommunity')} />
         </Form.Item>
       </Form>
