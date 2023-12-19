@@ -2,12 +2,11 @@
 /* eslint-disable no-unused-vars */
 
 import React from 'react'
-import { Row, Col, Card } from 'antd'
-
-import { useTheme } from 'antd-style'
+import { Row, Col, Card, theme } from 'antd'
 
 const EventListCard = (props) => {
-  const token = useTheme()
+  const { useToken } = theme
+  const { token } = useToken()
   const { createAt, sourceIP, msg, eventId, hostname } = props.item
 
   return (

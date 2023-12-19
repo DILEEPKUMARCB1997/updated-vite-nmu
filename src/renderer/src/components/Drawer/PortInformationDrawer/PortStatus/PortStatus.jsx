@@ -136,6 +136,7 @@ const PortStatus = () => {
   return (
     <Card
       title="Port Status"
+      role="card"
       size="small"
       bordered={false}
       style={{
@@ -145,6 +146,7 @@ const PortStatus = () => {
       headStyle={{ backgroundColor: token.colorPrimaryBorder }}
     >
       <Table
+        //  role="table"
         size="small"
         loading={isWaiting}
         rowKey={(record) => record.portName}
