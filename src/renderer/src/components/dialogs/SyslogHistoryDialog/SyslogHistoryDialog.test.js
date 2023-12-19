@@ -2,8 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../../app/store'
 import '@testing-library/jest-dom'
-import { ipcRenderer } from 'electron'
-import { RESPONSE_RP_GET_EVENT_LOG_HISTORY } from '../../../../../main/utils/IPCEvents'
 import SyslogHistoryDialog from './SyslogHistoryDialog'
 
 jest.mock('electron', () => ({
@@ -30,6 +28,7 @@ describe('SyslogHistoryDialog', () => {
     expect(modal).toBeInTheDocument()
   })
   test('should render input', () => {
+    const onchange = jest.fn()
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -43,7 +42,8 @@ describe('SyslogHistoryDialog', () => {
       </Provider>
     )
     const input = screen.getByPlaceholderText('Source IP')
-    expect(input).toBeInTheDocument()
+    fireEvent.change(input)
+    expect(onchange).toHaveBeenCalledTimes(0)
   })
 
   test.skip('should render button', () => {

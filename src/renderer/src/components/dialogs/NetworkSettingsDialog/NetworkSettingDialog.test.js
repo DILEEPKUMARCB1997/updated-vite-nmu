@@ -33,6 +33,7 @@ test('should render start button', () => {
     addListener: jest.fn(),
     removeListener: jest.fn()
   }))
+  // const buttonClick = jest.fn()
 
   render(
     <Provider store={store}>
