@@ -3,12 +3,12 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { expect, test, describe, jest } from '@jest/globals'
 import '@testing-library/jest-dom'
-import AddUserDialog from './AddUserDialog'
 import { store } from '../../../app/store'
 import userEvent from '@testing-library/user-event'
+import EditUserDialog from './EditUserDialog'
 
-describe('Add User Dialog TestCases', () => {
-  test('should render add user dialog', () => {
+describe('Edit User Dialog TestCases', () => {
+  test('should render edit user dialog', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -19,13 +19,13 @@ describe('Add User Dialog TestCases', () => {
 
     render(
       <Provider store={store}>
-        <AddUserDialog />
+        <EditUserDialog />
       </Provider>
     )
-    const addUserModal = screen.getByRole('dialog')
-    expect(addUserModal).toBeInTheDocument()
+    const editUserModal = screen.getByRole('dialog')
+    expect(editUserModal).toBeInTheDocument()
   })
-  test('should render OK Button', () => {
+  test('should render Edit Button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -36,12 +36,12 @@ describe('Add User Dialog TestCases', () => {
 
     render(
       <Provider store={store}>
-        <AddUserDialog />
+        <EditUserDialog />
       </Provider>
     )
-    const okButton = screen.getByText(/ok/i)
-    userEvent.click(okButton)
-    expect(okButton).toBeInTheDocument()
+    const editButton = screen.getByRole('button', { name: 'Edit' })
+    userEvent.click(editButton)
+    expect(editButton).toBeInTheDocument()
   })
 
   test('should render Cancel Button', () => {
@@ -55,7 +55,7 @@ describe('Add User Dialog TestCases', () => {
 
     render(
       <Provider store={store}>
-        <AddUserDialog />
+        <EditUserDialog />
       </Provider>
     )
 
@@ -64,7 +64,7 @@ describe('Add User Dialog TestCases', () => {
     expect(cancelButton).toBeInTheDocument()
   })
 
-  test('should render dropdown input field', async () => {
+  test('should render dropdown input field', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -75,16 +75,16 @@ describe('Add User Dialog TestCases', () => {
 
     render(
       <Provider store={store}>
-        <AddUserDialog />
+        <EditUserDialog />
       </Provider>
     )
-    const dropdown = await screen.getByRole('combobox')
+    const dropdown = screen.getByRole('combobox')
     console.log('dropdown', dropdown)
     userEvent.selectOptions(dropdown, ['Admin', 'Supervisor', 'Operator'])
     expect(dropdown).toBeInTheDocument()
   })
 
-  test('should render username input', () => {
+  test('should render all input fields', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -95,10 +95,16 @@ describe('Add User Dialog TestCases', () => {
 
     render(
       <Provider store={store}>
-        <AddUserDialog />
+        <EditUserDialog />
       </Provider>
     )
-    const usernameInput = screen.getByPlaceholderText('Enter Username')
+    const usernameInput = screen.getByRole('textbox', { name: 'Username' })
     expect(usernameInput).toBeInTheDocument()
+
+    const newPasswordInput = screen.getByLabelText('New Password')
+    expect(newPasswordInput).toBeInTheDocument()
+
+    const oldPasswordInput = screen.getByLabelText('Old Password')
+    expect(oldPasswordInput).toBeInTheDocument()
   })
 })

@@ -8,10 +8,6 @@ import {
   setUserData,
   userManagementSelector
 } from '../../../features/userManagementSlice'
-import {
-  REQUEST_MP_SET_USER_DETAILS,
-  RESPONSE_RP_SET_USER_DETAILS
-} from '../../../../../main/utils/IPCEvents'
 
 const AddUserDialog = ({ onClose }) => {
   const passwordPattern =
