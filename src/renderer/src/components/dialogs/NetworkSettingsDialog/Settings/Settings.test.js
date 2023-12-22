@@ -7,6 +7,23 @@ import Settings from './Settings'
 import { store } from '../../../../app/store'
 
 describe('Rendering settings component', () => {
+  test('should render settings card', () => {
+    window.matchMedia = jest.fn().mockImplementation((query) => ({
+      matches: query !== '(min-width: 240px) and (max-width: 767px)',
+      media: '',
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }))
+
+    render(
+      <Provider store={store}>
+        <Settings />
+      </Provider>
+    )
+    const card = screen.getByTestId('settingsCard')
+    expect(card).toBeInTheDocument()
+  })
   test('should render all Input field', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

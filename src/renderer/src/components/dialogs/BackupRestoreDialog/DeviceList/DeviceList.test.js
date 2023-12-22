@@ -7,7 +7,7 @@ import { store } from '../../../../app/store'
 import DeviceList from './DeviceList'
 import '@testing-library/jest-dom'
 
-describe(' should render the backuprestore page', () => {
+describe('should render Device list card in Backup and Restore Dialog', () => {
   test('should render start button', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

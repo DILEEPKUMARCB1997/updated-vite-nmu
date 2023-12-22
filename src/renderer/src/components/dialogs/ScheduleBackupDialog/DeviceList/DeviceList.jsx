@@ -190,6 +190,7 @@ const DeviceList = (props) => {
                 columns={columns}
                 dataSource={scheduledDeviceArrayData[scheduleId]}
                 style={{ cursor: 'pointer' }}
+                // data-testid="table"
                 onRow={(record, rowIndex) => {
                   return {
                     onClick: (event) => {

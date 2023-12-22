@@ -5,6 +5,16 @@
 import '@testing-library/jest-dom'
 import { beforeAll, jest } from '@jest/globals'
 
+export const mockElectron = {
+  ipcRenderer: {
+    sendMessage: jest.fn(),
+    on: jest.fn(),
+    once: jest.fn(),
+    send: jest.fn(),
+    removeEventListener: jest.fn()
+  }
+}
+
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,

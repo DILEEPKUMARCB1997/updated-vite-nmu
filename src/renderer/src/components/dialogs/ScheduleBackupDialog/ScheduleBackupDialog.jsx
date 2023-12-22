@@ -50,6 +50,7 @@ const ScheduleBackupDialog = ({ onClose }) => {
         paddingTop: 10,
         paddingBottom: '10px'
       }}
+      data-testid="scheduleBackup"
     >
       <Row gutter={[15, 15]}>
         <Col span={24}>
