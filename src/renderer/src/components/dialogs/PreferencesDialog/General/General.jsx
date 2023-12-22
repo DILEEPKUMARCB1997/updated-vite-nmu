@@ -28,7 +28,7 @@ const General = () => {
   }, [clearGeneralData])
 
   let NICSelectWidth = 400
-  niList.forEach((element) => {
+  niList?.forEach((element) => {
     const minWidth = element.name.length * 12
     if (minWidth > NICSelectWidth) {
       NICSelectWidth = minWidth
@@ -65,13 +65,14 @@ const General = () => {
           dropdownStyle={{ zIndex: '1301' }}
           onChange={handleNICSelectOnChange}
         >
-          {niList.map((NICInfo, index) => (
-            <Option key={NICInfo.name} value={index}>
-              {`${NICInfo.name} - ${NICInfo.IPAddress}`}
-            </Option>
-          ))}
+          {niList &&
+            niList.map((NICInfo, index) => (
+              <Option key={NICInfo.name} value={index}>
+                {`${NICInfo.name} - ${NICInfo.IPAddress}`}
+              </Option>
+            ))}
         </Select>
-        <Divider />
+        <Divider data-testid="divider" />
       </div>
     </div>
   )

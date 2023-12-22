@@ -65,6 +65,7 @@ const DefaultCommunity = () => {
             defaultValue={readCommunity}
             value={readCommunity}
             onChange={handleReadCommuityInputOnChange}
+            aria-label="readCommunityInput"
           />
         </Form.Item>
         <Form.Item colon={false} style={{ fontWeight: 'bold' }} label="Write Community">
@@ -75,6 +76,7 @@ const DefaultCommunity = () => {
             defaultValue={writeCommunity}
             value={writeCommunity}
             onChange={handleWriteCommuityInputOnChange}
+            aria-label="writeCommunityInput"
           />
         </Form.Item>
       </div>

@@ -51,6 +51,7 @@ const OfflineDetection = () => {
             controls={false}
             defaultValue={offlinePollInterval}
             onChange={handleOfflinePollIntervalInputOnChange}
+            data-testid="offlineInterval"
           />
         </Form.Item>
         <Form.Item
@@ -65,6 +66,7 @@ const OfflineDetection = () => {
             controls={false}
             defaultValue={offlineTimeout}
             onChange={handleOfflineTimeoutInputOnChange}
+            data-testid="offlinetimeout"
           />
         </Form.Item>
       </div>

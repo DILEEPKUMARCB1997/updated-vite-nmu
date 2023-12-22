@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import SplashScreen from './SplashScreen'
-import '../../../matchMedia'
 
 describe.only('SplashScreen', () => {
   test('should render div', () => {

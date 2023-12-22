@@ -94,6 +94,8 @@ const EventTips = () => {
             tabIndex="0"
             onClick={handleOKOnClick}
             onKeyDown={handleOKOnKeyPress}
+            aria-current="page"
+            data-testid="okbutton"
           >
             {' '}
             OK
@@ -104,6 +106,7 @@ const EventTips = () => {
             tabIndex="0"
             onClick={handleCancelOnClick}
             onKeyDown={handleCancelOnKeyPress}
+            data-testid="cancelbutton"
           >
             Cancel
           </a>

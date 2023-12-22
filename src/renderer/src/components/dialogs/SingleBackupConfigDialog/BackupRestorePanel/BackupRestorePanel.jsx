@@ -82,13 +82,15 @@ const BackupRestorePanel = () => {
           paddingLeft: '0.75em',
           paddingRight: '0.75em'
         }}
+        role="field"
       >
-        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }} data-testid="title">
           Backup
         </Typography.Title>
         Path:
         <div>
           <Input
+            id="backup"
             disabled
             value={backupPath}
             style={{
@@ -97,18 +99,24 @@ const BackupRestorePanel = () => {
               background: 'white',
               height: '34px'
             }}
+            aria-label="backupinput"
           />
           <Button
             type="primary"
             ghost
             style={{ float: 'right' }}
             onClick={handleSelectFolderButtonOnClick}
+            data-testid="selectFolder"
           >
             Select Folder
           </Button>
         </div>
         File Name:
-        <Input value={filename} onChange={handleBackupFileNameInputOnChange} />
+        <Input
+          value={filename}
+          onChange={handleBackupFileNameInputOnChange}
+          aria-label="fileinput"
+        />
         {isBackingUP ? (
           <LoadingOutlined
             style={{
@@ -116,6 +124,7 @@ const BackupRestorePanel = () => {
               marginRight: '15px'
             }}
             spin
+            role="spinbutton"
           />
         ) : (
           <Button
@@ -124,6 +133,7 @@ const BackupRestorePanel = () => {
             style={{ marginTop: '16px' }}
             onClick={handleBackupButtonOnClick}
             disabled={disableBackupButton}
+            data-testid="backup"
           >
             Backup
           </Button>
@@ -140,7 +150,7 @@ const BackupRestorePanel = () => {
           paddingRight: '0.75em'
         }}
       >
-        <Typography.Title level={5} style={{ color: token.colorPrimary }}>
+        <Typography.Title level={5} style={{ color: token.colorPrimary }} data-testid="restore">
           Restore
         </Typography.Title>
         File:
@@ -154,6 +164,7 @@ const BackupRestorePanel = () => {
               background: 'white',
               height: '34px'
             }}
+            aria-label="restorepath"
           />
           <Button
             type="primary"
