@@ -1,12 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { store } from '../../../../../../app/store'
+import { store } from '../../../../../app/store'
 import { Provider } from 'react-redux'
-import IPRangeList from './IPRangeList'
-import userEvent from '@testing-library/user-event'
+import NumberInput from './NumberInput'
 
-describe('IPRangeList', () => {
-  test('should render Panel Component ', () => {
+describe('NumberInput', () => {
+  test('should render inputNumber component', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -14,13 +13,14 @@ describe('IPRangeList', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
+    const inputNumberButton = jest.fn()
     render(
       <Provider store={store}>
-        <IPRangeList />
+        <NumberInput onChange={inputNumberButton} />
       </Provider>
     )
-    const panel = screen.getByTestId('panel')
-    userEvent.click(panel)
-    expect(panel).toBeTruthy()
+    const inputNumber = screen.getByTestId('number')
+    fireEvent.change(inputNumber)
+    expect(inputNumberButton).toHaveBeenCalledTimes(0)
   })
 })
