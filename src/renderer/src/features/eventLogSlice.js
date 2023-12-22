@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
@@ -222,8 +223,10 @@ export const {
   updateBeepSoundStop
 } = eventLogSlice.actions
 
-export const eventLogSelector = (state) => {
-  const {
+const memoizedEventlogSelector = (state) => state.eventLog
+export const eventLogSelector = createSelector(
+  memoizedEventlogSelector,
+  ({
     eventData,
     eventHistoryData,
     trapData,
@@ -236,8 +239,7 @@ export const eventLogSelector = (state) => {
     customEventListData,
     beepSoundStart,
     openBeepDialog
-  } = state.eventLog
-  return {
+  }) => ({
     eventData,
     eventHistoryData,
     trapData,
@@ -250,8 +252,39 @@ export const eventLogSelector = (state) => {
     customEventListData,
     beepSoundStart,
     openBeepDialog
-  }
-}
+  })
+)
+
+// export const eventLogSelector = (state) => {
+//   const {
+//     eventData,
+//     eventHistoryData,
+//     trapData,
+//     trapHistoryData,
+//     syslogData,
+//     syslogHistoryData,
+//     customEventData,
+//     customEventDailyData,
+//     customEventHistoryData,
+//     customEventListData,
+//     beepSoundStart,
+//     openBeepDialog
+//   } = state.eventLog
+//   return {
+//     eventData,
+//     eventHistoryData,
+//     trapData,
+//     trapHistoryData,
+//     syslogData,
+//     syslogHistoryData,
+//     customEventData,
+//     customEventDailyData,
+//     customEventHistoryData,
+//     customEventListData,
+//     beepSoundStart,
+//     openBeepDialog
+//   }
+// }
 
 export default eventLogSlice
 

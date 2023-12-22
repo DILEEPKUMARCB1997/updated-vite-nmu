@@ -8,6 +8,7 @@ import {
   REQUEST_MP_CHECK_SNMP
 } from '../../../main/utils/IPCEvents'
 import { showCheckSNMPModal } from './UIControllSlice'
+import { createSelector } from 'reselect'
 
 export const requestCheckSNMP = (param, callback) => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_CHECK_SNMP, (event, arg) => {
@@ -146,9 +147,10 @@ export const {
   setSNMPSelectOnly,
   selectDiscoveryTable
 } = discoverySlice.actions
-
-export const discoverySelector = (state) => {
-  const {
+const memoizedDiscoverySelector = (state) => state.discovery
+export const discoverySelector = createSelector(
+  memoizedDiscoverySelector,
+  ({
     defaultDeviceData,
     defaultDeviceArrayData,
     groupDeviceData,
@@ -158,9 +160,7 @@ export const discoverySelector = (state) => {
     SNMPSelectOnly,
     showCheckBox,
     groupView
-  } = state.discovery
-
-  return {
+  }) => ({
     defaultDeviceData,
     defaultDeviceArrayData,
     groupDeviceData,
@@ -170,7 +170,7 @@ export const discoverySelector = (state) => {
     SNMPSelectOnly,
     showCheckBox,
     groupView
-  }
-}
+  })
+)
 
 export default discoverySlice

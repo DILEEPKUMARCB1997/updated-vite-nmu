@@ -12,6 +12,7 @@ import {
   selectDiscoveryTable
 } from './discoverySlice'
 import { closeSnack } from './snackSlice'
+import { createSelector } from 'reselect'
 
 const SNMPOnlyEvents = ['resetToDefault', 'backupRestore', 'syslogSetting', 'trapSetting']
 export const requestAppInitialData = () => (dispatch) => {
@@ -75,24 +76,24 @@ export const {
   removeBatchOperate,
   setBatchOperateEvents
 } = UIControlSlice.actions
-
-export const UIControlSelector = (state) => {
-  const {
+const memoizedUIControlSelector = (state) => state.UIControl
+export const UIControlSelector = createSelector(
+  memoizedUIControlSelector,
+  ({
     initRenderStep,
     manualOpenDeviceMenu,
     version,
     showCheckSNMPModal,
     batchOperateEvent,
     showBatchOperateTips
-  } = state.UIControl
-  return {
+  }) => ({
     initRenderStep,
     manualOpenDeviceMenu,
     version,
     showCheckSNMPModal,
     batchOperateEvent,
     showBatchOperateTips
-  }
-}
+  })
+)
 
 export default UIControlSlice

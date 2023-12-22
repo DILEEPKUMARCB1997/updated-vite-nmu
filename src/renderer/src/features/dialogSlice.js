@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 
 export const openAlertDialog = (payload) => (dispatch) => {
   dispatch(openDialog(payload.alertType))
@@ -34,10 +35,7 @@ const dialogSlice = createSlice({
 })
 
 export const { openDialog, closeDialog, setAlertText } = dialogSlice.actions
-
-export const dialogSelector = (state) => {
-  const { dialogs } = state.dialog
-  return { dialogs }
-}
+const memoizedDialogSelector = (state) => state.dialog
+export const dialogSelector = createSelector(memoizedDialogSelector, ({ dialogs }) => ({ dialogs }))
 
 export default dialogSlice

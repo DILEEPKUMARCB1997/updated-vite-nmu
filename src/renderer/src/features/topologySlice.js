@@ -10,6 +10,7 @@ import {
   RESPONSE_RP_GET_DEVICE_PROPERTIES,
   REQUEST_MP_GET_DEVICE_PROPERTIES
 } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 export const requestSaveTopologyLayout = (positions, callback) => (dispatch, getState) => {
   const { edgesData, currentGroup, nodesIds, changeGroupMemberData } = getState().topology
   window.electron.ipcRenderer.once(RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT, (event, arg) => {
@@ -407,8 +408,10 @@ export const {
   clearTopologyLayout,
   setImageExporting
 } = topologySlice.actions
-export const topologySelector = (state) => {
-  const {
+const memoizedTopologySelector = (state) => state.topology
+export const topologySelector = createSelector(
+  memoizedTopologySelector,
+  ({
     graphOption,
     virtualNodeData,
     nodesData,
@@ -429,8 +432,7 @@ export const topologySelector = (state) => {
     devicelistSelect,
     isImageExporting,
     SNMPDeviceProperties
-  } = state.topology
-  return {
+  }) => ({
     graphOption,
     virtualNodeData,
     nodesData,
@@ -451,6 +453,6 @@ export const topologySelector = (state) => {
     devicelistSelect,
     isImageExporting,
     SNMPDeviceProperties
-  }
-}
+  })
+)
 export default topologySlice

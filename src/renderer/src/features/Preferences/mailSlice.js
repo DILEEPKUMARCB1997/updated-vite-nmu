@@ -7,6 +7,7 @@ import {
   RESPONSE_RP_SET_MAIL_SETTINGS
 } from '../../../../main/utils/IPCEvents'
 import { updateLoadingVisible } from './preferenceSlice'
+import { createSelector } from 'reselect'
 
 const valueFormat = {
   service: {
@@ -197,10 +198,11 @@ export const {
   initMailData,
   clearMailData
 } = mailSlice.actions
-export const mailSelector = (state) => {
-  const { mailData, validsData, preService } = state.mail
-  return { mailData, validsData, preService }
-}
+const memoizedMailSelector = (state) => state.mail
+export const mailSelector = createSelector(
+  memoizedMailSelector,
+  ({ mailData, validsData, preService }) => ({ mailData, validsData, preService })
+)
 
 export default mailSlice
 

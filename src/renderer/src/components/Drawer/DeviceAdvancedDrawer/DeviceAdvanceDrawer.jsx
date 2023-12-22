@@ -46,36 +46,39 @@ const DeviceAdvanceDrawer = ({ onClose }) => {
   }
 
   return (
-    <Drawer
-      open={drawVisible}
-      title={<Typography.Title level={4}>Advance Setting</Typography.Title>}
-      closable={false}
-      maskClosable={false}
-      onClose={handleCloseDrawer}
-      destroyOnClose
-      width={400}
-      headerStyle={{ backgroundColor: token.colorPrimaryBgHover, paddingBottom: '0px' }}
-      bodyStyle={{ backgroundColor: token.colorBgLayout }}
-      footer={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}
-        >
-          <Button style={{ marginRight: '10px' }} onClick={handleCloseDrawer}>
-            Cancel
-          </Button>
-          <Button type="primary" onClick={handleApplyButtonClick}>
-            Apply
-          </Button>
-        </div>
-      }
-      // style={{ overflow: 'auto' }}
-    >
-      <Typography style={{ marginBottom: '10px' }}>{`${model}(${MACAddress})`}</Typography>
-      <Tabs type="card" defaultActiveKey="1" items={items} style={{ overflow: 'auto' }} />
-    </Drawer>
+    <div data-testid="divider">
+      <Drawer
+        open={drawVisible}
+        title={<Typography.Title level={4}>Advance Setting</Typography.Title>}
+        closable={false}
+        maskClosable={false}
+        onClose={handleCloseDrawer}
+        destroyOnClose
+        width={400}
+        headerStyle={{ backgroundColor: token.colorPrimaryBgHover, paddingBottom: '0px' }}
+        bodyStyle={{ backgroundColor: token.colorBgLayout }}
+        footer={
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <Button style={{ marginRight: '10px' }} onClick={handleCloseDrawer}>
+              Cancel
+            </Button>
+            <Button type="primary" onClick={handleApplyButtonClick}>
+              Apply
+            </Button>
+          </div>
+        }
+        //data-testid="drawer"
+        // style={{ overflow: 'auto' }}
+      >
+        <Typography style={{ marginBottom: '10px' }}>{`${model}(${MACAddress})`}</Typography>
+        <Tabs defaultActiveKey="1" items={items} style={{ overflow: 'auto' }} />
+      </Drawer>
+    </div>
   )
 }
 

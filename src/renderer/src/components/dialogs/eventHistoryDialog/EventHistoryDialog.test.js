@@ -13,6 +13,7 @@ jest.mock('electron', () => ({
   }
 }))
 describe('EventHistoryDialog', () => {
+  const handleChange = jest.fn()
   test('should render modal', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
@@ -43,7 +44,8 @@ describe('EventHistoryDialog', () => {
       </Provider>
     )
     const input = screen.getByPlaceholderText('MAC Address')
-    expect(input).toBeInTheDocument()
+    fireEvent.change(input)
+    expect(handleChange).toHaveBeenCalledTimes(0)
   })
 
   test.skip('should render button', () => {

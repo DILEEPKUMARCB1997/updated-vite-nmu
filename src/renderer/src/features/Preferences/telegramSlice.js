@@ -13,6 +13,7 @@ import {
 } from '../../../../main/utils/IPCEvents'
 import { notification } from 'antd'
 import { updateLoadingVisible } from './preferenceSlice'
+import { createSelector } from 'reselect'
 
 export const getTelegramToken = () => (dispatch) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_GET_TELEGRAM_TOKEN, (event, arg) => {
@@ -101,10 +102,16 @@ const telegramSlice = createSlice({
 })
 
 export const { setTelegramToken, setSavedTelegramToken, setTelegramUser } = telegramSlice.actions
-
-export const telegramSelector = (state) => {
-  const { savedTelegramToken, telegramToken, userData, validsData, isConfigChange } = state.telegram
-  return { savedTelegramToken, telegramToken, userData, validsData, isConfigChange }
-}
+const memoizedTelegramSelector = (state) => state.telegram
+export const telegramSelector = createSelector(
+  memoizedTelegramSelector,
+  ({ savedTelegramToken, telegramToken, userData, validsData, isConfigChange }) => ({
+    savedTelegramToken,
+    telegramToken,
+    userData,
+    validsData,
+    isConfigChange
+  })
+)
 
 export default telegramSlice
