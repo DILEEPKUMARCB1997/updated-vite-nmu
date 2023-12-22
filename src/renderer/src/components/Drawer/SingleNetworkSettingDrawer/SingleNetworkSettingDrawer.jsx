@@ -97,6 +97,7 @@ const SingleNetworkSettingDrawer = (props) => {
   return (
     <div>
       <Drawer
+        data-testid="drawer"
         open={drawerVisible}
         title={
           <Typography.Title

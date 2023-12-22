@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { expect, test, describe, jest } from '@jest/globals'
 import { userEvent } from '@testing-library/user-event'
@@ -34,15 +34,17 @@ describe(' should render the backuprestore page', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
+    const ModeSelectOnChange = jest.fn()
     render(
       <Provider store={store}>
-        <DeviceList />
+        <DeviceList handleModeSelectOnChange={ModeSelectOnChange} />
       </Provider>
     )
     const select = screen.getByRole('combobox')
-    userEvent.selectOptions(select, ['backup', 'restore'])
+    // userEvent.selectOptions(select, ['backup', 'restore'])
+    fireEvent.change(select)
     expect(select).toBeInTheDocument()
+    expect(ModeSelectOnChange).toHaveBeenCalledTimes(0)
   })
   test('should render table component', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({

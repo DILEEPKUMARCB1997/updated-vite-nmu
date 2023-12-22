@@ -34,7 +34,6 @@ describe('NetworkSettingDrawer', () => {
     userEvent.click(screen.findByText('Cancel'))
     expect(handleCloseDrawer).toHaveBeenCalledTimes(0)
   })
-
   test('should close the drawer when apply button is clicked', () => {
     const handleCloseDrawer = jest.fn()
     render(
@@ -45,7 +44,6 @@ describe('NetworkSettingDrawer', () => {
     userEvent.click(screen.findByText('Apply'))
     expect(handleCloseDrawer).toHaveBeenCalledTimes(0)
   })
-
   test('should disable DHCP when DHCP checkbox is unchecked', () => {
     const dhcpCheck = jest.fn()
     render(

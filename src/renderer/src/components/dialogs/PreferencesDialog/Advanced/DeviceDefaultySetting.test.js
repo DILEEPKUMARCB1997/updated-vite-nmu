@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import DeviceDefaultSetting from './DeviceDefaultSetting'
 import { Provider } from 'react-redux'
@@ -38,7 +38,7 @@ describe('DeviceDefaultSetting', () => {
     )
 
     const username = screen.getByPlaceholderText('Default Username')
-    userEvent.type(username)
+    fireEvent.change(username)
     expect(DefaultUsernameValid).toHaveBeenCalledTimes(0)
   })
   test('should render Default Password', () => {
@@ -57,7 +57,7 @@ describe('DeviceDefaultSetting', () => {
     )
 
     const defaultPassword = screen.getByPlaceholderText('Default Password')
-    userEvent.type(defaultPassword)
+    fireEvent.change(defaultPassword)
     expect(DefaultPasswordValid).toHaveBeenCalledTimes(0)
   })
 })

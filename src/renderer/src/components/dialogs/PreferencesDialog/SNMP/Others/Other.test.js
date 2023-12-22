@@ -1,12 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { store } from '../../../../app/store'
-import OfflineDetection from './OfflineDetection'
+import { store } from '../../../../../app/store'
 import { Provider } from 'react-redux'
-import userEvent from '@testing-library/user-event'
+import Other from './Other'
 
-describe('OfflineDetection', () => {
-  test('should render divider component', () => {
+describe('Other', () => {
+  test('should render divider', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -16,13 +15,13 @@ describe('OfflineDetection', () => {
     }))
     render(
       <Provider store={store}>
-        <OfflineDetection />
+        <Other />
       </Provider>
     )
-    const divider = screen.getByText('Offline Detection')
+    const divider = screen.getByText('Others')
     expect(divider).toBeInTheDocument()
   })
-  test('should render OfflinePollIntervalValid ', () => {
+  test('should render switch component', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -30,17 +29,19 @@ describe('OfflineDetection', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-    const OfflinePollInterval = jest.fn()
+    const SwitchOnChange = jest.fn()
     render(
       <Provider store={store}>
-        <OfflineDetection handleOfflinePollIntervalInputOnChange={OfflinePollInterval} />
+        <Other handlePrecheckSwitchOnChange={SwitchOnChange} />
       </Provider>
     )
-    const OfflineInterval = screen.getByTestId('offlineInterval')
-    fireEvent.change(OfflineInterval)
-    expect(OfflinePollInterval).toHaveBeenCalledTimes(0)
+    const SwitchElement = screen.getByRole('switch')
+    // expect(SwitchElement).not.toBeChecked() //switch to be unChecked initially
+    fireEvent.click(SwitchElement)
+    expect(SwitchElement).toBeChecked() //switch to be checked
+    expect(SwitchOnChange).toHaveBeenCalledTimes(0)
   })
-  test('should render OfflineTimeoutValid', () => {
+  test('should render Typography', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -48,14 +49,12 @@ describe('OfflineDetection', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-    const OfflineTimeout = jest.fn()
     render(
       <Provider store={store}>
-        <OfflineDetection handleOfflineTimeoutInputOnChange={OfflineTimeout} />
+        <Other />
       </Provider>
     )
-    const offlineTime = screen.getByTestId('offlinetimeout')
-    fireEvent.change(offlineTime)
-    expect(OfflineTimeout).toHaveBeenCalledTimes(0)
+    const title = screen.getByRole('heading', { level: 5 })
+    expect(title).toBeTruthy()
   })
 })

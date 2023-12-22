@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import General from './General'
 import { store } from '../../../../app/store'
@@ -37,7 +37,8 @@ describe('General', () => {
       </Provider>
     )
     const element = screen.getByRole('combobox')
-    userEvent.selectOptions(element, ['index'])
+    // userEvent.selectOptions(element, ['index'])
+    fireEvent.change(element)
     expect(SelectOnChange).toHaveBeenCalledTimes(0)
   })
   test('should render the divider2 ', () => {

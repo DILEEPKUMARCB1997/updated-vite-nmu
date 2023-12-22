@@ -38,8 +38,9 @@ const IPRangeList = () => {
 
   return (
     <Collapse className="collapse">
-      <Panel header={HEADER}>
+      <Panel header={HEADER} data-testid="panel">
         <List
+          data-testid="listElement"
           className="list"
           split={false}
           itemLayout="horizontal"

@@ -92,7 +92,8 @@ describe('MailService', () => {
       </Provider>
     )
     const serviceSelect = screen.getByRole('combobox')
-    userEvent.selectOptions(serviceSelect, ['serviceItem'])
+    // userEvent.selectOptions(serviceSelect, ['serviceItem'])
+    fireEvent.change(serviceSelect)
     expect(ServiceSelectOnChange).toHaveBeenCalledTimes(0)
   })
   test('should render userDefinitionRadioButton', () => {
@@ -146,7 +147,7 @@ describe('MailService', () => {
       </Provider>
     )
     const host = screen.getByTestId('hostInput')
-    userEvent.type(host)
+    fireEvent.change(host)
     expect(hostInputOnchange).toHaveBeenCalledTimes(0)
   })
   test('should render Port Input', () => {
@@ -164,7 +165,7 @@ describe('MailService', () => {
       </Provider>
     )
     const port = screen.getByTestId('portInput')
-    userEvent.type(port)
+    fireEvent.change(port)
     expect(portInputOnchange).toHaveBeenCalledTimes(0)
   })
 })

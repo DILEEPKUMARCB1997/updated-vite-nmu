@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { store } from '../../../../app/store'
 import FirmwareUpdate from './FirmwareUpdate'
@@ -37,7 +37,7 @@ describe('FirmwareUpdate', () => {
       </Provider>
     )
     const BatchQuantity = screen.getByTestId('batchQuantity')
-    userEvent.type(BatchQuantity)
+    fireEvent.change(BatchQuantity)
     expect(FWUpdateBatchQuantity).toHaveBeenCalledTimes(0)
   })
   test('should render FWUpdateConnTimeoutValid ', () => {
@@ -55,7 +55,7 @@ describe('FirmwareUpdate', () => {
       </Provider>
     )
     const ConnectionTimeout = screen.getByTestId('connectiontime')
-    userEvent.type(ConnectionTimeout)
+    fireEvent.change(ConnectionTimeout)
     expect(FWUpdateConnTimeout).toHaveBeenCalledTimes(0)
   })
 })
