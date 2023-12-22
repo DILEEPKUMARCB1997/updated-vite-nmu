@@ -38,7 +38,7 @@ const IPRangeList = () => {
 
   return (
     <Collapse className="collapse">
-      <Panel header={HEADER}>
+      <Panel header={HEADER} data-testid="panel">
         <List
           className="list"
           split={false}
@@ -71,7 +71,7 @@ const IPRangeList = () => {
             )
           )}
         />
-        <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />
+        <Divider style={{ marginTop: '15px', marginBottom: '15px' }} data-testid="divider" />
         <div style={{ display: 'flex', justifyContent: 'end', margin: '0px' }}>
           <Button
             type="primary"

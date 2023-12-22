@@ -10,6 +10,7 @@ const NumberInput = (props) => {
   return (
     <InputNumber
       name={name}
+      data-testid="number"
       placeholder={placeholder}
       value={value}
       onChange={onChange}
