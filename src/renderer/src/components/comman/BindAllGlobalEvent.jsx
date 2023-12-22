@@ -16,9 +16,9 @@ const BindAllGlobalEvent = () => {
   const { mode } = useThemeStore()
   const { notification } = App.useApp()
   const location = useLocation()
-  console.log(location)
+  // console.log(location)
   const dispatch = useDispatch()
-  console.log(dispatch)
+  // console.log(dispatch)
 
   const deviceListListener = useCallback((_, args) => {
     dispatch(updateDiscoveryData(JSON.parse(args)))

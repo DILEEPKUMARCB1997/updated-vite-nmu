@@ -6,6 +6,7 @@ import {
   RESPONSE_RP_GET_ALL_ADVANCED_SETTINGS,
   REQUEST_MP_GET_ALL_ADVANCED_SETTINGS
 } from '../../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 const valueFormat = {
   common: {
@@ -183,14 +184,14 @@ export const {
   initAdvancedData,
   clearAdvancedData
 } = advancedSlice.actions
-
-export const advancedSelector = (state) => {
-  const { isConfigChange, advancedData, validsData } = state.advanced
-  return {
+const memoizedAdvancedSelector = (state) => state.advanced
+export const advancedSelector = createSelector(
+  memoizedAdvancedSelector,
+  ({ isConfigChange, advancedData, validsData }) => ({
     isConfigChange,
     advancedData,
     validsData
-  }
-}
+  })
+)
 
 export default advancedSlice
