@@ -8,6 +8,7 @@ import {
   RESPONSE_RP_SET_USER_DETAILS
 } from '../../../main/utils/IPCEvents'
 import { notification } from 'antd'
+import { createSelector } from 'reselect'
 
 export const setUserData = (param) => (dispatch, getState) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_USER_DETAILS, (event, arg) => {
@@ -84,10 +85,10 @@ const userManagementSlice = createSlice({
 
 export const { getLoginData, clearUsersData, getUsersData, setEditUserData } =
   userManagementSlice.actions
-
-export const userManagementSelector = (state) => {
-  const { loggedInUser, usersData, editUserData } = state.userManagement
-  return { loggedInUser, usersData, editUserData }
-}
+const memoizedUserManagementSelector = (state) => state.userManagement
+export const userManagementSelector = createSelector(
+  memoizedUserManagementSelector,
+  ({ loggedInUser, usersData, editUserData }) => ({ loggedInUser, usersData, editUserData })
+)
 
 export default userManagementSlice

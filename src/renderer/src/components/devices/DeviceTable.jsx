@@ -341,7 +341,7 @@ const DeviceTable = ({ deviceData = [] }) => {
   // console.log('seleceted rows array', selectedRowsArray)
   const rowSelection = {
     onSelect: (record, selected, selectedRows, nativeEvent) => {
-      console.log(record, selected, selectedRows, nativeEvent)
+      //console.log(record, selected, selectedRows, nativeEvent)
       dispatch(
         selectDiscoveryTable({
           isSelect: selected,
@@ -359,6 +359,19 @@ const DeviceTable = ({ deviceData = [] }) => {
     //   setSelectedRowsArray([])
     // },
   }
+  const handleSelect = (record, selected, selectedRows, nativeEvent) => {
+    console.log(record, selected, selectedRows, nativeEvent)
+    if (selected) {
+      setSelectedRowsArray([])
+    } else {
+      setSelectedRowsArray([record.MACAddress])
+    }
+  }
+  const updatedRowSelection = {
+    onSelect: handleSelect,
+    getCheckboxProps: rowSelection.getCheckboxProps
+  }
+
   // const handleCheckboxChange = (event) => {
   //   const checkboxValue = event.target.value
   //   if (event.target.checked) {

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 const pagesList = {
   0: 'general',
   1: 'mail',
@@ -37,10 +38,10 @@ const preferenceSlice = createSlice({
 })
 export const { clearPreferencesData, setSelectIndex, updateLoadingVisible } =
   preferenceSlice.actions
-
-export const preferenceSelector = (state) => {
-  const { loading, selectedIndex, selectedPage } = state.preference
-  return { loading, selectedIndex, selectedPage }
-}
+const memoizedPreferenceSelector = (state) => state.preference
+export const preferenceSelector = createSelector(
+  memoizedPreferenceSelector,
+  ({ loading, selectedIndex, selectedPage }) => ({ loading, selectedIndex, selectedPage })
+)
 
 export default preferenceSlice

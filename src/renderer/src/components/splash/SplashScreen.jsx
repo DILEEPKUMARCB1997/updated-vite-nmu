@@ -20,7 +20,7 @@ const SplashScreen = () => {
   }, [])
 
   return (
-    <div className="splash">
+    <div className="splash" data-testid="custom-element">
       <img src={icon} alt="icon" className={showIcon ? 'splash_icon' : 'splash_icon_hide'} />
       <Title level={1} style={{ fontSize: '45px', textAlign: 'center', marginBottom: 0 }}>
         Network Management Utility

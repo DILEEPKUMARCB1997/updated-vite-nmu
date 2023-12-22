@@ -4,6 +4,7 @@ import {
   REQUEST_MP_GET_APP_INITIAL_DATA,
   RESPONSE_RP_GET_APP_INITIAL_DATA
 } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 const status = {
   i: 'SNMP Scan ...',
@@ -32,11 +33,11 @@ const snmpScanProgressSlice = createSlice({
 })
 
 export const { changeSnmpScanStep, clearSnmpScanProgress } = snmpScanProgressSlice.actions
-
-export const snmpScanProgressSelector = (state) => {
-  const { progress, scanStatus } = state.snmpScanProgress
-  return { progress, scanStatus }
-}
+const memoizedSnmpScanProgressSelector = (state) => state.snmpScanProgress
+export const snmpScanProgressSelector = createSelector(
+  memoizedSnmpScanProgressSelector,
+  ({ progress, scanStatus }) => ({ progress, scanStatus })
+)
 
 export default snmpScanProgressSlice
 

@@ -10,6 +10,7 @@ import {
   RESPONSE_RP_SET_SNMP_SETTINGS
 } from '../../../../main/utils/IPCEvents'
 import { updateLoadingVisible } from './preferenceSlice'
+import { createSelector } from 'reselect'
 
 const valueFormat = {
   common: {
@@ -294,11 +295,17 @@ export const {
   setSNMPAppInitialData,
   clearSNMPSettingData
 } = snmpSlice.actions
-
-export const snmpSelector = (state) => {
-  const { SNMPData, isPrecheck, isConfigChange, IPRangeData, validsData } = state.snmp
-  return { SNMPData, isPrecheck, isConfigChange, IPRangeData, validsData }
-}
+const memoizedSnmpSelector = (state) => state.snmp
+export const snmpSelector = createSelector(
+  memoizedSnmpSelector,
+  ({ SNMPData, isPrecheck, isConfigChange, IPRangeData, validsData }) => ({
+    SNMPData,
+    isPrecheck,
+    isConfigChange,
+    IPRangeData,
+    validsData
+  })
+)
 
 export default snmpSlice
 

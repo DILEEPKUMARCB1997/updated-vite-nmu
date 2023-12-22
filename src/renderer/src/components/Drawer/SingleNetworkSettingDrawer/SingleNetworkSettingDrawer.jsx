@@ -9,8 +9,9 @@ import {
   Form,
   Input,
   Alert,
-  App,
-  notification
+  // App,
+  notification,
+  Divider
 } from 'antd'
 
 import React, { useState } from 'react'
@@ -29,7 +30,7 @@ const networkSettingTips =
 
 let enableApply
 const SingleNetworkSettingDrawer = (props) => {
-  const { notification, modal } = App.useApp()
+  // const { notification, modal } = App.useApp()
   const { useToken } = theme
   const { token } = useToken()
   const dispatch = useDispatch()
@@ -95,9 +96,9 @@ const SingleNetworkSettingDrawer = (props) => {
     dispatch(setHostname({ hostname: event.target.value }))
   }
   return (
-    <div>
+    <div data-testid="drawer">
       <Drawer
-        data-testid="drawer"
+        data-testid="drawer-content"
         open={drawerVisible}
         title={
           <Typography.Title
@@ -136,7 +137,7 @@ const SingleNetworkSettingDrawer = (props) => {
         }
       >
         <Typography style={{ marginBottom: '10px' }}>{`${model}(${MACAddress})`}</Typography>
-        <Form layout="vertical" role="form">
+        <Form layout="vertical">
           <Form.Item>
             <Checkbox
               style={{ paddingTop: '10px' }}
@@ -153,7 +154,6 @@ const SingleNetworkSettingDrawer = (props) => {
             style={{ margin: '2px' }}
           >
             <Input
-              placeholder="IPAddress"
               status={!validIPAddress}
               disabled={isDHCP}
               value={IPAddress}
@@ -168,7 +168,7 @@ const SingleNetworkSettingDrawer = (props) => {
               onChange={handleNetworkAddressInputOnChange('netmask', validNetmask)}
             />
           </Form.Item>
-          <Form.Item label="Gateway" colon={false} style={{ margin: '2px' }}>
+          <Form.Item label="Gateway" aria-label="Gateway" colon={false} style={{ margin: '2px' }}>
             <Input
               status={!validGateway}
               disabled={isDHCP}
@@ -207,7 +207,7 @@ const SingleNetworkSettingDrawer = (props) => {
             </>
           )}
 
-          <Form.Item label="Hostname" colon={false} style={{ margin: '2px' }}>
+          <Form.Item label="Hostname" aria-label="Hostname" colon={false} style={{ margin: '2px' }}>
             <Input value={hostname} onChange={handleHostnameInputOnChange} />
           </Form.Item>
         </Form>

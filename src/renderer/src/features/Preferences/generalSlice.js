@@ -7,6 +7,7 @@ import {
   REQUEST_MP_SET_THE_NETWORK_INTERFACE,
   RESPONSE_RP_SET_THE_NETWORK_INTERFACE
 } from '../../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 export const requireSetNICData = (callback) => (dispatch, getState) => {
   window.electron.ipcRenderer.once(RESPONSE_RP_SET_THE_NETWORK_INTERFACE, (event, arg) => {
@@ -71,11 +72,11 @@ const generalSlice = createSlice({
 })
 
 export const { clearGeneralData, setNICActiveIndex, initNICData } = generalSlice.actions
-
-export const generalSelector = (state) => {
-  const { NICData, validsData } = state.general
-  return { NICData, validsData }
-}
+const memoizedGeneralSelector = (state) => state.general
+export const generalSelector = createSelector(
+  memoizedGeneralSelector,
+  ({ NICData, validsData }) => ({ NICData, validsData })
+)
 
 export default generalSlice
 

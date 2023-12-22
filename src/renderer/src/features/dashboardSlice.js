@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
   RESPONSE_RP_GET_EVENT_LOG_HISTORY
@@ -164,18 +165,11 @@ export const {
   updateCustomGraph
 } = dashboardSlice.actions
 
-export const dashboardSelector = (state) => {
-  const {
-    diskUses,
-    trapGraphData,
-    syslogGraphData,
-    customGraphData,
-    syslogTableData,
-    trapTableData,
-    customTableData
-  } = state.dashboard
+const memoizedDashboardSelector = (state) => state.dashboard
 
-  return {
+export const dashboardSelector = createSelector(
+  memoizedDashboardSelector,
+  ({
     diskUses,
     trapGraphData,
     syslogGraphData,
@@ -183,7 +177,90 @@ export const dashboardSelector = (state) => {
     syslogTableData,
     trapTableData,
     customTableData
-  }
-}
+  }) => ({
+    diskUses,
+    trapGraphData,
+    syslogGraphData,
+    customGraphData,
+    syslogTableData,
+    trapTableData,
+    customTableData
+  })
+)
+
+// export const dashboardSelector = (state) => {
+//   const {
+//     diskUses,
+//     trapGraphData,
+//     syslogGraphData,
+//     customGraphData,
+//     syslogTableData,
+//     trapTableData,
+//     customTableData
+//   } = state.dashboard
+
+//   return {
+//     diskUses,
+//     trapGraphData,
+//     syslogGraphData,
+//     customGraphData,
+//     syslogTableData,
+//     trapTableData,
+//     customTableData
+//   }
+// }
 
 export default dashboardSlice
+
+/*
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+
+// Define your state selectors
+const getDashboardState = (state) => state.dashboard;
+const getDiskUses = (dashboard) => dashboard.diskUses;
+const getTrapGraphData = (dashboard) => dashboard.trapGraphData;
+const getSyslogGraphData = (dashboard) => dashboard.syslogGraphData;
+const getCustomGraphData = (dashboard) => dashboard.customGraphData;
+const getSyslogTableData = (dashboard) => dashboard.syslogTableData;
+const getTrapTableData = (dashboard) => dashboard.trapTableData;
+const getCustomTableData = (dashboard) => dashboard.customTableData;
+
+// Create a memoized selector
+export const dashboardSelector = createSelector(
+ [getDashboardState,
+ getDiskUses,
+ getTrapGraphData,
+ getSyslogGraphData,
+ getCustomGraphData,
+ getSyslogTableData,
+ getTrapTableData,
+ getCustomTableData],
+ (
+    diskUses,
+    trapGraphData,
+    syslogGraphData,
+    customGraphData,
+    syslogTableData,
+    trapTableData,
+    customTableData
+ ) =>
+    diskUses,
+    trapGraphData,
+    syslogGraphData,
+    customGraphData,
+    syslogTableData,
+    trapTableData,
+    customTableData,
+
+);
+
+// Now you can use this selector in your component like this:
+
+export const DashboardGraph = () => {
+ const { diskUses, trapGraphData, syslogGraphData, customGraphData, syslogTableData, trapTableData, customTableData } = useSelector(dashboardSelector);
+
+ // ... rest of your component code
+}
+*/
