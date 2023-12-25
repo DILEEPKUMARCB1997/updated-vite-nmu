@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 
 const multipleSnack = false
 const snackSlice = createSlice({
@@ -28,10 +29,7 @@ const snackSlice = createSlice({
   }
 })
 export const { openSnack, closeSnack } = snackSlice.actions
-
-export const snackSelector = (state) => {
-  const { snacks } = state.snack
-  return { snacks }
-}
+const memoizedSnackSelector = (state) => state.snack
+export const snackSelector = createSelector(memoizedSnackSelector, ({ snacks }) => ({ snacks }))
 
 export default snackSlice

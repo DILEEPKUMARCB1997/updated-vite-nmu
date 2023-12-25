@@ -21,89 +21,85 @@ const TrapGraphSummary = () => {
   const onTrapGraphClick = (barIndex) => {
     dispatch(showTrapTableData(tableData[barIndex]))
   }
-  const snmpTrapMsgData = useMemo(() => {
-    return {
-      series: [
-        {
-          name: 'SNMP Trap Message Count',
-          // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
-          data: trapGraphData.data
+  const [snmpTrapMsgData, setSnmpTrapMsgData] = useState({
+    series: [
+      {
+        name: 'SNMP Trap Message Count',
+        data: trapGraphData.data
+      }
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+        height: 320,
+        toolbar: {
+          show: false
+        },
+        offsetY: -20,
+        offsetX: -5,
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (config.selectedDataPoints[0].length > 0) {
+              onTrapGraphClick(config.dataPointIndex)
+            }
+          }
         }
-      ],
-      options: {
-        chart: {
-          type: 'bar',
-          // background: token.colorBgContainer,
-          height: 320,
-          toolbar: {
-            show: false
-          },
-          offsetY: -20,
-          offsetX: -5,
-          events: {
-            dataPointSelection: (event, chartContext, config) => {
-              if (config.selectedDataPoints[0].length > 0) {
-                onTrapGraphClick(config.dataPointIndex)
-              }
-            }
-          }
-        },
-        legend: {
-          show: true,
-          showForSingleSeries: true,
-          position: 'top',
-          horizontalAlign: 'center',
-          offsetY: 20
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            columnWidth: '50%'
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: 2
-        },
+      },
+      legend: {
+        show: true,
+        showForSingleSeries: true,
+        position: 'top',
+        horizontalAlign: 'center',
+        offsetY: 20
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 0,
+          columnWidth: '50%'
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 2
+      },
 
-        grid: {
-          show: true
-        },
-        xaxis: {
-          type: 'category',
-          categories: trapGraphData.label,
-          labels: {
-            rotate: -45,
-            rotateAlways: true
+      grid: {
+        show: true
+      },
+      xaxis: {
+        type: 'category',
+        categories: trapGraphData.label,
+        labels: {
+          rotate: -45,
+          rotateAlways: true
+        }
+      },
+      yaxis: {
+        title: {
+          text: 'Trap Msg Count',
+          lines: {
+            show: true
           }
-        },
-        yaxis: {
-          title: {
-            text: 'Trap Msg Count',
-            lines: {
-              show: true
-            }
-          }
-        },
-        fill: {
-          type: 'solid',
+        }
+      },
+      fill: {
+        type: 'solid',
 
-          gradient: {
-            shade: 'lights',
-            type: 'horizontal',
-            shadeIntensity: 1,
-            gradientToColors: undefined,
-            inverseColors: false,
-            opacityFrom: 0.85,
-            opacityTo: 0.85,
-            stops: [50, 0, 100]
-          }
+        gradient: {
+          shade: 'lights',
+          type: 'horizontal',
+          shadeIntensity: 1,
+          gradientToColors: undefined,
+          inverseColors: false,
+          opacityFrom: 0.85,
+          opacityTo: 0.85,
+          stops: [50, 0, 100]
         }
       }
     }
-  }, [trapGraphData.data, trapGraphData.label])
+  })
 
   useEffect(() => {
     setTimeout(() => {

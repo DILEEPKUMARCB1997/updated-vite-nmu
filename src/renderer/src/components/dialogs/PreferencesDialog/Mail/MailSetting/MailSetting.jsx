@@ -34,6 +34,7 @@ const MailSetting = () => {
   const { useToken } = theme
   const { token } = useToken()
 
+  const initialValues = { username: 'initialValue@example.com', password: 'abn@3348' }
   const handleShowPasswordOnClick = () => {
     setShowPassword(!showPassword)
   }
@@ -96,22 +97,19 @@ const MailSetting = () => {
                 message: EMAIL_EMPTY_MSG
               }
             ]}
+            initialValue={username}
           >
             <Input
-              //  bordered={false}
               style={{ width: '200px' }}
               value={username}
-              defaultValue={username}
               onChange={handleUsernameInputOnChange}
               placeholder={USERNAME_INPUT_LABLE}
             />
           </Form.Item>
-          <Form.Item name="password">
+          <Form.Item name="password" initialValue={password}>
             <Input.Password
-              //  bordered={false}
               style={{ width: '200px' }}
               value={password}
-              defaultValue={password}
               onChange={handlePasswordInputOnChange}
               placeholder={PASSWORD_INPUT_LABLE}
               iconRender={(visible) =>

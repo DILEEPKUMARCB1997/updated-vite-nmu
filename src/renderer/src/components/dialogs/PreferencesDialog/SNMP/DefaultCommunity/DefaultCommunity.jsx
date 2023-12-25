@@ -57,22 +57,29 @@ const DefaultCommunity = () => {
             onChange={handleSNMPVersionSelectOnChange}
           />
         </Form.Item>
-        <Form.Item colon={false} style={{ fontWeight: 'bold' }} label="Read Community">
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bold' }}
+          label="Read Community"
+          initialValue={readCommunity}
+        >
           <Input
             // status="error"
             status={isReadCommunityValid ? null : 'error'}
             style={{ width: '200px', marginLeft: '45px' }}
-            defaultValue={readCommunity}
             value={readCommunity}
             onChange={handleReadCommuityInputOnChange}
           />
         </Form.Item>
-        <Form.Item colon={false} style={{ fontWeight: 'bold' }} label="Write Community">
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bold' }}
+          label="Write Community"
+          initialValue={writeCommunity}
+        >
           <Input
-            // status="error"
             status={isWriteCommunityValid ? null : 'error'}
             style={{ width: '200px', marginLeft: '40px' }}
-            defaultValue={writeCommunity}
             value={writeCommunity}
             onChange={handleWriteCommuityInputOnChange}
           />

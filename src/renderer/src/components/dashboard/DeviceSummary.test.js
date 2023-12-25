@@ -22,6 +22,7 @@ describe('DeviceSummary', () => {
       </Provider>
     )
     const element = screen.getByTestId('custom-element')
+
     expect(element).toBeInTheDocument()
   })
   test('should render the online summary card with the correct count', () => {

@@ -7,6 +7,7 @@ import {
   RESPONSE_RP_DELETE_SCHEDULE,
   RESPONSE_RP_SET_THE_SCHEDULE_DEVICE_DATA
 } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 export const initScheduleMemberData = (payload) => (dispatch, getState) => {
   let memberMACAddress = []
@@ -106,10 +107,15 @@ const scheduleBackupMemberSlice = createSlice({
 
 export const { initializeScheduleMemberData, transferMember, clearScheduleMemberData } =
   scheduleBackupMemberSlice.actions
-
-export const scheduleBackupMemberSelector = (state) => {
-  const { allDevice, memberKeys, scheduleName, scheduleId } = state.scheduleBackupMember
-  return { allDevice, memberKeys, scheduleName, scheduleId }
-}
+const memoizedScheduleBackupMemberSelector = (state) => state.scheduleBackupMember
+export const scheduleBackupMemberSelector = createSelector(
+  memoizedScheduleBackupMemberSelector,
+  ({ allDevice, memberKeys, scheduleName, scheduleId }) => ({
+    allDevice,
+    memberKeys,
+    scheduleName,
+    scheduleId
+  })
+)
 
 export default scheduleBackupMemberSlice
