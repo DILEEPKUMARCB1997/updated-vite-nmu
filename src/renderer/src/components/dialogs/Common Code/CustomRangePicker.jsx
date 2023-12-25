@@ -20,6 +20,7 @@ const CustomRangePicker = (props) => {
       style={{ marginRight: '10px' }}
       onChange={onChange}
       showTime={{ format: 'YYYY-MM-DD HH:mm:ss', hideDisabledOptions: false }}
+      data-testid="data"
     />
   )
 }

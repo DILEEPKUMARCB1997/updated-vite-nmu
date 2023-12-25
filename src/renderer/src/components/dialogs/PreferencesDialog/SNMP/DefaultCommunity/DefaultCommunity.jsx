@@ -69,6 +69,7 @@ const DefaultCommunity = () => {
             style={{ width: '200px', marginLeft: '45px' }}
             value={readCommunity}
             onChange={handleReadCommuityInputOnChange}
+            aria-label="readCommunityInput"
           />
         </Form.Item>
         <Form.Item
@@ -82,6 +83,7 @@ const DefaultCommunity = () => {
             style={{ width: '200px', marginLeft: '40px' }}
             value={writeCommunity}
             onChange={handleWriteCommuityInputOnChange}
+            aria-label="writeCommunityInput"
           />
         </Form.Item>
       </div>

@@ -17,7 +17,7 @@ const SNMP = () => {
 
   return (
     // <Card>
-    <div>
+    <div data-testid="div">
       <SNMPScan />
       <DefaultCommunity />
       <Other />

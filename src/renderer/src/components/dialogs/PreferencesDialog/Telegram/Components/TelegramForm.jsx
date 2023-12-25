@@ -29,7 +29,7 @@ const TelegramForm = () => {
   }
 
   return (
-    <Form layout="vertical" form={form}>
+    <Form layout="vertical" form={form} data-testid="form">
       {/* add user name */}
       <Form.Item
         name="telegramId"

@@ -51,6 +51,7 @@ const FirmwareUpdate = () => {
             defaultValue={fwUpdateBatchQuantity}
             controls={false}
             onChange={handleFWUpdateBatchQuantityInputOnChange}
+            data-testid="batchQuantity"
           />
         </Form.Item>
         <Form.Item
@@ -65,6 +66,7 @@ const FirmwareUpdate = () => {
             controls={false}
             defaultValue={fwUpdateConnTimeout}
             onChange={handleConnectionTimeoutInputOnChange}
+            data-testid="connectiontime"
           />
         </Form.Item>
       </div>

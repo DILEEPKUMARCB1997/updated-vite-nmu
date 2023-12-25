@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-
 import MailSetting from './MailSetting/MailSetting'
 import { clearMailData } from '../../../../features/Preferences/mailSlice'
 import { Divider } from 'antd'
@@ -16,7 +15,7 @@ const Mail = () => {
     }
   }, [])
   return (
-    <div style={{ display: 'inline-grid', width: '100%' }}>
+    <div style={{ display: 'inline-grid', width: '100%' }} data-testid="divTag">
       <MailService />
       <MailSetting />
       <Divider />

@@ -104,19 +104,22 @@ const MailSetting = () => {
               value={username}
               onChange={handleUsernameInputOnChange}
               placeholder={USERNAME_INPUT_LABLE}
+              data-testid="userInput"
             />
           </Form.Item>
           <Form.Item name="password" initialValue={password}>
             <Input.Password
+              //  bordered={false}
+              data-testid="inputPassword"
               style={{ width: '200px' }}
               value={password}
               onChange={handlePasswordInputOnChange}
               placeholder={PASSWORD_INPUT_LABLE}
               iconRender={(visible) =>
                 visible ? (
-                  <EyeTwoTone onClick={handleShowPasswordOnClick} />
+                  <EyeTwoTone onClick={handleShowPasswordOnClick} data-testid="eyeVisible" />
                 ) : (
-                  <EyeInvisibleOutlined />
+                  <EyeInvisibleOutlined data-testid="eyeInvisible" />
                 )
               }
             />
@@ -134,12 +137,17 @@ const MailSetting = () => {
                 closable
                 style={{ fontSize: '1rem' }}
                 onClose={handleRemoveTagButtonOnClick(element.id, tag)}
+                data-testid="removeTag"
               >
                 {tag}
               </Tag>
             ))}
             {inputVisible[element.id] ? (
-              <Form ref={formRef} onFinish={handleAddNewInputPressEnter(element.id)}>
+              <Form
+                ref={formRef}
+                onFinish={handleAddNewInputPressEnter(element.id)}
+                data-testid="onFinishForm"
+              >
                 <Form.Item
                   name="email"
                   rules={[
@@ -158,6 +166,7 @@ const MailSetting = () => {
                     type="text"
                     style={{ width: '200px' }}
                     onBlur={handleAddNewInputOnBlur(element.id)}
+                    aria-label="onBlurInput"
                   />
                 </Form.Item>
               </Form>

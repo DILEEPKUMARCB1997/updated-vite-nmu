@@ -30,7 +30,7 @@ const MailService = () => {
   const dispatch = useDispatch()
 
   let serviceListSelectWidth = 80
-  serviceList.forEach((element) => {
+  serviceList?.forEach((element) => {
     const minWidth = element.length * 12
     if (minWidth > serviceListSelectWidth) {
       serviceListSelectWidth = minWidth
@@ -78,6 +78,7 @@ const MailService = () => {
           color: token.colorPrimary,
           borderCollapse: 'true'
         }}
+        data-testid="divider"
       >
         {TITLE}
       </Divider>
@@ -88,7 +89,10 @@ const MailService = () => {
           color="primary"
           style={{ marginRight: '10px' }}
         />
-        <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}>
+        <span
+          style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}
+          aria-label="switchLabel"
+        >
           {ENABLE_SWITCH_LABLE}
         </span>
         <div>
@@ -96,6 +100,7 @@ const MailService = () => {
             style={{ marginTop: '20px', marginRight: '0px' }}
             checked={!isServiceOther}
             onChange={handleServiceListRadioOnChange}
+            data-testid="serviceList"
           >
             <span
               style={{ fontSize: '1rem', fontWeight: 'bold', color: 'black', marginRight: '10px' }}
@@ -114,11 +119,12 @@ const MailService = () => {
             onChange={handleServiceSelectOnChange}
           >
             {' '}
-            {serviceList.map((serviceItem) => (
-              <Option key={serviceItem} value={serviceItem}>
-                {serviceItem}
-              </Option>
-            ))}
+            {serviceList &&
+              serviceList.map((serviceItem) => (
+                <Option key={serviceItem} value={serviceItem}>
+                  {serviceItem}
+                </Option>
+              ))}
           </Select>
           <br />
           <Radio
@@ -126,6 +132,7 @@ const MailService = () => {
             value="Other"
             checked={isServiceOther}
             onChange={handleUserDefinitionRadioOnChange}
+            data-testid="userDefinition"
           >
             {' '}
             <span
@@ -152,6 +159,7 @@ const MailService = () => {
                   value={host}
                   onChange={handleHostInputOnChange}
                   disabled={!isServiceOther}
+                  data-testid="hostInput"
                 />
               </Form.Item>
 
@@ -163,6 +171,7 @@ const MailService = () => {
                   value={port}
                   onChange={handlePortInputOnChange}
                   disabled={!isServiceOther}
+                  data-testid="portInput"
                 />
               </Form.Item>
             </Form>

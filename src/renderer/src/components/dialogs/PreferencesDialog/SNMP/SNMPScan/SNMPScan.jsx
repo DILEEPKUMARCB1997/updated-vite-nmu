@@ -65,7 +65,7 @@ const SNMPScan = () => {
             Enable
           </Typography.Title>
         </div>
-        <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />
+        <Divider style={{ marginTop: '15px', marginBottom: '15px' }} data-testid="divider-comp" />
         <IPRangeList />
         <Divider style={{ marginTop: '15px', marginBottom: '15px' }} />
         <Form.Item
@@ -91,6 +91,7 @@ const SNMPScan = () => {
             controls={false}
             value={SNMPPollInterval}
             onChange={handleSNMPPollIntervalInputOnChange}
+            data-testid="isSNMPPoll"
           />
         </Form.Item>
         <Form.Item
@@ -107,6 +108,7 @@ const SNMPScan = () => {
             controls={false}
             value={ICMPTimeout}
             onChange={handleICMPTimeoutInputOnChange}
+            data-testid="isICMPTime"
           />
         </Form.Item>
         <Form.Item
@@ -124,6 +126,7 @@ const SNMPScan = () => {
             controls={false}
             value={SNMPTimeout}
             onChange={handleSNMPTimeoutInputOnChange}
+            data-testid="isSNMPTime"
           />
         </Form.Item>
       </div>
