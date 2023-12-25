@@ -13,6 +13,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 // import { openDialog } from '../features/dialogSlice'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -233,10 +234,16 @@ export const {
   setFiles,
   initDeviceStatus
 } = backupRestoreSlice.actions
-
-export const backupRestoreSelector = (state) => {
-  const { mode, deviceStatus, selectDevice, isTaskRunning, isRestoreFisish } = state.backupRestore
-  return { mode, deviceStatus, selectDevice, isTaskRunning, isRestoreFisish }
-}
+const memoizedBackupRestoreSelector = (state) => state.backupRestore
+export const backupRestoreSelector = createSelector(
+  memoizedBackupRestoreSelector,
+  ({ mode, deviceStatus, selectDevice, isTaskRunning, isRestoreFisish }) => ({
+    mode,
+    deviceStatus,
+    selectDevice,
+    isTaskRunning,
+    isRestoreFisish
+  })
+)
 
 export default backupRestoreSlice

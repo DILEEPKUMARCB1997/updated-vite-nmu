@@ -6,6 +6,7 @@ import {
   RESPONSE_RP_SET_PORT_LINK_STATUS
 } from '../../../main/utils/IPCEvents'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 const XAXES_LABELS_NUM = 13
 const XAXES_INTERVAL_NUM = XAXES_LABELS_NUM - 1
@@ -236,9 +237,10 @@ export const {
   removePortSwitchLoading,
   addPortSwitchLoading
 } = portInformationSlice.actions
-
-export const portInformationSelector = (state) => {
-  const {
+const memoizedPortInformationSelector = (state) => state.portInformation
+export const portInformationSelector = createSelector(
+  memoizedPortInformationSelector,
+  ({
     labels,
     trigger,
     isWaiting,
@@ -253,8 +255,7 @@ export const portInformationSelector = (state) => {
     viewWhichPort,
     upTime,
     drawerVisible
-  } = state.portInformation
-  return {
+  }) => ({
     labels,
     trigger,
     isWaiting,
@@ -269,8 +270,8 @@ export const portInformationSelector = (state) => {
     viewWhichPort,
     upTime,
     drawerVisible
-  }
-}
+  })
+)
 
 export default portInformationSlice
 

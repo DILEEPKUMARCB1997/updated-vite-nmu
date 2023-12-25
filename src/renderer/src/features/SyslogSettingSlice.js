@@ -5,6 +5,7 @@ import {
   REQUEST_MP_SYSLOG_SETTING,
   RESPONSE_RP_SYSLOG_SETTING
 } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -104,10 +105,10 @@ export const {
   clearData,
   initDeviceStatus
 } = syslogSettingSlice.actions
-
-export const syslogSettingSelector = (state) => {
-  const { deviceStatus, isTaskRunning } = state.syslogSetting
-  return { deviceStatus, isTaskRunning }
-}
+const memoizedSyslogSettingSelector = (state) => state.syslogSetting
+export const syslogSettingSelector = createSelector(
+  memoizedSyslogSettingSelector,
+  ({ deviceStatus, isTaskRunning }) => ({ deviceStatus, isTaskRunning })
+)
 
 export default syslogSettingSlice

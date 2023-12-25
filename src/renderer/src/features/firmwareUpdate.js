@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect'
 import {
   REQUEST_MP_START_FIRMWARE_UPDATE,
   RESPONSE_RP_START_FIRMWARE_UPDATE,
@@ -144,10 +145,17 @@ export const {
   initFirmwareUpdate,
   addFirmWareFinishData
 } = firmwareSlice.actions
-export const firmwareSelector = (state) => {
-  const { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status } =
-    state.firmwareUpdate
-  return { FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status }
-}
+const memoizedFirmwareSelector = (state) => state.firmwareUpdate
+export const firmwareSelector = createSelector(
+  memoizedFirmwareSelector,
+  ({ FWUDoneDeviceData, deviceData, deviceRealTimeData, filePath, activeStep, status }) => ({
+    FWUDoneDeviceData,
+    deviceData,
+    deviceRealTimeData,
+    filePath,
+    activeStep,
+    status
+  })
+)
 
 export default firmwareSlice

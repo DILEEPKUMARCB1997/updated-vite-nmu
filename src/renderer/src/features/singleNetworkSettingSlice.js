@@ -8,6 +8,7 @@ import {
   REQUEST_MP_GET_SNMP_DEVICE_NETWORK_SETTINGS
 } from '../../../main/utils/IPCEvents'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 const IPFormat =
   /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
 export const clearSingleNetworkSettingData = () => (dispatch) => {
@@ -205,9 +206,10 @@ export const {
   initNetworkSetting,
   initBasicData
 } = singleNetworkSettingSlice.actions
-
-export const singleNetworkSettingSelector = (state) => {
-  const {
+const memoizedSingleNetworkSettingSelector = (state) => state.singleNetworkSetting
+export const singleNetworkSettingSelector = createSelector(
+  memoizedSingleNetworkSettingSelector,
+  ({
     drawerVisible,
     loading,
     model,
@@ -226,8 +228,7 @@ export const singleNetworkSettingSelector = (state) => {
     validGateway,
     validDNS1,
     validDNS2
-  } = state.singleNetworkSetting
-  return {
+  }) => ({
     drawerVisible,
     loading,
     model,
@@ -246,7 +247,7 @@ export const singleNetworkSettingSelector = (state) => {
     validGateway,
     validDNS1,
     validDNS2
-  }
-}
+  })
+)
 
 export default singleNetworkSettingSlice
