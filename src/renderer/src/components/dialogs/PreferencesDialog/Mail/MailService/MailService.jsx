@@ -42,7 +42,7 @@ const MailService = () => {
   }
 
   const handleHostInputOnChange = (event) => {
-    console.log(event)
+    //console.log(event)
     dispatch(setMailHost(event.target.value))
   }
 
@@ -63,7 +63,7 @@ const MailService = () => {
 
   const handleUserDefinitionRadioOnChange = () => {
     dispatch(setMailService('Other'))
-    console.log('other')
+    //console.log('other')
     setIsServiceOther(true)
   }
 

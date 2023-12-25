@@ -14,6 +14,7 @@ import {
   RESPONSE_RP_SET_DEVICE_COMMUNITY_SETTINGS
 } from '../../../main/utils/IPCEvents'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 export const clearDeviceAdvancedData = () => (dispatch) => {
   dispatch(openAdvanceDrawer(false))
@@ -196,9 +197,10 @@ export const {
   openAdvanceDrawer,
   clearData
 } = deviceAdvanceSettingSlice.actions
-
-export const deviceAdvanceSettingSelector = (state) => {
-  const {
+const memoizedDeviceAdvanceSettingSelector = (state) => state.deviceAdvanceSetting
+export const deviceAdvanceSettingSelector = createSelector(
+  memoizedDeviceAdvanceSettingSelector,
+  ({
     portInfo,
     powerInfo,
     model,
@@ -210,8 +212,7 @@ export const deviceAdvanceSettingSelector = (state) => {
     password,
     preSaveResult,
     drawVisible
-  } = state.deviceAdvanceSetting
-  return {
+  }) => ({
     portInfo,
     powerInfo,
     model,
@@ -223,7 +224,7 @@ export const deviceAdvanceSettingSelector = (state) => {
     password,
     preSaveResult,
     drawVisible
-  }
-}
+  })
+)
 
 export default deviceAdvanceSettingSlice

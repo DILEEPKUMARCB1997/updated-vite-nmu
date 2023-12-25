@@ -11,6 +11,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 import _ from 'lodash'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 export const initScheduleBackup = () => (dispatch, getState) => {
   dispatch(openDialog('scheduleBackup'))
@@ -173,9 +174,10 @@ export const {
   initializeScheduleMemberData,
   clearData
 } = scheduleBackupSlice.actions
-
-export const scheduleBackupSelector = (state) => {
-  const {
+const memoizedScheduleBackupSelector = (state) => state.scheduleBackup
+export const scheduleBackupSelector = createSelector(
+  memoizedScheduleBackupSelector,
+  ({
     mode,
     deviceStatus,
     selectDevice,
@@ -192,8 +194,7 @@ export const scheduleBackupSelector = (state) => {
     weeekDay,
     customFrequency,
     files
-  } = state.scheduleBackup
-  return {
+  }) => ({
     mode,
     deviceStatus,
     selectDevice,
@@ -210,7 +211,7 @@ export const scheduleBackupSelector = (state) => {
     weeekDay,
     customFrequency,
     files
-  }
-}
+  })
+)
 
 export default scheduleBackupSlice

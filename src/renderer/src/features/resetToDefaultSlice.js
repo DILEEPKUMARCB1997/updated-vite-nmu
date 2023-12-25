@@ -5,6 +5,7 @@ import {
 } from '../../../main/utils/IPCEvents'
 // import { openDialog } from '../features/dialogSlice'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -102,9 +103,13 @@ export const {
   updateResetTaskStatus,
   initResetDefaultData
 } = resetToDefaultSlice.actions
-
-export const resetToDefaultSelector = (state) => {
-  const { resetToDefaultStatus, taskStatus, waitingDeviceCount } = state.resetToDefault
-  return { resetToDefaultStatus, taskStatus, waitingDeviceCount }
-}
+const memoizedResetToDefault = (state) => state.resetToDefault
+export const resetToDefaultSelector = createSelector(
+  memoizedResetToDefault,
+  ({ resetToDefaultStatus, taskStatus, waitingDeviceCount }) => ({
+    resetToDefaultStatus,
+    taskStatus,
+    waitingDeviceCount
+  })
+)
 export default resetToDefaultSlice

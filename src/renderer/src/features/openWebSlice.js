@@ -3,6 +3,7 @@ import {
   REQUEST_MP_GET_DEVICE_AUTHENTICATION_SETTINGS,
   RESPONSE_RP_GET_DEVICE_AUTHENTICATION_SETTINGS
 } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 export const requestOpenWebData =
   (param = {}) =>
@@ -52,9 +53,9 @@ export const openWebSlice = createSlice({
 })
 
 export const { changeNextUrl, clearOpenWebData, initOpenWebData } = openWebSlice.actions
-
-export const openWebSelector = (state) => {
-  const { URL, IPAddress } = state.openWeb
-  return { URL, IPAddress }
-}
+const memoizedOpenWebSelector = (state) => state.openWeb
+export const openWebSelector = createSelector(memoizedOpenWebSelector, ({ URL, IPAddress }) => ({
+  URL,
+  IPAddress
+}))
 export default openWebSlice

@@ -77,6 +77,7 @@ const SNMPScan = () => {
               message: 'Wrong number'
             }
           ]}
+          initialValue={SNMPPollInterval}
         >
           <InputNumber
             style={{
@@ -88,26 +89,34 @@ const SNMPScan = () => {
             prefix={isSNMPPollIntervalValid ? null : <CloseCircleOutlined />}
             addonAfter="min"
             controls={false}
-            defaultValue={SNMPPollInterval}
             value={SNMPPollInterval}
             onChange={handleSNMPPollIntervalInputOnChange}
             data-testid="isSNMPPoll"
           />
         </Form.Item>
-        <Form.Item colon={false} style={{ fontWeight: 'bold' }} label="ICMP Timeout">
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bold' }}
+          label="ICMP Timeout"
+          initialValue={ICMPTimeout}
+        >
           <InputNumber
             style={{ width: '200px', marginLeft: '65px' }}
             status={isICMPTimeoutValid ? null : 'error'}
             maxLength={4}
             addonAfter="ms"
             controls={false}
-            defaultValue={ICMPTimeout}
             value={ICMPTimeout}
             onChange={handleICMPTimeoutInputOnChange}
             data-testid="isICMPTime"
           />
         </Form.Item>
-        <Form.Item colon={false} style={{ fontWeight: 'bolder' }} label="SNMP Timeout">
+        <Form.Item
+          colon={false}
+          style={{ fontWeight: 'bolder' }}
+          label="SNMP Timeout"
+          initialValue={SNMPTimeout}
+        >
           <InputNumber
             style={{ width: '200px', marginLeft: '60px' }}
             status={isSNMPTimeoutValid ? null : 'error'}
@@ -116,7 +125,6 @@ const SNMPScan = () => {
             addonAfter="ms"
             controls={false}
             value={SNMPTimeout}
-            defaultValue={SNMPTimeout}
             onChange={handleSNMPTimeoutInputOnChange}
             data-testid="isSNMPTime"
           />
