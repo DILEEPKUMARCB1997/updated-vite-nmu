@@ -7,14 +7,12 @@ import {
   showTrapTableData
   //updateTrapGraph
 } from '../../features/dashboardSlice'
-import { Button, Tooltip, theme as antdTheme } from 'antd'
-import { Card } from 'antd'
+import { Button, Tooltip } from 'antd'
 import ReactApexChart from 'react-apexcharts'
-import { useThemeStore } from '../../utils/themes/useStore'
 
 const TrapGraphSummary = () => {
-  const { mode } = useThemeStore()
-  const { token } = antdTheme.useToken()
+  // const { mode } = useThemeStore()
+  // const { token } = antdTheme.useToken()
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
@@ -26,14 +24,12 @@ const TrapGraphSummary = () => {
       series: [
         {
           name: 'SNMP Trap Message Count',
-          // data: [0.12, 0.32, 0.43, 0.23, 0.65, 0.12, 0.11]
           data: trapGraphData.data
         }
       ],
       options: {
         chart: {
           type: 'bar',
-          // background: token.colorBgContainer,
           height: 320,
           toolbar: {
             show: false

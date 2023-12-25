@@ -12,6 +12,7 @@ import {
   REQUEST_MP_SINGLE_BACKUP_RESTORE_DATA
 } from '../../../main/utils/IPCEvents'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 export const requestGetBackupRestoreData = (payload) => (dispatch) => {
   const { MACAddress } = payload
@@ -111,8 +112,15 @@ export const {
   changeBackupStatus,
   setRestorePath
 } = singleBackupRestoreSlice.actions
-export const singleBackupRestoreSelector = (state) => {
-  const { isBackingUP, MACAddress, backupPath, filename, restorePath } = state.singleBackupRestore
-  return { isBackingUP, MACAddress, backupPath, filename, restorePath }
-}
+const memoizedSingleBackupRestoreSelector = (state) => state.singleBackupRestore
+export const singleBackupRestoreSelector = createSelector(
+  memoizedSingleBackupRestoreSelector,
+  ({ isBackingUP, MACAddress, backupPath, filename, restorePath }) => ({
+    isBackingUP,
+    MACAddress,
+    backupPath,
+    filename,
+    restorePath
+  })
+)
 export default singleBackupRestoreSlice

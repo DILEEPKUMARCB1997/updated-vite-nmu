@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 // import { openDialog } from '../features/dialogSlice'
 import { openDialog } from './dialogSlice'
 import { RESPONSE_RP_TRAP_SETTING, REQUEST_MP_TRAP_SETTING } from '../../../main/utils/IPCEvents'
+import { createSelector } from 'reselect'
 
 const WAITING = 0
 const SUCCESS = 1
@@ -100,10 +101,10 @@ export const {
   clearData,
   initDeviceStatus
 } = trapSettingSlice.actions
-
-export const trapSettingSelector = (state) => {
-  const { deviceStatus, isTaskRunning } = state.trapSetting
-  return { deviceStatus, isTaskRunning }
-}
+const memoizedTrapSettingSelector = (state) => state.trapSetting
+export const trapSettingSelector = createSelector(
+  memoizedTrapSettingSelector,
+  ({ deviceStatus, isTaskRunning }) => ({ deviceStatus, isTaskRunning })
+)
 
 export default trapSettingSlice

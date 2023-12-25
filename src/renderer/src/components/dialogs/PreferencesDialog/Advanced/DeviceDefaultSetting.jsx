@@ -46,6 +46,7 @@ const DeviceDefaultSetting = (props) => {
       <div style={{ marginLeft: '60px', alignItems: 'center' }}>
         <Form>
           <Form.Item
+            initialValue={defaultUsername}
             name="defaultUsername"
             colon={false}
             style={{ fontWeight: 'bold' }}
@@ -57,12 +58,10 @@ const DeviceDefaultSetting = (props) => {
             ]}
           >
             <Input
-              // bordered={false}
               status={isDefaultUsernameValid ? null : 'error'}
               style={{ width: '200px', fontSize: '15px' }}
               placeholder="Default Username"
               onChange={handleDefaultUsernameInputOnChange}
-              defaultValue={defaultUsername}
             />
           </Form.Item>
           <Form.Item
@@ -75,12 +74,11 @@ const DeviceDefaultSetting = (props) => {
                 message: 'Default Password'
               }
             ]}
+            initialValue={defaultPassword}
           >
             <Input.Password
-              // bordered={false}
               status={isDefaultPasswordValid ? null : 'error'}
               style={{ width: '200px', fontSize: '15px' }}
-              defaultValue={defaultPassword}
               placeholder="Default Password"
               onChange={handleDefaultPasswordInputOnChange}
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}

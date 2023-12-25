@@ -472,3 +472,337 @@ const CalculateRoundness = (key) => {
   }
   return roundnessList[key]
 }
+
+/*
+import React, { useRef, useEffect } from 'react';
+import { Graph, Edge } from 'react-vis-network';
+import ContextMenuTrigger from './ContextMenuTrigger';
+import 'react-vis-network/styles/styles.css';
+import './styles.css';
+
+const TopologyGraph = (props) => {
+ const network = useRef(null);
+ const nodes = useRef([]);
+ const edges = useRef([]);
+
+ const fitViewPointOption = {
+    nodes: [],
+ };
+
+ const getEdgeLinkNode = (edgeData) => {
+    const edgeLinkNode = network.current.body.data.edges.get(edgeData.id);
+    props.setEdgeLinkNode(edgeLinkNode);
+ };
+
+ const getNodePosition = (nodeData) => {
+    const nodePosition = network.current.body.data.nodes.get(nodeData.id);
+    props.setNodePosition(nodePosition);
+ };
+
+ const nodeStyle = (status, model) => {
+    const node = {
+      color: '#2b828d',
+      shape: 'box',
+      borderWidth: 2,
+    };
+
+    if (status === 'disconnected') {
+      node.color = '#8b2b2b';
+    }
+
+    if (model === 'EHG2408' || model === '') {
+      node.shape = 'hexagon';
+    }
+
+    return node;
+ };
+
+ const edgeStyle = (status, leftMAC, rightMAC) => {
+    const edge = {
+      color: '#848484',
+      font: {
+        color: '#848484',
+      },
+      label: `${status.toUpperCase()}`,
+      dashes: false,
+    };
+
+    return edge;
+ };
+
+ useEffect(() => {
+    if (props.graphOption.nodesData) {
+      nodes.current = [];
+      edges.current = [];
+
+      const showIds = [];
+      const virtualMac = [];
+      const roundnessList = {};
+
+      Object.entries(props.graphOption.nodesData).forEach(
+        ([key, element]) => {
+          const label = `${element.MACAddress}${
+            props.graphOption.showIP ? `\n${element.IPAddress}` : ''
+          }${props.graphOption.showModel ? `\n${element.model}` : ''}${
+            props.graphOption.showHostname ? `\n${element.hostname}` : ''
+          }`;
+          const x =
+            props.graphOption.followPosition ||
+            props.graphOption.newNodeTemp === key
+              ? element.x
+              : undefined;
+          const y =
+            props.graphOption.followPosition ||
+            props.graphOption.newNodeTemp === key
+              ? element.y
+              : undefined;
+
+          (element.model === 'EHG2408' || element.model === '') &&
+            virtualMac.push(element.MACAddress);
+
+          nodes.current.push({
+            id: key,
+            label,
+            x,
+            y,
+            ...nodeStyle(element.status, element.model),
+          });
+          showIds.push(key);
+        }
+      );
+
+      Object.entries(props.graphOption.virtualNodeData).forEach(
+        ([key, element]) => {
+          const label = '';
+          const x =
+            props.graphOption.followPosition ||
+            props.graphOption.newNodeTemp === key
+              ? element.x
+              : undefined;
+          const y =
+            props.graphOption.followPosition ||
+            props.graphOption.newNodeTemp === key
+              ? element.y
+              : undefined;
+          nodes.current.push({
+            id: key,
+            label,
+            x,
+            y,
+            ...nodeStyle(element.status, element.model),
+          });
+          showIds.push(key);
+        }
+      );
+
+      Object.entries(props.graphOption.edgesData).forEach(
+        ([key, value]) => {
+          const MACs = key.split('_');
+          const leftMAC = MACs[0];
+          const rightMAC = MACs[1];
+          const edgeLabel = value.status;
+
+          const leftIndex = showIds.indexOf( = MACs[1];
+
+          edges.current.push({
+            id: key,leftMAC);
+          const rightIndex = showIds.indexOf
+            from: leftMAC,
+            to: rightMAC,
+(rightMAC);
+
+          const leftRoundness =            label: `${value.status.toUpperCase()}`,
+            ...
+            roundnessList[leftMAC] !== undefined
+              ?edgeStyle(value.status, leftMAC, rightMAC),
+ roundnessList[leftMAC]
+              : 0.5;          });
+        }
+      );
+
+      network.current.setData({ nodes:
+          const rightRoundness =
+            roundnessList[rightMAC nodes.current, edges: edges.current });
+      network.current.redraw] !== undefined
+              ? roundnessList[rightMAC]
+();
+    }
+ }, [props.graphOption]);
+
+               : 0.5;
+
+          if (leftIndex > -1const options = {
+    autoResize: true,
+    nodes: { && rightIndex > -1) {
+            edges.
+      borderWidth: 2,
+      size: 30,
+      fontcurrent.push({
+              id: key,
+              from: leftMAC,
+: {
+        size: 12,
+        color: '#00              to: rightMAC,
+              label: edgeLabel,
+              leftRound0000',
+      },
+      shapeProperties: {
+        borderRadius: 5ness,
+              rightRoundness,
+              ...edgeStyle(value.status, left,
+      },
+    },
+    edges: {
+      width: 2,
+      fontMAC, rightMAC),
+            });
+          }
+        }
+      );
+
+     : {
+        size: 10,
+        color: '#000000',
+      }, virtualMac.forEach((mac) => {
+        if (showIds.includes(mac)) {
+
+      arrows: {
+        to: {
+          enabled: true,
+          scaleFactor:  const virtualNodes = [];
+          props.graphOption.virtualNodeData[mac].forEach((1,
+        },
+      },
+    },
+    layout: {
+      hierarchical: {
+        directionvirtualNode) => {
+            if (showIds.includes(virtualNode.id)) {
+              virtualNodes.push: 'UD',
+        sortMethod: 'directed',
+      },
+    },
+    interaction: {
+      drag(virtualNode.id);
+            }
+          });
+
+          virtualNodes.forEach((virtualNode, indexNodes: true,
+      dragView: true,
+      hover: true,
+      selectConnectedEdges: false,
+) => {
+            if (index < virtualNodes.length - 1) {
+              edges.current.push({
+                     zoomView: true,
+    },
+    physics: {
+      enabled: true,
+      solver: 'repulsion',
+      id: `virtualEdge_${virtualNode}_${virtualNodes[index + 1]}`,
+                from: virtualNode,
+ repulsion: {
+        nodeDistance: 150,
+      },
+      hierarchicalRepulsion: {
+        nodeDistance:                to: virtualNodes[index + 1],
+                color: { color: '#848484', highlight: '#8 120,
+      },
+      stabilization: {
+        enabled: true,
+        iterations: 1000,48484' },
+                label: 'virtual',
+                dashes: true,
+              });
+      },
+    },
+ };
+
+ return (
+    <div className="graph-container">
+      <Graph
+        ref={
+            }
+          });
+        }
+      });
+
+      network.current.fit({
+        nodes: nodes.current,
+       network}
+        graph={props.graphOption.graph}
+        options={options}
+        getNetwork={(networkInstance) => {
+          animation: true,
+      });
+
+      props.setEdgeLinkNode(null);
+      props.setNodePosition(null);
+    }
+ network.current = networkInstance;
+        }}
+        events={{
+          selectNode: (event) => {
+            getNodePosition(event. }, [props.graphOption]);
+
+ const events = {
+    onMouseOver: (event) => {
+      const nodeId = event.nodesnodes[0]);
+          },
+          selectEdge: (event) => {
+            getEdgeLinkNode(event.edges[0]);
+          },
+        }}
+     [0];
+      if (nodeId) {
+        const node = nodes.current.find((n) => n.id === nodeId);
+        const nodeLabel >
+        {nodes.current.map((node) => (
+          <ContextMenuTrigger
+            key={node.id}
+            node = node.label;
+        props.setHoverNode({ nodeId, nodeLabel });
+      }
+    },
+    onMouseOut: ()={node}
+            nodes={nodes.current}
+            edges={edges.current}
+            getNodePosition={getNodePosition}
+            get => {
+      props.setHoverNode(null);
+    },
+    onSelectNode: (event) => {
+      const nodeId = event.nodes[0];EdgeLinkNode={getEdgeLinkNode}
+          />
+        ))}
+        {edges.current.map((edge) => (
+          <Edge
+            key={edge.id}
+
+      const node = nodes.current.find((n) => n.id === nodeId);
+      getNodePosition(node);
+    },
+    onSelectEdge: (event) => id={edge.id}
+            from={edge.from}
+            to={edge.to}
+            label={edge.label}
+            font={edge.font}
+            dashes={edge.dashes}
+          {
+      const edgeId = event.edges[0];
+      const edge = edges.current.find((e) => e.id === edgeId);
+      getEdgeLinkNode(edge);
+    },
+ };
+
+ return (
+    <div className="graph-container">
+      <Graph />
+        ))}
+      </Graph>
+    </div>
+ );
+};
+
+export default TopologyGraph;
+*/

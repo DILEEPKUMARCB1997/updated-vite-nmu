@@ -8,6 +8,7 @@ import {
   RESPONSE_RP_SET_SNMP_DEVICE_NETWORK_SETTINGS
 } from '../../../main/utils/IPCEvents'
 import { openDialog } from './dialogSlice'
+import { createSelector } from 'reselect'
 
 const IPFormat =
   /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){1}$/
@@ -324,9 +325,10 @@ export const {
   changeNetworkSettingStatus,
   clearNetworkSetting
 } = networkSettingSlice.actions
-
-export const networkSettingSelector = (state) => {
-  const {
+const memoizedNetworkSetting = (state) => state.networkSetting
+export const networkSettingSelector = createSelector(
+  memoizedNetworkSetting,
+  ({
     status,
     isDHCP,
     existIP,
@@ -346,8 +348,7 @@ export const networkSettingSelector = (state) => {
     validNum,
     completeNum,
     failNum
-  } = state.networkSetting
-  return {
+  }) => ({
     status,
     isDHCP,
     existIP,
@@ -367,7 +368,7 @@ export const networkSettingSelector = (state) => {
     validNum,
     completeNum,
     failNum
-  }
-}
+  })
+)
 
 export default networkSettingSlice
