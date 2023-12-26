@@ -1,13 +1,11 @@
-import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { Provider } from 'react-redux'
-import { expect, test, describe, jest } from '@jest/globals'
-import { store } from '../../app/store'
-import AboutDialog from '../dialogs/AboutDialog/AboutDialog'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import AddIPRangeDialog from './AddIPRangeDialog'
+import { store } from '../../../app/store'
+import { Provider } from 'react-redux'
 
-describe('should render the AboutDialog', () => {
-  test('should render Modal', () => {
+describe('AddIPRangeDialog', () => {
+  it('should render Modal ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -15,17 +13,14 @@ describe('should render the AboutDialog', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <AboutDialog />
+        <AddIPRangeDialog />
       </Provider>
     )
-    const element = screen.getByRole('dialog')
-    fireEvent.click(element)
-    expect(element).toBeInTheDocument()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
-  test('should render image', () => {
+  it('should render Form', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -33,16 +28,14 @@ describe('should render the AboutDialog', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <AboutDialog />
+        <AddIPRangeDialog />
       </Provider>
     )
-    const image = screen.getByAltText('icon')
-    expect(image).toBeInTheDocument()
+    expect(screen.getByRole('form')).toBeInTheDocument()
   })
-  test('should render Title', () => {
+  it('should render Start IPAddress Input ', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -50,13 +43,11 @@ describe('should render the AboutDialog', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-
     render(
       <Provider store={store}>
-        <AboutDialog />
+        <AddIPRangeDialog />
       </Provider>
     )
-    const element = screen.getByTestId('title')
-    expect(element).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter the Start IP Address')).toBeInTheDocument()
   })
 })

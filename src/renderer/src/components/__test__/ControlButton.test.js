@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { store } from '../../app/store'
 import { Provider } from 'react-redux'
 import ControlButton from '../dialogs/PreferencesDialog/Telegram/Components/ControlButton'
