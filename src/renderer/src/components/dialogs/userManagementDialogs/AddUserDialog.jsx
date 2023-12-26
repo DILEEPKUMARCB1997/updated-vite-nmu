@@ -57,7 +57,6 @@ const AddUserDialog = ({ onClose }) => {
   return userType === 'Admin' ? (
     <Modal title="Add New User" open onOk={handleAddUserSubmit} onCancel={onClose} okText="Save">
       <Form form={form} layout="vertical" name="form_in_modal_user">
-        {/* add user name */}
         <Form.Item
           name="username"
           label="Username"
