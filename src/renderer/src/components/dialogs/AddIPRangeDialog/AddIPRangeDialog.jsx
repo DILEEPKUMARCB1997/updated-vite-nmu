@@ -76,7 +76,7 @@ const AddIPRangeDialog = ({ onClose }) => {
       okText="Ok"
       okButtonProps={{ disabled: !isValidFormat(startIP, endIP) }}
     >
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical" data-testid="form">
         <Form.Item
           name="startIp"
           label="Start IP Address"
