@@ -14,7 +14,6 @@ test('should render Backup Restore', () => {
     addListener: jest.fn(),
     removeListener: jest.fn()
   }))
-
   render(
     <Provider store={store}>
       <BackupRestoreDialog />
