@@ -20,9 +20,9 @@ describe('SNMP Scan progress dialog test cases', () => {
         <SNMPScanProgressDialog />
       </Provider>
     )
-    const snmpScanModel = screen.getByRole('dialog')
-    fireEvent.click(snmpScanModel)
-    expect(snmpScanModel).toBeInTheDocument()
+    const snmpScanModal = screen.getByRole('dialog')
+    fireEvent.click(snmpScanModal)
+    expect(snmpScanModal).toBeInTheDocument()
   })
   test('should render antd progress', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
