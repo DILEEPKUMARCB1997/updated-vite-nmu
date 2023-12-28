@@ -49,7 +49,7 @@ const EventGraphTableDialog = ({ onClose }) => {
   const { useToken } = theme
   const { token } = useToken()
   const { customTableData } = useSelector(dashboardSelector)
-  const [tableLoading, setTableLoading] = useState(true)
+  const [tableLoading, setTableLoading] = useState(false)
 
   useEffect(() => {
     setTableLoading(false)
