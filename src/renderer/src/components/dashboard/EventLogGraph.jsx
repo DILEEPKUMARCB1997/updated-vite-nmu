@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import ReactApexChart from 'react-apexcharts'
+import Chart from 'react-apexcharts'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   dashboardSelector,
@@ -155,7 +155,7 @@ const EventLogGraph = () => {
         />
       </div>
       <div>
-        <ReactApexChart
+        <Chart
           role="graphics-document"
           name="Bar chart"
           options={eventLogData.options}
