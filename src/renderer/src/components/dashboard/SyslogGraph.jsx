@@ -106,7 +106,9 @@ const SyslogGraph = () => {
   }, [label, data])
 
   useEffect(() => {
-    dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
   }, [])
 
   const handleRefreshGraph = () => {

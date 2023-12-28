@@ -16,9 +16,7 @@ const TrapGraphSummary = () => {
   const { trapGraphData } = useSelector(dashboardSelector)
   const { tableData } = trapGraphData
   const dispatch = useDispatch()
-  const onTrapGraphClick = (barIndex) => {
-    dispatch(showTrapTableData(tableData[barIndex]))
-  }
+
   const snmpTrapMsgData = useMemo(() => {
     return {
       series: [
@@ -101,6 +99,10 @@ const TrapGraphSummary = () => {
     }
   }, [trapGraphData.data, trapGraphData.label])
 
+  const onTrapGraphClick = (barIndex) => {
+    dispatch(showTrapTableData(tableData[barIndex]))
+  }
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
@@ -108,6 +110,7 @@ const TrapGraphSummary = () => {
   }, [])
 
   const handleRefresh = () => {
+    console.log('trapGraph clicked', trapGraphData)
     dispatch(requestHistoryData({ type: 'trap', sourceIP: '', ge: '', le: '' }))
   }
 

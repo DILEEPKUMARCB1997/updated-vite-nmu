@@ -1,79 +1,13 @@
+import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import AddIPRangeDialog from '../../dialogs/AddIPRangeDialog/AddIPRangeDialog'
-import { store } from '../../../app/store'
 import { Provider } from 'react-redux'
+import { expect, test, describe, jest } from '@jest/globals'
+import '@testing-library/jest-dom'
+import { store } from '../../../app/store'
+import { AddIPRangeDialog } from '../../dialogs/AddIPRangeDialog/AddIPRangeDialog'
 
-describe('AddIPRangeDialog', () => {
-  it('should render Modal ', () => {
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query !== '(min-width: 240px) and (max-width: 767px)',
-      media: '',
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    }))
-    render(
-      <Provider store={store}>
-        <AddIPRangeDialog />
-      </Provider>
-    )
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
-  })
-  it('should render Form', () => {
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query !== '(min-width: 240px) and (max-width: 767px)',
-      media: '',
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    }))
-    render(
-      <Provider store={store}>
-        <AddIPRangeDialog />
-      </Provider>
-    )
-    expect(screen.getByTestId('form')).toBeInTheDocument()
-  })
-  it('should render Start IPAddress Input ', () => {
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query !== '(min-width: 240px) and (max-width: 767px)',
-      media: '',
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    }))
-    const StartAddressInput = jest.fn()
-    render(
-      <Provider store={store}>
-        <AddIPRangeDialog handleStartAddressInputOnChange={StartAddressInput} />
-      </Provider>
-    )
-    fireEvent.change(screen.getByPlaceholderText('Enter the Start IP Address'), {
-      target: { value: '' }
-    })
-    expect(StartAddressInput).toHaveBeenCalledTimes(0)
-  })
-  it('should render End IPAddress Input ', () => {
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query !== '(min-width: 240px) and (max-width: 767px)',
-      media: '',
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    }))
-    const EndAddressInput = jest.fn()
-    render(
-      <Provider store={store}>
-        <AddIPRangeDialog handleEndAddressInputOnChange={EndAddressInput} />
-      </Provider>
-    )
-    fireEvent.change(screen.getByPlaceholderText('Enter the End IP Address'), {
-      target: { value: '' }
-    })
-    expect(EndAddressInput).toHaveBeenCalledTimes(0)
-  })
-  it('should render Alert ', () => {
+describe('Add IP Range test cases', () => {
+  test('rendering IP range modal', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
       media: '',
@@ -87,6 +21,71 @@ describe('AddIPRangeDialog', () => {
         <AddIPRangeDialog />
       </Provider>
     )
-    expect(screen.getByRole('alert')).toBeInTheDocument()
+    const ipRangeModal = screen.getByRole('dialog')
+    fireEvent.click(ipRangeModal)
+    expect(ipRangeModal).toBeInTheDocument()
+  })
+
+  test('rendering the two input fields', () => {
+    window.matchMedia = jest.fn().mockImplementation((query) => ({
+      matches: query !== '(min-width: 240px) and (max-width: 767px)',
+      media: '',
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }))
+
+    render(
+      <Provider store={store}>
+        <AddIPRangeDialog />
+      </Provider>
+    )
+    const startIpAddressInput = screen.getByRole('textbox', { name: 'Start IP Address' })
+    fireEvent.click(startIpAddressInput)
+    expect(startIpAddressInput).toBeInTheDocument()
+
+    const endIpAddressInput = screen.getByRole('textbox', { name: 'End IP Address' })
+    fireEvent.click(endIpAddressInput)
+    expect(endIpAddressInput).toBeInTheDocument()
+  })
+  test('rendering the two buttons', () => {
+    window.matchMedia = jest.fn().mockImplementation((query) => ({
+      matches: query !== '(min-width: 240px) and (max-width: 767px)',
+      media: '',
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }))
+
+    render(
+      <Provider store={store}>
+        <AddIPRangeDialog />
+      </Provider>
+    )
+    const okButton = screen.getByRole('button', { name: 'Ok' })
+    fireEvent.click(okButton)
+    expect(okButton).toBeInTheDocument()
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+    fireEvent.click(cancelButton)
+    expect(cancelButton).toBeInTheDocument()
+  })
+
+  test('should render Alert component', () => {
+    window.matchMedia = jest.fn().mockImplementation((query) => ({
+      matches: query !== '(min-width: 240px) and (max-width: 767px)',
+      media: '',
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }))
+
+    render(
+      <Provider store={store}>
+        <AddIPRangeDialog />
+      </Provider>
+    )
+    const alert = screen.getByRole('alert')
+    expect(alert).toBeInTheDocument()
   })
 })

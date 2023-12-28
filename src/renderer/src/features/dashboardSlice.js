@@ -120,18 +120,17 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraph: (state, { payload }) => {
-      const { label, InformationData, CriticalData, WarningData, tableResult, lastUpdated } =
-        payload
+    updateCustomGraph: (state, action) => {
+      const { payload } = action
       return {
         ...state,
         customGraphData: {
-          label: label,
-          InformationData: InformationData,
-          CriticalData: CriticalData,
-          WarningData: WarningData,
-          tableData: tableResult,
-          lastUpdated: lastUpdated
+          label: payload.label,
+          InformationData: payload.InformationData,
+          CriticalData: payload.CriticalData,
+          WarningData: payload.WarningData,
+          tableData: payload.tableResult,
+          lastUpdated: payload.lastUpdated
         }
       }
     },
@@ -211,4 +210,3 @@ export const dashboardSelector = createSelector(
 // }
 
 export default dashboardSlice
-

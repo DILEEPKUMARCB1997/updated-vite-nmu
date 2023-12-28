@@ -32,6 +32,7 @@ import EventGraphTableDialog from './EventGraphTableDialog/EventGraphTableDialog
 import TopologyAddModal from '../topology/TopologyAddModal/TopologyAddModal'
 import TrapGraphTableDialog from './TrapGraphTableDialog/TrapGraphTableDialog'
 import SyslogGraphTableDialog from './SyslogGraphTableDialog/SyslogGraphTableDialog'
+import CustomHistoryDialog from './CustomHistoryDialog'
 
 const Dialog = ({ id, onClose, ...rest }) => {
   return (
@@ -68,7 +69,8 @@ const Dialog = ({ id, onClose, ...rest }) => {
           eventGraphTable: <EventGraphTableDialog onClose={onClose} />,
           trapGraphTable: <TrapGraphTableDialog onClose={onClose} />,
 
-          syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />
+          syslogGraphTable: <SyslogGraphTableDialog onClose={onClose} />,
+          customHistory: <CustomHistoryDialog onClose={onClose} />
         }[id]
       }
     </div>
