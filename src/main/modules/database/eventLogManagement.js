@@ -17,6 +17,7 @@ function updateEventLog(data, type = 'event') {
         break
       case 'trap':
         result = apiCore.db.updateTrap(data, true)
+        console.log(result)
         break
       case 'syslog':
         result = apiCore.db.updateSyslog(data, true)

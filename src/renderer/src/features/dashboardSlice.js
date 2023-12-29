@@ -120,8 +120,7 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    updateCustomGraph: (state, action) => {
-      const { payload } = action
+    updateCustomGraph: (state, { payload }) => {
       return {
         ...state,
         customGraphData: {
@@ -149,7 +148,10 @@ const dashboardSlice = createSlice({
     },
 
     updateTrapTableData: (state, action) => {
-      return { ...state, trapTableData: action.payload }
+      return {
+        ...state,
+        trapTableData: action.payload
+      }
     }
   }
 })
