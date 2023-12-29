@@ -28,7 +28,7 @@ const BuzzerDialog = ({ onClose }) => {
     return () => {
       oscillator.stop()
     }
-  })
+  }, [oscillator])
 
   const handleCancelButtonOnClick = () => {
     onClose()
