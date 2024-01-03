@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState } from 'react'
 /* eslint-disable no-unused-vars */
 
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
-import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAddModal'
 import { Card, Col, Row, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
@@ -21,8 +20,7 @@ import {
 import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
-
-// import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
+import TopologyAddModal from '../components/Topology/TopologyAddModal/TopologyAddModal'
 
 const TopologyPage = (props) => {
   const { event, nodesData, currentGroup } = useSelector(topologySelector)
@@ -75,7 +73,7 @@ const TopologyPage = (props) => {
 
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
-    event.networkDisableEditMode()
+    graph.networkDisableEditMode()
   }
 
   const handleSaveLayout = () => {
@@ -160,11 +158,12 @@ const TopologyPage = (props) => {
               />
 
               {/* <Card> */}
-              <TopologyGraph
+              {/* <TopologyGraph
                 onRef={(ref) => {
                   graph = ref
                 }}
-              />
+              /> */}
+              <TopologyGraph />
               {/* </Card> */}
 
               <TopologyAddModal
