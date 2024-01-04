@@ -3,7 +3,7 @@ import CustomRangePicker from '../../components/dialogs/Common Code/CustomRangeP
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 
-describe('CustomRangePicker', () => {
+describe.only('CustomRangePicker', () => {
   test(' should render the range Picker', () => {
     render(
       <Provider store={store}>

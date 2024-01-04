@@ -5,6 +5,7 @@ import { expect, test, describe, jest } from '@jest/globals'
 import { store } from '../../app/store'
 import AboutDialog from '../../components/dialogs/AboutDialog/AboutDialog'
 import '@testing-library/jest-dom'
+
 describe('should render the AboutDialog', () => {
   test('should render Modal', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
