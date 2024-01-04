@@ -139,11 +139,11 @@ const SyslogGraph = () => {
       </div>
       <div>
         <Chart
+          role="chart"
           options={graphData.options}
           series={graphData.series}
           type="bar"
           height={210}
-          data-testid="syslogchart"
         />
       </div>
     </>

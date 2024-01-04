@@ -5,7 +5,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createSelector } from 'reselect'
 import {
   REQUEST_MP_GET_EVENT_LOG_HISTORY,
-  RESPONSE_RP_GET_EVENT_LOG_HISTORY
+  RESPONSE_RP_GET_EVENT_LOG_HISTORY,
+  RESPONSE_RP_GET_DISK_USES,
+  REQUEST_MP_GET_DISK_USES
 } from '../../../main/utils/IPCEvents'
 import { requestGraphData, requestCustomGraphData } from '../components/dashboard/requestGraphData'
 import { openDialog } from './dialogSlice'
@@ -55,6 +57,18 @@ export const requestHistoryData = (param) => (dispatch) => {
   })
 
   window.electron.ipcRenderer.send(REQUEST_MP_GET_EVENT_LOG_HISTORY, param)
+}
+export const getDiskUsesData = () => (dispatch) => {
+  window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
+    if (arg.success) {
+      const diskUses = arg.data
+      //console.log(usersData);
+      dispatch(initDiskUses(diskUses))
+    } else {
+      console.log('Error get disk uses data')
+    }
+  })
+  window.electron.ipcRenderer.send(REQUEST_MP_GET_DISK_USES, {})
 }
 
 const dashboardSlice = createSlice({

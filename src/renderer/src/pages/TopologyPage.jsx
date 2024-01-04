@@ -6,8 +6,8 @@ import React, { useRef, useEffect, useState } from 'react'
 import TopologyToolbar from '../components/Topology/TopologyToolbar/TopologyToolbar'
 import { Card, Col, Row, Typography } from 'antd'
 import { datePad } from '../components/comman/tools'
-import domtoimage from 'dom-to-image'
-import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
+import domToImage from 'dom-to-image'
+// import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
 import { saveAs } from 'file-saver'
 import {
   changeTopologyEvent,
@@ -17,6 +17,7 @@ import {
   requestSwitchPolling,
   topologySelector
 } from '../features/topologySlice'
+import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
 import TopologyButtons from '../components/topology/TopologyButtons/TopologyButtons'
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
@@ -88,32 +89,34 @@ const TopologyPage = (props) => {
     graph.networkSelectNodes([node])
     graph.networkFocusNode(node)
   }
-  let networkCanvas
+  // let networkCanvas
   const handleExportImage = () => {
-    dispatch(setImageExporting(true))
-    const now = new Date()
-    const nowYear = datePad(now.getFullYear().toString())
-    const nowMonth = datePad(now.getMonth() + 1).toString()
-    const nowDate = datePad(now.getDate().toString())
-    const nowHours = datePad(now.getHours().toString())
-    const nowMinutes = datePad(now.getMinutes().toString())
-    const nowSeconds = datePad(now.getSeconds().toString())
-
-    const fileName =
-      currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
-    function filter(node) {
-      return node.tagName !== 'i'
-    }
-    domtoimage
-      .toSvg(networkCanvas, { filter })
-      .then((dataUrl) => {
-        saveAs(dataUrl, `${fileName}.png`)
-        return dispatch(setImageExporting(false))
-      })
-      .catch((error) => {
-        console.error(error)
-        return dispatch(setImageExporting(false))
-      })
+    graph.networkExportImage()
+    //   dispatch(setImageExporting(true))
+    //   const now = new Date()
+    //   const nowYear = datePad(now.getFullYear().toString())
+    //   const nowMonth = datePad(now.getMonth() + 1).toString()
+    //   const nowDate = datePad(now.getDate().toString())
+    //   const nowHours = datePad(now.getHours().toString())
+    //   const nowMinutes = datePad(now.getMinutes().toString())
+    //   const nowSeconds = datePad(now.getSeconds().toString())
+    //   const fileName =
+    //     currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
+    //   function filter(node) {
+    //     return node.tagName !== 'i'
+    //   }
+    //   // let p = document.getElementById('para1')
+    //   // let p_prime = p.cloneNode(true)
+    //   domToImage
+    //     .toSvg(networkCanvas, { filter })
+    //     .then((dataUrl) => {
+    //       saveAs(dataUrl, `${fileName}.png`)
+    //       return dispatch(setImageExporting(false))
+    //     })
+    //     .catch((error) => {
+    //       console.error(error)
+    //       return dispatch(setImageExporting(false))
+    //     })
   }
 
   return (
@@ -158,12 +161,12 @@ const TopologyPage = (props) => {
               />
 
               {/* <Card> */}
-              {/* <TopologyGraph
+
+              <TopologyGraph
                 onRef={(ref) => {
                   graph = ref
                 }}
-              /> */}
-              <TopologyGraph />
+              />
               {/* </Card> */}
 
               <TopologyAddModal

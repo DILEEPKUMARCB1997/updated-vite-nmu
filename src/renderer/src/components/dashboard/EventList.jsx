@@ -8,7 +8,7 @@ const EventList = () => {
 
   // console.log('cus eve data', customEventListData)
   return (
-    <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }}>
+    <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }} data-testid="eventList">
       {customEventListData.map((item) => (
         <EventListCard
           key={item.eventId}

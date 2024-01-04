@@ -150,33 +150,33 @@ const TopologyGraph = (props) => {
     networkRef.current.Network.selectNodes(nodeIds)
   }
 
-  // const networkExportImage = () => {
-  //   dispatch(setImageExporting(true))
-  //   const now = new Date()
-  //   const nowYear = datePad(now.getFullYear().toString())
-  //   const nowMonth = datePad(now.getMonth() + 1).toString()
-  //   const nowDate = datePad(now.getDate().toString())
-  //   const nowHours = datePad(now.getHours().toString())
-  //   const nowMinutes = datePad(now.getMinutes().toString())
-  //   const nowSeconds = datePad(now.getSeconds().toString())
+  const networkExportImage = () => {
+    dispatch(setImageExporting(true))
+    const now = new Date()
+    const nowYear = datePad(now.getFullYear().toString())
+    const nowMonth = datePad(now.getMonth() + 1).toString()
+    const nowDate = datePad(now.getDate().toString())
+    const nowHours = datePad(now.getHours().toString())
+    const nowMinutes = datePad(now.getMinutes().toString())
+    const nowSeconds = datePad(now.getSeconds().toString())
 
-  //   const fileName =
-  //     currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
-  //   function filter(node) {
-  //     return node.tagName !== 'i'
-  //   }
+    const fileName =
+      currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
+    function filter(node) {
+      return node.tagName !== 'i'
+    }
 
-  //   domtoimage
-  //     .toSvg(networkCanvas, { filter })
-  //     .then((dataUrl) => {
-  //       saveAs(dataUrl, `${fileName}.png`)
-  //       return dispatch(setImageExporting(false))
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //       return dispatch(setImageExporting(false))
-  //     })
-  // }
+    domtoimage
+      .toSvg(networkCanvas, { filter })
+      .then((dataUrl) => {
+        saveAs(dataUrl, `${fileName}.png`)
+        return dispatch(setImageExporting(false))
+      })
+      .catch((error) => {
+        console.error(error)
+        return dispatch(setImageExporting(false))
+      })
+  }
 
   const options = {
     ...graphOption,

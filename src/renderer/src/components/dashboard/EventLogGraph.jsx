@@ -159,7 +159,7 @@ const EventLogGraph = () => {
       </div>
       <div>
         <Chart
-          role="graphics-document"
+          data-testid="event-Graph"
           name="Bar chart"
           options={eventLogData.options}
           series={eventLogData.series}
