@@ -106,7 +106,9 @@ const SyslogGraph = () => {
   }, [label, data])
 
   useEffect(() => {
-    dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    setTimeout(() => {
+      dispatch(requestHistoryData({ type: 'syslog', sourceIP: '', ge: '', le: '' }))
+    }, 3000)
   }, [])
 
   const handleRefreshGraph = () => {
@@ -137,11 +139,11 @@ const SyslogGraph = () => {
       </div>
       <div>
         <Chart
+          role="chart"
           options={graphData.options}
           series={graphData.series}
           type="bar"
           height={210}
-          data-testid="syslogchart"
         />
       </div>
     </>

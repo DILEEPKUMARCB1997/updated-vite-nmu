@@ -499,7 +499,7 @@ const trap = new Receiver(
       }
       eventLogManagement.default.updateEventLog(trapMsg, 'trap')
       // console.log('Trap received')
-      console.log(trapMsg)
+      // console.log(trapMsg)
       // console.log('--------------------------------------')
       // console.log(pkt)
       // console.log('--------------------------------------')

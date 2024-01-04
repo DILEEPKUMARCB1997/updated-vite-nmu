@@ -1,26 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react'
-import {
-  REQUEST_MP_GET_DISK_USES,
-  RESPONSE_RP_GET_DISK_USES
-} from '../../../../main/utils/IPCEvents'
+// import {
+//   REQUEST_MP_GET_DISK_USES,
+//   RESPONSE_RP_GET_DISK_USES
+// } from '../../../../main/utils/IPCEvents'
 import { useDispatch, useSelector } from 'react-redux'
-import { dashboardSelector, initDiskUses } from '../../features/dashboardSlice'
+import { dashboardSelector, initDiskUses, getDiskUsesData } from '../../features/dashboardSlice'
 import ReactApexChart from 'react-apexcharts'
 
 const DiskSpaceSummary = () => {
   const dispatch = useDispatch()
   const { diskUses } = useSelector(dashboardSelector)
+
   useEffect(() => {
-    window.electron.ipcRenderer.once(RESPONSE_RP_GET_DISK_USES, (event, arg) => {
-      if (arg.success) {
-        const diskUse = arg.data
-        dispatch(initDiskUses(diskUse))
-      } else {
-        console.log('Error get disk uses data')
-      }
-    })
-    window.electron.ipcRenderer.send(REQUEST_MP_GET_DISK_USES, {})
+    setTimeout(() => {
+      dispatch(getDiskUsesData())
+    }, 1500)
   }, [])
 
   const options = {
