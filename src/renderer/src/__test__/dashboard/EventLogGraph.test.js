@@ -14,7 +14,7 @@ jest.mock('electron', () => ({
   }
 }))
 
-describe.skip('EventLogGraph', () => {
+describe('EventLogGraph', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
