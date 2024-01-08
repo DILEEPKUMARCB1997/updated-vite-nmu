@@ -33,7 +33,7 @@ let virtualMac = []
 const TopologyGraph = (props) => {
   const { onRef } = props
   const networkRef = useRef()
-  console.log(networkRef)
+  // console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
   const [network, setNetwork] = useState(null)
