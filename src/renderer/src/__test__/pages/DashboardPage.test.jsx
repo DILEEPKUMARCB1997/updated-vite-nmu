@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import { ipcRenderer } from 'electron'
 
+jest.mock('react-apexcharts')
 describe.skip('DashboardPage', () => {
   beforeEach(() => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
