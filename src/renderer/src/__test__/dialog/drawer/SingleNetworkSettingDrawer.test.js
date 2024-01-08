@@ -29,7 +29,7 @@ describe('SingleNetworkSettingDrawer', () => {
   })
 })
 
-describe.skip('SingleNetworkSettingDrawer', () => {
+describe('SingleNetworkSettingDrawer', () => {
   test('should render drawer', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

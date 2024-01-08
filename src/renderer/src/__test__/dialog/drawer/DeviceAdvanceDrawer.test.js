@@ -21,7 +21,7 @@ describe('DeviceAdvanceDrawer', () => {
     const drawer = screen.getByTestId('divider')
     expect(drawer).toBeInTheDocument()
   })
-  test.skip('should render tab', () => {
+  test('should render tab', () => {
     render(
       <Provider store={store}>
         <DeviceAdvanceDrawer />

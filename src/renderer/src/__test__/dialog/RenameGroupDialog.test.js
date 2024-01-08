@@ -10,7 +10,7 @@ jest.mock('electron', () => ({
   }
 }))
 
-describe.skip('RenameGroupDialog', () => {
+describe('RenameGroupDialog', () => {
   const handleClose = jest.fn()
 
   // it('updates state on Input change', () => {
