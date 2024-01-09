@@ -28,11 +28,5 @@ export default defineConfig({
     define: {
       global: {}
     }
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    css: true,
-    setupFiles: './src/renderer/setupTests.js'
   }
 })

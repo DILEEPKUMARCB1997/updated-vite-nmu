@@ -53,7 +53,7 @@ const TopologyToolbar = (props) => {
     handleAddEdge,
     handleDisableEdit,
     handleExportImage,
-    handleFitViewPoin,
+    handleFitViewPoint,
     handleSaveLayout
   } = props
   const { editMode, isImageExporting, event } = useSelector(topologySelector)
@@ -91,7 +91,7 @@ const TopologyToolbar = (props) => {
     handleExportImage()
   }
   const handleFitViewPointButtonOnClick = () => {
-    handleFitViewPoin()
+    handleFitViewPoint()
   }
 
   const renderEditModeToolbar = () => {

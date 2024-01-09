@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, forwardRef } from 'react'
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
@@ -23,13 +23,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 import TopologyAddModal from '../components/Topology/TopologyAddModal/TopologyAddModal'
 
+const Graph = forwardRef((props, ref) => {
+  return <TopologyGraph ref={ref} {...props} />
+})
+
 const TopologyPage = (props) => {
   const { event, nodesData, currentGroup } = useSelector(topologySelector)
   const dispatch = useDispatch()
 
-  const [graph, setGraph] = useState(null)
+  // const [graph, setGraph] = useState(null)
   const [modal, setModal] = useState(null)
-
+  const inputRef = useRef(null)
   useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
 
@@ -46,7 +50,7 @@ const TopologyPage = (props) => {
   }
 
   const handleFitViewPoint = () => {
-    graph.networkFitViewPoint()
+    inputRef.current?.networkFitViewPoint()
   }
 
   const handleAddNode = () => {
@@ -60,7 +64,7 @@ const TopologyPage = (props) => {
   }
 
   const handleSearchNode = (node) => {
-    graph.networkFocusNode(node)
+    inputRef.current?.networkFocusNode(node)
   }
 
   const handleAddEdge = () => {
@@ -74,24 +78,24 @@ const TopologyPage = (props) => {
 
   const handleDisableEdit = () => {
     dispatch(changeTopologyEvent(''))
-    graph.networkDisableEditMode()
+    inputRef.current?.networkDisableEditMode()
   }
 
   const handleSaveLayout = () => {
-    graph.networkSaveLayout()
+    inputRef.current?.networkSaveLayout()
   }
 
   const topologyPanelSizeOnChange = () => {
-    graph.updateDimensions()
+    inputRef.current?.updateDimensions()
   }
 
   const handleSelectNode = (node) => {
-    graph.networkSelectNodes([node])
-    graph.networkFocusNode(node)
+    inputRef.current?.networkSelectNodes([node])
+    inputRef.current?.networkFocusNode(node)
   }
   // let networkCanvas
   const handleExportImage = () => {
-    graph.networkExportImage()
+    inputRef.current?.networkExportImage()
     //   dispatch(setImageExporting(true))
     //   const now = new Date()
     //   const nowYear = datePad(now.getFullYear().toString())
@@ -162,11 +166,13 @@ const TopologyPage = (props) => {
 
               {/* <Card> */}
 
-              <TopologyGraph
-                onRef={(ref) => {
-                  graph = ref
-                }}
-              />
+              {/* <TopologyGraph
+                // onRef={(ref) => {
+                //   graph = ref
+                // }}
+                ref={graphRef}
+              /> */}
+              <Graph refs={inputRef} />
               {/* </Card> */}
 
               <TopologyAddModal
