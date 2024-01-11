@@ -1,9 +1,11 @@
 import { resolve } from 'path'
+import { builtinModules } from 'module'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
+  test: {},
   main: {
     plugins: [externalizeDepsPlugin()]
   },
