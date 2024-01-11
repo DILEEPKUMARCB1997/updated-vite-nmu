@@ -8,7 +8,8 @@ import {
   REQUEST_MP_SET_THE_GROUP_DATA,
   RESPONSE_RP_SAVE_TOPOLOGY_LAYOUT,
   RESPONSE_RP_GET_DEVICE_PROPERTIES,
-  REQUEST_MP_GET_DEVICE_PROPERTIES
+  REQUEST_MP_GET_DEVICE_PROPERTIES,
+  SEND_RP_TOPOLOGY_DATA
 } from '../../../main/utils/IPCEvents'
 import { createSelector } from 'reselect'
 export const requestSaveTopologyLayout = (positions, callback) => (dispatch, getState) => {
@@ -35,6 +36,29 @@ export const requestSaveTopologyLayout = (positions, callback) => (dispatch, get
   dispatch(clearTopologyData())
 }
 
+export const setTopologyData = (param) => (dispatch, getState) => {
+  const { nodesData, edgesData, virtualNodeData } = param
+  // const nodesData = {}
+  // const edgesData = {}
+  // const virtualNodeData = {}
+
+  Object.keys(nodesData).forEach((MACAddress) => {
+    const { defaultDeviceData } = getState().discovery
+    if (defaultDeviceData[MACAddress] !== undefined) {
+      nodesData[MACAddress].status =
+        defaultDeviceData[MACAddress].deviceType === 'all' ||
+        (defaultDeviceData[MACAddress].deviceType === 'snmp' &&
+          defaultDeviceData[MACAddress].online)
+          ? 'online'
+          : 'offline'
+      nodesData[MACAddress].IPAddress = defaultDeviceData[MACAddress].IPAddress
+      nodesData[MACAddress].model = defaultDeviceData[MACAddress].model
+      nodesData[MACAddress].hostname = defaultDeviceData[MACAddress].hostname
+    }
+  })
+  dispatch(settingTopologyData({ nodesData, edgesData, virtualNodeData }))
+}
+
 export const requestSwitchPolling = (param) => () => {
   window.electron.ipcRenderer.send(REQUEST_MP_SWITCH_POLLING_TOPOLOGY, {
     isStartPolling: param
@@ -57,26 +81,6 @@ export const setNetworkSelectElement = (payload) => (dispatch) => {
     ;[devicelistSelect] = nodes
   }
   dispatch(SET_DEVICE_LIST_SELECT({ MACAddress: devicelistSelect }))
-}
-
-export const setTopologyData = (param) => (dispatch, getState) => {
-  const { nodesData, edgesData, virtualNodeData } = param
-
-  Object.keys(nodesData).forEach((MACAddress) => {
-    const { defaultDeviceData } = getState().discovery
-    if (defaultDeviceData[MACAddress] !== undefined) {
-      nodesData[MACAddress].status =
-        defaultDeviceData[MACAddress].deviceType === 'all' ||
-        (defaultDeviceData[MACAddress].deviceType === 'snmp' &&
-          defaultDeviceData[MACAddress].online)
-          ? 'online'
-          : 'offline'
-      nodesData[MACAddress].IPAddress = defaultDeviceData[MACAddress].IPAddress
-      nodesData[MACAddress].model = defaultDeviceData[MACAddress].model
-      nodesData[MACAddress].hostname = defaultDeviceData[MACAddress].hostname
-    }
-  })
-  dispatch(SET_TOPOLOGY_DATA({ nodesData, edgesData, virtualNodeData }))
 }
 
 export const requestGetDeviceProperties = (payload) => (dispatch) => {
@@ -343,7 +347,7 @@ const topologySlice = createSlice({
         changeGroupMemberData
       }
     },
-    SET_TOPOLOGY_DATA: (state, action) => {
+    settingTopologyData: (state, action) => {
       if (state.event !== '') {
         return state
       }
@@ -397,7 +401,7 @@ export const {
   setTopologyViewSettings,
   removeNetworkSelectElement,
   setSNMPDeviceProperties,
-  SET_TOPOLOGY_DATA,
+  settingTopologyData,
   addNewEdge,
   addNewNode,
   addNewVirtualNode,

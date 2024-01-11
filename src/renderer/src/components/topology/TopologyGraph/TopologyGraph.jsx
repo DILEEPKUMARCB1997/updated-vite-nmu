@@ -32,7 +32,7 @@ let virtualMac = []
 
 const TopologyGraph = (props) => {
   const { onRef } = props
-  const networkRef = useRef()
+  const networkRef = useRef(null)
   // console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
@@ -71,10 +71,68 @@ const TopologyGraph = (props) => {
     deviceType: nodeData.deviceType,
     model: nodeData.model
   })
+  const { getNodePosition, getEdgeLinkNode } = props
+  // useEffect(() => {
+  //   // console.log('props', props)
+  //   // props.onRef()
+  //   window.addEventListener('resize', updateDimensions)
+  //   window.addEventListener('enter-full-screen', updateDimensions)
+  //   networkRef.current.on('select', (params) => {
+  //     const { nodes, edges } = params
+  //     dispatch(
+  //       setNetworkSelectElement({
+  //         nodes,
+  //         edges
+  //       })
+  //     )
+  //   })
+  //   networkRef.current.on('click', () => {
+  //     dispatch(openDevicesMenu(false))
+  //   })
+  //   networkRef.current.on('oncontext', (params) => {
+  //     const { x, y } = params.pointer.DOM
+  //     // const { groupDevices, currentGroup } = this.props
+  //     const rightClickMAC = networkRef.current.getNodeAt({ x, y })
+  //     console.log('rightClickMAC', rightClickMAC)
+  //     if (
+  //       rightClickMAC === undefined ||
+  //       groupDevices[rightClickMAC] === undefined ||
+  //       !groupDevices[rightClickMAC].online ||
+  //       (currentGroup === 'all' && !groupDevices[rightClickMAC].isAUZ)
+  //     ) {
+  //       dispatch(openDevicesMenu(false))
+  //     } else {
+  //       const { MACAddress, deviceType, IPAddress, model } = groupDevices[rightClickMAC]
+  //       dispatch(openDevicesMenu(true))
+  //       setNodeData({
+  //         nodeMACAddress: MACAddress,
+  //         nodeDeviceType: deviceType,
+  //         nodeIPAddress: IPAddress,
+  //         nodeModel: model
+  //       })
+  //     }
+  //   })
 
-  useEffect(() => {
-    console.log('props', props)
-  }, [])
+  //   networkRef.current.on('afterDrawing', (ctx) => {
+  //     networkCanvas = ctx.canvas
+  //   })
+  // }, [])
+  // useEffect(() => {
+  //   // window.addEventListener('resize', updateDimensions)
+  //   // window.addEventListener('enter-full-screen', updateDimensions)
+  //   document.addEventListener('select', (params) => {
+  //     const { nodes, edges } = params
+  //     dispatch(
+  //       setNetworkSelectElement({
+  //         nodes,
+  //         edges
+  //       })
+  //     )
+  //   })
+  //   document.addEventListener('click', () => {
+  //     dispatch(openDevicesMenu(false))
+  //   })
+  // }, [])
 
   useEffect(() => {
     switch (props.event) {
@@ -104,33 +162,40 @@ const TopologyGraph = (props) => {
 
   const initNetworkInstance = (networkInstance) => {
     // networkRef.current.Network = networkInstance
-    setNetwork(networkInstance)
+    // setNetwork(networkInstance)
+    networkRef.current = networkInstance
   }
 
   const updateDimensions = () => {
-    networkRef.current.fitView()
+    // networkRef.current.fitView()
+    networkRef.current.redraw()
   }
 
   const networkFitViewPoint = () => {
-    networkRef.current.Network.fit(fitViewPointOption)
+    //   networkRef.current.Network.fit(fitViewPointOption)
+    networkRef.current?.fit(fitViewPointOption)
   }
 
   const networkFocusNode = (node) => {
     if (nodesIds.includes(node)) {
-      networkRef.current.Network.focus(node, nodeFocusOption)
+      // networkRef.current.Network.focus(node, nodeFocusOption)
+      networkRef.current?.focus(node, nodeFocusOption)
     }
   }
 
   const networkDisableEditMode = () => {
-    networkRef.current.Network.disableEditMode()
+    networkRef.current?.disableEditMode()
+    // networkRef.current.Network.disableEditMode()
   }
 
   const networkAddNodeMode = () => {
-    networkRef.current.Network.addNodeMode()
+    // networkRef.current.Network.addNodeMode()
+    networkRef.current?.addNodeMode()
   }
 
   const networkAddEdgeMode = () => {
-    networkRef.current.Network.addEdgeMode()
+    // networkRef.current.Network.addEdgeMode()
+    networkRef.current?.addEdgeMode()
   }
 
   const handleShowSaveResult = () => (result) => {
@@ -150,33 +215,57 @@ const TopologyGraph = (props) => {
     networkRef.current.Network.selectNodes(nodeIds)
   }
 
-  const networkExportImage = () => {
-    dispatch(setImageExporting(true))
-    const now = new Date()
-    const nowYear = datePad(now.getFullYear().toString())
-    const nowMonth = datePad(now.getMonth() + 1).toString()
-    const nowDate = datePad(now.getDate().toString())
-    const nowHours = datePad(now.getHours().toString())
-    const nowMinutes = datePad(now.getMinutes().toString())
-    const nowSeconds = datePad(now.getSeconds().toString())
+  // const networkExportImage = () => {
+  //   dispatch(setImageExporting(true))
+  //   const now = new Date()
+  //   const nowYear = datePad(now.getFullYear().toString())
+  //   const nowMonth = datePad(now.getMonth() + 1).toString()
+  //   const nowDate = datePad(now.getDate().toString())
+  //   const nowHours = datePad(now.getHours().toString())
+  //   const nowMinutes = datePad(now.getMinutes().toString())
+  //   const nowSeconds = datePad(now.getSeconds().toString())
 
-    const fileName =
-      currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
-    function filter(node) {
-      return node.tagName !== 'i'
-    }
+  //   const fileName =
+  //     currentGroup + nowYear + nowMonth + nowDate + nowHours + nowMinutes + nowSeconds
+  //   // function filter(node) {
+  //   //   return node.tagName !== 'i'
+  //   // }
 
-    domtoimage
-      .toSvg(networkCanvas, { filter })
-      .then((dataUrl) => {
-        saveAs(dataUrl, `${fileName}.png`)
-        return dispatch(setImageExporting(false))
-      })
-      .catch((error) => {
-        console.error(error)
-        return dispatch(setImageExporting(false))
-      })
-  }
+  //   // domtoimage
+  //   //   .toSvg(networkCanvas, { filter })
+  //   //   .then((dataUrl) => {
+  //   //     saveAs(dataUrl, `${fileName}.png`)
+  //   //     return dispatch(setImageExporting(false))
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error(error)
+  //   //     return dispatch(setImageExporting(false))
+  //   //   })
+  //   // var node = document.getElementById('element')
+  //   // function filter(node) {
+  //   //   return node.tagName !== 'i'
+  //   // }
+  //   // function makeNodeCopy(node) {
+  //   //   if (!node) {
+  //   //     console.error('Node to copy is undefined')
+  //   //     return null
+  //   //   }
+
+  //   //   // The rest of the function's code
+  //   // }
+
+  //   domtoimage
+  //     .toSvg(document.getElementById('element'))
+  //     .then(function (dataUrl) {
+  //       saveAs(dataUrl, `${fileName}.png`)
+  //       return dispatch(setImageExporting(false))
+  //     })
+  //     .catch((error) => {
+  //       console.error(error)
+  //       return dispatch(setImageExporting(false))
+  //       /* do something */
+  //     })
+  // }
 
   const options = {
     ...graphOption,
@@ -184,7 +273,7 @@ const TopologyGraph = (props) => {
       enabled: false,
       /* eslint-disable */
       addNode: (data, callback) => {
-        this.props.getNodePosition(data)
+        getNodePosition(data)
       },
       editNode: () => {
         // console.log('editNode')
@@ -192,7 +281,7 @@ const TopologyGraph = (props) => {
       addEdge: (data, callback) => {
         /* eslint-enable */
         if (data.from !== data.to) {
-          this.props.getEdgeLinkNode(data)
+          getEdgeLinkNode(data)
         }
       },
       editEdge: {
@@ -377,7 +466,7 @@ const nodeStyle = (status, model) => {
 }
 
 const edgeStyle = (element, leftMAC, rightMAC) => {
-  //console.log('element', element)
+  // console.log('element', element)
   //console.log('leftMAC', leftMAC);
   //console.log('rightMAC', rightMAC);
   //console.log('virtualMAC', virtualMac);
