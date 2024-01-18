@@ -53,7 +53,7 @@ const WebBrowserDialog = ({ onClose }) => {
       open
       onCancel={handleCloseButtonClick}
       width="100%"
-      style={{ top: 20 }}
+      style={{ top: '20px' }}
       bodyStyle={{
         margin: 0,
         paddingTop: 10,

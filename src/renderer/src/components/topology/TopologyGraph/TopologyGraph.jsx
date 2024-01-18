@@ -24,6 +24,7 @@ import { discoverySelector } from '../../../features/discoverySlice'
 import { openDevicesMenu } from '../../../features/UIControllSlice'
 import { notification } from 'antd'
 import { datePad } from '../../comman/tools'
+import { useEditableArray } from '@ant-design/pro-components'
 
 // import PropTypes from 'prop-types'
 
@@ -133,27 +134,47 @@ const TopologyGraph = (props) => {
   //     dispatch(openDevicesMenu(false))
   //   })
   // }, [])
-
-  useEffect(() => {
-    switch (props.event) {
+  useEffect((prevProps) => {
+    switch (event) {
       case 'addNode':
-        props.network.addNodeMode()
+        networkRef.current.addNodeMode()
         break
       case 'addEdge':
-        props.network.addEdgeMode()
+        networkRef.current.addEdgeMode()
         break
       default:
         break
     }
-  }, [
-    props.event,
-    props.newNodeTemp,
-    props.nodesIds,
-    props.currentGroup,
-    // prevProps.currentGroup,
-    followPosition,
-    props.network
-  ])
+    if (newNodeTemp !== '') {
+      dispatch(clearNewNodeTemp())
+    }
+    if (nodesIds.length !== 0 && followPosition) {
+      setFollowPosition(false)
+    }
+    if (currentGroup !== currentGroup) {
+      setFollowPosition(true)
+    }
+  }, [])
+  // useEffect(() => {
+  //   switch (props.event) {
+  //     case 'addNode':
+  //       networkRef.current.addNodeMode()
+  //       break
+  //     case 'addEdge':
+  //       networkRef.current.addEdgeMode()
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }, [
+  //   props.event,
+  //   props.newNodeTemp,
+  //   props.nodesIds,
+  //   props.currentGroup,
+  //   // prevProps.currentGroup,
+  //   followPosition,
+  //   props.network
+  // ])
 
   const roundnessValue = [
     0, 0.15, -2.15, 0.25, -2.25, 0.35, -2.35, 0.45, -2.45, 0.55, -2.55, 0.65, -2.65, 0.75, -2.75,
@@ -166,54 +187,54 @@ const TopologyGraph = (props) => {
     networkRef.current = networkInstance
   }
 
-  const updateDimensions = () => {
-    // networkRef.current.fitView()
-    networkRef.current.redraw()
-  }
+  // const updateDimensions = () => {
+  //   // networkRef.current.fitView()
+  //   networkRef.current.redraw()
+  // }
 
-  const networkFitViewPoint = () => {
-    //   networkRef.current.Network.fit(fitViewPointOption)
-    networkRef.current?.fit(fitViewPointOption)
-  }
+  // const networkFitViewPoint = () => {
+  //   //   networkRef.current.Network.fit(fitViewPointOption)
+  //   networkRef.current?.fit(fitViewPointOption)
+  // }
 
-  const networkFocusNode = (node) => {
-    if (nodesIds.includes(node)) {
-      // networkRef.current.Network.focus(node, nodeFocusOption)
-      networkRef.current?.focus(node, nodeFocusOption)
-    }
-  }
+  // const networkFocusNode = (node) => {
+  //   if (nodesIds.includes(node)) {
+  //     // networkRef.current.Network.focus(node, nodeFocusOption)
+  //     networkRef.current?.focus(node, nodeFocusOption)
+  //   }
+  // }
 
-  const networkDisableEditMode = () => {
-    networkRef.current?.disableEditMode()
-    // networkRef.current.Network.disableEditMode()
-  }
+  // const networkDisableEditMode = () => {
+  //   networkRef.current?.disableEditMode()
+  //   // networkRef.current.Network.disableEditMode()
+  // }
 
-  const networkAddNodeMode = () => {
-    // networkRef.current.Network.addNodeMode()
-    networkRef.current?.addNodeMode()
-  }
+  // const networkAddNodeMode = () => {
+  //   // networkRef.current.Network.addNodeMode()
+  //   networkRef.current?.addNodeMode()
+  // }
 
-  const networkAddEdgeMode = () => {
-    // networkRef.current.Network.addEdgeMode()
-    networkRef.current?.addEdgeMode()
-  }
+  // const networkAddEdgeMode = () => {
+  //   // networkRef.current.Network.addEdgeMode()
+  //   networkRef.current?.addEdgeMode()
+  // }
 
-  const handleShowSaveResult = () => (result) => {
-    const type = result ? 'success' : 'error'
-    notification[type]({
-      message: `Topology Layout ${result ? 'successfully saved.' : 'save error.'}`
-    })
-  }
+  // const handleShowSaveResult = () => (result) => {
+  //   const type = result ? 'success' : 'error'
+  //   notification[type]({
+  //     message: `Topology Layout ${result ? 'successfully saved.' : 'save error.'}`
+  //   })
+  // }
 
-  const networkSaveLayout = () => {
-    dispatch(
-      requestSaveTopologyLayout(networkRef.current.Network.getPositions(), handleShowSaveResult())
-    )
-  }
+  // const networkSaveLayout = () => {
+  //   dispatch(
+  //     requestSaveTopologyLayout(networkRef.current.Network.getPositions(), handleShowSaveResult())
+  //   )
+  // }
 
-  const networkSelectNodes = (nodeIds) => {
-    networkRef.current.Network.selectNodes(nodeIds)
-  }
+  // const networkSelectNodes = (nodeIds) => {
+  //   networkRef.current.Network.selectNodes(nodeIds)
+  // }
 
   // const networkExportImage = () => {
   //   dispatch(setImageExporting(true))

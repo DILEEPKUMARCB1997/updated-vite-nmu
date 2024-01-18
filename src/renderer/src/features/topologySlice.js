@@ -38,9 +38,6 @@ export const requestSaveTopologyLayout = (positions, callback) => (dispatch, get
 
 export const setTopologyData = (param) => (dispatch, getState) => {
   const { nodesData, edgesData, virtualNodeData } = param
-  // const nodesData = {}
-  // const edgesData = {}
-  // const virtualNodeData = {}
 
   Object.keys(nodesData).forEach((MACAddress) => {
     const { defaultDeviceData } = getState().discovery
@@ -347,11 +344,11 @@ const topologySlice = createSlice({
         changeGroupMemberData
       }
     },
-    settingTopologyData: (state, action) => {
+    settingTopologyData: (state, { payload }) => {
       if (state.event !== '') {
         return state
       }
-      const { nodesData, edgesData, virtualNodeData } = action.payload
+      const { nodesData, edgesData, virtualNodeData } = payload
       return {
         ...state,
         virtualNodeData,

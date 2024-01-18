@@ -56,7 +56,16 @@ const TopologyToolbar = (props) => {
     handleFitViewPoint,
     handleSaveLayout
   } = props
-  const { editMode, isImageExporting, event } = useSelector(topologySelector)
+  const {
+    editMode,
+    isImageExporting,
+    event,
+    showIP,
+    showModel,
+    showHostname,
+    showLinkText,
+    physics
+  } = useSelector(topologySelector)
   const dispatch = useDispatch()
 
   const handleCheckBoxGroupOnChange = (name) => () => {
@@ -198,6 +207,7 @@ const TopologyToolbar = (props) => {
               fontSize: '16px',
               marginRight: '5px'
             }}
+            checked={showIP}
             onChange={handleCheckBoxGroupOnChange('showIP')}
           >
             Show IP
@@ -206,6 +216,7 @@ const TopologyToolbar = (props) => {
           <Checkbox
             style={{ fontSize: '16px', marginRight: '5px' }}
             onChange={handleCheckBoxGroupOnChange('showModel')}
+            checked={showModel}
           >
             Show Model
           </Checkbox>
@@ -213,6 +224,7 @@ const TopologyToolbar = (props) => {
           <Checkbox
             style={{ fontSize: '16px', marginRight: '5px' }}
             onChange={handleCheckBoxGroupOnChange('showHostname')}
+            checked={showHostname}
           >
             Show Hostname
           </Checkbox>
@@ -220,6 +232,7 @@ const TopologyToolbar = (props) => {
           <Checkbox
             style={{ fontSize: '16px', marginRight: '5px' }}
             onChange={handleCheckBoxGroupOnChange('showLinkText')}
+            checked={showLinkText}
           >
             Show Link Text
           </Checkbox>
@@ -227,6 +240,7 @@ const TopologyToolbar = (props) => {
             <Checkbox
               style={{ fontSize: '16px', marginRight: '5px' }}
               onChange={handleCheckBoxGroupOnChange('physics')}
+              checked={physics}
             >
               Physics
             </Checkbox>

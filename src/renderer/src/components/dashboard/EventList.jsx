@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
+  // console.log(customEventListData)
 
-  // console.log('cus eve data', customEventListData)
+  console.log('cus eve data', customEventListData)
   return (
     <div style={{ overflow: 'auto', height: 'calc(100vh - 19vh)' }} data-testid="eventList">
       {customEventListData.map((item) => (
