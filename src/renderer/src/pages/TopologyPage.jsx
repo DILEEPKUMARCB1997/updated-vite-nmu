@@ -40,11 +40,16 @@ const TopologyPage = (props) => {
   const fitRef = useRef(null)
 
   const topologyDataListener = (event, arg) => {
+    console.log('arg', arg)
     dispatch(setTopologyData(arg))
   }
+
   useEffect(() => {
+    console.log('Topology page added')
     window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
+
     return () => {
+      console.log('topology page removed')
       dispatch(clearTopologyData())
       dispatch(requestSwitchPolling(false))
       window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
@@ -215,6 +220,9 @@ const TopologyPage = (props) => {
               /> */}
               <Graph
                 refs={inputRef}
+                onRef={(ref) => {
+                  console.log('ref'.ref)
+                }}
                 getNodePosition={getNodePosition}
                 getEdgeLinkNode={getEdgeLinkNode}
               />

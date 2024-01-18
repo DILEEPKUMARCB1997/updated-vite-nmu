@@ -296,7 +296,10 @@ const TopologyGraph = (props) => {
     }
   }
 
-  const graph = { nodes: [], edges: [] }
+  const graph = {
+    nodes: [],
+    edges: []
+  }
   const showIds = []
   virtualMac = []
 
@@ -305,9 +308,11 @@ const TopologyGraph = (props) => {
       showModel ? `\n${element.model}` : ''
     }${showHostname ? `\n${element.hostname}` : ''}`
     const x = followPosition || newNodeTemp === key ? element.x : undefined
-    const y = followPosition || newNodeTemp === key ? element.y : undefined
-
-    ;(element.model === 'EHG2408' || element.model === '') && virtualMac.push(element.MACAddress)
+    const y =
+      followPosition || newNodeTemp === key
+        ? element.y
+        : undefined(element.model === 'EHG2408' || element.model === '') &&
+          virtualMac.push(element.MACAddress)
 
     graph.nodes.push({
       id: key,

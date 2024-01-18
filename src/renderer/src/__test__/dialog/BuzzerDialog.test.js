@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import { store } from '../../app/store'
 import BuzzerDialog from '../../components/dialogs/BuzzerDialog/BuzzerDialog'
 
-describe.skip('Buzzer Dialog test cases', () => {
+describe('Buzzer Dialog test cases', () => {
   test('rendering Buzzer Dialog', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
