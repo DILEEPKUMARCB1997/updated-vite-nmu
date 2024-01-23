@@ -5,6 +5,7 @@ import DiskSpaceSummary from '../../components/dashboard/DiskSpaceSummary'
 import { store } from '../../app/store'
 // import { mockElectron } from '../../../setupTests'
 import { render } from '@testing-library/react'
+import { getDiskUsesData } from '../../features/dashboardSlice'
 // import { ipcRenderer } from 'electron'
 
 jest.mock('react-apexcharts')
@@ -17,6 +18,15 @@ describe('DiskSpaceSummary', () => {
       </Provider>
     )
     expect(container).toBeTruthy()
+  })
+
+  it('Should handle getDiskUsesData correctly when successful', async () => {
+    await store.dispatch(getDiskUsesData())
+    const updatedState = store.getState().dashboard
+    expect(updatedState.diskUses).not.to.equal({})
+    // expect(updatedState.topologyData).not.to.equal('')
+    // expect(updatedState.clientsData).not.to.equal('')
+    // expect(updatedState.gData).not.to.equal('')
   })
 })
 // describe('Diskspace summary test cases', () => {

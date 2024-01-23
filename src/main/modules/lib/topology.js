@@ -215,11 +215,11 @@ const convertTopologyData = () => {
     userUpdate = false
   }
 
-  // console.log('Users');
-  // console.log(userNode);
-  // console.log(userEdge);
-  // console.log(userVirtualNode);
-  // console.log(virtualNodeRelative);
+  console.log('Users')
+  console.log(userNode)
+  console.log(userEdge)
+  console.log(userVirtualNode)
+  console.log(virtualNodeRelative)
 
   nodesData = { ...userNode }
   edgesData = { ...userEdge }

@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { discoverySelector } from '../features/discoverySlice'
 import GroupDeviceTable from '../components/devices/GroupDeviceTable'
 import EventTips from '../components/devices/EventTips/EventTips'
+import { store } from '../app/store'
 
 const DevicePage = () => {
   const { groupView, defaultDeviceArrayData } = useSelector(discoverySelector)
-
+  console.log('store', store.getState())
   return (
     <Row gutter={[16, 16]}>
       {/* <Col span={24}> */}
