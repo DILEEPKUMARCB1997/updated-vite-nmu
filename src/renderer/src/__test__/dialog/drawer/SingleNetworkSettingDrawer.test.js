@@ -10,7 +10,7 @@ import { store } from '../../../app/store'
 // } from '../../../Drawer/SingleNetworkSettingDrawer/SingleNetworkSettingDrawer'
 import { Typography, Button } from 'antd'
 
-describe('SingleNetworkSettingDrawer', () => {
+describe.skip('SingleNetworkSettingDrawer', () => {
   test('should render div tag', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

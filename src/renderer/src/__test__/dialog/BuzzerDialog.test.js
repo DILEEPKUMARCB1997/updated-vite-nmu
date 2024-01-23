@@ -15,9 +15,6 @@ describe.skip('Buzzer Dialog test cases', () => {
       addListener: jest.fn(),
       removeListener: jest.fn()
     }))
-    window.AudioContext = jest.fn().mockImplementation(() => {
-      return {}
-    })
 
     render(
       <Provider store={store}>

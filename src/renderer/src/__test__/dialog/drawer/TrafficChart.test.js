@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../../app/store'
 import TrafficChart from '../../../components/Drawer/PortInformationDrawer/TrafficChart/TrafficChart'
+import { jest } from '@jest/globals'
 
-describe.skip('TrafficChart', () => {
+jest.mock('react-apexcharts')
+describe('TrafficChart', () => {
   test('should render card', () => {
     render(
       <Provider store={store}>

@@ -11,3 +11,13 @@ export default defineConfig({
     css: true
   }
 })
+// // https://vitejs.dev/config/
+// export default defineConfig({
+//   plugins: [react()],
+//   test: {
+//     globals: true,
+//     environment: 'happy-dom',
+//     setupFiles: '../src/renderer/setupTests.js',
+//     css: true
+//   }
+// })

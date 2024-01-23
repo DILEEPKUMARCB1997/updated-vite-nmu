@@ -7,8 +7,12 @@ import LoginPage from '../../pages/LoginPage'
 import '@testing-library/jest-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { userEvent } from '@testing-library/user-event'
+import { getLoginData } from '../../features/userManagementSlice'
 
 describe('test the login page', () => {
+  it(' check the login component', () => {
+    store.dispatch(getLoginData)
+  })
   test('should render username in the login page', () => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

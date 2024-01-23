@@ -72,7 +72,7 @@ const TopologyToolbar = (props) => {
     dispatch(setTopologyViewSettings(name))
   }
   const handleEditModeButtonOnClick = () => {
-    requestSwitchPolling(false)
+    dispatch(requestSwitchPolling(false))
     dispatch(switchEditMode(true))
   }
   const handleAddNodeButtonOnClick = () => {
@@ -93,7 +93,7 @@ const TopologyToolbar = (props) => {
     dispatch(removeNetworkSelectElement())
   }
   const handleEditCancelButtonOnClick = () => {
-    //(true)
+    dispatch(requestSwitchPolling(true))
     dispatch(switchEditMode(false))
   }
   const handleExportImageButtonOnClick = () => {

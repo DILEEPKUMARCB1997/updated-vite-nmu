@@ -9,6 +9,7 @@ import { datePad } from '../components/comman/tools'
 import domtoimage from 'dom-to-image'
 // import TopologyGraph from '../components/Topology/TopologyGraph/TopologyGraph'
 import { saveAs } from 'file-saver'
+
 import {
   changeTopologyEvent,
   setImageExporting,
@@ -23,12 +24,12 @@ import TopologyAddModal from '../components/topology/TopologyAddModal/TopologyAd
 import { useDispatch, useSelector } from 'react-redux'
 import { SEND_RP_TOPOLOGY_DATA } from '../../../main/utils/IPCEvents'
 
-const Graph = forwardRef((props, ref) => {
-  return <TopologyGraph ref={ref} {...props} />
-})
-const AddModal = forwardRef((props, ref) => {
-  return <TopologyAddModal ref={ref} {...props} />
-})
+// const Graph = forwardRef((props, ref) => {
+//   return <TopologyGraph ref={ref} {...props} />
+// })
+// const AddModal = forwardRef((props, ref) => {
+//   return <TopologyAddModal ref={ref} {...props} />
+// })
 
 const TopologyPage = (props) => {
   const { event, nodesData, currentGroup } = useSelector(topologySelector)
@@ -40,19 +41,19 @@ const TopologyPage = (props) => {
   const inputRef = useRef(null)
   const fitRef = useRef(null)
 
-  const topologyDataListener = (event, arg) => {
-    dispatch(setTopologyData(arg))
-  }
   useEffect(() => {
     window.electron.ipcRenderer.on(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
 
     return () => {
+      window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
       dispatch(clearTopologyData())
       dispatch(requestSwitchPolling(false))
-      window.electron.ipcRenderer.removeListener(SEND_RP_TOPOLOGY_DATA, topologyDataListener)
     }
   }, [])
 
+  const topologyDataListener = (event, arg) => {
+    dispatch(setTopologyData(arg))
+  }
   const networkExportImage = () => {
     dispatch(setImageExporting(true))
     const now = new Date()
@@ -73,7 +74,7 @@ const TopologyPage = (props) => {
     domtoimage
       .toSvg(document.createElement('element'), { filter: filter })
       .then(function (dataUrl) {
-        saveAs(dataUrl, `${fileName}.png`)
+        saveAs(dataUrl, `${fileName}.svg`)
         return dispatch(setImageExporting(false))
       })
       .catch((error) => {
@@ -115,6 +116,7 @@ const TopologyPage = (props) => {
   const networkFitViewPoint = () => {
     //   networkRef.current.Network.fit(fitViewPointOption)
     fitRef.current?.fit(fitViewPointOption)
+    console.log('FitViewPoint', fitViewPointOption)
   }
 
   const handleFitViewPoint = () => {
@@ -209,27 +211,29 @@ const TopologyPage = (props) => {
 
               {/* <Card> */}
 
-              {/* <TopologyGraph
-                // onRef={(ref) => {
-                //   graph = ref
-                // }}
-                ref={graphRef}
-              /> */}
-              <Graph
+              <TopologyGraph
+                onRef={(ref) => {
+                  graph = ref
+                }}
+              />
+              {/* <Graph
                 refs={inputRef}
+                onRef={(ref) => {
+                  console.log('ref'.ref)
+                }}
                 getNodePosition={getNodePosition}
                 getEdgeLinkNode={getEdgeLinkNode}
               />
-              <AddModal refs={modal} />
+              <AddModal refs={modal} /> */}
               {/* </Card> */}
 
-              {/* <TopologyAddModal
+              <TopologyAddModal
                 onRef={(ref) => {
                   modalRef = ref
                 }}
                 getNodePosition={getNodePosition}
                 handleDisableEdit={handleDisableEdit}
-              /> */}
+              />
             </div>
           </Card>
         </Col>

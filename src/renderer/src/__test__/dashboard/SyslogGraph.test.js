@@ -2,15 +2,15 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
-import TrapGraphSummary from '../../components/dashboard/TrapGraphSummary'
+import SyslogGraph from '../../components/dashboard/SyslogGraph'
 
 jest.mock('react-apexcharts')
 
-describe('TrapGraphSummary', () => {
-  it('should render the TrapGraph', () => {
-    const container = renderWithProviders(
+describe('SyslogGraph', () => {
+  it('should render the SyslogGraph', () => {
+    const container = render(
       <Provider store={store}>
-        <TrapGraphSummary />
+        <SyslogGraph />
       </Provider>
     )
     expect(container).toBeTruthy()
