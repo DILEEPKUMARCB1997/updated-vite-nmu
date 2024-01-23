@@ -38,10 +38,9 @@ export const requestSaveTopologyLayout = (positions, callback) => (dispatch, get
 
 export const setTopologyData = (param) => (dispatch, getState) => {
   const { nodesData, edgesData, virtualNodeData } = param
-  // const nodesData = {}
-  // const edgesData = {}
-  // const virtualNodeData = {}
-
+  console.log('NodesData', nodesData)
+  console.log('EdgesData', edgesData)
+  console.log('VirtualNode', virtualNodeData)
   Object.keys(nodesData).forEach((MACAddress) => {
     const { defaultDeviceData } = getState().discovery
     if (defaultDeviceData[MACAddress] !== undefined) {
@@ -63,6 +62,7 @@ export const requestSwitchPolling = (param) => () => {
   window.electron.ipcRenderer.send(REQUEST_MP_SWITCH_POLLING_TOPOLOGY, {
     isStartPolling: param
   })
+  console.log('startTopology', param)
 }
 
 export const setCurrentGroup = (payload) => (dispatch) => {
@@ -347,11 +347,11 @@ const topologySlice = createSlice({
         changeGroupMemberData
       }
     },
-    settingTopologyData: (state, action) => {
+    settingTopologyData: (state, { payload }) => {
       if (state.event !== '') {
         return state
       }
-      const { nodesData, edgesData, virtualNodeData } = action.payload
+      const { nodesData, edgesData, virtualNodeData } = payload
       return {
         ...state,
         virtualNodeData,

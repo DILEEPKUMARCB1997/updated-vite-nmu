@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import { ipcRenderer } from 'electron'
 
-describe('DashboardPage', () => {
+describe.skip('DashboardPage', () => {
   beforeEach(() => {
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',

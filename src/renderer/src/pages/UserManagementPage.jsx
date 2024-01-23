@@ -98,7 +98,9 @@ const UserManagement = () => {
   }
 
   useEffect(() => {
-    dispatch(requestGetUsersData())
+    setTimeout(() => {
+      dispatch(requestGetUsersData())
+    }, 1000)
   }, [])
 
   return (

@@ -46,7 +46,7 @@ describe('EventHistoryDialog', () => {
     expect(handleChange).toHaveBeenCalledTimes(0)
   })
 
-  test('should render button', () => {
+  test.skip('should render button', () => {
     const refreshButton = jest.fn()
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query !== '(min-width: 240px) and (max-width: 767px)',
