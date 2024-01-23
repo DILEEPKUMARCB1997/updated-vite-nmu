@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 const EventList = () => {
   const { customEventListData } = useSelector(eventLogSelector)
+  // console.log(customEventListData)
 
   // console.log('cus eve data', customEventListData)
   return (

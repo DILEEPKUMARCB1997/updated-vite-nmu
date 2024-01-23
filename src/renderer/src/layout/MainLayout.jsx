@@ -32,6 +32,7 @@ import { requestGetNICData } from '../features/Preferences/generalSlice'
 import { changeSnmpScanStep, clearSnmpScanProgress } from '../features/snmpScanProgressSlice'
 import { requestDiscoveryAfterLogin, updateDiscoveryData } from '../features/discoverySlice'
 import { eventLogSelector, updateBeepSoundStart, updateEventLog } from '../features/eventLogSlice'
+import { requestSwitchPolling } from '../features/topologySlice.js'
 
 const MainLayout = () => {
   const { dialogs } = useSelector(dialogSelector)
@@ -108,6 +109,16 @@ const MainLayout = () => {
   //   dispatch(updateDiscoveryData(JSON.parse(args)))
   // }, [])
 
+  const handleMenuItemSelect = () => {
+    switch (location.pathname) {
+      case '/topology':
+        dispatch(requestSwitchPolling(true))
+        break
+      default:
+        break
+    }
+  }
+
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
       dispatch(clearUsersData())
@@ -128,6 +139,7 @@ const MainLayout = () => {
         fixedHeader
         hasSiderMenu={true}
         siderMenuType="sub"
+        onSelect={handleMenuItemSelect}
         menu={{
           collapsedShowGroupTitle: false
         }}
