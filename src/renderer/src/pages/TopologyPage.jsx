@@ -169,54 +169,96 @@ const TopologyPage = (props) => {
   }
 
   return (
-    <div>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <TopologyButtons />
-        </Col>
-
-        <Col span={24}>
-          <Card
-            bodyStyle={{
+    <Row gutter={[16, 16]}>
+      <Col span={24}>
+        <TopologyButtons />
+      </Col>
+      <Col span={24}>
+        <Card
+          style={{
+            height: 'calc(100vh - 160px)',
+            boxSizing: 'border-box',
+            position: 'relative',
+            width: '100%',
+            minWidth: '761px'
+          }}
+        >
+          <div
+            style={{
+              height: 'calc(100vh - 500px)',
               boxSizing: 'border-box',
-              width: '100%',
-              padding: '15px',
-              minWidth: '761px',
-              minHeight: '520px'
+              position: 'relative',
+              padding: '5px 5px 5px 5px',
+              minWidth: '761px'
             }}
-            // style={{ height: 'calc(100vh - 105px)' }}
-
-            bordered={false}
           >
-            <Typography.Title level={4}>Device Topology</Typography.Title>
-            <div
-              style={{
-                boxSizing: 'border-box',
-                padding: '15px 10px 15px 15px',
-                marginTop: '20px',
-                minWidth: '761px'
-                // height: 'calc(100vh - 105px)'
+            {' '}
+            <TopologyToolbar
+              handleExportImage={handleExportImage}
+              handleFitViewPoint={handleFitViewPoint}
+              handleAddNode={handleAddNode}
+              handleAddEdge={handleAddEdge}
+              // handleSearchNode={handleSearchNode}
+              handleDisableEdit={handleDisableEdit}
+              handleSaveLayout={handleSaveLayout}
+              // handleChangeShowLabelItem={handleChangeShowLabelItem}
+            />
+            <TopologyGraph
+              refs={inputRef}
+              onRef={(ref) => {
+                console.log('ref', ref)
               }}
-            >
-              <TopologyToolbar
-                handleExportImage={handleExportImage}
-                handleFitViewPoint={handleFitViewPoint}
-                handleAddNode={handleAddNode}
-                handleAddEdge={handleAddEdge}
-                // handleSearchNode={handleSearchNode}
-                handleDisableEdit={handleDisableEdit}
-                handleSaveLayout={handleSaveLayout}
-                // handleChangeShowLabelItem={handleChangeShowLabelItem}
-              />
+              getNodePosition={getNodePosition}
+              getEdgeLinkNode={getEdgeLinkNode}
+            />
+            <TopologyAddModal
+              onRef={(ref) => {
+                modalRef = ref
+              }}
+              getNodePosition={getNodePosition}
+              handleDisableEdit={handleDisableEdit}
+            />
+          </div>
+        </Card>
+      </Col>
+      {/* <Col span={24}> */}
+      {/* <Card
+          bodyStyle={{
+            boxSizing: 'border-box',
+            width: '100%',
+            padding: '15px'
+          }}
+          style={{ height: 'calc(100vh - 155px)' }}
+          bordered={false}
+        >
+          <Typography.Title level={4}>Device Topology</Typography.Title>
+          <div
+            style={{
+              boxSizing: 'border-box',
+              padding: '15px 10px 15px 15px',
+              marginTop: '20px',
+              minWidth: '761px'
+              // height: 'calc(100vh - 105px)'
+            }}
+          >
+            <TopologyToolbar
+              handleExportImage={handleExportImage}
+              handleFitViewPoint={handleFitViewPoint}
+              handleAddNode={handleAddNode}
+              handleAddEdge={handleAddEdge}
+              // handleSearchNode={handleSearchNode}
+              handleDisableEdit={handleDisableEdit}
+              handleSaveLayout={handleSaveLayout}
+              // handleChangeShowLabelItem={handleChangeShowLabelItem}
+            />
 
-              {/* <Card> */}
-
-              <TopologyGraph
-                onRef={(ref) => {
-                  graph = ref
-                }}
-              />
-              {/* <Graph
+            {/* <Card> */}
+      {/* <TopologyGraph
+          onRef={(ref) => {
+            graph = ref
+          }} */}
+      {/* /> */}
+      {/* <Graph
                 refs={inputRef}
                 onRef={(ref) => {
                   console.log('ref'.ref)
@@ -225,20 +267,11 @@ const TopologyPage = (props) => {
                 getEdgeLinkNode={getEdgeLinkNode}
               />
               <AddModal refs={modal} /> */}
-              {/* </Card> */}
-
-              <TopologyAddModal
-                onRef={(ref) => {
-                  modalRef = ref
-                }}
-                getNodePosition={getNodePosition}
-                handleDisableEdit={handleDisableEdit}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+      {/* </Card> */}
+      {/* </div> */}
+      {/* </Card> */}
+      {/* </Col> */}
+    </Row>
   )
 }
 export default TopologyPage
