@@ -34,7 +34,7 @@ let virtualMac = []
 const TopologyGraph = (props) => {
   const { onRef } = props
   const networkRef = useRef(null)
-  // console.log(networkRef)
+  console.log(networkRef)
   const dispatch = useDispatch()
   const [followPosition, setFollowPosition] = useState(true)
   const [network, setNetwork] = useState(null)
@@ -392,7 +392,7 @@ const TopologyGraph = (props) => {
   // console.log(networkRef.current)
 
   return (
-    <div style={{ border: 'double', marginTop: '50px', height: 'calc(100%-96px)' }}>
+    <div style={{ border: 'double', marginTop: '30px', height: 'calc(100vh - 300px)' }}>
       <ContextMenuTrigger
         id="default_table_row_menu"
         MACAddress={nodeData.nodeMACAddress}

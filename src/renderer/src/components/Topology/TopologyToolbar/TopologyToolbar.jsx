@@ -187,17 +187,15 @@ const TopologyToolbar = (props) => {
       </div>
     )
   }
+
   return (
     <div>
       <div
         style={{
           display: 'flex',
-
           position: 'absolute',
           top: '5px',
-          left: '10px',
-          padding: '20px',
-          marginTop: '35px'
+          left: '10px'
         }}
       >
         {/* <div> */}
